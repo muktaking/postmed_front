@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
+import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 import NavbarHome from "../../../components/navbar/navbarHome";
 
@@ -7,6 +8,7 @@ import NavbarHome from "../../../components/navbar/navbarHome";
 //import "./home.scss";
 
 const home = props => {
+
   return (
     <div id="home">
       <NavbarHome isLanding={true} />
@@ -17,11 +19,24 @@ const home = props => {
         </div>
       </div>
       <div className="caption text-center">
-        <h1>Welcome to E-Exam System</h1>
-        <h3>Gorw confidence by practising</h3>
+        <h1>
+          <FormattedMessage
+            id="site.title"
+            defaultMessage="Welcome to Prostuti Exam System"
+          /> 
+        </h1>
+        <h3>
+          <FormattedMessage
+            id="site.subtitle"
+            defaultMessage="With the suffix of staying ahead"
+          />
+        </h3>
         <Link to="/exams">
           <Button variant="outline-light" size="lg" className="btn-lg">
-            Exams
+          <FormattedMessage
+            id="btn.exams"
+            defaultMessage="Exams"
+          />
           </Button>
         </Link>
         

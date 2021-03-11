@@ -6,6 +6,7 @@ import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Spinner from "react-bootstrap/Spinner";
+import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import validator from "validator";
 import { createCategory, fetchCategory } from "../../store/category";
@@ -295,6 +296,9 @@ class Category extends Component {
     const { categories } = this.props.category;
     return (
       <>
+        <Helmet>
+          <title>Category</title>
+        </Helmet>
         {this.state.loading && (
           <Spinner
             animation="border"

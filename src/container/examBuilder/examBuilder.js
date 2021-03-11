@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Alert, Button, Col, Form, FormCheck, ListGroup, Modal, Row } from "react-bootstrap";
+import { Helmet } from "react-helmet";
 import { FaShoppingBasket } from 'react-icons/fa';
 import { connect } from "react-redux";
 import ExamSpec from "../../components/examBuilder/examSpec";
@@ -17,11 +18,10 @@ import { paginate } from "../../utils/paginate";
 class ExamPaper extends Component {
   constructor(props) {
     super(props);
-    //this.inputRef = React.createRef(null);
     this.state = {
       show: false,
       id: null,
-      input: React.createRef(),
+      //input: React.createRef(),
       action: null,
       //toogle: false,
       checkedQuestionIds: [],
@@ -114,6 +114,9 @@ class ExamPaper extends Component {
     );
     return (
       <>
+        <Helmet>
+          <title>Exam Builder</title>
+        </Helmet>
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Selected Questions Preview</Modal.Title>
@@ -174,7 +177,7 @@ class ExamPaper extends Component {
                     >
                       { this.state.action === null &&
                         <Form.Check
-                        ref={this.state.input}
+                        //ref={this.state.input}
                           inline
                           type="checkbox"
                           value={question.id}
@@ -189,7 +192,7 @@ class ExamPaper extends Component {
 
                       {this.state.action === 'mAll' &&
                         <Form.Check
-                        ref={this.state.input}
+                        //ref={this.state.input}
                           inline
                           type="checkbox"
                           checked={true}
@@ -203,7 +206,7 @@ class ExamPaper extends Component {
 
                       {this.state.action === 'uAll' &&
                         <Form.Check
-                        ref={this.state.input}
+                        //ref={this.state.input}
                           inline
                           type="checkbox"
                           checked={false}

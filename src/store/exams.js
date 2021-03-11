@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { apiCallBegun } from "./api";
 
-
 const slice = createSlice({
   name: "Exams",
   initialState: {
@@ -19,13 +18,13 @@ const slice = createSlice({
     totalScorePercentage: null,
     timeTakenToComplete: null,
     rank: null,
-    exam: null, // store the individual exam 
+    exam: null, // store the individual exam
     error: null,
     examError: null,
-    exams: [],// store the all exam lists
+    exams: [], // store the all exam lists
   },
   reducers: {
-    resetExamResult: (state, action) => {
+    resetExamResult: (state) => {
       state.examResult = null;
       state.totalMark = null;
       state.totalScore = null;
@@ -35,15 +34,15 @@ const slice = createSlice({
       state.rank = null;
       state.exam = null;
       state.error = null;
-      state.questionIdsByOrder= [];
+      state.questionIdsByOrder = [];
     },
     getAllExams: (state, action) => {
       state.exams = action.payload;
     },
     getExamById: (state, action) => {
       state.questions = action.payload.questions;
-      action.payload.questions.forEach(e=>{
-        state.questionIdsByOrder.push(e.id)
+      action.payload.questions.forEach((e) => {
+        state.questionIdsByOrder.push(e.id);
       });
       state.id = action.payload.exam.id;
       state.singleQuestionMark = action.payload.exam.singleQuestionMark;
@@ -53,8 +52,8 @@ const slice = createSlice({
     },
     getFreeExamById: (state, action) => {
       state.questions = action.payload.questions;
-      action.payload.questions.forEach(e=>{
-        state.questionIdsByOrder.push(e.id)
+      action.payload.questions.forEach((e) => {
+        state.questionIdsByOrder.push(e.id);
       });
       state.id = action.payload.exam.id;
       state.singleQuestionMark = action.payload.exam.singleQuestionMark;
@@ -62,26 +61,24 @@ const slice = createSlice({
       state.timeLimit = action.payload.exam.timeLimit;
       state.penaltyMark = action.payload.exam.penaltyMark;
     },
-    getExamError: (state, action)=>{
+    getExamError: (state, action) => {
       state.examError = action.payload;
     },
-    resetExamError: (state, action)=>{
+    resetExamError: (state) => {
       state.examError = null;
-    }
-    ,
+    },
     postExamById: (state, action) => {
       state.examResult = action.payload.resultArray;
       state.totalMark = action.payload.totalMark;
       state.totalScore = action.payload.totalScore;
       state.totalPenaltyMark = action.payload.totalPenaltyMark;
       state.totalScorePercentage = action.payload.totalScorePercentage;
-      state.timeTakenToComplete= action.payload.timeTakenToComplete;
+      state.timeTakenToComplete = action.payload.timeTakenToComplete;
     },
-    examRankById: (state,action)=>{
+    examRankById: (state, action) => {
       state.rank = action.payload.rank;
-      state.exam = action.payload.exam
-    }
-    ,
+      state.exam = action.payload.exam;
+    },
     postExamError: (state, action) => {
       state.error = action.payload;
     },
@@ -109,7 +106,7 @@ export const getAllExamsLoader = () => (dispatch) => {
       method: "get",
       sendToken: true,
       onSuccess: getAllExams.type,
-      onError: getExamError.type
+      onError: getExamError.type,
     })
   );
 };
@@ -120,7 +117,7 @@ export const getAllFreeExamsLoader = () => (dispatch) => {
       url: "/exams/free",
       method: "get",
       onSuccess: getAllExams.type,
-      onError: getExamError.type
+      onError: getExamError.type,
     })
   );
 };
@@ -132,7 +129,7 @@ export const getExamByIdLoader = (id) => (dispatch) => {
       method: "get",
       sendToken: true,
       onSuccess: getExamById.type,
-      onError: getExamError.type
+      onError: getExamError.type,
     })
   );
 };
@@ -144,7 +141,7 @@ export const getFreeExamByIdLoader = (id) => (dispatch) => {
       method: "get",
       sendToken: true,
       onSuccess: getFreeExamById.type,
-      onError: getExamError.type
+      onError: getExamError.type,
     })
   );
 };

@@ -1,10 +1,10 @@
 import { Formik } from "formik";
 import React, { useState } from "react";
-import { Alert, Button, Form } from "react-bootstrap";
+import { Alert, Button, Form, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 //import { useFormik } from "formik";
 import validator from "validator";
-import { postExamProfile } from "../../store/examPaper";
+import { onLoadingLoader, postExamProfile } from "../../store/examPaper";
 import ExamCard from "./card/card";
 
 const centeredStyle = {
@@ -21,23 +21,18 @@ const ExamSpec = ({ categories }) => {
   const [hideMsg, setHideMsg] = useState(true);
   const dispatch = useDispatch();
   const selectedQuestionIds = useSelector((state) => state.examPaper.ids);
+  const loading = useSelector((state) => state.examPaper.loading);
   const successMsg = useSelector((state) => state.examPaper.success);
-
-  // const formik = useFormik({
-  //   initialValues: {
-  //     title: "",
-  //     type: "0",
-  //     categoryType: [],
-  //     singleQuestionMark: "1",
-  //     questionStemLength: "0.2",
-  //     penaltyMark: "0",
-  //     timeLimit: "40",
-  //   },
-  //   validate,
-  //   onSubmit: onSubmitHandler(selectedQuestionIds, dispatch),
-  // });
+  const errorMsg = useSelector((state) => state.examPaper.error);
 
   return (
+    <>
+    {loading  && <Spinner
+        animation="border"
+        role="status"
+        variant="dark"
+        className="content-center"
+    ></Spinner>}
     <Formik
       initialValues={{
         title: "",
@@ -67,6 +62,17 @@ const ExamSpec = ({ categories }) => {
                 " --->  " +
                 successMsg.questions.length +
                 " questions"}
+            </Alert>
+          )}
+          {hideMsg && errorMsg && (
+            <Alert //
+              variant={"success"}
+              className="text-center"
+              style={centeredStyle}
+              onClose={() => setHideMsg(false)}
+              dismissible
+            >
+              {JSON.stringify(errorMsg)}
             </Alert>
           )}
           <Form>
@@ -181,6 +187,7 @@ const ExamSpec = ({ categories }) => {
         </ExamCard>
       )}
     </Formik>
+    </>
   );
 };
 
@@ -189,6 +196,7 @@ export default ExamSpec;
 function onSubmitHandler(selectedQuestionIds, dispatch, setHideMsg) {
   return (values) => {
     if (selectedQuestionIds.length > 0) {
+      dispatch(onLoadingLoader());
       setHideMsg(true);
       dispatch(postExamProfile(values, selectedQuestionIds));
     } else {

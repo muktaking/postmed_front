@@ -39,7 +39,6 @@ const InnerContent = (props) => {
             <div>
               <Topbar pageName={pageName} />
               <div className="px-1 ml-md-4" style={{marginTop: '70px'}}>
-                
                   {
                     <>
                       <Route path="/dashboard" exact component={Dashboard} />

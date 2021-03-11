@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { useDispatch } from "react-redux";
 import BigCards from "../../components/dashboard/bigCards/bigCards";
 import MiniCards from "../../components/dashboard/miniCards/miniCards";
@@ -20,6 +21,10 @@ const Dashboard = (props) => {
 
   return (
     <div className="">
+      <Helmet>
+        <title>Dashboard</title>
+      </Helmet>
+
       <MiniCards />
       <hr className="my-3" />
       <BigCards />

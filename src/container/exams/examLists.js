@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Spinner } from "react-bootstrap";
+import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import GallaryCard from "../../components/exams/gallary/gallaryCard";
 import { getAllExamsLoader, resetExamResult } from "../../store/exams";
@@ -23,6 +24,9 @@ class ExamLists extends Component {
   render() {
     return (
       <>
+      <Helmet>
+        <title>List of Exams</title>
+      </Helmet>
       {this.props.exams.exams.length < 1 && (
           <Spinner
             animation="border"

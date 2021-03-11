@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
 import { Alert, Badge, Button, ListGroup, Toast } from "react-bootstrap";
+import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import validator from "validator";
 import { fetchCategory } from "../../store/category";
@@ -238,6 +239,9 @@ class Question extends Component {
     const { title, category, qType, qText, aStemSba } = this.state;
     return (
       <>
+        <Helmet>
+          <title>Question</title>
+        </Helmet>
         {this.state.uploadedExcelQuestion && this.state.toastShow && (
           <Toast
             show={this.state.toastShow}

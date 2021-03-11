@@ -1,38 +1,30 @@
 import React from "react";
-import { Route } from "react-router-dom";
-import { slide as Menu } from "react-burger-menu";
-
-import Navbar from "react-bootstrap/Navbar";
+import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-
-import Sidebar from "../components/sidebar/sidebar";
+import { slide as Menu } from "react-burger-menu";
+import { Route } from "react-router-dom";
+import "../assets/scss/section/dashboard.scss";
 import IconBar from "../components/sidebar/iconBar";
+import Sidebar from "../components/sidebar/sidebar";
 import Topbar from "../components/topbar/topbar";
-
+import Category from "./category/category";
 //importing routing parts
 import Dashboard from "./dashboard/dashboard";
-import Category from "./category/category";
-import Question from "./question/question";
 import ExamPaper from "./examPaper/examPaper";
-import ExamTaker from "./exams/examTaker";
 import ExamLists from "./exams/examLists";
+import ExamTaker from "./exams/examTaker";
+import Question from "./question/question";
 import Result from "./result/result";
 
-import "../assets/scss/section/dashboard.scss";
+
+
+
 
 const innerContent = (props) => {
   const pageName = props.match.url.split("/", 2)[1];
   return (
     <>
-      {/* <Navbar expand="md" variant="light" className="dashboard py-0">
-        <Navbar.Toggle
-          aria-controls="basic-navbar-nav"
-          className="ml-auto mb-2 bg-light"
-        />
-        <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
-      </Navbar> */}
       <IconBar
         styles={{
           position: "fixed",

@@ -1,17 +1,19 @@
+/* eslint-disable react/prop-types */
+import moment from "moment";
 import React, { Component } from "react";
 import { Alert, Card, ListGroup } from "react-bootstrap";
-import { FaMinusCircle } from 'react-icons/fa';
+import { FaMinusCircle } from "react-icons/fa";
 import { connect } from "react-redux";
 import SubNavBar from "../../components/navbar/subNavBar";
+import Gist from "../../components/result/gist";
 import QuestionResultStem from "../../components/result/stem";
 
 const QType = {
   SingleBestAnswer: "sba",
   Matrix: "matrix",
-}
+};
 
 class Result extends Component {
-  state = {};
   render() {
     const {
       examResult,
@@ -19,6 +21,7 @@ class Result extends Component {
       totalScore,
       totalPenaltyMark,
       totalScorePercentage,
+      // eslint-disable-next-line no-unused-vars
       timeTakenToComplete,
       error,
     } = this.props.exams;
@@ -26,12 +29,11 @@ class Result extends Component {
       <div>
         {error && (
           <>
-          <Alert variant={"danger"} className="m-5 text-center">
-            {error}
-          </Alert>
-          <SubNavBar />
+            <Alert variant={"danger"} className="m-5 text-center">
+              {error}
+            </Alert>
+            <SubNavBar />
           </>
-
         )}
         {examResult && (
           <div>
@@ -40,19 +42,30 @@ class Result extends Component {
                 Result
               </Card.Header>
               <Card.Body className="d-flex justify-content-center">
-                <div style={{width:"250px"}} className="mr-2 mb-1">
-                  <p className="bg-warning text-center text-light mb-1 p-3" style={{fontSize: "1.5rem"}}>{totalScore.toFixed(2)} out of{" "} {totalMark.toFixed(2)}</p>
-                  <p className="bg-warning text-center text-light p-1" style={{fontSize: "1rem"}}>Score</p>
-                </div>
-                <div style={{width:"250px"}} className="mr-2 mb-1">
-                  <p className="bg-info text-center text-light mb-1 p-3" style={{fontSize: "1.5rem"}}>{timeTakenToComplete} Mins</p>
-                  <p className="bg-info text-center text-light p-1" style={{fontSize: "1rem"}}>Time</p>
-                </div>
-                <div style={{width:"250px"}} className="mr-2 mb-1">
-                  <p className="bg-primary text-center text-light mb-1 p-3" style={{fontSize: "1.5rem"}}>{totalScorePercentage.toFixed(2)} %</p>
-                  <p className="bg-primary text-center text-light p-1" style={{fontSize: "1rem"}}>Percentage</p>
-                </div>
-                
+                <Gist
+                  title="Score"
+                  bgColor="bg-warning"
+                  value={
+                    totalScore.toFixed(2) + " Out of " + totalMark.toFixed(2)
+                  }
+                />
+                <Gist
+                  title="Time"
+                  bgColor="bg-info"
+                  value={moment
+                    .duration(timeTakenToComplete, "minute")
+                    .humanize()}
+                />
+                <Gist
+                  title="Percentage"
+                  bgColor="bg-primary"
+                  value={totalScorePercentage.toFixed(2) + " %"}
+                />
+                <Gist
+                  title="Penalty Mark"
+                  bgColor="bg-secondary"
+                  value={totalPenaltyMark.toFixed(2)}
+                />
               </Card.Body>
             </Card>
 
@@ -62,25 +75,48 @@ class Result extends Component {
               </Card.Header>
               <Card.Body>
                 {examResult.map((item, index) => (
-                  <ListGroup variant="flush">
+                  <ListGroup key={index} variant="flush">
                     <ListGroup.Item>
-                      {item.result.stemResult[0] === QType.Matrix && item.result.stemResult.length === 1 
-                      && <FaMinusCircle className="mr-2" style={{color: '#777'}} size='1.4rem' />}
-                      {item.result.stemResult[0] === QType.SingleBestAnswer && item.result.stemResult.length === 2 
-                      && <FaMinusCircle lassName="mr-2" style={{color: '#777'}} size='1.4rem' />}
+                      {item.result.stemResult[0] === QType.Matrix &&
+                        item.result.stemResult.length === 1 && (
+                          <FaMinusCircle
+                            className="mr-2"
+                            style={{ color: "#777" }}
+                            size="1.4rem"
+                          />
+                        )}
+                      {item.result.stemResult[0] === QType.SingleBestAnswer &&
+                        item.result.stemResult.length === 2 && (
+                          <FaMinusCircle
+                            lassName="mr-2"
+                            style={{ color: "#777" }}
+                            size="1.4rem"
+                          />
+                        )}
                       {index + 1 + ". " + item.qText}
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <ListGroup variant="flush" className="pl-3">
                         {item.stems.map((stem, ind) => {
-                          if (item.result.stemResult[0] === QType.SingleBestAnswer)
+                          if (
+                            item.result.stemResult[0] === QType.SingleBestAnswer
+                          )
                             return (
                               <>
                                 <ListGroup.Item>
-                                  <QuestionResultStem index={ind} qType={item.result.stemResult[0]} answer={[item.result.stemResult[1], item.result.stemResult[2]]} qStem={`${ind + 1}. ${stem.qStem}`} />
+                                  <QuestionResultStem
+                                    index={ind}
+                                    qType={item.result.stemResult[0]}
+                                    answer={[
+                                      item.result.stemResult[1],
+                                      item.result.stemResult[2],
+                                    ]}
+                                    qStem={`${ind + 1}. ${stem.qStem}`}
+                                  />
                                 </ListGroup.Item>
                                 <ListGroup.Item className="ml-3">
-                                  {stem.fbStem && "Explanation is : " + stem.fbStem}
+                                  {stem.fbStem &&
+                                    "Explanation is : " + stem.fbStem}
                                 </ListGroup.Item>
                               </>
                             );
@@ -88,29 +124,36 @@ class Result extends Component {
                             return (
                               <>
                                 <ListGroup.Item>
-                                  <QuestionResultStem index={ind} qType={item.result.stemResult[0]} answer= {item.result.stemResult[(ind+1)]} qStem={`${ind + 1}. ${stem.qStem}`} />
+                                  <QuestionResultStem
+                                    index={ind}
+                                    qType={item.result.stemResult[0]}
+                                    answer={item.result.stemResult[ind + 1]}
+                                    qStem={`${ind + 1}. ${stem.qStem}`}
+                                    aStem={stem.aStem}
+                                  />
                                 </ListGroup.Item>
 
                                 <ListGroup.Item
-                                  // className={
-                                  //   (item.result.stemResult[ind] === true
-                                  //     ? "bg-success"
-                                  //     : "bg-danger") + " text-light ml-3"
-                                  // }
+                                // className={
+                                //   (item.result.stemResult[ind] === true
+                                //     ? "bg-success"
+                                //     : "bg-danger") + " text-light ml-3"
+                                // }
                                 >
                                   This Statement is:{" "}
                                   {stem.aStem === "1" ? "True" : "False"}
                                   <br />
-                                  {stem.fbStem && "Explanation is : " + stem.fbStem}
+                                  {stem.fbStem &&
+                                    "Explanation is : " + stem.fbStem}
                                 </ListGroup.Item>
-                                
                               </>
                             );
                         })}
                       </ListGroup>
                     </ListGroup.Item>
                     <ListGroup.Item className="ml-3">
-                      {item.generalFeedbacks && "Explanation is : " + item.generalFeedbacks}
+                      {item.generalFeedbacks &&
+                        "Explanation is : " + item.generalFeedbacks}
                     </ListGroup.Item>
                   </ListGroup>
                 ))}
@@ -123,9 +166,6 @@ class Result extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {};
-};
 const mapStateToProps = (state) => {
   return {
     exams: state.exams,
@@ -135,4 +175,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Result);
+export default connect(mapStateToProps)(Result);

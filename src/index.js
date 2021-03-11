@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-undef */
 /*!
 
 =========================================================
@@ -15,48 +17,49 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
-import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import rootReducers from "./store";
-import { api } from "./store/middleware/index";
-import App from "./App";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import {
-  faHome,
-  faUser,
-  faEnvelope,
-  faShoppingCart,
-  faChartLine,
-  faChartBar,
-  faTable,
-  faWrench,
-  faFileAlt,
-  faSearch,
-  faComments,
-  faBell,
-  faSignOutAlt,
-  faSync,
-  faFileImport,
-  faMedal,
-  faClock,
-  faPoll,
-  faBalanceScale,
-  faUsers,
-  faFile,
-  faCalendarAlt,
-  faStar,
-  faBars,
-  faCloud,
-  faHourglass,
-  faThumbsUp,
-  faQuoteLeft,
   faArrowUp,
+  faBalanceScale,
+  faBars,
+  faBell,
+  faCalendarAlt,
+  faChartBar,
+  faChartLine,
+  faClock,
+  faCloud,
+  faComments,
+  faEnvelope,
+  faFile,
+  faFileAlt,
+  faFileImport,
+  faHome,
+  faHourglass,
+  faMedal,
+  faPoll,
+  faQuoteLeft,
+  faSearch,
+  faShoppingCart,
+  faSignOutAlt,
+  faStar,
+  faSync,
+  faTable,
+  faThumbsUp,
+  faUser,
+  faUsers,
+  faWrench
 } from "@fortawesome/free-solid-svg-icons";
-//import "bootstrap/dist/css/bootstrap.min.css";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import React from "react";
+import ReactDOM from "react-dom";
+import { IntlProvider } from "react-intl";
+import { Provider } from "react-redux";
+import App from "./App";
 import "./index.css";
+import Bangla from "./lang/bn.json";
+import rootReducers from "./store";
+import { api } from "./store/middleware/index";
 
 library.add(
   fab,
@@ -98,7 +101,9 @@ const store = configureStore({
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />{" "}
+    <IntlProvider locale={Bangla} messages={Bangla}>
+      <App />
+    </IntlProvider>
   </Provider>,
   document.getElementById("root")
 );
