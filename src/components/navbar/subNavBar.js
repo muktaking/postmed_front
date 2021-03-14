@@ -21,7 +21,7 @@ const subNavBar = (props) => {
             </Nav.Item>
             <Nav.Item as="li" className="mr-3">
               <NavLink
-                to={{ pathname: "/contact" }}
+                to="/#contact"
                 className="nav-link"
               >
                 {"Contact".toUpperCase()}

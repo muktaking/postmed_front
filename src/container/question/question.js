@@ -177,8 +177,7 @@ class Question extends Component {
 
     const { valid, error } = formValid({ rest, formErrors });
 
-    if (valid && stem.length !== 0) {
-      
+    if (valid && stem.length !== 0) {     
       this.resetState();
       this.props.onCreateQuestionLoader({ ...rest, stem });
     } else {

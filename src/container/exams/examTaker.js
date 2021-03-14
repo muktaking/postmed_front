@@ -6,7 +6,7 @@ import {
   Alert,
   Badge,
   Button,
-  Col,
+  Col, Form,
   Modal,
   Row,
   Spinner
@@ -89,6 +89,7 @@ class ExamTaker extends Component {
     timeExpired: false,
     modalShow: false,
     arrowState: true,
+    showPagination: true,
   };
 
   timeTakenToComplete = 0;
@@ -125,6 +126,18 @@ class ExamTaker extends Component {
       });
     }
   };
+
+  onSwithchHandleChange = (e) => {
+    const checked = e.target.checked;
+    if(checked) {
+      this.setState({pageSize: this.props.exams.questions.length, showPagination: false});
+    }
+    else{
+      this.setState({pageSize: 1, showPagination: true});
+    }
+    
+
+  }
 
   // for submitting Answer Sheet
   onSubmitHandler = () => {
@@ -181,7 +194,7 @@ class ExamTaker extends Component {
           <Redirect to="/result" />
         )}
 
-        {this.props.exams.questions.length < 1 && (
+        {(this.props.exams.questions.length < 1 && !this.props.exams.examError) && (
           <Spinner
             animation="border"
             role="status"
@@ -199,13 +212,6 @@ class ExamTaker extends Component {
           ></Spinner>
         )}
 
-        {/* {(this.props.exams.examError) && (
-          <Redirect to={{
-            pathname: "/error", 
-            state: {message:this.props.exams.examError}
-          }} />
-          
-        )} */}
 
         {/* Modal tests are you want submit or time expired*/}
         <Modal show={this.state.modalShow} onHide={this.modalHide}>
@@ -270,6 +276,14 @@ class ExamTaker extends Component {
 
         {this.props.exams.timeLimit && (
           <div className="text-dark text-center mt-1" id="et-top">
+            <Form.Switch
+            id="custom-switch"
+            label="Switch to All Questions View"
+            className="mb-2"
+            onChange={this.onSwithchHandleChange}
+            > 
+
+            </Form.Switch>
             <Countdown
               date={this.state.date + this.props.exams.timeLimit * 60 * 1000}
               renderer={renderer}
@@ -309,7 +323,7 @@ class ExamTaker extends Component {
                 />
               ))}
               <div className="mt-2 d-flex justify-content-center">
-                <Pagination
+                {this.state.showPagination && <Pagination
                   activePage={this.state.currentPage}
                   itemsCountPerPage={1}
                   totalItemsCount={this.props.exams.questions.length}
@@ -319,7 +333,7 @@ class ExamTaker extends Component {
                   linkClass="page-link"
                   prevPageText="Previous"
                   nextPageText="Next"
-                />
+                /> }
                 <Button onClick={this.modalShow} className="mb-3 ml-5 btn-md">
                   Submit Answer Sheet
                 </Button>
@@ -338,12 +352,12 @@ class ExamTaker extends Component {
                 >
                   {this.state.arrowState ? <FaRegArrowAltCircleDown size={"1.2rem"} onClick={()=>{this.setState({arrowState: false})}}/> : <FaRegArrowAltCircleUp size={"1.2rem"} onClick={()=>{this.setState({arrowState: true})}} />}
                 </LinkScroll>
-              <PaginationCustom
+              {this.state.showPagination && <PaginationCustom
                 itemsCount={this.props.exams.questions.length}
                 pageSize={this.state.pageSize}
                 currentPage={this.state.currentPage}
                 onPageHandler={this.onPageHandler}
-              />
+              />}
             </Col>
           </Row>
         )}

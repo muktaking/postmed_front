@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Spinner } from "react-bootstrap";
 import { Helmet } from "react-helmet";
+import { injectIntl } from 'react-intl';
 import { connect } from "react-redux";
 import GallaryCard from "../../components/exams/gallary/gallaryCard";
 import { getAllExamsLoader, resetExamResult } from "../../store/exams";
@@ -22,6 +23,7 @@ class ExamLists extends Component {
     "Final",
   ];
   render() {
+      console.log(Object.keys(this.props.exams.exams))
     return (
       <>
       <Helmet>
@@ -35,7 +37,10 @@ class ExamLists extends Component {
             className="content-center"
           ></Spinner>
         )}
-        {Object.keys(this.props.exams.exams).map(key=> this.props.exams.exams[key] && <GallaryCard title={key} exams={this.props.exams.exams[key]} />)}
+        {Object.keys(this.props.exams.exams).map(key=> this.props.exams.exams[key] && 
+        <GallaryCard 
+        title={this.props.intl.formatMessage({id: key, defaultMessage: key})} 
+        exams={this.props.exams.exams[key]} />)}
       </>
     );
   }
@@ -56,4 +61,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExamLists);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)((ExamLists)));

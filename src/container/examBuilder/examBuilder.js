@@ -36,6 +36,13 @@ class ExamPaper extends Component {
     this.props.onFetchCategoryLoader();
     this.props.onGetQuestionLoader();
   }
+  componentDidUpdate(){
+    // this.setState((preState,props)=>{
+    //   if(preState.checkedQuestionIds.length !== props.examPaper.ids.length)
+    //   preState.checkedQuestionIds= props.examPaper.questions;
+    //   preState.checkedQuestions = props.examPaper.ids;
+    // })
+  }
 
   handleShow = () => {
     this.setState({ show: true });
@@ -54,19 +61,14 @@ class ExamPaper extends Component {
 
     this.setState((preState) => {
       if (isChecked) {
-        preState.checkedQuestionIds = [...preState.checkedQuestionIds, value];
-        preState.checkedQuestions = [
-          ...preState.checkedQuestions,
-          { title, qText },
-        ];
+        if(!preState.checkedQuestionIds.includes(value)){
+          preState.checkedQuestionIds.push(value);
+          preState.checkedQuestions.push({ title, qText });
+        }
         //preState.checkedQuestions.push({ title, qText });
       } else {
-        preState.checkedQuestionIds = preState.checkedQuestionIds.filter(
-          (v) => v !== value
-        );
-        preState.checkedQuestions = preState.checkedQuestions.filter(
-          (v) => v.title !== title
-        );
+        preState.checkedQuestionIds = preState.checkedQuestionIds.filter(v=> v!== value);
+        preState.checkedQuestions =  preState.checkedQuestions.filter(v=> v.title !== title);
       }
     });
   };
@@ -184,7 +186,7 @@ class ExamPaper extends Component {
                           onChange={this.checkHandleChange}
                           name={question.title + "*_*" + question.qText}
                           defaultChecked={this.state.checkedQuestionIds.includes(
-                            question.id
+                            question.id.toString()
                           )}
                         />
                       }
@@ -200,7 +202,7 @@ class ExamPaper extends Component {
                           onChange={this.checkHandleChange}
                           name={question.title + "*_*" + question.qText}
                           defaultChecked={this.state.checkedQuestionIds.includes(
-                            question.id
+                            question.id.toString()
                           )}
                         /> }
 
@@ -214,7 +216,7 @@ class ExamPaper extends Component {
                           onChange={this.checkHandleChange}
                           name={question.title + "*_*" + question.qText}
                           defaultChecked={this.state.checkedQuestionIds.includes(
-                            question.id
+                            question.id.toString()
                           )}
                         />
                       }
@@ -238,8 +240,8 @@ class ExamPaper extends Component {
                 onClick={() => {
                   //this.setState({ toogleChecked: !this.state.toogleChecked });
                   this.props.onSelectedQuestionsLoader(
-                    this.state.checkedQuestions,
-                    this.state.checkedQuestionIds
+                    [...this.state.checkedQuestions],
+                    [...this.state.checkedQuestionIds]
                   );
                 }}
                 className="mr-5 mb-2 mb-sm-0"

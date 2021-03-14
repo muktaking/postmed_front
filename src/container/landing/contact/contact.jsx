@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import { FormattedMessage } from 'react-intl';
 
 //import "./contact.scss";
 
@@ -17,11 +18,19 @@ const contact = props => {
         <Row className="justify-content-center">
           <Col md={6} className="text-center">
             <p className="lead">
-              We are highly trained team to manage the exam system for you
+              <FormattedMessage 
+              id="footer.msg"
+              defaultMessage="We are highly trained team to manage the exam system for you"
+              />
             </p>
-            <strong>Contact Info</strong>
+            <strong>
+              <FormattedMessage
+              id="btn.contact"
+              defaultMessage="Contact Info"
+              />
+              </strong>
             <p>
-              000-0000-00000 <br />
+              +8801641622541 <br />
               admin@eexam.com{" "}
             </p>
             {socials.map(value => (

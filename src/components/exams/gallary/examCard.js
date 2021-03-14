@@ -21,7 +21,7 @@ const categoryTypeVariant = (name)=>{
     return variant;
 }
 
-export default function ExamCard({width="340px", examId, imgSrc, title, categoryType, description, createdAt, free}) {
+export default function ExamCard({width="350px", examId, imgSrc, title, categoryType, description, createdAt, free}) {
     return (
         <>
             <Card key={examId} className="mr-2 mb-2" style={{width:width}}>

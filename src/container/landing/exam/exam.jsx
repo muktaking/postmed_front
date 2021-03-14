@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component } from "react";
+import { injectIntl } from 'react-intl';
 import GallaryCard from '../../../components/exams/gallary/gallaryCard';
 //import "./exam.scss";
 
@@ -23,11 +24,10 @@ class Exam extends Component{
   }
 
   render() {
-    console.log(this.state.exams)
     return (<div id="exam" className="mb-5 offset">
-      <GallaryCard title="Our Featured Exams" exams={this.state.exams} landing={true}/>
+      <GallaryCard title={this.props.intl.formatMessage({id:'db.fe', defaultMessage: "Our Featured Exams"})} exams={this.state.exams} landing={true}/>
     </div>)
   }
 };
 
-export default Exam;
+export default injectIntl(Exam);

@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { useIntl } from "react-intl";
 import { connect } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
@@ -13,6 +14,16 @@ import ScrollToTop from 'react-scroll-up';
 //import "./navbarLanding.css";
 
 const navbarHome = (props) => {
+  const intl = useIntl()
+  const itemsName = [intl.formatMessage({id: 'btn.home', defaultMessage: "home"}),intl.formatMessage({id: 'btn.contact', defaultMessage: "contact"})];
+  const pagesName = props.isAuthenticated
+    ? [intl.formatMessage({id:'btn.db',defaultMessage: "dashboard"}), 
+    intl.formatMessage({id: 'btn.exams', defaultMessage: "exams"}),
+    intl.formatMessage({id: 'btn.logout', defaultMessage: "logout"})]
+    : [
+      intl.formatMessage({id: 'btn.exams', defaultMessage: "exams"}),
+      intl.formatMessage({id: 'btn.signup', defaultMessage: "signup"}), 
+      intl.formatMessage({id: 'btn.login', defaultMessage: "login"})];
   const items = ["home", "contact"];
   const pages = props.isAuthenticated
     ? ["dashboard","exams" ,"logout"]
@@ -40,7 +51,7 @@ const navbarHome = (props) => {
           className="navbar-nav ml-auto"
           offset={-80}
         > */}
-          {items.map((value) => (
+          {items.map((value, index) => (
             <Nav.Item key={value} as="li" className="mr-3">
               {props.isLanding ? (
                 <LinkScroll
@@ -55,7 +66,7 @@ const navbarHome = (props) => {
                   className="nav-link"
                   //to={{ pathname: "/" }}
                 >
-                  {value}
+                  {itemsName[index]}
                 </LinkScroll>
               ) : (
                 <HashLink
@@ -63,19 +74,19 @@ const navbarHome = (props) => {
                   className="nav-link"
                   activeClassName="active"
                 >
-                  {value}
+                  {itemsName[index]}
                 </HashLink>
               )}
             </Nav.Item>
           ))}
-          {pages.map((value) => (
+          {pages.map((value,index) => (
             <Nav.Item key={value} as="li" className="mr-3">
               <NavLink
                 // href={"/" + value}
                 to={{ pathname: "/" + value }}
                 className="nav-link"
               >
-                {value}
+                {pagesName[index]}
               </NavLink>
             </Nav.Item>
           ))}

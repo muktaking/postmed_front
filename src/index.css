@@ -14,13 +14,13 @@ code {
 
 body {
   margin: 0;
-  font-family: "Dosis", sans-serif;
+  font-family: 'Baloo Da 2', cursive, 'Dosis', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #505962;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }

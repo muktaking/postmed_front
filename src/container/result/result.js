@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import moment from "moment";
 import React, { Component } from "react";
-import { Alert, Card, ListGroup } from "react-bootstrap";
+import { Alert, Card, Image, ListGroup } from "react-bootstrap";
 import { FaMinusCircle } from "react-icons/fa";
 import { connect } from "react-redux";
 import SubNavBar from "../../components/navbar/subNavBar";
@@ -151,10 +151,10 @@ class Result extends Component {
                         })}
                       </ListGroup>
                     </ListGroup.Item>
-                    <ListGroup.Item className="ml-3">
-                      {item.generalFeedbacks &&
-                        "Explanation is : " + item.generalFeedbacks}
-                    </ListGroup.Item>
+                    {item.generalFeedback && <ListGroup.Item className="ml-3 text-white bg-secondary">
+                      <p>{"General Explanation is : " + item.generalFeedback.replace(/#L(.+)L#/,'')}</p>
+                      <Image src={item.generalFeedback.split(/#L(.+)L#/)[1]} width="350" height="300"  />
+                    </ListGroup.Item>}
                   </ListGroup>
                 ))}
               </Card.Body>

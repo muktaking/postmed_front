@@ -14,9 +14,13 @@ const slice = createSlice({
     apiCallFail: (api, action) => {
       api.error = action.payload;
     },
+    apiCallReset: (api)=>{
+      api.result = null;
+      api.error = null;
+    }
   },
 });
 
-export const { apiCallBegun, apiCallSuccess, apiCallFail } = slice.actions;
+export const { apiCallBegun, apiCallSuccess, apiCallFail, apiCallReset } = slice.actions;
 
 export default slice.reducer;

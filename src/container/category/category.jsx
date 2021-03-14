@@ -311,8 +311,7 @@ class Category extends Component {
         {this.state.response && (
           <Alert
             variant={this.state.responseClass}
-            className="text-center"
-            style={centeredStyle}
+            className="text-center content-center"
           >
             {this.state.response}
           </Alert>

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 import { apiCallBegun } from "./api";
+
 
 const slice = createSlice({
   name: "Question",
@@ -37,9 +37,6 @@ export const getQuestionByCategoryLoader = (id) => (dispatch) => {
     apiCallBegun({
       url: "/questions/category/" + id,
       method: "get",
-      //sendToken: true,
-      //data,
-      //config,
       onSuccess: getQuestions.type,
     })
   );
