@@ -4,14 +4,13 @@ import { Helmet } from "react-helmet";
 import { injectIntl } from 'react-intl';
 import { connect } from "react-redux";
 import GallaryCard from "../../components/exams/gallary/gallaryCard";
-import { getAllExamsLoader, resetExamResult } from "../../store/exams";
+import { getAllExamsLoader } from "../../store/exams";
 
 
 class ExamLists extends Component {
   
   componentDidMount() {
     this.props.onGetAllExamsLoader();
-    this.props.onResetExamResult();
   }
   type = [
     "Assignment",
@@ -23,7 +22,7 @@ class ExamLists extends Component {
     "Final",
   ];
   render() {
-      console.log(Object.keys(this.props.exams.exams))
+  
     return (
       <>
       <Helmet>
@@ -49,15 +48,11 @@ class ExamLists extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     onGetAllExamsLoader: () => dispatch(getAllExamsLoader()),
-    onResetExamResult: () => dispatch({ type: resetExamResult.type }),
   };
 };
 const mapStateToProps = (state) => {
   return {
     exams: state.exams,
-    //   auth: state.auth,
-    //   category: state.category,
-    //   api: state.api,
   };
 };
 

@@ -181,3 +181,7 @@ export const examRankByIdLoader = (id) => (dispatch) => {
     })
   );
 };
+
+export const resetExamResultLoader = () => (dispatch)=> {
+  dispatch({type: resetExamResult.type})
+}

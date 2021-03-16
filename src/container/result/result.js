@@ -130,6 +130,7 @@ class Result extends Component {
                                     answer={item.result.stemResult[ind + 1]}
                                     qStem={`${ind + 1}. ${stem.qStem}`}
                                     aStem={stem.aStem}
+                                    isUntouched={item.result.stemResult.length === 1}
                                   />
                                 </ListGroup.Item>
 

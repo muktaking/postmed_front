@@ -1,8 +1,9 @@
 import moment from 'moment'
 import React from 'react'
 import { Badge, Button, Card } from 'react-bootstrap'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { resetExamResult } from '../../../store/exams'
+import { resetExamResultLoader } from '../../../store/exams'
 
 
 const categoryTypeVariant = (name)=>{
@@ -22,6 +23,7 @@ const categoryTypeVariant = (name)=>{
 }
 
 export default function ExamCard({width="350px", examId, imgSrc, title, categoryType, description, createdAt, free}) {
+    const dispatch = useDispatch();
     return (
         <>
             <Card key={examId} className="mr-2 mb-2" style={{width:width}}>
@@ -52,8 +54,12 @@ export default function ExamCard({width="350px", examId, imgSrc, title, category
         
                     <div className="d-flex justify-content-around">
                         <Link  className="text-white" to={(free ? "/exams/free/" : "/exams/") + examId}>
-                        <Button variant="outline-primary">Start Exam</Button></Link>
-                        <Link className="text-white" to={"/result/rank/" + examId}><Button onClick={()=>{resetExamResult()}} variant="outline-dark">Rank</Button></Link>
+                        <Button variant="outline-primary" onClick={()=>{
+                            dispatch(resetExamResultLoader());
+                            }}>Start Exam</Button></Link>
+                        <Link className="text-white" to={"/result/rank/" + examId}><Button onClick={()=>{
+                            dispatch(resetExamResultLoader());
+                        }} variant="outline-dark">Rank</Button></Link>
                     </div>
                 </Card.Body>
             </Card>

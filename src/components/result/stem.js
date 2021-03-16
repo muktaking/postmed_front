@@ -2,10 +2,10 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import {
-    FaCheckCircle,
-    FaMinusCircle,
-    FaRegCheckCircle,
-    FaRegTimesCircle
+  FaCheckCircle,
+  FaMinusCircle,
+  FaRegCheckCircle,
+  FaRegTimesCircle
 } from "react-icons/fa";
 
 const answerStatus = {
@@ -19,7 +19,7 @@ const QTypeNumber = {
   Matrix: "matrix",
 };
 
-export default function stem({ index, qType, answer, qStem, aStem }) {
+export default function stem({ index, qType, answer, qStem, aStem,isUntouched }) {
   return (
     <div className="d-flex flex-nowrap">
       {qType === QTypeNumber.Matrix && (
@@ -36,14 +36,16 @@ export default function stem({ index, qType, answer, qStem, aStem }) {
             )}
           </div>
           <div className="mr-2">{qStem}</div>
-          <div>
+          {!isUntouched && <div>
             <Form.Check
               inline
               disabled
               label="true"
               type="radio"
               checked={
+                (answer !== answerStatus.NotAnswered) ?
                 answer === answerStatus.True ? aStem === "1" : aStem !== "1"
+                : false
               }
             />
             <Form.Check
@@ -52,10 +54,13 @@ export default function stem({ index, qType, answer, qStem, aStem }) {
               label="False"
               type="radio"
               checked={
+                (answer !== answerStatus.NotAnswered)?
                 answer === answerStatus.True ? aStem === "0" : aStem !== "0"
+                : false
               }
             />
-          </div>
+
+          </div>}
         </>
       )}
 

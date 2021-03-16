@@ -130,7 +130,7 @@ class ExamTaker extends Component {
   onSwithchHandleChange = (e) => {
     const checked = e.target.checked;
     if(checked) {
-      this.setState({pageSize: this.props.exams.questions.length, showPagination: false});
+      this.setState({pageSize: this.props.exams.questions.length, currentPage: 1 ,showPagination: false});
     }
     else{
       this.setState({pageSize: 1, showPagination: true});
@@ -310,7 +310,34 @@ class ExamTaker extends Component {
             <SubNavBar />
           </>
         ) : (
-          <Row className="">
+          <Row >
+            <div className="scroll-container d-flex justify-content-center flex-wrap bg-danger text-white">
+              <LinkScroll
+                to={"et-top"}
+                spy={true}
+                smooth={true}
+                offset={-50}
+                duration={500}
+                //className="text-secondary"
+                //to={{ pathname: "/" }}
+              >
+                <FaRegArrowAltCircleUp size={"1.2rem"} />
+                
+              </LinkScroll>
+
+              <LinkScroll
+                to={"qNavigator"}
+                spy={true}
+                smooth={true}
+                offset={-50}
+                duration={500}
+                //className="text-secondary"
+                //to={{ pathname: "/" }}
+              >
+                <FaRegArrowAltCircleDown size={"1.2rem"}/>
+
+              </LinkScroll>
+            </div>
             <Col lg={9}>
               {questions.map((question) => (
                 <QuestionView
@@ -334,24 +361,12 @@ class ExamTaker extends Component {
                   prevPageText="Previous"
                   nextPageText="Next"
                 /> }
-                <Button onClick={this.modalShow} className="mb-3 ml-5 btn-md">
+                <Button onClick={this.modalShow} className="mb-3 ml-5 btn-md" id="qNavigator">
                   Submit Answer Sheet
                 </Button>
               </div>
             </Col>
-            <Col lg={3} className="mt-3" id="qNavigator">
-              <LinkScroll
-                  to={this.state.arrowState ? "qNavigator" : "et-top"}
-                  spy={true}
-                  smooth={true}
-                  offset={-50}
-                  duration={500}
-                  className="hideInMd text-secondary"
-                  style={{position: 'fixed', bottom: '10px', left: '10px', zIndex: "10000"}}
-                  //to={{ pathname: "/" }}
-                >
-                  {this.state.arrowState ? <FaRegArrowAltCircleDown size={"1.2rem"} onClick={()=>{this.setState({arrowState: false})}}/> : <FaRegArrowAltCircleUp size={"1.2rem"} onClick={()=>{this.setState({arrowState: true})}} />}
-                </LinkScroll>
+            <Col lg={3} className="mt-3">
               {this.state.showPagination && <PaginationCustom
                 itemsCount={this.props.exams.questions.length}
                 pageSize={this.state.pageSize}

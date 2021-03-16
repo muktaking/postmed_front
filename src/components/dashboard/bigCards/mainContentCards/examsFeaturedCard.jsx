@@ -1,5 +1,4 @@
 import React from "react";
-import ListGroup from "react-bootstrap/ListGroup";
 import { useSelector } from "react-redux";
 import ExamCard from "../../../exams/gallary/examCard";
 import BigCard from "../bigCard/bigCard";
@@ -19,16 +18,8 @@ const ExamsFeaturedCard = () => {
       headerColor={"primary"}
       showDatePicker={false}
     >
-      <ListGroup variant="flush">
+      <div  className="d-flex justify-content-around">
         {featuredExams.map((exam, index) => (
-          <ListGroup.Item className="border-0">
-            {/* <ExamList
-              id={exam.id}
-              title={exam.title}
-              description={exam.description}
-              createdAt={exam.createdAt}
-              type={exam.type}
-            /> */}
             <ExamCard
               examId = {exam.id} 
               imgSrc = {process.env.REACT_APP_SITE_URL+"/"+ exam.categoryType[getRndInteger(0,exam.categoryType.length)].imageUrl}
@@ -37,9 +28,8 @@ const ExamsFeaturedCard = () => {
               description = {exam.description}
               createdAt = {exam.createdAt}
             />
-          </ListGroup.Item>
         ))}
-      </ListGroup>
+      </div>
     </BigCard>
   );
 };
