@@ -14,8 +14,8 @@ import {
 } from "react-icons/fa";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { getUserLoader } from "../../store/user";
 import { canActivate, rolePermitted } from "../../utils/canActivate";
+import Profile from '../user/profile';
 
 
 class Sidebar extends Component {
@@ -31,14 +31,8 @@ class Sidebar extends Component {
   faIcons = [];
   menuName = [];
   navLinks = [];
-  // state = {
-  //   userName: [null]
-  // };
-  componentDidMount() {
-    this.props.onGetUserLoader();
-  }
+
   render() {
-    const { userName, email, id, avatar } = this.props.user;
     if (canActivate(rolePermitted.student, this.props.token)) {
       this.faIcons = [
         <FaHome size="1.6em" className="mr-2" />,
@@ -107,18 +101,8 @@ class Sidebar extends Component {
         >
           <NavLink to="/" className="text-white">E-Exam</NavLink>
         </Navbar.Brand>
-        <h3 className="text-white">Good Day</h3>
-        <div className="bottom-border pb-3">
-          {/* <Image
-            src={avatar}
-            roundedCircle={true}
-            style={{ width: "50px" }}
-            className="mr-3"
-          /> */}
-          <a href="#" className="text-white" style={{fontSize:"1.2rem"}}>
-            {userName}
-          </a>
-        </div>
+        <h3 className="text-white text-center mb-2">Good Day</h3>
+        <Profile />        
         <Nav className={this.classes.sideNav}>
           {this.faIcons.map((value, index) => (
             <Nav.Item key={index}>
@@ -141,20 +125,13 @@ class Sidebar extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onGetUserLoader: () => dispatch(getUserLoader()),
-  };
-};
-
 const mapStateToProps = (state) => {
   return {
     token: state.auth.token,
-    user: state.user,
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default connect(mapStateToProps)(Sidebar);
 
 //export default Sidebar;
 

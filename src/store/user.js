@@ -9,6 +9,10 @@ const slice = createSlice({
     lastName: null,
     userName: null,
     email: null,
+    role: null,
+    mobile: null,
+    userFrom: Date.now(),
+    address: null,
     avatar: null,
   },
   reducers: {
@@ -18,6 +22,10 @@ const slice = createSlice({
       user.lastName = action.payload.lastName;
       user.userName = action.payload.userName;
       user.email = action.payload.email;
+      user.mobile = action.payload.mobile;
+      user.userFrom = action.payload.createdAt;
+      user.role = action.payload.role;
+      user.address = action.payload.address;
       user.avatar =
         action.payload.avater ||
         "https://api.adorable.io/avatars/285/abott@adorable.png";

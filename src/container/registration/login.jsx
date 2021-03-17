@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import validator from "validator";
 import "../../assets/scss/section/registration.scss";
 import NavbarHome from "../../components/navbar/navbarHome";
-import { auth, autoAuth } from "../../store/auth";
+import { auth } from "../../store/auth";
 
 
 
@@ -78,7 +78,7 @@ class Home extends Component {
     });
   };
   componentDidMount() {
-    //this.props.onAutoAuth();
+    
   }
   render() {
     const { formErrors } = this.state;
@@ -170,9 +170,6 @@ class Home extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     onAuth: (username, password) => dispatch(auth(username, password)),
-    onAutoAuth: () => {
-      dispatch(autoAuth());
-    },
   };
 };
 

@@ -23,6 +23,7 @@ import QuestionView from "../../components/exams/paper/question/question";
 import SubNavBar from "../../components/navbar/subNavBar";
 import PaginationCustom from "../../components/pagination/pagination";
 import {
+  disableQuestionsAdd,
   getExamByIdLoader,
   getFreeExamByIdLoader,
   postExamByIdLoader,
@@ -109,8 +110,11 @@ class ExamTaker extends Component {
   };
 
   onHandleChange = (e) => {
+        
     const name = e.target.name;
     const value = e.target.value;
+    
+    this.props.onDisableQuestionsAddLoader(name);
 
     if (name.includes("_")) {
       const [id, index] = name.split("_");
@@ -311,7 +315,7 @@ class ExamTaker extends Component {
           </>
         ) : (
           <Row >
-            <div className="scroll-container d-flex justify-content-center flex-wrap bg-danger text-white">
+            <div className="scroll-container d-flex justify-content-center flex-wrap">
               <LinkScroll
                 to={"et-top"}
                 spy={true}
@@ -388,6 +392,7 @@ const mapDispatchToProps = (dispatch) => {
     onPostExamByIdLoader: (data) => dispatch(postExamByIdLoader(data)),
     onPostFreeExamByIdLoader: (data) => dispatch(postFreeExamByIdLoader(data)),
     onResetExamLoader: () => dispatch({ type: resetExamError.type }),
+    onDisableQuestionsAddLoader: (name) => dispatch({type: disableQuestionsAdd.type, payload: name})
   };
 };
 const mapStateToProps = (state) => {

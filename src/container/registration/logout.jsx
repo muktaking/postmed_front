@@ -1,12 +1,13 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-
+import { Redirect } from "react-router-dom";
 import { logoutLoader } from "../../store/auth";
+
 
 class Logout extends React.Component {
   componentDidMount() {
     this.props.onLogoutLoader();
+    this.props.onRootReducerLoader();
   }
   render() {
     return <Redirect to="/" />;
@@ -18,6 +19,9 @@ const mapDispatchToProps = (dispatch) => {
     onLogoutLoader: () => {
       dispatch(logoutLoader());
     },
+    onRootReducerLoader: ()=>{
+      dispatch({type: 'RESET_APP'})
+    }
   };
 };
 

@@ -16,6 +16,7 @@ import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getUserLoader } from "../../store/user";
 import { canActivate, rolePermitted } from "../../utils/canActivate";
+import Profile from '../user/profile';
 
 
 class Sidebar extends Component {
@@ -121,6 +122,7 @@ class Sidebar extends Component {
 
     return (
       <div style={styles}>
+        <Profile />
         
         <Nav className={this.classes.sideNav}>
           

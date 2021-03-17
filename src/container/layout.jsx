@@ -14,13 +14,11 @@ import Dashboard from "./dashboard/dashboard";
 import ExamBuilder from "./examBuilder/examBuilder";
 import ExamLists from "./exams/examLists";
 import ExamTaker from "./exams/examTaker";
+import Profile from "./profile/profile";
 import Question from "./question/question";
 import Rank from "./result/rank";
 import Result from "./result/result";
-
-
-
-
+import Settings from './settings/settings';
 
 const InnerContent = (props) => {
   const pageName = props.match.url.split("/", 2)[1];
@@ -42,6 +40,7 @@ const InnerContent = (props) => {
                   {
                     <>
                       <Route path="/dashboard" exact component={Dashboard} />
+                      <Route path="/profile" exact component={Profile} />
                       <Route path="/category" exact component={Category} />
                       <Route path="/question" exact component={Question} />
                       <Route path="/exambuilder" exact component={ExamBuilder} />
@@ -51,6 +50,7 @@ const InnerContent = (props) => {
                       <Route path="/exams/free/:id" exact render={(props)=><ExamTaker free={true} {...props}/>} />
                       <Route path="/result" exact component={Result} />
                       <Route path="/result/rank/:id" exact component={Rank} />
+                      <Route path="/settings" exact component={Settings} />
                     </>
                   }
                 

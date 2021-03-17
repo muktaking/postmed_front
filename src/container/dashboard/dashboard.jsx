@@ -7,12 +7,14 @@ import BigCards from "../../components/dashboard/bigCards/bigCards";
 import MiniCards from "../../components/dashboard/miniCards/miniCards";
 import { dashboardStudent } from "../../store/dashboard";
 import { resetExamResultLoader } from "../../store/exams";
+import { getUserLoader } from "../../store/user";
 
 const Dashboard = (props) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(resetExamResultLoader());
+    dispatch(getUserLoader());
     setLoading(true);
     axios
       .get(process.env.REACT_APP_SITE_URL + "/dashboard")

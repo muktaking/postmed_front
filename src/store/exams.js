@@ -22,6 +22,7 @@ const slice = createSlice({
     error: null,
     examError: null,
     exams: [], // store the all exam lists
+    disableQuestions: []
   },
   reducers: {
     resetExamResult: (state) => {
@@ -82,6 +83,12 @@ const slice = createSlice({
     postExamError: (state, action) => {
       state.error = action.payload;
     },
+    disableQuestionsAdd: (state,action) =>{
+      state.disableQuestions.push(action.payload);
+    },
+    resetDisableQuestions: (state)=>{
+      state.disableQuestions = []
+    },
   },
 });
 
@@ -95,6 +102,8 @@ export const {
   postExamById,
   examRankById,
   postExamError,
+  disableQuestionsAdd,
+  resetDisableQuestions
 } = slice.actions;
 
 export default slice.reducer;

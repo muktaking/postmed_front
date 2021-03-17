@@ -1,58 +1,80 @@
 import React from "react";
 import { Col, Form, Row } from "react-bootstrap";
+import { useSelector } from "react-redux";
 const questionStemView = ({
   id,
   qType,
   stem,
   index,
   handleChange,
-  defaultChecked,
+  defaultChecked
 }) => {
+
+  //const dispatch = useDispatch();
+  const disableQuestions = useSelector(state => state.exams.disableQuestions);
+
+  // const disableQuestionsAddLoader = (name)=>{
+  //   dispatch({type: disableQuestionsAdd.type, payload: name})
+  // }
+
   return (
-    <Row className="pr-3 pl-2">
-      <Col lg={10}>
-        <div>{index + ". " + stem}</div>
-      </Col>
-      <Col lg={2}>
-        <Form.Group as={Col} controlId="formGroupQuestionStemAnswer">
+    <Row className="px-md-4 px-xs-2">
+      <Col xs="9">{index + ". " + stem}</Col>
+        <Form.Group  as={Col} controlId="formGroupQuestionStemAnswer">
           {qType === "matrix" ? (
             <>
-              <Form.Check
-                inline
+            <Form.Check type="radio">
+              <Form.Check.Input
+                //inline
+                disabled = {disableQuestions && disableQuestions.includes(id + "_" + index)}
                 type="radio"
-                label="True"
+                //label="True"
                 name={id + "_" + index}
                 id="formHorizontalRadios1"
                 value={1}
                 defaultChecked={defaultChecked === "1"}
                 onChange={handleChange}
+                // onClick={(e)=>{
+                //   disableQuestionsAddLoader(id + "_" + index);
+                // }}
                 className="mb-0"
               />
-              <Form.Check
-                inline
+              <Form.Check.Label>True</Form.Check.Label>
+            </Form.Check>  
+            <Form.Check type="radio">
+              <Form.Check.Input
+                //inline
+                disabled = {disableQuestions && disableQuestions.includes(id + "_" + index)}
                 type="radio"
-                label="False"
+                //label="False"
                 name={id + "_" + index}
                 id="formHorizontalRadios2"
                 value={0}
                 defaultChecked={defaultChecked === "0"}
                 onChange={handleChange}
+                // onClick={(e)=>{                  
+                //   disableQuestionsAddLoader(id + "_" + index);
+                // }}
                 className="mb-0"
               />
+              <Form.Check.Label>False</Form.Check.Label>
+            </Form.Check>  
             </>
           ) : (
-            <Form.Check
-              type="radio"
-              name={id}
-              id="formHorizontalRadios1"
-              value={index}
-              defaultChecked={defaultChecked === index}
-              onChange={handleChange}
-              className="mb-0"
-            />
+            <Form.Check>
+              <Form.Check.Input
+                disabled = {disableQuestions && disabledQuestions.includes(id.toString())}
+                type="radio"
+                name={id}
+                id="formHorizontalRadios1"
+                value={index}
+                defaultChecked={defaultChecked === index}
+                onChange={handleChange}
+                className="mb-0" 
+              />
+            </Form.Check>
           )}
         </Form.Group>
-      </Col>
     </Row>
   );
 };

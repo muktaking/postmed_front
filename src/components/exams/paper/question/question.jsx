@@ -1,12 +1,13 @@
 import React from "react";
 import {
-    ListGroup
+  ListGroup
 } from "react-bootstrap";
 import Stem from "./stem";
 
 
 
-const QuestionForm = ({ question, handleChange, defaultChecked }) => {
+const QuestionForm = ({ question, handleChange, defaultChecked}) => {
+
   return (
     <ListGroup as="ul" className="mt-3">
       <ListGroup.Item as="li" active>

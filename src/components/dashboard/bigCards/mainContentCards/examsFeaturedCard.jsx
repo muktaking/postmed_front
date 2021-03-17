@@ -18,7 +18,7 @@ const ExamsFeaturedCard = () => {
       headerColor={"primary"}
       showDatePicker={false}
     >
-      <div  className="d-flex justify-content-around">
+      <div  className="d-flex justify-content-around flex-wrap">
         {featuredExams.map((exam, index) => (
             <ExamCard
               examId = {exam.id} 

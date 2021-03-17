@@ -8,7 +8,7 @@ import examsReducer from "./exams";
 import questionReducer from "./question";
 import userReducer from "./user";
 
-export default combineReducers({
+const appReducer = combineReducers({
   api: apiReducer,
   auth: authReducer,
   user: userReducer,
@@ -18,3 +18,13 @@ export default combineReducers({
   exams: examsReducer,
   dashboard: dashboardReducer,
 });
+
+export const rootReducer = (state, action) => {
+  
+  if (action.type === 'RESET_APP') {
+    state = undefined;
+  }
+  return appReducer(state, action);
+}
+
+export default rootReducer;

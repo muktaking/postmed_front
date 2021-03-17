@@ -34,10 +34,12 @@ const RoutePages = (props) => {
     routes = (
       <Switch>
         <Route path="/dashboard" component={InnerContent} />
+        <Route path="/profile" component={InnerContent} />
         <Route path="/exams" component={InnerContent} />
         <Route path="/exams/:id" component={InnerContent} />
         <Route path="/result" component={InnerContent} />
         <Route path="/rank" component={InnerContent} />
+        <Route path="/settings" component={InnerContent} />
         <Route path="/logout" component={LogoutPage} />
         <Route path="/" exact component={Landing} />
         <Redirect to="/dashboard" />
@@ -50,8 +52,10 @@ const RoutePages = (props) => {
     routes = (
       <Switch>
         <Route path="/dashboard" component={InnerContent} />
+        <Route path="/profile" component={InnerContent} />
         <Route path="/question" component={InnerContent} />
         <Route path="/exambuilder" component={InnerContent} />
+        <Route path="/settings" component={InnerContent} />
         <Route path="/logout" component={LogoutPage} />
         <Route path="/" exact component={Landing} />
         <Redirect to="/dashboard" />
@@ -64,6 +68,7 @@ const RoutePages = (props) => {
     routes = (
       <Switch>
         <Route path="/dashboard" component={InnerContent} />
+        <Route path="/profile" component={InnerContent} />
         <Route path="/category" component={InnerContent} />
         <Route path="/question" component={InnerContent} />
         <Route path="/exambuilder" component={InnerContent} />
