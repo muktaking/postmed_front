@@ -63,7 +63,7 @@ const questionStemView = ({
           ) : (
             <Form.Check>
               <Form.Check.Input
-                disabled = {disableQuestions && disabledQuestions.includes(id.toString())}
+                disabled = {disableQuestions && disableQuestions.includes(id.toString())}
                 type="radio"
                 name={id}
                 id="formHorizontalRadios1"
