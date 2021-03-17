@@ -36,6 +36,7 @@ const slice = createSlice({
       state.exam = null;
       state.error = null;
       state.questionIdsByOrder = [];
+      state.disableQuestions = [];
     },
     getAllExams: (state, action) => {
       state.exams = action.payload;
