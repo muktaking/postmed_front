@@ -1,16 +1,18 @@
 import React from "react";
-
+import { useIntl } from 'react-intl';
 import MiniBlock from "./miniBlock";
 
+
 const rank = ({ value, footerValue }) => {
+  const intl = useIntl();
   return (
     <MiniBlock
-      heading={"Your Rank"}
+      heading={intl.formatMessage({id: "db.er", defaultMessage: "Your Rank"})}
       //
       value={value}
       //
       faIcon={"medal"}
-      footerHeading={"Total students"}
+      footerHeading={intl.formatMessage({id: 'db.ts', defaultMessage: "Your Rank"})}
       footerValue={footerValue}
       color={"warning"}
       faFooterIcon={"users"}

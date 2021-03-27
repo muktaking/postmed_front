@@ -3,6 +3,7 @@ import moment from "moment";
 import React, { Component } from "react";
 import { Alert, Card, Image, ListGroup } from "react-bootstrap";
 import { FaMinusCircle } from "react-icons/fa";
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from "react-redux";
 import SubNavBar from "../../components/navbar/subNavBar";
 import Gist from "../../components/result/gist";
@@ -39,7 +40,7 @@ class Result extends Component {
           <div>
             <Card className="mt-3">
               <Card.Header as="h5" className="text-center">
-                Result
+                <FormattedMessage id="result" defaultMessage="Result" />
               </Card.Header>
               <Card.Body className="d-flex justify-content-center">
                 <Gist
@@ -71,7 +72,7 @@ class Result extends Component {
 
             <Card className="mt-3">
               <Card.Header as="h5" className="text-center">
-                Detail
+                <FormattedMessage id="detail" defaultMessage="Detail" />
               </Card.Header>
               <Card.Body>
                 {examResult.map((item, index) => (
@@ -116,7 +117,7 @@ class Result extends Component {
                                 </ListGroup.Item>
                                 <ListGroup.Item className="ml-3">
                                   {stem.fbStem &&
-                                    "Explanation is : " + stem.fbStem}
+                                    this.props.intl.formatMessage({id: 'explanation', defaultMessage: "Explanation is : "}) + " " + stem.fbStem}
                                 </ListGroup.Item>
                               </>
                             );
@@ -145,7 +146,7 @@ class Result extends Component {
                                   {stem.aStem === "1" ? "True" : "False"}
                                   <br />
                                   {stem.fbStem &&
-                                    "Explanation is : " + stem.fbStem}
+                                    this.props.intl.formatMessage({id: 'explanation', defaultMessage: "Explanation is : "}) + " " + stem.fbStem + stem.fbStem}
                                 </ListGroup.Item>
                               </>
                             );
@@ -153,7 +154,7 @@ class Result extends Component {
                       </ListGroup>
                     </ListGroup.Item>
                     {item.generalFeedback && <ListGroup.Item className="ml-3 text-white bg-secondary">
-                      <p>{"General Explanation is : " + item.generalFeedback.replace(/#L(.+)L#/,'')}</p>
+                      <p>{this.props.intl.formatMessage({id: 'gexplanation', defaultMessage: "General explanation is : "}) + " " + stem.fbStem + item.generalFeedback.replace(/#L(.+)L#/,'')}</p>
                       <Image src={item.generalFeedback.split(/#L(.+)L#/)[1]} width="350" height="300"  />
                     </ListGroup.Item>}
                   </ListGroup>
@@ -176,4 +177,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Result);
+export default injectIntl(connect(mapStateToProps)(Result));

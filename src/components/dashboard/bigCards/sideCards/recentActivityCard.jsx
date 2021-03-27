@@ -1,19 +1,22 @@
-import React from "react";
 import moment from "moment";
-import { MdInfo } from "react-icons/md";
-import ListGroup from "react-bootstrap/ListGroup";
-import BigCard from "../bigCard/bigCard";
+import React from "react";
 import { Badge } from "react-bootstrap";
+import ListGroup from "react-bootstrap/ListGroup";
+import { MdInfo } from "react-icons/md";
+import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
+import BigCard from "../bigCard/bigCard";
 
 const SideCard = (props) => {
   const userExamStat = useSelector((state) => state.dashboard.userExamStat);
+  const intl = useIntl();
+
   const examTitles = userExamStat ? userExamStat.examTitles : [];
   const stat = userExamStat ? userExamStat.stat : [];
 
   return (
     <BigCard
-      header="Recent Activity"
+      header={intl.formatMessage({id: 'db.ra', defaultMessage: "Recent Activity"})}
       headerColor={"warning"}
       showDatePicker={false}
     >
@@ -22,7 +25,7 @@ const SideCard = (props) => {
           examTitles.map((exam, index) => {
             if (index < 6)
               return (
-                <ListGroup.Item as="li" className="">
+                <ListGroup.Item key={index} as="li" className="">
                   {/* <Badge variant="info" className="rounded p-1"> */}
                   <MdInfo size="1.5em" color="magenta" />
                   {/* </Badge> */}

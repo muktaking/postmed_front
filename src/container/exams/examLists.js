@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-import { Spinner } from "react-bootstrap";
-import { Helmet } from "react-helmet";
 import { injectIntl } from 'react-intl';
 import { connect } from "react-redux";
 import GallaryCard from "../../components/exams/gallary/gallaryCard";
+import MetaInfo from '../../components/seo/metainfo';
+import { RoutesConfig } from '../../config/routes.config';
 import { getAllExamsLoader } from "../../store/exams";
 
-
 class ExamLists extends Component {
-  
+
   componentDidMount() {
     this.props.onGetAllExamsLoader();
   }
@@ -25,21 +24,23 @@ class ExamLists extends Component {
   
     return (
       <>
-      <Helmet>
-        <title>List of Exams</title>
-      </Helmet>
-      {this.props.exams.exams.length < 1 && (
+      <MetaInfo {...RoutesConfig.Exams.metaInfo} />
+      
+      {/* {this.props.exams.exams.length < 1 && (
           <Spinner
             animation="border"
             role="status"
             variant="dark"
             className="content-center"
           ></Spinner>
-        )}
+        )} */}
         {Object.keys(this.props.exams.exams).map(key=> this.props.exams.exams[key] && 
-        <GallaryCard 
+        <GallaryCard
+        key={key} 
         title={this.props.intl.formatMessage({id: key, defaultMessage: key})} 
-        exams={this.props.exams.exams[key]} />)}
+        exams={this.props.exams.exams[key]}
+        examLoader = {this.props.onGetAllExamsLoader}
+        />)}
       </>
     );
   }

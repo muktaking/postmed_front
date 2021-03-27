@@ -14,6 +14,7 @@ import {
 import Countdown from "react-countdown";
 import { Helmet } from "react-helmet";
 import { FaRegArrowAltCircleDown, FaRegArrowAltCircleUp } from 'react-icons/fa';
+import { injectIntl } from 'react-intl';
 import Pagination from "react-js-pagination";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
@@ -182,6 +183,7 @@ class ExamTaker extends Component {
     }
   }
 
+
   render() {
     const questions = paginate(
       this.props.exams.questions,
@@ -245,12 +247,14 @@ class ExamTaker extends Component {
           ) : (
             <>
               <Modal.Header closeButton>
-                <Modal.Title>Submit Answer Sheet</Modal.Title>
+                <Modal.Title>
+                {this.props.intl.formatMessage({id: 'btn.sas', defaultMessage: "Submit Answer Sheet"})}
+                </Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <div>
                   <p className="lead">
-                    Are You Sure ? You will Taken To Result Page.
+                    {this.props.intl.formatMessage({id: 'et.agree', defaultMessage: "Are You Sure ? You will Taken To Result Page."})}
                   </p>
                   <Countdown
                     date={Date.now() + 5 * 1000}
@@ -268,10 +272,11 @@ class ExamTaker extends Component {
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={this.modalHide}>
-                  Go Back
+                {this.props.intl.formatMessage({id: 'et.no', defaultMessage: "Go Back"})}
+                  
                 </Button>
                 <Button variant="primary" onClick={this.onSubmitHandler}>
-                  Yes, I Want.
+                {this.props.intl.formatMessage({id: 'et.yes', defaultMessage: "Yes, I Want."})}
                 </Button>
               </Modal.Footer>
             </>
@@ -282,7 +287,7 @@ class ExamTaker extends Component {
           <div className="text-dark text-center mt-1" id="et-top">
             <Form.Switch
             id="custom-switch"
-            label="Switch to All Questions View"
+            label={this.props.intl.formatMessage({id: 'btn.aqv', defaultMessage: "Switch to All Questions View"})}
             className="mb-2"
             onChange={this.onSwithchHandleChange}
             > 
@@ -366,7 +371,7 @@ class ExamTaker extends Component {
                   nextPageText="Next"
                 /> }
                 <Button onClick={this.modalShow} className="mb-3 ml-5 btn-md" id="qNavigator">
-                  Submit Answer Sheet
+                {this.props.intl.formatMessage({id: 'btn.sas', defaultMessage: "Submit Answer Sheet"})}
                 </Button>
               </div>
             </Col>
@@ -404,7 +409,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(
+export default injectIntl(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(ExamTaker));
+)(withRouter(ExamTaker)));

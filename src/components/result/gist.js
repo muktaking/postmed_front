@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import React from "react";
+import { FormattedMessage } from "react-intl";
 
 export default function Gist({ width = "250px", value, title, bgColor }) {
   // eslint-disable-next-line no-console
@@ -16,7 +17,7 @@ export default function Gist({ width = "250px", value, title, bgColor }) {
         className={bgColor + " bg-warning text-center text-light p-1"}
         style={{ fontSize: "1rem" }}
       >
-        {title}
+        <FormattedMessage id={title.toLowerCase()} defaultMessage={title} />
       </p>
     </div>
   );

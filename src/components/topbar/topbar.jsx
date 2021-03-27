@@ -3,6 +3,7 @@ import React from "react";
 import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
+import { FormattedMessage } from "react-intl";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
@@ -18,7 +19,9 @@ const topbar = (props) => {
     <div className="bg-dark py-2 top-navbar mb-3 w-100">
       <Row className="align-items-center">
         <Col md={4} style={{ paddingLeft: "3rem" }}>
-          <h4 className="text-light text-uppercase mb-0">{props.pageName}</h4>
+          <h4 className="text-light text-uppercase mb-0">
+            <FormattedMessage id={props.pageName} defaultMessage={props.pageName} />
+          </h4>
         </Col>
         
         <Col md={8} className="hideInSm pr-5">
@@ -28,7 +31,8 @@ const topbar = (props) => {
                   to={{ pathname: "/" }}
                   className="nav-link"
                 >
-                  Home
+                  <FormattedMessage id="btn.home" defaultMessage="Home" />
+                  
                 </NavLink>
             </Nav.Item>
             <Nav.Item
@@ -37,7 +41,8 @@ const topbar = (props) => {
                   to={{ pathname: "/exams" }}
                   className="nav-link"
                 >
-                  Exams
+                  <FormattedMessage id="btn.exams" defaultMessage="Exams" />
+                  
                 </NavLink>
             </Nav.Item>
            
@@ -64,7 +69,8 @@ const topbar = (props) => {
                   to={{ pathname: "/signup" }}
                   className="nav-link"
                 >
-                  Signup
+                  <FormattedMessage id="btn.signup" defaultMessage="Signup" />
+                  
                 </NavLink>
             </Nav.Item>
             <Nav.Item
@@ -73,7 +79,7 @@ const topbar = (props) => {
                   to={{ pathname: "/login" }}
                   className="nav-link"
                 >
-                  Login
+                  <FormattedMessage id="btn.login" defaultMessage="Login" />
                 </NavLink>
             </Nav.Item>
             </>

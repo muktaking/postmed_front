@@ -1,6 +1,7 @@
 import moment from "moment";
 import React, { Component } from 'react';
 import { ListGroup, Table } from 'react-bootstrap';
+import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { examRankByIdLoader } from '../../store/exams';
 
@@ -11,14 +12,39 @@ class Rank extends Component {
     render() {
         return (
             <div className="mt-5">
-                <h3 className="text-center">Rank</h3>
+                <h3 className="text-center">
+                  <FormattedMessage id="btn.rank" defaultMessage="Rank" />
+                </h3>
                 {this.props.exam && <ListGroup horizontal={"lg"}>
-                    <ListGroup.Item>Exam: {this.props.exam.title}</ListGroup.Item>
-                    <ListGroup.Item>Total Mark: {this.props.exam.singleQuestionMark * this.props.exam.questions.length}</ListGroup.Item>
-                    <ListGroup.Item>Total Questions : {this.props.exam.questions.length}</ListGroup.Item>
-                    <ListGroup.Item>Penalty Mark: {this.props.exam.penaltyMark}</ListGroup.Item>
-                    <ListGroup.Item>Time Limit: {this.props.exam.timeLimit} Mins</ListGroup.Item>
-                    <ListGroup.Item>Started From: {moment(this.props.exam.createdAt).calendar()}</ListGroup.Item>
+                    <ListGroup.Item>
+                      <FormattedMessage id="exam" defaultMessage="Exams" />
+                      {" "} : {" "} 
+                      {this.props.exam.title}
+                      </ListGroup.Item>
+                    <ListGroup.Item>
+                      <FormattedMessage id="db.os" defaultMessage="Total Mark" />
+                      {" "} : {" "} 
+                      {this.props.exam.singleQuestionMark * this.props.exam.questions.length}</ListGroup.Item>
+                    <ListGroup.Item>
+                    <FormattedMessage id="tquestions" defaultMessage="Total Questions" />
+                      
+                      {" "} : {" "}  
+                       {this.props.exam.questions.length}</ListGroup.Item>
+                    <ListGroup.Item>
+                    <FormattedMessage id="penalty mark" defaultMessage="Penalty Mark" />
+                      
+                      {" "} : {" "}  
+                      {this.props.exam.penaltyMark}</ListGroup.Item>
+                    <ListGroup.Item>
+                    <FormattedMessage id="timelimit" defaultMessage="Time Limit" />
+                      
+                      {" "} : {" "} 
+                      {this.props.exam.timeLimit} Mins</ListGroup.Item>
+                    <ListGroup.Item>
+                    <FormattedMessage id="db.so" defaultMessage="Started From" />
+                     
+                      {" "} : {" "}  
+                      {moment(this.props.exam.createdAt).calendar()}</ListGroup.Item>
                 </ListGroup>}
                 <Table striped bordered hover responsive="md" className="mt-3">
                     <thead>
@@ -31,7 +57,7 @@ class Rank extends Component {
                     </thead>
                     <tbody>
                         {
-                        this.props.rank && this.props.rank.map((rank,ind)=><tr className={this.props.userId===rank.user.id ? "bg-success text-light " : ""}>
+                        this.props.rank && this.props.rank.map((rank,ind)=><tr key={ind} className={this.props.userId===rank.user.id ? "bg-success text-light " : ""}>
                             <td>{ind+1}</td>
                             <td>{rank.user.name}</td>
                             <td>{rank.exam.length> 0 ? rank.exam[0].score : "Exam Not Yet Tried"}</td>

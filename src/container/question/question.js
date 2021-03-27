@@ -10,6 +10,8 @@ import {
   uploadQuestionLoader
 } from "../../store/question";
 import errorHandler from "../../utils/errorHandler";
+import Edit from './edit';
+import EditQuestion from './editQuestion';
 import QuestionUploadForm from "./questionsUpload";
 import QuestionForm from "./questionView";
 
@@ -179,6 +181,7 @@ class Question extends Component {
 
     if (valid && stem.length !== 0) {     
       this.resetState();
+      console.log({...rest, stem});
       this.props.onCreateQuestionLoader({ ...rest, stem });
     } else {
       this.setState({
@@ -238,9 +241,14 @@ class Question extends Component {
     const { title, category, qType, qText, aStemSba } = this.state;
     return (
       <>
+
         <Helmet>
           <title>Question</title>
         </Helmet>
+        <Edit />
+
+        <EditQuestion />
+
         {this.state.uploadedExcelQuestion && this.state.toastShow && (
           <Toast
             show={this.state.toastShow}

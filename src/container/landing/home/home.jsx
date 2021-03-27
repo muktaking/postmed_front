@@ -19,13 +19,13 @@ const home = props => {
         </div>
       </div>
       <div className="caption text-center">
-        <h1>
+        <h1 style={{fontSize: '3rem'}}>
           <FormattedMessage
             id="site.title"
             defaultMessage="Welcome to Prostuti Exam System"
           /> 
         </h1>
-        <h3>
+        <h3 style={{fontSize: '1.8rem'}}>
           <FormattedMessage
             id="site.subtitle"
             defaultMessage="With the suffix of staying ahead"

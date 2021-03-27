@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { apiCallBegun } from "./api";
 
 const slice = createSlice({
   name: "dashboard",
@@ -18,16 +19,26 @@ const slice = createSlice({
       state.userExamInfo = action.payload.userExamInfo;
       state.userExamStat = action.payload.userExamStat;
     },
+    userExamStat: (state,action)=>{
+      state.userExamStat = action.payload.userExamStat;
+    }
   },
 });
 
-export const { dashboardStudent } = slice.actions;
+export const { dashboardStudent} = slice.actions;
 
 export default slice.reducer;
 
-// export const dashboardStudentLoader = (data) => (dispatch) => {
-//   dispatch({
-//     type: dashboardStudent.type,
-//     payload: data,
-//   });
-// };
+const url = "/dashboard/examstat";
+const method = "get";
+
+export const userExamStatLoader = () => (dispatch) => {
+  dispatch(
+    apiCallBegun({
+      url,
+      method,
+      onSuccess: userExamStat.type,
+      sendToken: true,
+    })
+  );
+};

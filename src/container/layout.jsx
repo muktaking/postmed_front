@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -8,17 +8,30 @@ import "../assets/scss/section/dashboard.scss";
 import Sidebar from "../components/sidebar/sidebar";
 import SidebarMini from "../components/sidebar/sidebarMini";
 import Topbar from "../components/topbar/topbar";
-import Category from "./category/category";
-//importing routing parts
-import Dashboard from "./dashboard/dashboard";
-import ExamBuilder from "./examBuilder/examBuilder";
-import ExamLists from "./exams/examLists";
-import ExamTaker from "./exams/examTaker";
 import Profile from "./profile/profile";
-import Question from "./question/question";
-import Rank from "./result/rank";
-import Result from "./result/result";
-import Settings from './settings/settings';
+
+
+//const Profile = lazy(()=> import('./profile/profile'));
+
+//import Category from "./category/category";
+const Category = lazy(()=> import('./category/category'));
+//import Settings from './settings/settings';
+//importing routing parts
+//import Dashboard from "./dashboard/dashboard";
+const Dashboard = lazy(()=> import('./dashboard/dashboard'));
+//import ExamBuilder from "./examBuilder/examBuilder";
+const ExamBuilder = lazy(()=> import('./examBuilder/examBuilder'));
+//import ExamLists from "./exams/examLists";
+const ExamLists = lazy(()=> import('./exams/examLists'));
+//import ExamTaker from "./exams/examTaker";
+const ExamTaker = lazy(()=> import('./exams/examTaker'));
+//import QuestionBuilder from './questionBuilder/';
+const QuestionBuilder = lazy(()=> import('./questionBuilder/'));
+//import Rank from "./result/rank";
+const Rank = lazy(()=> import('./result/rank'));
+//import Result from "./result/result";
+const Result = lazy(()=> import('./result/result'));
+const Settings = lazy(()=> import('./settings/settings'));
 
 const InnerContent = (props) => {
   const pageName = props.match.url.split("/", 2)[1];
@@ -37,23 +50,21 @@ const InnerContent = (props) => {
             <div>
               <Topbar pageName={pageName} />
               <div className="px-1 ml-md-4" style={{marginTop: '70px'}}>
-                  {
-                    <>
+                  <Suspense fallback={<div className="text-center" style={{marginTop: '45vh'}}>Loading...</div>}
+                   >
                       <Route path="/dashboard" exact component={Dashboard} />
                       <Route path="/profile" exact component={Profile} />
                       <Route path="/category" exact component={Category} />
-                      <Route path="/question" exact component={Question} />
+                      <Route path="/question" exact component={QuestionBuilder} />
                       <Route path="/exambuilder" exact component={ExamBuilder} />
-                      {/* <Route path="/exams/:id" exact component={ExamTaker} /> */}
+                      <Route path="/examedit" exact component={ExamLists} />
                       <Route path="/exams/:id" exact render={(props)=><ExamTaker free={false} {...props}/>} />
                       <Route path="/exams" exact component={ExamLists} />
                       <Route path="/exams/free/:id" exact render={(props)=><ExamTaker free={true} {...props}/>} />
                       <Route path="/result" exact component={Result} />
                       <Route path="/result/rank/:id" exact component={Rank} />
                       <Route path="/settings" exact component={Settings} />
-                    </>
-                  }
-                
+                  </Suspense>                  
               </div>  
             </div>
           </Col>

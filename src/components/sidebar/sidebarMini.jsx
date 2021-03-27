@@ -3,17 +3,13 @@ import React, { Component } from "react";
 import Nav from "react-bootstrap/Nav";
 import {
   FaBookOpen, FaCog, FaHome,
-
-
   FaPen, FaQuestion,
-
-
-
-
   FaTools, FaUser
 } from "react-icons/fa";
+import { FormattedMessage } from 'react-intl';
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { userExamStatLoader } from "../../store/dashboard";
 import { getUserLoader } from "../../store/user";
 import { canActivate, rolePermitted } from "../../utils/canActivate";
 import Profile from '../user/profile';
@@ -32,11 +28,13 @@ class Sidebar extends Component {
   faIcons = [];
   menuName = [];
   navLinks = [];
+  menuIntlId = [];
   // state = {
   //   userName: [null]
   // };
   componentDidMount() {
     this.props.onGetUserLoader();
+    this.props.onUserExamStatLoader();
   }
   render() {
 
@@ -52,6 +50,8 @@ class Sidebar extends Component {
       "Signup",
       "Login",
     ];
+    this.menuIntlId = ["btn.home","btn.exams","btn.signup","btn.login"];
+
     this.navLinks = [
       "/",
       "/exams",
@@ -67,6 +67,7 @@ class Sidebar extends Component {
         <FaTools size="1.6em" className="mr-2" />,
       ];
       this.menuName = ["Dashboard", "Exams", "Profile", "Settings"];
+      this.menuIntlId = ["btn.db","btn.exams","profile","settings"];
       this.navLinks = ["/dashboard", "/exams", "/profile", "/settings"];
     }
 
@@ -81,14 +82,15 @@ class Sidebar extends Component {
       this.menuName = [
         "Dashboard",
         "Question",
-        "Exam Paper",
+        "Exam Builder",
         "Profile",
         "Settings",
       ];
+      this.menuIntlId = [];
       this.navLinks = [
         "/dashboard",
         "/question",
-        "/exampaper",
+        "/exambuilder",
         "/profile",
         "/settings",
       ];
@@ -99,6 +101,7 @@ class Sidebar extends Component {
         <FaCog size="1.6em" className="mr-2" />,
         <FaQuestion size="1.6em" className="mr-2" />,
         <FaPen size="1.6em" className="mr-2" />,
+        <FaCog size="1.6em" className="mr-2" />,
         <FaUser size="1.6em" className="mr-2" />,
         <FaTools size="1.6em" className="mr-2" />,
       ];
@@ -107,14 +110,17 @@ class Sidebar extends Component {
         "Category",
         "Question",
         "Exam Builder",
+        "Exam Edit",
         "Profile",
         "Settings",
       ];
+      this.menuIntlId = [];
       this.navLinks = [
         "/dashboard",
         "/category",
         "/question",
         "/exambuilder",
+        "/examedit",
         "/profile",
         "/settings",
       ];
@@ -136,8 +142,7 @@ class Sidebar extends Component {
                 activeClassName="current"
               >
                 {value}
-
-                {this.menuName[index]}
+                {this.menuIntlId.length > 1 ? <FormattedMessage id={this.menuIntlId[index]} defaultMessage={this.menuName[index]} /> : this.menuName[index]}
               </NavLink>
             </Nav.Item>
           ))}
@@ -174,6 +179,7 @@ class Sidebar extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     onGetUserLoader: () => dispatch(getUserLoader()),
+    onUserExamStatLoader: ()=> dispatch(userExamStatLoader)
   };
 };
 

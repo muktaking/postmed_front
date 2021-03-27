@@ -97,7 +97,7 @@ const ExamSpec = ({ categories }) => {
                 <option value="3">Assesment</option>
                 <option value="4">Term</option>
                 <option value="5">Test</option>
-                <option value="0">Final</option>
+                <option value="6">Final</option>
               </Form.Control>
             </Form.Group>
             <Form.Group controlId="categoryType">

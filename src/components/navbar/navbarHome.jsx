@@ -40,7 +40,7 @@ const navbarHome = (props) => {
         ></Spinner>
       )} */}
       <Link to="/" className="navbar-brand">
-        Exam Point
+        Examis.XYZ
       </Link>
       <Navbar.Toggle aria-controls="navbarResponsive" />
       <Navbar.Collapse id="navbarResponsive">

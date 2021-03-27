@@ -61,12 +61,14 @@ class ExamPaper extends Component {
 
     this.setState((preState) => {
       if (isChecked) {
+        this.setState({[value]: true});
         if(!preState.checkedQuestionIds.includes(value)){
           preState.checkedQuestionIds.push(value);
           preState.checkedQuestions.push({ title, qText });
         }
         //preState.checkedQuestions.push({ title, qText });
       } else {
+        this.setState({[value]: false});
         preState.checkedQuestionIds = preState.checkedQuestionIds.filter(v=> v!== value);
         preState.checkedQuestions =  preState.checkedQuestions.filter(v=> v.title !== title);
       }
@@ -85,6 +87,7 @@ class ExamPaper extends Component {
           checkedQuestions: this.props.question.questions
       
       });
+      this.props.question.questions.map(e=>{this.setState({[e.id]: true})});
         break;
       case 'uAll':
         this.setState({
@@ -177,14 +180,14 @@ class ExamPaper extends Component {
                       key={question.id}
                       variant={index % 2 === 0 ? "dark" : "light"}
                     >
-                      { this.state.action === null &&
-                        <Form.Check
+                      { <Form.Check
                         //ref={this.state.input}
                           inline
                           type="checkbox"
                           value={question.id}
                           onChange={this.checkHandleChange}
                           name={question.title + "*_*" + question.qText}
+                          checked={this.state[question.id]}
                           defaultChecked={this.state.checkedQuestionIds.includes(
                             question.id.toString()
                           )}
@@ -192,12 +195,12 @@ class ExamPaper extends Component {
                       }
                 
 
-                      {this.state.action === 'mAll' &&
+                      {/* {this.state.action === 'mAll' &&
                         <Form.Check
                         //ref={this.state.input}
                           inline
                           type="checkbox"
-                          checked={true}
+                          //checked={true}
                           value={question.id}
                           onChange={this.checkHandleChange}
                           name={question.title + "*_*" + question.qText}
@@ -219,7 +222,7 @@ class ExamPaper extends Component {
                             question.id.toString()
                           )}
                         />
-                      }
+                      } */}
                       
                       {`${index + 1}. ${question.title} --> ${question.qText}`}
                     </ListGroup.Item>

@@ -35,7 +35,7 @@ const feature = props => {
           <Row className="">
             {features.faIcons.map((value, index) => (
               <MiniBlock
-                key={index}
+                key={value + index}
                 icon={value}
                 heading={features.heading[index]}
                 para={features.para[index]}

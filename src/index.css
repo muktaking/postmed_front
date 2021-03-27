@@ -12,14 +12,16 @@ code {
     monospace;
 } */
 
+@import url('https://cdn.staticaly.com/gh/sh4hids/bangla-web-fonts/9baee0fc23e77fe957c0b70fe49d81d2cbbe87d6/boshonto/stylesheet.css');
+
 body {
   margin: 0;
-  font-family: 'Dosis', sans-serif;
+  font-family: 'boshonto', 'Dosis', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #505962;
 }
-
+/* , 'Baloo Da 2', 'Dosis', sans-serif */
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

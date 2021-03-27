@@ -1,10 +1,10 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import Col from "react-bootstrap/Col";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const miniBlock = props => {
   return (
-    <Col md={4} key={props.key}>
+    <Col md={4}>
       <div className="feature">
         <FontAwesomeIcon
           icon={props.icon}
