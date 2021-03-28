@@ -14,54 +14,58 @@ const iconStyle = {
     round: true
 }
 
-const SocialShare = ({id, title, description,...props})=> <div className="mt-3" {...props}>
+const SocialShare = ({title, description, url,...props})=> {
+    url = process.env.REACT_APP_BASE_URL + url;
 
-    <hr />
+    return <div className="mt-3" {...props}>
 
-    <Badge variant="success" className="mr-1 p-1" style={{fontSize: '.8rem'}}>Share on</Badge>
+            <hr />
 
-    <FacebookShareButton
-    url={"/exams/"+id}
-    quote={description}
-    hashtag={title}
-    className="mr-1"
-    
-    >
-        <FacebookIcon size={iconStyle.size} round={iconStyle.round} />
-    </FacebookShareButton>
+            <Badge variant="success" className="mr-1 p-1" style={{fontSize: '.8rem'}}>Share on</Badge>
 
-    <TwitterShareButton
-    url={"/exams/"+id}
-    title={description}
-    hashtag={title}
-    className="mr-1"
-    
-    >
-        <TwitterIcon size={iconStyle.size} round={iconStyle.round} />
-    </TwitterShareButton>
+            <FacebookShareButton
+            url={url}
+            quote={description}
+            hashtag={title}
+            className="mr-1"
+            
+            >
+                <FacebookIcon size={iconStyle.size} round={iconStyle.round} />
+            </FacebookShareButton>
 
-    <EmailShareButton
-    url={"/exams/"+id}
-    body={description}
-    title={title}
-    className="mr-1"
-    
-    >
-        <EmailIcon size={iconStyle.size} round={iconStyle.round} />
-    </EmailShareButton>
+            <TwitterShareButton
+            url={url}
+            title={description}
+            hashtag={title}
+            className="mr-1"
+            
+            >
+                <TwitterIcon size={iconStyle.size} round={iconStyle.round} />
+            </TwitterShareButton>
 
-    <LinkedinShareButton
-    url={"/exams/"+id}
-    source={"/exams/"+id}
-    body={description}
-    title={title}
-    className="mr-1"
-    
-    >
-        <LinkedinIcon size={iconStyle.size} round={iconStyle.round} />
-    </LinkedinShareButton>
+            <EmailShareButton
+            url={url}
+            body={description}
+            title={title}
+            className="mr-1"
+            
+            >
+                <EmailIcon size={iconStyle.size} round={iconStyle.round} />
+            </EmailShareButton>
 
-</div>;
+            <LinkedinShareButton
+            url={url}
+            source={url}
+            body={description}
+            title={title}
+            className="mr-1"
+            
+            >
+                <LinkedinIcon size={iconStyle.size} round={iconStyle.round} />
+            </LinkedinShareButton>
+
+        </div>
+    };
 
 const categoryTypeVariant = (name)=>{
     let variant = "primary"
@@ -131,7 +135,7 @@ export default function ExamCard({width="350px", examId, imgSrc, title, category
                                 </Link>
                                 
                             </div>
-                            <SocialShare id={examId} title={title} description={description} />                    
+                            <SocialShare url={"/exams/"+examId} title={title} description={description} />                    
                         </> 
                     }
 

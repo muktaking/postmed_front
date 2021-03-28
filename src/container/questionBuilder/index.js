@@ -15,21 +15,21 @@ const DefaultView = ({viewHandler, disable})=>{
         <div className="my-3">
             <MetaInfo {...RoutesConfig.Question.metaInfo} />
 
-            <Button variant="primary" size="bg" className="mr-3" disabled={disable === 'create'} onClick={
+            <Button variant="primary" size="bg" className="mr-3 mt-3" disabled={disable === 'create'} onClick={
                 ()=>{
                     viewHandler('create')
                 }
             } >
                 Create Question
             </Button>
-            <Button variant="primary" size="bg" className="mr-3" disabled={disable === 'create'} onClick={
+            <Button variant="primary" size="bg" className="mr-3 mt-3" disabled={disable === 'upload'} onClick={
                 ()=>{
                     viewHandler('upload')
                 }
             } >
                 Upload An Excel File
             </Button>
-            <Button variant="primary" size="bg" disabled={disable === 'select'} onClick={
+            <Button variant="primary" size="bg" className="mt-3" disabled={disable === 'select'} onClick={
                 ()=>{
                     viewHandler('select')
                 }
@@ -58,7 +58,7 @@ export default function QuestionBuilder() {
             return <> <DefaultView viewHandler={viewHandler} disable="create" /> <CreateQuestion viewHandler={viewHandler} /> </>
             break;
         case 'upload':
-            return <> <DefaultView viewHandler={viewHandler} disable="select" /> <Upload viewHandler={viewHandler} /> </>
+            return <> <DefaultView viewHandler={viewHandler} disable="upload" /> <Upload viewHandler={viewHandler} /> </>
             break;      
         case 'select':
             return <> <DefaultView viewHandler={viewHandler} disable="select" /> <SelectQuestions viewHandler={viewHandler} /> </>

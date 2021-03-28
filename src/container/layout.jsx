@@ -18,7 +18,7 @@ const Category = lazy(()=> import('./category/category'));
 //import Settings from './settings/settings';
 //importing routing parts
 //import Dashboard from "./dashboard/dashboard";
-const Dashboard = lazy(()=> import('./dashboard/dashboard'));
+const Dashboard = lazy(()=> import('./dashboard/'));
 //import ExamBuilder from "./examBuilder/examBuilder";
 const ExamBuilder = lazy(()=> import('./examBuilder/examBuilder'));
 //import ExamLists from "./exams/examLists";

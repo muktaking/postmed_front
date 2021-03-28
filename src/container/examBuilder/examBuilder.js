@@ -63,7 +63,7 @@ class ExamPaper extends Component {
 
     switch(v){
       case 'mAll':
-      this.props.question.questions.map(e=>{this.setState({[e.id]: {checked: true, title: e.title, text: e.text}})});
+      this.props.question.questions.map(e=>{this.setState({[e.id]: {checked: true, id: e.id, title: e.title, qText: e.qText}})});
         break;
       case 'uAll':
         this.props.question.questions.map(e=>{this.setState({[e.id]: {checked: false}})});

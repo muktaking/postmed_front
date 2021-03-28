@@ -6,20 +6,22 @@ import MetaInfo from '../../components/seo/metainfo';
 import { RoutesConfig } from '../../config/routes.config';
 import { getAllExamsLoader } from "../../store/exams";
 
+export const examType = [
+  "Assignment",
+  "Weekly",
+  "Monthly",
+  "Assesment",
+  "Term",
+  "Test",
+  "Final",
+];
+
 class ExamLists extends Component {
 
   componentDidMount() {
     this.props.onGetAllExamsLoader();
   }
-  type = [
-    "Assignment",
-    "Weekly",
-    "Monthly",
-    "Assesment",
-    "Term",
-    "Test",
-    "Final",
-  ];
+  
   render() {
   
     return (
