@@ -101,7 +101,7 @@ const store = configureStore({
 
 ReactDOM.render(
   <Provider store={store}>
-    <IntlProvider locale="bn" defaultLocale="en"  messages={Bangla}>
+    <IntlProvider locale={process.env.REACT_APP_LANG} defaultLocale={process.env.REACT_APP_DEFAULT_LANG}  messages={process.env.REACT_APP_LANG === 'bn' && Bangla}>
       <App />
     </IntlProvider>
   </Provider>,

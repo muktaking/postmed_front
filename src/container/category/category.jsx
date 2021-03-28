@@ -6,9 +6,10 @@ import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Spinner from "react-bootstrap/Spinner";
-import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import validator from "validator";
+import MetaInfo from "../../components/seo/metainfo";
+import { RoutesConfig } from "../../config/routes.config";
 import { createCategory, fetchCategory } from "../../store/category";
 import errorHandler from "../../utils/errorHandler";
 import setAuthorizationToken from "../../utils/setAuthorizationToken";
@@ -296,9 +297,7 @@ class Category extends Component {
     const { categories } = this.props.category;
     return (
       <>
-        <Helmet>
-          <title>Category</title>
-        </Helmet>
+        <MetaInfo {...RoutesConfig.Category.metaInfo} />
         {this.state.loading && (
           <Spinner
             animation="border"

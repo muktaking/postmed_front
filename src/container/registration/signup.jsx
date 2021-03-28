@@ -8,6 +8,8 @@ import Spinner from "react-bootstrap/Spinner";
 import validator from "validator";
 import "../../assets/scss/section/registration.scss";
 import NavbarHome from "../../components/navbar/navbarHome";
+import MetaInfo from "../../components/seo/metainfo";
+import { RoutesConfig } from "../../config/routes.config";
 
 
 const formValid = ({ formErrors, ...rest }) => {
@@ -207,6 +209,7 @@ class SignUp extends Component {
     const { formErrors } = this.state;
     return (
       <div className="registration">
+        <MetaInfo {...RoutesConfig.Signup.metaInfo} />
         <NavbarHome isLanding={false} />
         {/* Landing */}
         <div className="landing">

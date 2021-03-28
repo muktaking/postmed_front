@@ -3,14 +3,14 @@ import React from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { FormattedMessage } from 'react-intl';
-
+import { ContactConfig } from "../../../config/contact.config";
 //import "./contact.scss";
 
 const contact = props => {
   const socials = [
-    ["fab", "facebook-square"],
-    ["fab", "twitter-square"],
-    ["fab", "instagram"]
+    [["fab", "facebook-square"], ContactConfig.socials.facebook],
+    [["fab", "twitter-square"], ContactConfig.socials.twitter],
+    [["fab", "instagram"], ContactConfig.socials.instagram]
   ];
   return (
     <div id="contact" className="offset">
@@ -30,13 +30,14 @@ const contact = props => {
               />
               </strong>
             <p>
-              +8801641622541 <br />
-              admin@eexam.com{" "}
+              {ContactConfig.mobile} 
+              <br />
+              {ContactConfig.email}
             </p>
-            {socials.map(value => (
-              <a key={value} href="#" target="_blank" rel="noopener noreferrer">
+            {socials.map((value, ind) => (
+              <a key={ind} href={value[1]} target="_blank" rel="noopener noreferrer">
                 {/* <FontAwesomeIcon icon={["fab", "apple"]} /> */}
-                <FontAwesomeIcon icon={value} />
+                <FontAwesomeIcon icon={value[0]} />
               </a>
             ))}
           </Col>

@@ -20,9 +20,10 @@ const home = props => {
       </div>
       <div className="caption text-center">
         <h1 style={{fontSize: '3rem'}}>
+        {process.env.REACT_APP_NAME + ""} <br />
           <FormattedMessage
             id="site.title"
-            defaultMessage="Welcome to Prostuti Exam System"
+            defaultMessage="Welcome to The Best Online Exam  Platform"
           /> 
         </h1>
         <h3 style={{fontSize: '1.8rem'}}>

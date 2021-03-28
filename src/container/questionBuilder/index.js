@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
+import MetaInfo from '../../components/seo/metainfo';
+import { RoutesConfig } from '../../config/routes.config';
 import { resetResponseLoader } from '../../store/question';
 import CreateQuestion from './create';
 import EditQuestion from './edit';
@@ -11,6 +13,7 @@ import Upload from './upload';
 const DefaultView = ({viewHandler, disable})=>{
     return(
         <div className="my-3">
+            <MetaInfo {...RoutesConfig.Question.metaInfo} />
 
             <Button variant="primary" size="bg" className="mr-3" disabled={disable === 'create'} onClick={
                 ()=>{

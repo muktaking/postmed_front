@@ -40,7 +40,7 @@ const navbarHome = (props) => {
         ></Spinner>
       )} */}
       <Link to="/" className="navbar-brand">
-        Examis.XYZ
+        {process.env.REACT_APP_NAME}
       </Link>
       <Navbar.Toggle aria-controls="navbarResponsive" />
       <Navbar.Collapse id="navbarResponsive">

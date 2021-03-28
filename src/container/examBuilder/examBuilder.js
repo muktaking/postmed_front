@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import { Alert, Button, Col, Form, FormCheck, ListGroup, Modal, Row } from "react-bootstrap";
-import { Helmet } from "react-helmet";
+import { Alert, Badge, Button, Col, Form, FormCheck, ListGroup, Modal, Row } from "react-bootstrap";
 import { FaShoppingBasket } from 'react-icons/fa';
 import { connect } from "react-redux";
 import ExamSpec from "../../components/examBuilder/examSpec";
 import Filter from "../../components/examBuilder/filter";
 import SelectedQuestionsPreview from "../../components/examBuilder/selectedQuestionsPreview";
 import Pagination from "../../components/pagination/pagination";
+import MetaInfo from "../../components/seo/metainfo";
+import { RoutesConfig } from "../../config/routes.config";
 import { fetchCategory } from "../../store/category";
-import { selectedQuestionsLoader } from "../../store/examPaper";
 import {
   getQuestionByCategoryLoader, getQuestionLoader
 } from "../../store/question";
@@ -20,13 +20,7 @@ class ExamPaper extends Component {
     super(props);
     this.state = {
       show: false,
-      id: null,
-      //input: React.createRef(),
-      action: null,
-      //toogle: false,
-      checkedQuestionIds: [],
-      checkedQuestions: [],
-      //toogleChecked: false,
+      selectedQuestions: [],
       pageSize: 10,
       currentPage: 1,
     };
@@ -36,43 +30,31 @@ class ExamPaper extends Component {
     this.props.onFetchCategoryLoader();
     this.props.onGetQuestionLoader();
   }
-  componentDidUpdate(){
-    // this.setState((preState,props)=>{
-    //   if(preState.checkedQuestionIds.length !== props.examPaper.ids.length)
-    //   preState.checkedQuestionIds= props.examPaper.questions;
-    //   preState.checkedQuestions = props.examPaper.ids;
-    // })
-  }
 
-  handleShow = () => {
+  handleShow = () => { //control modal show state
     this.setState({ show: true });
   };
-  handleClose = () => {
+  handleClose = () => { //control modal show state
     this.setState({ show: false });
   };
 
-  checkHandleChange = (e) => {
+  checkHandleChange = (e, question) => {
     const isChecked = e.target.checked;
     const value = e.target.value;
-    const [title, qText] = e.target.name.split("*_*");
-    // this.setState({
-    //   checkedQuestionIds: [...this.state.checkedQuestionIds, e.target.value],
-    // });
 
-    this.setState((preState) => {
-      if (isChecked) {
-        this.setState({[value]: true});
-        if(!preState.checkedQuestionIds.includes(value)){
-          preState.checkedQuestionIds.push(value);
-          preState.checkedQuestions.push({ title, qText });
-        }
-        //preState.checkedQuestions.push({ title, qText });
-      } else {
-        this.setState({[value]: false});
-        preState.checkedQuestionIds = preState.checkedQuestionIds.filter(v=> v!== value);
-        preState.checkedQuestions =  preState.checkedQuestions.filter(v=> v.title !== title);
-      }
-    });
+    if(isChecked){
+      this.setState({[value]: {
+        checked: true,
+        id: question.id,
+        title: question.title,
+        qText: question.qText
+      }});
+    } else {
+      this.setState({[value]: {
+        checked: false
+      }});
+    } 
+
   };
 
   actionHandleChange = (e)=>{
@@ -81,33 +63,32 @@ class ExamPaper extends Component {
 
     switch(v){
       case 'mAll':
-        this.setState({
-          action: 'mAll',
-          checkedQuestionIds: this.props.question.questions.map(e=>e.id),
-          checkedQuestions: this.props.question.questions
-      
-      });
-      this.props.question.questions.map(e=>{this.setState({[e.id]: true})});
+      this.props.question.questions.map(e=>{this.setState({[e.id]: {checked: true, title: e.title, text: e.text}})});
         break;
       case 'uAll':
-        this.setState({
-          action: 'uAll',
-          checkedQuestionIds: [],
-          checkedQuestions: []
-      });
+        this.props.question.questions.map(e=>{this.setState({[e.id]: {checked: false}})});
         break;
     }
 
   }
 
-  handleChange = (e) => {
+  selectedQuestionsHandler = (id)=>{
+    this.setState({
+      selectedQuestions: this.state.selectedQuestions.filter(question=> question.id != id),
+      [id]: {checked: false}
+    })
+
+  }
+
+  handleChange = (e) => { // the category controller
     e = e.target;
     this.props.onGetQuestionByCategoryLoader(e.value);
     this.setState({
       id: e.value,
     });
   };
-  onPageHandler = (page) => {
+
+  onPageHandler = (page) => { // for pagination
     this.setState({ currentPage: page });
   };
 
@@ -117,11 +98,12 @@ class ExamPaper extends Component {
       this.state.currentPage,
       this.state.pageSize
     );
+
+    const checkedQuestionIds = Object.keys(this.state).filter(key=> !isNaN(key) && this.state[key].checked);
+
     return (
       <>
-        <Helmet>
-          <title>Exam Builder</title>
-        </Helmet>
+        <MetaInfo {...RoutesConfig.ExamBuilder.metaInfo} />
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Selected Questions Preview</Modal.Title>
@@ -129,9 +111,8 @@ class ExamPaper extends Component {
 
           <Modal.Body>
             <SelectedQuestionsPreview
-              //toogleChecked={this.toogleChecked}
-              checkedQuestions={this.state.checkedQuestions}
-              checkedQuestionIds={this.state.checkedQuestionIds}
+              selectedQuestions={this.state.selectedQuestions}
+              selectedQuestionsHandler={this.selectedQuestionsHandler}
             />
           </Modal.Body>
 
@@ -142,14 +123,14 @@ class ExamPaper extends Component {
           </Modal.Footer>
         </Modal>
 
+        {/* Preview questions cart */}
         <div style={{position:'fixed', bottom: '50px', right: '20px', width: '50px', height: '35px', zIndex:'99'}}>
           <Button onClick={this.handleShow} title="Questions Busket">
             <FaShoppingBasket size={'2rem'}/>
           </Button>
           <span className="bg-danger text-white p-1 text-center" style={{position: 'absolute', top: '-15px' , right: '-10px'}}>
-            {this.props.examPaper.questions.length}
+            {this.state.selectedQuestions.length}
           </span>
-          
         </div>
 
         <Row>
@@ -163,73 +144,34 @@ class ExamPaper extends Component {
               handleChange={this.handleChange}
               categories={this.props.category.categories}
             />
-            <ExamSpec categories={this.props.category.categories} />
-            {/* <SelectedQuestionsPreview
-              //toogleChecked={this.toogleChecked}
-              checkedQuestions={this.state.checkedQuestions}
-              checkedQuestionIds={this.state.checkedQuestionIds}
-            /> */}
+            <ExamSpec categories={this.props.category.categories} selectedQuestionIds={this.state.selectedQuestions.map(q=>q.id)} />
+            
           </Col>
           <Col lg={8}>
-            {
-              <FormCheck>
-                <ListGroup className="my-2">
-                  {questions.length < 1 && <p className="text-danger">No Question in this category.</p>}
-                  {questions.map((question, index) => (
-                    <ListGroup.Item
-                      key={question.id}
-                      variant={index % 2 === 0 ? "dark" : "light"}
-                    >
-                      { <Form.Check
-                        //ref={this.state.input}
-                          inline
-                          type="checkbox"
-                          value={question.id}
-                          onChange={this.checkHandleChange}
-                          name={question.title + "*_*" + question.qText}
-                          checked={this.state[question.id]}
-                          defaultChecked={this.state.checkedQuestionIds.includes(
-                            question.id.toString()
-                          )}
-                        />
-                      }
-                
-
-                      {/* {this.state.action === 'mAll' &&
-                        <Form.Check
-                        //ref={this.state.input}
-                          inline
-                          type="checkbox"
-                          //checked={true}
-                          value={question.id}
-                          onChange={this.checkHandleChange}
-                          name={question.title + "*_*" + question.qText}
-                          defaultChecked={this.state.checkedQuestionIds.includes(
-                            question.id.toString()
-                          )}
-                        /> }
-
-                      {this.state.action === 'uAll' &&
-                        <Form.Check
-                        //ref={this.state.input}
-                          inline
-                          type="checkbox"
-                          checked={false}
-                          value={question.id}
-                          onChange={this.checkHandleChange}
-                          name={question.title + "*_*" + question.qText}
-                          defaultChecked={this.state.checkedQuestionIds.includes(
-                            question.id.toString()
-                          )}
-                        />
-                      } */}
-                      
-                      {`${index + 1}. ${question.title} --> ${question.qText}`}
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              </FormCheck>
-            }
+            <FormCheck>
+              <ListGroup className="my-2">
+                {questions.length < 1 && <p className="text-danger">No Question in this category.</p>}
+                {questions.map((question, index) => (
+                  <ListGroup.Item
+                    key={question.id}
+                    variant={index % 2 === 0 ? "dark" : "light"}
+                  >
+                    { <Form.Check
+                      //ref={this.state.input}
+                        inline
+                        type="checkbox"
+                        value={question.id}
+                        onChange={(e)=>{this.checkHandleChange(e,question)}}
+                        checked={this.state[question.id] && this.state[question.id].checked}
+                      />
+                    }
+                    
+                    {`${(index + 1) +  (this.state.pageSize * (this.state.currentPage - 1) )}. ${question.title} --> ${question.qText}`}
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+            </FormCheck>
+            <p className="text-muted">** Please add checked questions to <Badge variant="info">Preview Cart</Badge>. Otherwise no questions will be avaiable in exam.</p>
             <Pagination
               itemsCount={this.props.question.questions.length}
               pageSize={this.state.pageSize}
@@ -238,20 +180,15 @@ class ExamPaper extends Component {
             />
 
             <div className="d-flex justify-content-center align-items-center">
-
               <Button
                 onClick={() => {
-                  //this.setState({ toogleChecked: !this.state.toogleChecked });
-                  this.props.onSelectedQuestionsLoader(
-                    [...this.state.checkedQuestions],
-                    [...this.state.checkedQuestionIds]
-                  );
+                  this.setState({selectedQuestions: checkedQuestionIds.map(id=>this.state[id])})
                 }}
                 className="mr-5 mb-2 mb-sm-0"
               >
-                Add to Preview Cart
+                Add Questions to Preview Cart
               </Button>
-              {/* onChange={actionHandleChange} */}
+
               <Form.Group controlId="formGridParent">
                 <Form.Label>Actions</Form.Label>
                 <Form.Control as="select" name="action" onChange={this.actionHandleChange}  >
@@ -262,6 +199,7 @@ class ExamPaper extends Component {
               </Form.Group>
 
             </div>
+
           </Col>
         </Row>
       </>
@@ -275,8 +213,6 @@ const mapDispatchToProps = (dispatch) => {
     onGetQuestionLoader: () => dispatch(getQuestionLoader()),
     onGetQuestionByCategoryLoader: (id) =>
       dispatch(getQuestionByCategoryLoader(id)),
-    onSelectedQuestionsLoader: (questions, ids) =>
-      dispatch(selectedQuestionsLoader(questions, ids)),
   };
 };
 const mapStateToProps = (state) => {
@@ -285,7 +221,6 @@ const mapStateToProps = (state) => {
     question: state.question,
     category: state.category,
     api: state.api,
-    examPaper: state.examPaper,
   };
 };
 

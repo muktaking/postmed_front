@@ -17,10 +17,9 @@ const centeredStyle = {
   zIndex: "1000",
 };
 
-const ExamSpec = ({ categories }) => {
+const ExamSpec = ({ categories, selectedQuestionIds }) => {
   const [hideMsg, setHideMsg] = useState(true);
   const dispatch = useDispatch();
-  const selectedQuestionIds = useSelector((state) => state.examPaper.ids);
   const loading = useSelector((state) => state.examPaper.loading);
   const successMsg = useSelector((state) => state.examPaper.success);
   const errorMsg = useSelector((state) => state.examPaper.error);
@@ -136,7 +135,7 @@ const ExamSpec = ({ categories }) => {
               <Form.Label>Single Question Mark</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter single Question Mark"
+                placeholder="1"
                 name="singleQuestionMark"
                 onChange={handleChange}
               />
@@ -150,7 +149,7 @@ const ExamSpec = ({ categories }) => {
               <Form.Label>Question Stem Length</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter question stem length"
+                placeholder="5"
                 name="questionStemLength"
                 onChange={handleChange}
               />
@@ -162,7 +161,7 @@ const ExamSpec = ({ categories }) => {
               <Form.Label>Penalty Mark</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter penalty Mark"
+                placeholder="0"
                 name="penaltyMark"
                 onChange={handleChange}
               />
@@ -174,7 +173,7 @@ const ExamSpec = ({ categories }) => {
               <Form.Label>Time Limit(Minutes)</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter Time Limit"
+                placeholder="40"
                 name="timeLimit"
                 onChange={handleChange}
               />

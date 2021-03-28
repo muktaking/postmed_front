@@ -1,3 +1,4 @@
+
 export const RoutesConfig = {
     Home: {
         metaInfo: {
@@ -11,16 +12,56 @@ export const RoutesConfig = {
             description: 'Lists of all avaiable exams. Participate into the exams.'
         }
     },
+    Dashboard: {
+        metaInfo: {
+            title: 'Dashboard- Get all your desired content in one place',
+        }
+
+    },
+    Profile: {
+        metaInfo: {
+            title: 'Profile- Know yourself and edit them',
+        }
+
+    },
+    Settings: {
+        metaInfo: {
+            title: 'Settings: Change the life as you want ',
+        }
+
+    },
+    Category: {
+        metaInfo: {
+            title: 'Category- Create, edit and delete category',
+        }
+
+    },
+    Question: {
+        metaInfo: {
+            title: 'Question- Create, upload, edit and delete question',
+        }
+
+    },
+    ExamBuilder: {
+        metaInfo: {
+            title: 'ExamBuilder- Build exam easily',
+        }
+
+    },
+    ExamEdit: {
+        metaInfo: {
+            title: 'ExamEdit- edit and delete exam easily',
+        }
+
+    },
     Login: {
         metaInfo: {
-            title: '',
-            description: ''
+            title: 'Login- Login to access the app',
         }
     },
     Signup: {
         metaInfo: {
-            title: '',
-            description: ''
+            title: 'Signup- To use the app fully, You have to signup ',
         }
     }
 }

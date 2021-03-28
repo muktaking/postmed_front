@@ -26,9 +26,7 @@ const slice = createSlice({
       user.userFrom = action.payload.createdAt;
       user.role = action.payload.role;
       user.address = action.payload.address;
-      user.avatar =
-        action.payload.avater ||
-        "https://api.adorable.io/avatars/285/abott@adorable.png";
+      user.avatar = action.payload.avatar
     },
   },
 });

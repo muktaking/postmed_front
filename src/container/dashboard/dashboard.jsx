@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
-import { Helmet } from "react-helmet";
 import { useDispatch } from "react-redux";
 import BigCards from "../../components/dashboard/bigCards/bigCards";
 import MiniCards from "../../components/dashboard/miniCards/miniCards";
+import MetaInfo from "../../components/seo/metainfo";
+import { RoutesConfig } from "../../config/routes.config";
 import { dashboardStudent } from "../../store/dashboard";
 import { resetExamResultLoader } from "../../store/exams";
 import { getUserLoader } from "../../store/user";
@@ -41,9 +42,7 @@ const Dashboard = (props) => {
        >
        </Spinner>
       }
-      <Helmet>
-        <title>Dashboard</title>
-      </Helmet>
+      <MetaInfo {...RoutesConfig.Dashboard.metaInfo} />
 
       <MiniCards />
       <hr className="my-3" />

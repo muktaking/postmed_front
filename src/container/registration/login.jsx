@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import validator from "validator";
 import "../../assets/scss/section/registration.scss";
 import NavbarHome from "../../components/navbar/navbarHome";
+import MetaInfo from "../../components/seo/metainfo";
+import { RoutesConfig } from "../../config/routes.config";
 import { auth } from "../../store/auth";
 
 
@@ -90,6 +92,7 @@ class Home extends Component {
     // }
     return (
       <div className="registration">
+        <MetaInfo {...RoutesConfig.Login.metaInfo} />
         {/* {authRedirect} */}
         <NavbarHome isLanding={false} />
         {/* Landing */}

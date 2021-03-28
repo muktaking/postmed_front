@@ -101,7 +101,9 @@ class Sidebar extends Component {
         <Navbar.Brand
           className="text-white d-block mx-auto text-center py-3 mb-4 bottom-border"
         >
-          <NavLink to="/" className="text-white">Examis.xyz</NavLink>
+          <NavLink to="/" className="text-white">
+            {process.env.REACT_APP_NAME}
+          </NavLink>
         </Navbar.Brand>
         <h3 className="text-white text-center mb-2">
           <FormattedMessage id="goodDay" defaultMessage="Good Day" />
