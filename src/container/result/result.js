@@ -146,7 +146,7 @@ class Result extends Component {
                                   {stem.aStem === "1" ? "True" : "False"}
                                   <br />
                                   {stem.fbStem &&
-                                    this.props.intl.formatMessage({id: 'explanation', defaultMessage: "Explanation is : "}) + " " + stem.fbStem + stem.fbStem}
+                                    this.props.intl.formatMessage({id: 'explanation', defaultMessage: "Explanation is : "}) + " " + stem.fbStem}
                                 </ListGroup.Item>
                               </>
                             );
