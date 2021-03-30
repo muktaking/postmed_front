@@ -114,7 +114,7 @@ const ExamSpec = ({ categories, selectedQuestionIds }) => {
                 {categories.map((value) => {
                   //console.log(categories[0].id);
                   let categorySlug = value.slug.replace(/_/g, " / ");
-                  return <option value={value.id}>{categorySlug}</option>;
+                  if(value.name !== 'Uncategorized') return <option value={value.id}>{categorySlug}</option>;
                 })}
               </Form.Control>
             </Form.Group>

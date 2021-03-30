@@ -7,7 +7,7 @@ export default function Exams({exams}) {
     return (
         <div>
 
-            <Table striped bordered hover>
+            <Table striped bordered hover responsive>
                 <thead>
                     <tr>
                     <th>#</th>

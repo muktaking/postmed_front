@@ -12,7 +12,7 @@ const rank = ({ value, footerValue }) => {
       value={value}
       //
       faIcon={"medal"}
-      footerHeading={intl.formatMessage({id: 'db.ts', defaultMessage: "Your Rank"})}
+      footerHeading={intl.formatMessage({id: 'db.ts', defaultMessage: "Total Student"})}
       footerValue={footerValue}
       color={"warning"}
       faFooterIcon={"users"}

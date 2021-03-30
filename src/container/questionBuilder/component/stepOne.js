@@ -37,12 +37,8 @@ export default function StepOne({values, errors, handleChange}) {
               <option>Select...</option>
               {categories.map((value, index) => {
                 let CategorySlug = value.slug.replace(/_/g, " / ");
-                return (
-                  <option
-                    key={index}
-                    value={value.id}
-                    //selected={Question && value.id === Question.parentId}
-                  >
+                if(value.name !== 'Free' && value.name !== 'Featured' && value.name !== 'Uncategorized' ) return (
+                  <option key={index} value={value.id}>
                     {CategorySlug}
                   </option>
                 );
