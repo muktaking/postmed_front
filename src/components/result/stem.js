@@ -19,7 +19,8 @@ const QTypeNumber = {
   Matrix: "matrix",
 };
 
-export default function stem({ index, qType, answer, qStem, aStem,isUntouched }) {
+export default function stem({qIndex, index, qType, answer, qStem, aStem,isUntouched }) {
+ 
   return (
     <div className="d-flex flex-nowrap">
       {qType === QTypeNumber.Matrix && (
@@ -67,20 +68,100 @@ export default function stem({ index, qType, answer, qStem, aStem,isUntouched })
       {qType === QTypeNumber.SingleBestAnswer && (
         <>
           <div className="mr-2">
-            {index + 1 === answer[0] && (
-              <FaRegCheckCircle style={{ color: "#3c763d" }} size="1.4rem" />
-            )}
-            {index + 1 === answer[0] && answer[0] === answer[1] && (
-              <FaCheckCircle
-                className="ml-1"
-                style={{ color: "#3c763d" }}
-                size="1.4rem"
+            {!answer[1] && (index + 1 === answer[0] ? (
+              <>
+                <FaRegCheckCircle className="mr-2" style={{ color: "#3c763d" }} size="1.4rem" />
+                <Form.Check
+                inline
+                disabled
+                type="radio"
+                name={qIndex}
+                checked={false}
+                />
+              </>
+            )
+          : (
+            <>
+              <Form.Check
+              inline
+              disabled
+              className="ml-2"
+              type="radio"
+              name={qIndex}
+              checked={false}
               />
-            )}
+            </>)
+            )
+          
+          }
+            {answer[1] && ( (index + 1 === answer[1] ) ? 
+                answer[0] === answer[1] ? (
+                  <>
+                    <FaCheckCircle
+                      className="mr-2"
+                      style={{ color: "#3c763d" }}
+                      size="1.4rem"
+                    />
+                    <Form.Check
+                      inline
+                      disabled
+                      type="radio"
+                      name={qIndex}
+                      checked={true}
+                      />
+                    </>
+                  )
+              : (
+                <>
+                  <FaRegTimesCircle className="mr-2" style={{ color: "#a94442" }} size="1.4rem" />
+                  <Form.Check
+                    inline
+                    disabled
+                    type="radio"
+                    name={qIndex}
+                    checked={true}
+                    />
+                </>
+                )
+              :   ( index + 1 === answer[0]  ? (
+                <>
+                  <FaCheckCircle
+                    className="mr-2"
+                    style={{ color: "#3c763d" }}
+                    size="1.4rem"
+                  />
+                  <Form.Check
+                    inline
+                    disabled
+                    type="radio"
+                    name={qIndex}
+                    checked={false}
+                    />
+                </>
+              ) 
+                  :  <Form.Check
+                  inline
+                  disabled
+                  className="ml-2"
+                  type="radio"
+                  name={qIndex}
+                  checked={false}
+                  />             
+              )
+            )            
+            }
 
-            {index + 1 === answer[1] && answer[0] !== answer[1] && (
-              <FaRegTimesCircle style={{ color: "#a94442" }} size="1.4rem" />
-            )}
+            {/* {answer[1] && index + 1 !== answer[0] && (
+              <>
+              <Form.Check
+                inline
+                disabled
+                type="radio"
+                name={qIndex}
+                checked={false}
+                />
+                </>
+            )} */}
           </div>
           <div className="">{qStem}</div>
         </>

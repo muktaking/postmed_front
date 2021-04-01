@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import moment from "moment";
 import React, { Component } from "react";
-import { Alert, Card, Image, ListGroup } from "react-bootstrap";
+import { Alert, Badge, Card, Image, ListGroup } from "react-bootstrap";
 import { FaMinusCircle } from "react-icons/fa";
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from "react-redux";
@@ -76,7 +76,7 @@ class Result extends Component {
               </Card.Header>
               <Card.Body>
                 {examResult.map((item, index) => (
-                  <ListGroup key={index} variant="flush">
+                  <ListGroup key={index} variant="flush" className="mb-4">
                     <ListGroup.Item>
                       {item.result.stemResult[0] === QType.Matrix &&
                         item.result.stemResult.length === 1 && (
@@ -89,22 +89,22 @@ class Result extends Component {
                       {item.result.stemResult[0] === QType.SingleBestAnswer &&
                         item.result.stemResult.length === 2 && (
                           <FaMinusCircle
-                            lassName="mr-2"
+                            className="mr-2"
                             style={{ color: "#777" }}
                             size="1.4rem"
                           />
                         )}
-                      {index + 1 + ". " + item.qText}
+                      <span>{index + 1 + ". " + item.qText}</span>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      <ListGroup variant="flush" className="pl-3">
+                      <div variant="flush" className="pl-3">
                         {item.stems.map((stem, ind) => {
                           if (
                             item.result.stemResult[0] === QType.SingleBestAnswer
                           )
                             return (
                               <>
-                                <ListGroup.Item>
+                                <div className="mb-1">
                                   <QuestionResultStem
                                     index={ind}
                                     qType={item.result.stemResult[0]}
@@ -114,18 +114,19 @@ class Result extends Component {
                                     ]}
                                     qStem={`${ind + 1}. ${stem.qStem}`}
                                   />
-                                </ListGroup.Item>
-                                <ListGroup.Item className="ml-3">
+                                </div>
+                                <div className="ml-3 mb-1">
                                   {stem.fbStem &&
                                     this.props.intl.formatMessage({id: 'explanation', defaultMessage: "Explanation is : "}) + " " + stem.fbStem}
-                                </ListGroup.Item>
+                                </div>
                               </>
                             );
                           else
                             return (
                               <>
-                                <ListGroup.Item>
+                                <div className="mb-1">
                                   <QuestionResultStem
+                                    qIndex={index}
                                     index={ind}
                                     qType={item.result.stemResult[0]}
                                     answer={item.result.stemResult[ind + 1]}
@@ -133,29 +134,35 @@ class Result extends Component {
                                     aStem={stem.aStem}
                                     isUntouched={item.result.stemResult.length === 1}
                                   />
-                                </ListGroup.Item>
+                                </div>
 
-                                <ListGroup.Item
+                                <div
                                 // className={
                                 //   (item.result.stemResult[ind] === true
                                 //     ? "bg-success"
                                 //     : "bg-danger") + " text-light ml-3"
                                 // }
+                                className="mb-3"
                                 >
-                                  This Statement is:{" "}
+                                  <Badge variant="primary" style={{fontSize: '.8rem'}}> This Statement is </Badge>{" "}
                                   {stem.aStem === "1" ? "True" : "False"}
                                   <br />
                                   {stem.fbStem &&
-                                    this.props.intl.formatMessage({id: 'explanation', defaultMessage: "Explanation is : "}) + " " + stem.fbStem}
-                                </ListGroup.Item>
+                                  <>
+                                  <Badge variant="info"  style={{fontSize: '.8rem'}}>
+                                    {this.props.intl.formatMessage({id: 'explanation', defaultMessage: "Explanation is"})}
+                                  </Badge> <span>{" " + stem.fbStem}</span> 
+                                  </>
+                                  }
+                                </div>
                               </>
                             );
                         })}
-                      </ListGroup>
+                      </div>
                     </ListGroup.Item>
                     {item.generalFeedback && <ListGroup.Item className="ml-3 text-white bg-secondary">
                       <p>{this.props.intl.formatMessage({id: 'gexplanation', defaultMessage: "General explanation is : "}) + " " + item.generalFeedback + item.generalFeedback.replace(/#L(.+)L#/,'')}</p>
-                      <Image src={item.generalFeedback.split(/#L(.+)L#/)[1]} width="350" height="300"  />
+                      {item.generalFeedback.split(/#L(.+)L#/)[1] &&  <Image src={item.generalFeedback.split(/#L(.+)L#/)[1]} width="350" height="300"  />}
                     </ListGroup.Item>}
                   </ListGroup>
                 ))}
