@@ -22,7 +22,7 @@ const QuestionForm = ({ question, handleChange, defaultChecked}) => {
             index={index + 1}
             id={question.id}
             handleChange={handleChange}
-            defaultChecked={defaultChecked ? defaultChecked[index] : null}
+            defaultChecked={defaultChecked ? (question.qType === 'matrix') ? defaultChecked[index] : defaultChecked[0] : null}
           />
         </ListGroup.Item>
       ))}

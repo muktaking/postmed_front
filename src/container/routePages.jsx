@@ -20,6 +20,8 @@ const LogoutPage = lazy(()=> pMinDelay(import('./registration/logout'), mDelay))
 //import Signup from "./registration/signup";
 const Signup = lazy(()=> pMinDelay(import('./registration/signup'), mDelay));
 
+const Reset = lazy(()=> pMinDelay(import('./registration/reset'), mDelay));
+
 const override = css`
   display: block;
   margin: 45vh auto;
@@ -35,6 +37,7 @@ const RoutePages = (props) => {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path="/reset/:id" component={Reset} />
           <Route path="/exams" exact component={InnerContent} />
           <Route path="/exams/:id" exact component={InnerContent} />
           <Route path="/exams/free/:id" component={InnerContent} />

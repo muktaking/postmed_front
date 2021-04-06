@@ -15,7 +15,6 @@ const questionStemView = ({
 
   // const disableQuestionsAddLoader = (name)=>{
   //   dispatch({type: disableQuestionsAdd.type, payload: name})
-  // }
 
   return (
     <Row className="px-md-4 px-xs-2">
@@ -68,7 +67,7 @@ const questionStemView = ({
                 name={id}
                 id="formHorizontalRadios1"
                 value={index}
-                defaultChecked={defaultChecked === index}
+                defaultChecked={defaultChecked == index}
                 onChange={handleChange}
                 className="mb-0" 
               />

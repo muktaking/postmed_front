@@ -12,6 +12,7 @@ import NavbarHome from "../../components/navbar/navbarHome";
 import MetaInfo from "../../components/seo/metainfo";
 import { RoutesConfig } from "../../config/routes.config";
 import { auth } from "../../store/auth";
+import ResetInit from "./resetInit";
 
 
 
@@ -31,6 +32,7 @@ class Home extends Component {
   state = {
     username: null,
     password: null,
+    showReset: false,
     formErrors: {
       username: "",
       password: "",
@@ -79,6 +81,14 @@ class Home extends Component {
       [name]: value,
     });
   };
+
+  resetClose = ()=>{
+    this.setState({showReset: false})
+  }
+  resetShow = ()=>{
+    this.setState({showReset: true})
+  }
+
   componentDidMount() {
     
   }
@@ -92,6 +102,7 @@ class Home extends Component {
     // }
     return (
       <div className="registration">
+        <ResetInit show={this.state.showReset} handleClose={this.resetClose} />
         <MetaInfo {...RoutesConfig.Login.metaInfo} />
         {/* {authRedirect} */}
         <NavbarHome isLanding={false} />
@@ -155,7 +166,7 @@ class Home extends Component {
               {/* <Button variant="danger">
                 Reset Your Password
               </Button> */}
-              <p className="bg-danger p-1">Please Email to {process.env.REACT_APP_HELP_EMAIL}</p>
+              <Button variant="danger" onClick={this.resetShow}>Reset</Button>
             </Col>
             <Col md={6}>
               <p className="lead">I am not a member yet!</p>

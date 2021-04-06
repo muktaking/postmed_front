@@ -139,6 +139,7 @@ const ExamSpec = ({ categories, selectedQuestionIds }) => {
                 name="singleQuestionMark"
                 onChange={handleChange}
               />
+              <Form.Text className="text-muted">** It is value for the question, not for the single stem.</Form.Text>
             </Form.Group>
             {errors.singleQuestionMark ? (
               <div className="alert alert-danger">
@@ -165,6 +166,7 @@ const ExamSpec = ({ categories, selectedQuestionIds }) => {
                 name="penaltyMark"
                 onChange={handleChange}
               />
+              <Form.Text className="text-muted">** It is value for single stem, not for the question.</Form.Text>
             </Form.Group>
             {errors.penaltyMark ? (
               <div className="alert alert-danger">{errors.penaltyMark}</div>
@@ -177,6 +179,7 @@ const ExamSpec = ({ categories, selectedQuestionIds }) => {
                 name="timeLimit"
                 onChange={handleChange}
               />
+              
             </Form.Group>
             {errors.timeLimit ? (
               <div className="alert alert-danger">{errors.timeLimit}</div>

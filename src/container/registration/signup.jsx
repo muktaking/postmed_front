@@ -83,10 +83,11 @@ class SignUp extends Component {
       case "password":
         formErrors.password = validator.matches(
           value,
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/
         )
+        //(?=.*[!@#\$%\^&\*])
           ? ""
-          : "Password should be minimum 8 characters and contain atleast one capital and lowercase alpha, neumeric and special value";
+          : "Password should be minimum 6 characters and contain atleast one capital and lowercase alpha, neumeric value";
         break;
       case "repeatPassword":
         formErrors.repeatPassword = validator.equals(
@@ -303,7 +304,7 @@ class SignUp extends Component {
                   className={formErrors.password.length > 0 && "is-invalid"}
                 />
                 <Form.Text className="text-warning">
-                  e.g. 123abcDEF!$%
+                  e.g. 123abcDEF
                 </Form.Text>
                 {formErrors.password.length > 0 && (
                   <span className="errorMessage">{formErrors.password}</span>

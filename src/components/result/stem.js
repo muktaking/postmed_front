@@ -2,7 +2,6 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import {
-  FaCheckCircle,
   FaMinusCircle,
   FaRegCheckCircle,
   FaRegTimesCircle
@@ -18,6 +17,11 @@ const QTypeNumber = {
   SingleBestAnswer: "sba",
   Matrix: "matrix",
 };
+
+const sbaStyle={
+  marginLeft: '2rem',
+  marginRight: '.6rem'
+}
 
 export default function stem({qIndex, index, qType, answer, qStem, aStem,isUntouched }) {
  
@@ -67,10 +71,57 @@ export default function stem({qIndex, index, qType, answer, qStem, aStem,isUntou
 
       {qType === QTypeNumber.SingleBestAnswer && (
         <>
-          <div className="mr-2">
+
+          <div className="d-flex mr-2">
+            <div className="">
+              { answer[1] ?
+                  index + 1 === answer[1] ? 
+                    answer[0] === answer[1] ?
+                      <FaRegCheckCircle style={{ color: "#3c763d", marginRight: sbaStyle.marginRight }} size="1.4rem" />
+                      : <FaRegTimesCircle style={{ color: "#a94442", marginRight: sbaStyle.marginRight }} size="1.4rem" />
+                  : index + 1 === answer[0] ?
+                      <FaRegCheckCircle style={{ color: "#3c763d", marginRight: sbaStyle.marginRight }} size="1.4rem" />
+                      : <div style={{width: '2rem'}}></div>
+
+                : index + 1 === answer[0] ?
+                    <FaRegCheckCircle style={{ color: "#3c763d", marginRight: sbaStyle.marginRight }} size="1.4rem" />
+                    : <div style={{width: '2rem'}}></div>
+              }
+            </div>
+            <div className="">
+              {
+                answer[1] ?
+                  index +1 === answer[1] ?
+                    <Form.Check
+                    inline
+                    disabled
+                    type="radio"
+                    name={qIndex}
+                    checked={true}
+                    />
+                    : <Form.Check
+                    inline
+                    disabled
+                    type="radio"
+                    name={qIndex}
+                    checked={false}
+                    />
+                  : <Form.Check
+                  inline
+                  disabled
+                  type="radio"
+                  name={qIndex}
+                  checked={false}
+                  />
+              }
+            </div>
+          </div>
+
+
+          {/* <div className="mr-2">
             {!answer[1] && (index + 1 === answer[0] ? (
-              <>
-                <FaRegCheckCircle className="mr-2" style={{ color: "#3c763d" }} size="1.4rem" />
+              <div className="d-flex">
+                <FaRegCheckCircle style={{ color: "#3c763d", marginRight: sbaStyle.marginRight }} size="1.4rem" />
                 <Form.Check
                 inline
                 disabled
@@ -78,14 +129,14 @@ export default function stem({qIndex, index, qType, answer, qStem, aStem,isUntou
                 name={qIndex}
                 checked={false}
                 />
-              </>
+              </div>
             )
           : (
             <>
               <Form.Check
               inline
               disabled
-              className="ml-2"
+              style={{marginLeft: sbaStyle.marginLeft}}
               type="radio"
               name={qIndex}
               checked={false}
@@ -96,10 +147,9 @@ export default function stem({qIndex, index, qType, answer, qStem, aStem,isUntou
           }
             {answer[1] && ( (index + 1 === answer[1] ) ? 
                 answer[0] === answer[1] ? (
-                  <>
+                  <div className="d-flex">
                     <FaCheckCircle
-                      className="mr-2"
-                      style={{ color: "#3c763d" }}
+                      style={{ color: "#3c763d", marginRight: sbaStyle.marginRight }}
                       size="1.4rem"
                     />
                     <Form.Check
@@ -109,11 +159,11 @@ export default function stem({qIndex, index, qType, answer, qStem, aStem,isUntou
                       name={qIndex}
                       checked={true}
                       />
-                    </>
+                    </div>
                   )
               : (
-                <>
-                  <FaRegTimesCircle className="mr-2" style={{ color: "#a94442" }} size="1.4rem" />
+                <div className="d-flex">
+                  <FaRegTimesCircle style={{ color: "#a94442", marginRight: sbaStyle.marginRight }} size="1.4rem" />
                   <Form.Check
                     inline
                     disabled
@@ -121,13 +171,12 @@ export default function stem({qIndex, index, qType, answer, qStem, aStem,isUntou
                     name={qIndex}
                     checked={true}
                     />
-                </>
+                </div>
                 )
               :   ( index + 1 === answer[0]  ? (
-                <>
+                <div className="d-flex">
                   <FaCheckCircle
-                    className="mr-2"
-                    style={{ color: "#3c763d" }}
+                    style={{ color: "#3c763d", marginRight: sbaStyle.marginRight }}
                     size="1.4rem"
                   />
                   <Form.Check
@@ -137,12 +186,12 @@ export default function stem({qIndex, index, qType, answer, qStem, aStem,isUntou
                     name={qIndex}
                     checked={false}
                     />
-                </>
+                </div>
               ) 
                   :  <Form.Check
                   inline
                   disabled
-                  className="ml-2"
+                  style={{marginLeft: sbaStyle.marginLeft}}
                   type="radio"
                   name={qIndex}
                   checked={false}
@@ -150,19 +199,7 @@ export default function stem({qIndex, index, qType, answer, qStem, aStem,isUntou
               )
             )            
             }
-
-            {/* {answer[1] && index + 1 !== answer[0] && (
-              <>
-              <Form.Check
-                inline
-                disabled
-                type="radio"
-                name={qIndex}
-                checked={false}
-                />
-                </>
-            )} */}
-          </div>
+          </div> */}
           <div className="">{qStem}</div>
         </>
       )}

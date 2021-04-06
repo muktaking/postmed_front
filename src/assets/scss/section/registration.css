@@ -49,7 +49,7 @@
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   will-change: transform;
-  background-image: url(../../image/computers.png);
+  background-image: url(../../image/bg_op.jpg);
 }
 
 .registration .navbar {
@@ -127,6 +127,10 @@
   height: 100%;
   display: block;
   margin: auto auto;
+}
+
+.registration .landing {
+  height: 100%;
 }
 
 .registration .caption {
