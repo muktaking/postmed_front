@@ -165,7 +165,7 @@ class Result extends Component {
                         <Badge variant="secondary" style={{fontSize: '.8rem'}} >
                           {this.props.intl.formatMessage({id: 'gexplanation', defaultMessage: "General explanation is : "}) }
                         </Badge> 
-                        { " " + item.generalFeedback + item.generalFeedback.replace(/#L(.+)L#/,'')}</p>
+                        { " " + item.generalFeedback.replace(/#L(.+)L#/,'')}</p>
                       {item.generalFeedback.split(/#L(.+)L#/)[1] &&  <Image src={item.generalFeedback.split(/#L(.+)L#/)[1]} width="350" height="300"  />}
                     </ListGroup.Item>}
                   </ListGroup>
