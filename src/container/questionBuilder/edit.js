@@ -46,12 +46,13 @@ export default function Index({viewHandler, id}) {
                 question= {
                     ...question,
                     ["qStem" + index]: stem.qStem,
-                    ["aStem" + index]: stem.aStem.toString(),
+                    ["aStem" + index]: question.qType === 'matrix' && stem.aStem.toString(),
                     ["fbStem" + index]: stem.fbStem,
-                    ["aStemSba"]: stem.aStem.toString()
+                    ["aStemSba"]: null
                 }
 
             })
+            if(response.data.qType === 'sba') question.aStemSba = (response.data.stems[0].aStem -1).toString();
             setData(question);
         })
         .catch(e=>console.log(e))

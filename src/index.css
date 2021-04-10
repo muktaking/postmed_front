@@ -12,11 +12,18 @@ code {
     monospace;
 } */
 
-@import url('https://cdn.staticaly.com/gh/sh4hids/bangla-web-fonts/9baee0fc23e77fe957c0b70fe49d81d2cbbe87d6/boshonto/stylesheet.css');
+/* @import url('https://cdn.staticaly.com/gh/sh4hids/bangla-web-fonts/9baee0fc23e77fe957c0b70fe49d81d2cbbe87d6/boshonto/stylesheet.css'); */
+/* body {
+  margin: 0;
+  font-family: Dosis, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #505962;
+} */
 
 body {
   margin: 0;
-  font-family: 'boshonto', 'Dosis', sans-serif;
+  font-family: 'Baloo Da 2', cursive, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #505962;

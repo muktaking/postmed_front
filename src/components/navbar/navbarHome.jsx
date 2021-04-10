@@ -6,7 +6,6 @@ import { useIntl } from "react-intl";
 import { connect } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-//import Scrollspy from "react-scrollspy";
 import { Link as LinkScroll } from "react-scroll";
 import ScrollToTop from 'react-scroll-up';
 

@@ -83,7 +83,7 @@ const categoryTypeVariant = (name)=>{
     return variant;
 }
 
-export default function ExamCard({width="350px", examId, imgSrc, title, categoryType, description, createdAt, free, examLoader}) {
+export default function ExamCard({width="350", height="180", examId, imgSrc, title, categoryType, description, createdAt, free, examLoader}) {
     const dispatch = useDispatch();
     const token = useSelector(state=> state.auth.token);
     const intl = useIntl();
@@ -91,10 +91,12 @@ export default function ExamCard({width="350px", examId, imgSrc, title, category
 
     return (
         <>
-            <Card key={examId} className="mr-2 mb-2" style={{width:width}}>
+            <Card key={examId} className="mr-2 mb-2">
                 {!canActivate(rolePermitted.admin, token) && <Card.Img
                     variant="top"
                     src={imgSrc}
+                    width={width}
+                    height={height}
                 />}
                 <Card.Body>
                     <div>

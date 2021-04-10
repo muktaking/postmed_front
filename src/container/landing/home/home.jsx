@@ -1,17 +1,20 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import Button from "react-bootstrap/Button";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
-import NavbarHome from "../../../components/navbar/navbarHome";
+//import NavbarHome from "../../../components/navbar/navbarHome";
 
-
+const NavbarHome = lazy(()=> import('../../../components/navbar/navbarHome'));
 //import "./home.scss";
 
 const home = props => {
 
   return (
     <div id="home">
-      <NavbarHome isLanding={true} />
+      <Suspense fallback={<div />}>
+        <NavbarHome isLanding={true} />
+      </Suspense>
+      
       {/* Landing */}
       <div className="landing">
         <div className="home-wrap">

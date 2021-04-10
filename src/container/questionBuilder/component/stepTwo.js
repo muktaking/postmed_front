@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 
 export default function StemTwo({values, stems, errors, handleChange, stemInc, stemDec}) {
+  console.log(values);
   
     return (
     <div> 
