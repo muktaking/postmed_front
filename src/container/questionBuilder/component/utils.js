@@ -35,8 +35,9 @@ export function submitHandler(stemNum, dispatch, edit) {
                 }
                 if (error === '') {
                     stem['qStem'] = values['qStem' + index];
-                    stem['aStem'] = values.qType === 'matrix' ? values['aStem' + index] : values['aStemSba'] + 1;
+                    stem['aStem'] = values.qType === 'matrix' ? values['aStem' + index] : (parseInt(values['aStemSba']) + 1).toString();
                     stem['fbStem'] = values['fbStem' + index];
+                    console.log((stem))
                     // delete values['qStem' + index];
                     // delete values['aStem' + index];
                     // delete values['fbStem' + index];

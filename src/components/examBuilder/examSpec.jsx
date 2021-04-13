@@ -211,13 +211,13 @@ const validate = (values) => {
   const errors = {};
   if (!values.title) {
     errors.title = "Required";
-  } else if (!validator.isLength(values.title, { min: 3, max: 20 })) {
-    errors.title = "Title should be between 3-20 characters";
+  } else if (!validator.isLength(values.title, { min: 5, max: 50 })) {
+    errors.title = "Title should be between 5-50 characters";
   }
   if (!values.description) {
     errors.description = "Required";
-  } else if (!validator.isLength(values.description, { min: 3, max: 50 })) {
-    errors.description = "Description should be between 3-50 characters";
+  } else if (!validator.isLength(values.description, { min: 15, max: 255 })) {
+    errors.description = "Description should be between 15-255 characters";
   }
   if (!values.singleQuestionMark) {
     errors.singleQuestionMark = "Required";

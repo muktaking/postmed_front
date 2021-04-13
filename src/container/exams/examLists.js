@@ -26,8 +26,7 @@ class ExamLists extends Component {
   
     return (
       <>
-      <MetaInfo {...RoutesConfig.Exams.metaInfo} />
-      
+      <MetaInfo {...RoutesConfig.Exams.metaInfo} />      
       {/* {this.props.exams.exams.length < 1 && (
           <Spinner
             animation="border"

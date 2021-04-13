@@ -10,6 +10,12 @@ import StepThree from './component/stepThree';
 import StepTwo from './component/stepTwo';
 import { stem, submitHandler, validator } from "./component/utils";
 
+const resStyle = {
+    position: 'fixed', 
+    right: '20px',
+    zIndex: '10000'
+}
+
 export default function Index({viewHandler, id}) {
 
     const [stemNum, setStemNum] = useState(5);
@@ -39,11 +45,12 @@ export default function Index({viewHandler, id}) {
                 category: response.data.categoryId,
                 qType: response.data.qType,
                 qText: response.data.qText,
+                stems: response.data.stems,
                 generalFeedback: response.data.generalFeedback,
                 tags: response.data.tags
             };
             response.data.stems.forEach((stem,index)=>{
-                question= {
+                question = {
                     ...question,
                     ["qStem" + index]: stem.qStem,
                     ["aStem" + index]: question.qType === 'matrix' && stem.aStem.toString(),
@@ -87,7 +94,7 @@ export default function Index({viewHandler, id}) {
             >
             </Spinner>
             }
-            {<Toast show={res} onClose={setRes} style={{position: 'fixed', right: '20px'}}>
+            {<Toast show={res} onClose={setRes} style={resStyle}>
                 <Toast.Header>
                     <strong className="mr-auto">Question Edited Successfully</strong>
                 </Toast.Header>

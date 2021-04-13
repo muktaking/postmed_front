@@ -91,7 +91,7 @@ export default function ExamCard({width="350", height="180", examId, imgSrc, tit
 
     return (
         <>
-            <Card key={examId} className="mr-2 mb-2">
+            <Card key={examId} className="mr-2 mb-2" style={{width: width + "px"}} >
                 {!canActivate(rolePermitted.admin, token) && <Card.Img
                     variant="top"
                     src={imgSrc}

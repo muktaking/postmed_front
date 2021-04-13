@@ -40,6 +40,7 @@ const RoutePages = (props) => {
           <Route path="/reset/:id" component={Reset} />
           <Route path="/exams" exact component={InnerContent} />
           <Route path="/exams/:id" exact component={InnerContent} />
+          <Route path="/exams/category/:id" exact component={InnerContent} />
           <Route path="/exams/free/:id" component={InnerContent} />
           <Route path="/result" component={InnerContent} />
           <Route path="/result/rank/:id" component={InnerContent} />

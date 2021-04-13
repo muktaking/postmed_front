@@ -185,6 +185,28 @@
   margin-left: 0;
 }
 
+.cat-card {
+  width: 350px;
+  div.parent {
+    display: flex;
+    justify-content: space-between;
+    a {
+      color: black;
+      text-decoration: none;
+    }
+    a:hover {
+      color: rgb(255, 255, 255);
+    }
+    svg {
+      margin-left: auto;
+      color: white;
+      :hover {
+        color: rgb(77, 77, 77);
+      }
+    }
+  }
+}
+
 @media (min-width: 768px) {
   #sidebar-wrapper {
     margin-left: 0;

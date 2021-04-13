@@ -9,8 +9,8 @@ import EditQuestion from './edit';
 import SelectQuestions from './selectQuestions';
 import Upload from './upload';
 
-
 const DefaultView = ({viewHandler, disable})=>{
+
     return(
         <div className="my-3">
             <MetaInfo {...RoutesConfig.Question.metaInfo} />

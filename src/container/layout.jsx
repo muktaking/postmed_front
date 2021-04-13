@@ -23,6 +23,11 @@ const Dashboard = lazy(()=> import('./dashboard/'));
 const ExamBuilder = lazy(()=> import('./examBuilder/examBuilder'));
 //import ExamLists from "./exams/examLists";
 const ExamLists = lazy(()=> import('./exams/examLists'));
+//import ExamLists from "./exams/examLists";
+//const ExamListsByCat = lazy(()=> import('./exams/examListsByCat'));
+const ExamListsByCat = lazy(()=> import('./exams/examsLists.index'));
+
+const ExamListsByCatShower = lazy(()=> import('./exams/examListsByCatShower'));
 //import ExamTaker from "./exams/examTaker";
 const ExamTaker = lazy(()=> import('./exams/examTaker'));
 //import QuestionBuilder from './questionBuilder/';
@@ -59,7 +64,8 @@ const InnerContent = (props) => {
                       <Route path="/exambuilder" exact component={ExamBuilder} />
                       <Route path="/examedit" exact component={ExamLists} />
                       <Route path="/exams/:id" exact render={(props)=><ExamTaker free={false} {...props}/>} />
-                      <Route path="/exams" exact component={ExamLists} />
+                      <Route path="/exams" exact component={process.env.REACT_APP_APP_TYPE === 'public' ? ExamListsByCat : ExamLists} />
+                      <Route path="/exams/category/:id" exact component={ExamListsByCatShower} />
                       <Route path="/exams/free/:id" exact render={(props)=><ExamTaker free={true} {...props}/>} />
                       <Route path="/result" exact component={Result} />
                       <Route path="/result/rank/:id" exact component={Rank} />
