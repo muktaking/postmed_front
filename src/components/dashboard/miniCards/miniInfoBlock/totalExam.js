@@ -1,23 +1,27 @@
-import React from "react";
-import { useIntl } from 'react-intl';
-import MiniBlock from "./miniBlock";
+import React from 'react'
+import { useIntl } from 'react-intl'
+import MiniBlock from './miniBlock'
 
-
-const totalExam = ({ value, footerValue }) => {
-  const intl = useIntl();
-  
+const TotalExam = ({ value, footerValue }) => {
+  const intl = useIntl()
 
   return (
     <MiniBlock
-      heading={intl.formatMessage({id: 'db.te', defaultMessage: "Total Exams"})}
+      heading={intl.formatMessage({
+        id: 'db.te',
+        defaultMessage: 'Total Exams'
+      })}
       value={value}
-      faIcon={"file-alt"}
-      footerHeading={intl.formatMessage({id: 'db.et', defaultMessage: "Exam Taken"})}
+      faIcon={'file-alt'}
+      footerHeading={intl.formatMessage({
+        id: 'db.et',
+        defaultMessage: 'Exam Taken'
+      })}
       footerValue={footerValue}
-      color={"info"}
-      faFooterIcon={"file-import"}
+      color={'info'}
+      faFooterIcon={'file-import'}
     />
-  );
-};
+  )
+}
 
-export default totalExam;
+export default TotalExam

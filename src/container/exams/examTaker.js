@@ -77,9 +77,6 @@ const renderer = ({ hours, minutes, seconds, completed }) => {
 };
 
 class ExamTaker extends Component {
-  constructor(){
-    super()
-  }
   state = {
     loading: false,
     //For Pagination

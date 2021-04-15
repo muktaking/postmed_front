@@ -1,16 +1,15 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { Button, Nav, Navbar } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
+import { Button, Nav, Navbar } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 
 const TopNavBar = (props) => {
-  const isLoggedIn = useSelector((state) => state.auth.token);
+  const isLoggedIn = useSelector((state) => state.auth.token)
   return (
-    <Navbar bg="dark" expand="lg" variant="dark">
-      <Button className="mr-2">Toggle</Button>
-      <Navbar.Brand href="#home">{props.pageName}</Navbar.Brand>
+    <Navbar bg='dark' expand='lg' variant='dark'>
+      <Button className='mr-2'>Toggle</Button>
+      <Navbar.Brand href='#home'>{props.pageName}</Navbar.Brand>
       {/* <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
@@ -21,26 +20,28 @@ const TopNavBar = (props) => {
         formControl={classes.formControl}
         searchBtn={classes.searchBtn}
       /> */}
-      {isLoggedIn && <Nav.Item className="ml-md-auto">
-        <NavLink to={{ pathname: "/logout" }} className="nav-link">
-          <FontAwesomeIcon
-            icon="sign-out-alt"
-            size="lg"
-            className="text-danger"
-          />
-        </NavLink>
-      </Nav.Item>}
+      {isLoggedIn && (
+        <Nav.Item className='ml-md-auto'>
+          <NavLink to={{ pathname: '/logout' }} className='nav-link'>
+            <FontAwesomeIcon
+              icon='sign-out-alt'
+              size='lg'
+              className='text-danger'
+            />
+          </NavLink>
+        </Nav.Item>
+      )}
       {/* </Navbar.Collapse> */}
     </Navbar>
-  );
-};
+  )
+}
 
-export default TopNavBar;
+export default TopNavBar
 
-const classes = {
-  formControl: "search-input",
-  searchBtn: "search-button",
-};
+// const classes = {
+//   formControl: 'search-input',
+//   searchBtn: 'search-button'
+// }
 
 // var styles = {
 //   bmBurgerButton: {

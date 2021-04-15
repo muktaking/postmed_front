@@ -1,13 +1,17 @@
-import React from 'react';
-import Helmet from 'react-helmet';
-import { APP_NAME, AUTHOR_NAME, BASE_URL, DEFAULT_LOCALE } from '../../config/env.config';
-import { RoutesConfig } from '../../config/routes.config';
-
+import React from 'react'
+import Helmet from 'react-helmet'
+import {
+  APP_NAME,
+  AUTHOR_NAME,
+  BASE_URL,
+  DEFAULT_LOCALE
+} from '../../config/env.config'
+import { RoutesConfig } from '../../config/routes.config'
 
 const {
   title: _defaultTitle,
   description: _defaultDescription
-} = RoutesConfig.Home.metaInfo;
+} = RoutesConfig.Home.metaInfo
 
 const MetaInfo = ({
   meta = [],
@@ -48,6 +52,6 @@ const MetaInfo = ({
       }
     ].concat(meta)}
   />
-);
+)
 
-export default MetaInfo;
+export default MetaInfo

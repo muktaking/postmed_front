@@ -1,29 +1,28 @@
-import React from "react";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-
-import MiniBlock from "../miniBlock/miniBlock";
+import React from 'react'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+import MiniBlock from '../miniBlock/miniBlock'
 
 //import "./demo.scss";
 
-const demo = props => {
+const demo = (props) => {
   const features = {
-    heading: ["Cloud Based", "Anywhere At Anytime", "Accurecy"],
+    heading: ['Cloud Based', 'Anywhere At Anytime', 'Accurecy'],
     para: [
-      "All System is based on cloud. Test the digitalization in exam management system",
-      "You can give exam at anytime from anywhere. Home, sweet home!! ",
-      "We try hard to make all questions and answers 100% accuret "
+      'All System is based on cloud. Test the digitalization in exam management system',
+      'You can give exam at anytime from anywhere. Home, sweet home!! ',
+      'We try hard to make all questions and answers 100% accuret '
     ],
-    faIcons: ["cloud", "hourglass", "thumbs-up"]
-  };
+    faIcons: ['cloud', 'hourglass', 'thumbs-up']
+  }
 
   return (
-    <div id="demo" className="offset">
-      <div className="fixed-background">
-        <Row className="dark text-center">
+    <div id='demo' className='offset'>
+      <div className='fixed-background'>
+        <Row className='dark text-center'>
           <Col xs={12}>
-            <h3 className="heading">A Snippet Of System</h3>
-            <div className="heading-underline"></div>
+            <h3 className='heading'>A Snippet Of System</h3>
+            <div className='heading-underline'></div>
           </Col>
           <Row>
             {features.faIcons.map((value, index) => (
@@ -36,12 +35,12 @@ const demo = props => {
             ))}
           </Row>
         </Row>
-        <div className="fixed-wrap">
-          <div className="fixed"></div>
+        <div className='fixed-wrap'>
+          <div className='fixed'></div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default demo;
+export default demo

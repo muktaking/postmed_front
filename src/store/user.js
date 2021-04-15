@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { apiCallBegun } from "./api";
+import { createSlice } from '@reduxjs/toolkit'
+import { apiCallBegun } from './api'
 
 const slice = createSlice({
-  name: "user",
+  name: 'user',
   initialState: {
     id: null,
     firstName: null,
@@ -13,28 +13,28 @@ const slice = createSlice({
     mobile: null,
     userFrom: Date.now(),
     address: null,
-    avatar: null,
+    avatar: null
   },
   reducers: {
     getUser: (user, action) => {
-      user.id = action.payload.id;
-      user.firstName = action.payload.firstName;
-      user.lastName = action.payload.lastName;
-      user.userName = action.payload.userName;
-      user.email = action.payload.email;
-      user.mobile = action.payload.mobile;
-      user.userFrom = action.payload.createdAt;
-      user.role = action.payload.role;
-      user.address = action.payload.address;
+      user.id = action.payload.id
+      user.firstName = action.payload.firstName
+      user.lastName = action.payload.lastName
+      user.userName = action.payload.userName
+      user.email = action.payload.email
+      user.mobile = action.payload.mobile
+      user.userFrom = action.payload.createdAt
+      user.role = action.payload.role
+      user.address = action.payload.address
       user.avatar = action.payload.avatar
-    },
-  },
-});
-export const { getUser } = slice.actions;
-export default slice.reducer;
+    }
+  }
+})
+export const { getUser } = slice.actions
+export default slice.reducer
 
-const url = "/users";
-const method = "get";
+const url = '/users'
+const method = 'get'
 
 export const getUserLoader = () => (dispatch) => {
   dispatch(
@@ -42,7 +42,7 @@ export const getUserLoader = () => (dispatch) => {
       url,
       method,
       onSuccess: getUser.type,
-      sendToken: true,
+      sendToken: true
     })
-  );
-};
+  )
+}

@@ -1,10 +1,10 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { Component } from "react";
-import Accordion from "react-bootstrap/Accordion";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { Component } from 'react'
+import Accordion from 'react-bootstrap/Accordion'
+import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 // CSS Modules, react-datepicker-cssmodules.css
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
@@ -12,50 +12,50 @@ import "react-datepicker/dist/react-datepicker.css";
 class BigCard extends Component {
   state = {
     startDate: new Date(),
-    endDate: new Date(),
-  };
+    endDate: new Date()
+  }
 
   startHandleChange = (date) => {
     this.setState({
-      startDate: date,
-    });
-  };
+      startDate: date
+    })
+  }
   endHandleChange = (date) => {
     this.setState({
-      endDate: date,
-    });
-  };
+      endDate: date
+    })
+  }
   reportHandler = () => {
     //console.log(this.state.startDate, this.state.endDate);
-  };
+  }
 
   render() {
     return (
-      <Accordion defaultActiveKey="0" className="mb-3">
-        <Card className="border-top-0">
-          <Card.Header className={"bg-dark" + " text-light"}>
-            <div className="d-flex justify-content-between">
+      <Accordion defaultActiveKey='0' className='mb-3'>
+        <Card className='border-top-0'>
+          <Card.Header className={'bg-dark text-light'}>
+            <div className='d-flex justify-content-between'>
               {this.props.header}
-              <Accordion.Toggle as={Button} variant="link" eventKey="0">
+              <Accordion.Toggle as={Button} variant='link' eventKey='0'>
                 <FontAwesomeIcon
-                  icon={"bars"}
-                  size="lg"
-                  className="text-light"
+                  icon={'bars'}
+                  size='lg'
+                  className='text-light'
                 />
               </Accordion.Toggle>
               {/* <span className="">More..</span> */}
             </div>
           </Card.Header>
-          <Accordion.Collapse eventKey="0">
+          <Accordion.Collapse eventKey='0'>
             <Card.Body>
               {this.props.showDatePicker && (
-                <div className="d-flex flex-wrap justify-content-between mb-3">
+                <div className='d-flex flex-wrap justify-content-between mb-3'>
                   <div>
                     <span>Start Date:</span>
                     <FontAwesomeIcon
-                      icon={"calendar-alt"}
-                      size="2x"
-                      className="mx-2"
+                      icon={'calendar-alt'}
+                      size='2x'
+                      className='mx-2'
                     />
                     <DatePicker
                       selected={this.state.startDate}
@@ -63,11 +63,11 @@ class BigCard extends Component {
                     />
                   </div>
                   <div>
-                    <span className="">End Date:</span>
+                    <span className=''>End Date:</span>
                     <FontAwesomeIcon
-                      icon={"calendar-alt"}
-                      size="2x"
-                      className="mx-2"
+                      icon={'calendar-alt'}
+                      size='2x'
+                      className='mx-2'
                     />
                     <DatePicker
                       selected={this.state.endDate}
@@ -84,8 +84,8 @@ class BigCard extends Component {
           </Accordion.Collapse>
         </Card>
       </Accordion>
-    );
+    )
   }
 }
 
-export default BigCard;
+export default BigCard

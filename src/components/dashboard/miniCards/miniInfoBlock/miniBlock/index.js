@@ -1,11 +1,10 @@
-import React from "react";
-import Card from "react-bootstrap/Card";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import Footer from "./footer";
-import Header from "./header";
-import Icon from "./icon";
-
+import React from 'react'
+import Card from 'react-bootstrap/Card'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+import Footer from './footer'
+import Header from './header'
+import Icon from './icon'
 
 const miniBlock = ({
   heading,
@@ -15,18 +14,18 @@ const miniBlock = ({
   faIcon,
   footerHeading,
   footerValue,
-  faFooterIcon,
+  faFooterIcon
 }) => {
   return (
-    <Card className="card-common mt-2" >
+    <Card className='card-common mt-2'>
       <Card.Body>
         <Row>
           <Col sm={8}>
-            <Header heading={heading} color={color} value={value} id={id}/>
+            <Header heading={heading} color={color} value={value} id={id} />
           </Col>
           <Col sm={4}>
-            <div className="d-flex  align-items-center justify-content-end h-100">
-              <Icon icon={faIcon} size={"3x"} classes={"text-" + color} />
+            <div className='d-flex  align-items-center justify-content-end h-100'>
+              <Icon icon={faIcon} size={'3x'} classes={'text-' + color} />
             </div>
           </Col>
         </Row>
@@ -38,7 +37,7 @@ const miniBlock = ({
         icon={faFooterIcon}
       />
     </Card>
-  );
-};
+  )
+}
 
-export default miniBlock;
+export default miniBlock

@@ -1,26 +1,26 @@
-import React from "react";
-import CategoryForm from "./categoryForm";
+import React from 'react'
+import CategoryForm from './categoryForm'
 
 const fields = [
   {
-    name: "name",
-    placeholder: "Category Name",
+    name: 'name',
+    placeholder: 'Category Name',
     error: formErrors.name,
-    label: "Category Name",
+    label: 'Category Name'
   },
   {
-    name: "parentId",
+    name: 'parentId',
     error: formErrors.parentId,
-    label: "Parent Category",
-    selectOptions,
-  },
-];
+    label: 'Parent Category',
+    selectOptions
+  }
+]
 
 class Category extends Component {
-  state = {};
+  state = {}
   render() {
-    return <CategoryForm />;
+    return <CategoryForm />
   }
 }
 
-export default Category;
+export default Category

@@ -6,19 +6,16 @@ it is an simple api middleware to generalize get and send data to server
 
 */
 
-import axios from "axios";
-
-import { apiCallBegun, apiCallSuccess, apiCallFail } from "../api";
-
-import { authSuccess, checkAuthTimeOut } from "../auth";
-
-import setAuthorizationToken from "../../utils/setAuthorizationToken";
-import errorHandler from "../../utils/errorHandler";
+import axios from 'axios'
+import errorHandler from '../../utils/errorHandler'
+import setAuthorizationToken from '../../utils/setAuthorizationToken'
+import { apiCallBegun, apiCallFail, apiCallSuccess } from '../api'
+import { authSuccess, checkAuthTimeOut } from '../auth'
 
 //api middleware function
 
 export const api = ({ getState, dispatch }) => (next) => async (action) => {
-  if (action.type !== apiCallBegun.type) return next(action);
+  if (action.type !== apiCallBegun.type) return next(action)
 
   const {
     url,
@@ -28,15 +25,15 @@ export const api = ({ getState, dispatch }) => (next) => async (action) => {
     onStart,
     onSuccess,
     onError,
-    sendToken,
-  } = action.payload;
+    sendToken
+  } = action.payload
 
-  if (onStart) dispatch({ type: onStart });
-  next(action);
+  if (onStart) dispatch({ type: onStart })
+  next(action)
 
   try {
     if (sendToken) {
-      setAuthorizationToken(getState().auth.token);
+      setAuthorizationToken(getState().auth.token)
     }
     // let imageData;
     // if (data && data.image) {
@@ -53,26 +50,26 @@ export const api = ({ getState, dispatch }) => (next) => async (action) => {
       url,
       method,
       data: data,
-      config,
-    });
+      config
+    })
 
-    dispatch(apiCallSuccess(response.data));
+    dispatch(apiCallSuccess(response.data))
 
     if (onSuccess) {
       if (onSuccess === authSuccess.type) {
         const expirationDate = new Date(
           new Date().getTime() + response.data.expireIn * 1000
-        );
-        localStorage.setItem("jwtToken", response.data.accessToken);
-        localStorage.setItem("expirationDate", expirationDate);
-        localStorage.setItem("userId", response.data.id);
-        dispatch(checkAuthTimeOut(response.data.expireIn));
-        dispatch({ type: authSuccess.type, payload: response.data });
-      } else dispatch({ type: onSuccess, payload: response.data });
+        )
+        localStorage.setItem('jwtToken', response.data.accessToken)
+        localStorage.setItem('expirationDate', expirationDate)
+        localStorage.setItem('userId', response.data.id)
+        dispatch(checkAuthTimeOut(response.data.expireIn))
+        dispatch({ type: authSuccess.type, payload: response.data })
+      } else dispatch({ type: onSuccess, payload: response.data })
     }
   } catch (error) {
-    const response = errorHandler(error);
-    dispatch(apiCallFail(response));
-    if (onError) dispatch({ type: onError, payload: response });
+    const response = errorHandler(error)
+    dispatch(apiCallFail(response))
+    if (onError) dispatch({ type: onError, payload: response })
   }
-};
+}

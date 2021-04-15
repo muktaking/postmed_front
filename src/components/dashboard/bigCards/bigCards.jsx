@@ -1,11 +1,10 @@
-import React from "react";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import "react-datepicker/dist/react-datepicker.css";
-import ExamFeaturedCard from "./mainContentCards/examsFeaturedCard";
-import ReportCard from "./mainContentCards/reportCard";
-import RecentActivityCard from "./sideCards/recentActivityCard";
-
+import React from 'react'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+import 'react-datepicker/dist/react-datepicker.css'
+import ExamFeaturedCard from './mainContentCards/examsFeaturedCard'
+import ReportCard from './mainContentCards/reportCard'
+import RecentActivityCard from './sideCards/recentActivityCard'
 
 const BigCards = (props) => {
   return (
@@ -23,7 +22,7 @@ const BigCards = (props) => {
         </Col>
       </Row>
     </>
-  );
-};
+  )
+}
 
-export default BigCards;
+export default BigCards

@@ -1,40 +1,39 @@
-import { createSlice } from "@reduxjs/toolkit";
-
-import { apiCallBegun } from "./api";
+import { createSlice } from '@reduxjs/toolkit'
+import { apiCallBegun } from './api'
 
 const slice = createSlice({
-  name: "Category",
+  name: 'Category',
   initialState: { categories: [], catHierarchy: [] },
   reducers: {
     getCategory: (state, action) => {
-      state.categories = action.payload.categories;
-      state.catHierarchy = action.payload.catHierarchy;
-    },
-  },
-});
+      state.categories = action.payload.categories
+      state.catHierarchy = action.payload.catHierarchy
+    }
+  }
+})
 
-export const { getCategory } = slice.actions;
-export default slice.reducer;
+export const { getCategory } = slice.actions
+export default slice.reducer
 
-const url = "/categories";
-const method = "get";
+const url = '/categories'
+const method = 'get'
 export const fetchCategory = () => (dispatch) => {
   dispatch(
     apiCallBegun({
       url,
       method,
-      onSuccess: getCategory.type,
+      onSuccess: getCategory.type
     })
-  );
-};
+  )
+}
 
 export const createCategory = (data) => (dispatch) => {
   dispatch(
     apiCallBegun({
       url,
-      method: "post",
+      method: 'post',
       data,
-      sendToken: true,
+      sendToken: true
     })
-  );
-};
+  )
+}

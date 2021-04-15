@@ -1,57 +1,60 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { apiCallBegun } from "./api";
-
+import { createSlice } from '@reduxjs/toolkit'
+import { apiCallBegun } from './api'
 
 const slice = createSlice({
-  name: "ExamPaper",
+  name: 'ExamPaper',
   initialState: {
     loading: false,
     questions: [],
     ids: [],
     success: null,
-    error: null,
+    error: null
   },
   reducers: {
     selectedQuestions: (state, action) => {
-      state.questions = action.payload.questions;
-      state.ids = action.payload.ids;
+      state.questions = action.payload.questions
+      state.ids = action.payload.ids
     },
-    onLoading: (state)=>{
-      state.loading = true;
+    onLoading: (state) => {
+      state.loading = true
     },
     onSuccess: (state, action) => {
-      state.success = action.payload;
-      state.loading= false;
+      state.success = action.payload
+      state.loading = false
     },
     onError: (state, action) => {
-      state.error = action.payload;
-      state.loading = false;
+      state.error = action.payload
+      state.loading = false
+    }
+  }
+})
 
-    },
-  },
-});
+export const {
+  selectedQuestions,
+  onSuccess,
+  onError,
+  onLoading
+} = slice.actions
 
-export const { selectedQuestions, onSuccess, onError, onLoading } = slice.actions;
-
-export default slice.reducer;
+export default slice.reducer
 
 export const selectedQuestionsLoader = (questions, ids) => (dispatch) => {
-  dispatch(selectedQuestions({ questions, ids }));
-};
+  dispatch(selectedQuestions({ questions, ids }))
+}
 
 export const onLoadingLoader = () => (dispatch) => {
-  dispatch({type: onLoading.type});
-};
+  dispatch({ type: onLoading.type })
+}
 
 export const postExamProfile = (examSpec, questions) => (dispatch) => {
   dispatch(
     apiCallBegun({
-      url: "/exams",
-      method: "post",
+      url: '/exams',
+      method: 'post',
       data: { ...examSpec, questions },
       onSuccess: onSuccess.type,
       onError: onError.type,
-      sendToken: true,
+      sendToken: true
     })
-  );
-};
+  )
+}

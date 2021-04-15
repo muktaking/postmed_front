@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { Accordion, Button, Card, Form } from "react-bootstrap";
-import Stems from "./questionStem.view";
-
-
+import React, { useState } from 'react'
+import { Accordion, Button, Card, Form } from 'react-bootstrap'
+import Stems from './questionStem.view'
 
 const QuestionForm = (props) => {
   const {
@@ -13,41 +11,41 @@ const QuestionForm = (props) => {
     title,
     categoryRef,
     question,
-    showEditQuestionAccordionStateHandler,
-  } = props;
-  const [stemAmount, setStemAmount] = useState([1, 2, 3, 4, 5]);
+    showEditQuestionAccordionStateHandler
+  } = props
+  const [stemAmount, setStemAmount] = useState([1, 2, 3, 4, 5])
   return (
-    <Accordion className="mt-3" defaultActiveKey={title && "0"}>
-      <Accordion.Toggle as={Card.Header} eventKey="0">
-        <h3> {title ? "Edit " + title : "Create A New"} Question</h3>
+    <Accordion className='mt-3' defaultActiveKey={title && '0'}>
+      <Accordion.Toggle as={Card.Header} eventKey='0'>
+        <h3> {title ? 'Edit ' + title : 'Create A New'} Question</h3>
       </Accordion.Toggle>
-      <Accordion.Collapse eventKey="0">
-        <Form className="mt-2" onSubmit={submitHandler}>
-          <Form.Group controlId="formGroupQuestionTitle">
+      <Accordion.Collapse eventKey='0'>
+        <Form className='mt-2' onSubmit={submitHandler}>
+          <Form.Group controlId='formGroupQuestionTitle'>
             <Form.Label>Question Title</Form.Label>
             <Form.Control
-              type="text"
-              placeholder="Question Title"
-              name="title"
+              type='text'
+              placeholder='Question Title'
+              name='title'
               value={question.title}
               onChange={handleChange}
             />
             {formErrors.title.length > 0 && (
-              <span className="errorMessage">{formErrors.title}</span>
+              <span className='errorMessage'>{formErrors.title}</span>
             )}
           </Form.Group>
-          <Form.Group controlId="formGridCategory">
+          <Form.Group controlId='formGridCategory'>
             <Form.Label>Question Category</Form.Label>
             <Form.Control
-              as="select"
-              name="category"
+              as='select'
+              name='category'
               defaultValue={question.category}
               onChange={handleChange}
               ref={categoryRef}
             >
               {/* <option value="Top">Top</option> */}
               {categories.map((value, index) => {
-                let CategorySlug = value.slug.replace(/_/g, " / ");
+                let CategorySlug = value.slug.replace(/_/g, ' / ')
                 return (
                   <option
                     key={index}
@@ -56,48 +54,48 @@ const QuestionForm = (props) => {
                   >
                     {CategorySlug}
                   </option>
-                );
+                )
               })}
             </Form.Control>
             {formErrors.category.length > 0 && (
-              <span className="errorMessage">{formErrors.category}</span>
+              <span className='errorMessage'>{formErrors.category}</span>
             )}
           </Form.Group>
-          <Form.Group controlId="formGridQType">
+          <Form.Group controlId='formGridQType'>
             <Form.Label>Question Category</Form.Label>
             <Form.Control
-              as="select"
-              name="qType"
+              as='select'
+              name='qType'
               value={question.qType}
               onChange={handleChange}
               // ref={selectOptionValueRef}
             >
-              <option value="matrix">Matrix</option>
-              <option value="sba">SBA</option>
+              <option value='matrix'>Matrix</option>
+              <option value='sba'>SBA</option>
             </Form.Control>
             {formErrors.category.length > 0 && (
-              <span className="errorMessage">{formErrors.category}</span>
+              <span className='errorMessage'>{formErrors.category}</span>
             )}
           </Form.Group>
 
-          <Form.Group controlId="formGroupQuestionQText">
+          <Form.Group controlId='formGroupQuestionQText'>
             <Form.Label>Question Text</Form.Label>
             <Form.Control
-              type="text"
-              placeholder="Question text"
-              name="qText"
+              type='text'
+              placeholder='Question text'
+              name='qText'
               value={question.qText}
               // value={Question ? Question.title : null}
               onChange={handleChange}
             />
             {formErrors.title.length > 0 && (
-              <span className="errorMessage">{formErrors.qText}</span>
+              <span className='errorMessage'>{formErrors.qText}</span>
             )}
           </Form.Group>
           <div>
             {stemAmount.map((i) => (
               <Stems
-                key={"stem-" + i}
+                key={'stem-' + i}
                 index={i}
                 stem={question.stem}
                 qType={question.qType}
@@ -105,7 +103,7 @@ const QuestionForm = (props) => {
               />
             ))}
             {formErrors.stem.length > 0 && (
-              <span className="errorMessage">{formErrors.stem}</span>
+              <span className='errorMessage'>{formErrors.stem}</span>
             )}
             {/* <Button
               onClick={() => {
@@ -168,13 +166,13 @@ const QuestionForm = (props) => {
             )}
           </Form.Group> */}
 
-          <Button type="submit" className="btn-submit">
+          <Button type='submit' className='btn-submit'>
             Submit
           </Button>
           {title && (
             <Button
-              variant="success"
-              className="ml-3"
+              variant='success'
+              className='ml-3'
               onClick={showEditQuestionAccordionStateHandler}
             >
               Cancel
@@ -183,7 +181,7 @@ const QuestionForm = (props) => {
         </Form>
       </Accordion.Collapse>
     </Accordion>
-  );
-};
+  )
+}
 
-export default QuestionForm;
+export default QuestionForm

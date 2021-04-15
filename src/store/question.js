@@ -1,9 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { apiCallBegun } from "./api";
-
+import { createSlice } from '@reduxjs/toolkit'
+import { apiCallBegun } from './api'
 
 const slice = createSlice({
-  name: "Question",
+  name: 'Question',
   initialState: {
     questions: [],
     error: null,
@@ -12,124 +11,129 @@ const slice = createSlice({
   },
   reducers: {
     getQuestions: (state, action) => {
-      state.questions = action.payload;
+      state.questions = action.payload
     },
-    loadingStart: (state, action)=>{
-      state.loading = true;
+    loadingStart: (state, action) => {
+      state.loading = true
     },
-    getResponse: (state, action)=>{
-      state.response = action.payload,
+    getResponse: (state, action) => {
+      state.response = action.payload
       state.loading = false
     },
-    resetResponse: (state, action)=>{
-      state.response = null,
+    resetResponse: (state, action) => {
+      state.response = null
       state.loading = false
     }
-  },
-});
+  }
+})
 
-export const { getQuestions,  loadingStart, getResponse, resetResponse } = slice.actions;
+export const {
+  getQuestions,
+  loadingStart,
+  getResponse,
+  resetResponse
+} = slice.actions
 
-export default slice.reducer;
+export default slice.reducer
 
 export const resetResponseLoader = () => (dispatch) => {
   dispatch({
     type: resetResponse.type
-  });
-};
+  })
+}
 
 export const getQuestionLoader = () => (dispatch) => {
   dispatch(
     apiCallBegun({
-      url: "/questions",
-      method: "get",
+      url: '/questions',
+      method: 'get',
       //sendToken: true,
       //data,
       //config,
-      onSuccess: getQuestions.type,
+      onSuccess: getQuestions.type
     })
-  );
-};
+  )
+}
 
 export const getQuestionByCategoryLoader = (id) => (dispatch) => {
   dispatch(
     apiCallBegun({
-      url: "/questions/category/" + id,
-      method: "get",
-      onSuccess: getQuestions.type,
+      url: '/questions/category/' + id,
+      method: 'get',
+      onSuccess: getQuestions.type
     })
-  );
-};
+  )
+}
 
 export const createQuestionLoader = (data) => (dispatch) => {
-  const config = { headers: { "Content-Type": "multipart/form-data" } };
-  const questionData = new FormData();
+  const config = { headers: { 'Content-Type': 'multipart/form-data' } }
+  const questionData = new FormData()
   Object.keys(data).forEach((key) => {
-    data[key] && questionData.append(key, data[key]);
-  });
+    data[key] && questionData.append(key, data[key])
+  })
 
   dispatch(
     apiCallBegun({
-      url: "/questions",
-      method: "post",
+      url: '/questions',
+      method: 'post',
       sendToken: true,
       data,
       config,
       onStart: loadingStart.type,
       onSuccess: getResponse.type,
-      onError: getResponse.type,
+      onError: getResponse.type
     })
-  );
-};
+  )
+}
 
 export const uploadQuestionLoader = (data) => (dispatch) => {
-  const config = { headers: { "Content-Type": "multipart/form-data" } };
-  const questionData = new FormData();
+  const config = { headers: { 'Content-Type': 'multipart/form-data' } }
+  const questionData = new FormData()
   Object.keys(data).forEach((key) => {
-    data[key] && questionData.append(key, data[key]);
-  });
+    data[key] && questionData.append(key, data[key])
+  })
 
   dispatch(
     apiCallBegun({
-      url: "/questions/files",
-      method: "post",
+      url: '/questions/files',
+      method: 'post',
       sendToken: true,
       data,
-      config,
+      config
     })
-  );
-};
+  )
+}
 
-export const editQuestionLoader = (id , data) => (dispatch) => {
-  const config = { headers: { "Content-Type": "multipart/form-data" } };
-  const questionData = new FormData();
+export const editQuestionLoader = (id, data) => (dispatch) => {
+  const config = { headers: { 'Content-Type': 'multipart/form-data' } }
+  const questionData = new FormData()
   Object.keys(data).forEach((key) => {
-    data[key] && questionData.append(key, data[key]);
-  });
+    data[key] && questionData.append(key, data[key])
+  })
 
   dispatch(
     apiCallBegun({
-      url: "/questions/" + id,
-      method: "patch",
+      url: '/questions/' + id,
+      method: 'patch',
       sendToken: true,
       data,
       config,
       onStart: loadingStart.type,
       onSuccess: getResponse.type,
-      onError: getResponse.type,
+      onError: getResponse.type
     })
-  );
-};
+  )
+}
 
 export const deleteQuestionLoader = (id) => (dispatch) => {
   dispatch(
     apiCallBegun({
-      url: "/questions/" + id,
-      method: "delete",
+      url: '/questions/' + id,
+      method: 'delete',
       sendToken: true,
       onStart: loadingStart.type,
       onSuccess: getResponse.type,
-      onError: getResponse.type,
+      onError: getResponse.type
     })
-  );
-};
+  )
+}

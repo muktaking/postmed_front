@@ -1,33 +1,34 @@
-import React from "react";
-import {
-  ListGroup
-} from "react-bootstrap";
-import Stem from "./stem";
+import React from 'react'
+import { ListGroup } from 'react-bootstrap'
+import Stem from './stem'
 
-
-
-const QuestionForm = ({ question, handleChange, defaultChecked}) => {
-
+const QuestionForm = ({ question, handleChange, defaultChecked }) => {
   return (
-    <ListGroup as="ul" className="mt-3">
-      <ListGroup.Item as="li" active>
+    <ListGroup as='ul' className='mt-3'>
+      <ListGroup.Item as='li' active>
         {question.qText}
       </ListGroup.Item>
 
       {question.stems.map((stem, index) => (
-        <ListGroup.Item as="li" key={index}>
+        <ListGroup.Item as='li' key={index}>
           <Stem
             qType={question.qType}
             stem={stem}
             index={index + 1}
             id={question.id}
             handleChange={handleChange}
-            defaultChecked={defaultChecked ? (question.qType === 'matrix') ? defaultChecked[index] : defaultChecked[0] : null}
+            defaultChecked={
+              defaultChecked
+                ? question.qType === 'matrix'
+                  ? defaultChecked[index]
+                  : defaultChecked[0]
+                : null
+            }
           />
         </ListGroup.Item>
       ))}
     </ListGroup>
-  );
-};
+  )
+}
 
-export default QuestionForm;
+export default QuestionForm

@@ -1,30 +1,30 @@
-import React from "react";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import Jumbotron from "react-bootstrap/Jumbotron";
-import Image from "react-bootstrap/Image";
-import Button from "react-bootstrap/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
+import Button from 'react-bootstrap/Button'
+import Col from 'react-bootstrap/Col'
+import Image from 'react-bootstrap/Image'
+import Jumbotron from 'react-bootstrap/Jumbotron'
+import Row from 'react-bootstrap/Row'
 
 //import "./clients.scss";
 
-const feature = props => {
+const feature = (props) => {
   return (
-    <div id="clients" className="offset">
+    <div id='clients' className='offset'>
       <Jumbotron>
-        <Col xs={12} className="text-center">
-          <h3 className="heading">Clients</h3>
-          <div className="heading-underline"></div>
+        <Col xs={12} className='text-center'>
+          <h3 className='heading'>Clients</h3>
+          <div className='heading-underline'></div>
         </Col>
-        <Row className="">
-          <Col md={6} className="clients">
+        <Row className=''>
+          <Col md={6} className='clients'>
             <Row>
               <Col md={4}>
-                <Image src="assets/image/client1.png" />
+                <Image src='assets/image/client1.png' />
               </Col>
               <Col md={8}>
                 <blockquote>
-                  <FontAwesomeIcon icon={"quote-left"} />
+                  <FontAwesomeIcon icon={'quote-left'} />
                   Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry. Lorem Ipsum has been the industry's
                   standard dummy text ever since the 1500s, when an unknown
@@ -35,7 +35,7 @@ const feature = props => {
                   the release of Letraset sheets containing Lorem Ipsum
                   passages, and more recently with desktop publishing software
                   like Aldus PageMaker including versions of Lorem Ipsum.
-                  <hr className="clients-hr" />
+                  <hr className='clients-hr' />
                   <cite>&#8212; Ericker fucker, sucker</cite>
                 </blockquote>
               </Col>
@@ -43,14 +43,14 @@ const feature = props => {
           </Col>
         </Row>
       </Jumbotron>
-      <Col xs={12} className="narrow text-center">
-        <p className="lead">Want to start practice</p>
-        <Button size="md" variant="secondary">
+      <Col xs={12} className='narrow text-center'>
+        <p className='lead'>Want to start practice</p>
+        <Button size='md' variant='secondary'>
           Exams
         </Button>
       </Col>
     </div>
-  );
-};
+  )
+}
 
-export default feature;
+export default feature

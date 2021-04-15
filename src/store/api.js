@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 
 const slice = createSlice({
-  name: "api",
+  name: 'api',
   initialState: { result: null, error: null },
   reducers: {
     apiCallBegun: (api, action) => {
@@ -9,18 +9,23 @@ const slice = createSlice({
     },
     apiCallSuccess: (api, action) => {
       //api.loading = false;
-      api.result = action.payload;
+      api.result = action.payload
     },
     apiCallFail: (api, action) => {
-      api.error = action.payload;
+      api.error = action.payload
     },
-    apiCallReset: (api)=>{
-      api.result = null;
-      api.error = null;
+    apiCallReset: (api) => {
+      api.result = null
+      api.error = null
     }
-  },
-});
+  }
+})
 
-export const { apiCallBegun, apiCallSuccess, apiCallFail, apiCallReset } = slice.actions;
+export const {
+  apiCallBegun,
+  apiCallSuccess,
+  apiCallFail,
+  apiCallReset
+} = slice.actions
 
-export default slice.reducer;
+export default slice.reducer

@@ -1,23 +1,25 @@
-import React from "react";
-import { useIntl } from 'react-intl';
-import MiniBlock from "./miniBlock";
+import React from 'react'
+import { useIntl } from 'react-intl'
+import MiniBlock from './miniBlock'
 
-
-const rank = ({ value, footerValue }) => {
-  const intl = useIntl();
+const Rank = ({ value, footerValue }) => {
+  const intl = useIntl()
   return (
     <MiniBlock
-      heading={intl.formatMessage({id: "db.er", defaultMessage: "Your Rank"})}
+      heading={intl.formatMessage({ id: 'db.er', defaultMessage: 'Your Rank' })}
       //
       value={value}
       //
-      faIcon={"medal"}
-      footerHeading={intl.formatMessage({id: 'db.ts', defaultMessage: "Total Student"})}
+      faIcon={'medal'}
+      footerHeading={intl.formatMessage({
+        id: 'db.ts',
+        defaultMessage: 'Total Student'
+      })}
       footerValue={footerValue}
-      color={"warning"}
-      faFooterIcon={"users"}
+      color={'warning'}
+      faFooterIcon={'users'}
     />
-  );
-};
+  )
+}
 
-export default rank;
+export default Rank

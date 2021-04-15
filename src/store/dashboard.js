@@ -1,36 +1,36 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { apiCallBegun } from "./api";
+import { createSlice } from '@reduxjs/toolkit'
+import { apiCallBegun } from './api'
 
 const slice = createSlice({
-  name: "dashboard",
+  name: 'dashboard',
   initialState: {
     featuredExams: [],
     userExamInfo: {
       totalExam: [0, 0],
       rank: [1, 100],
-      upcomingExam: ["No Exam", "01-02-03",null],
-      result: [0.0, 100],
+      upcomingExam: ['No Exam', '01-02-03', null],
+      result: [0.0, 100]
     },
-    userExamStat: null,
+    userExamStat: null
   },
   reducers: {
     dashboardStudent: (state, action) => {
-      state.featuredExams = action.payload.featuredExams;
-      state.userExamInfo = action.payload.userExamInfo;
-      state.userExamStat = action.payload.userExamStat;
+      state.featuredExams = action.payload.featuredExams
+      state.userExamInfo = action.payload.userExamInfo
+      state.userExamStat = action.payload.userExamStat
     },
-    userExamStat: (state,action)=>{
-      state.userExamStat = action.payload.userExamStat;
+    userExamStat: (state, action) => {
+      state.userExamStat = action.payload.userExamStat
     }
-  },
-});
+  }
+})
 
-export const { dashboardStudent} = slice.actions;
+export const { dashboardStudent, userExamStat } = slice.actions
 
-export default slice.reducer;
+export default slice.reducer
 
-const url = "/dashboard/examstat";
-const method = "get";
+const url = '/dashboard/examstat'
+const method = 'get'
 
 export const userExamStatLoader = () => (dispatch) => {
   dispatch(
@@ -38,7 +38,7 @@ export const userExamStatLoader = () => (dispatch) => {
       url,
       method,
       onSuccess: userExamStat.type,
-      sendToken: true,
+      sendToken: true
     })
-  );
-};
+  )
+}
