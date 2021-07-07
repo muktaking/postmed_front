@@ -7,26 +7,26 @@ import RoutePages from './container/routePages'
 import { checkAuthState } from './store/auth'
 
 class App extends Component {
-	componentDidMount() {
-		this.props.onTryAutologin()
-	}
-	render() {
-		return (
-			<>
-				<BrowserRouter>
-					<RoutePages />
-				</BrowserRouter>
-			</>
-		)
-	}
+  componentDidMount() {
+    this.props.onTryAutologin()
+  }
+  render() {
+    return (
+      <>
+        <BrowserRouter>
+          <RoutePages />
+        </BrowserRouter>
+      </>
+    )
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
-	return {
-		onTryAutologin: () => {
-			dispatch(checkAuthState())
-		},
-	}
+  return {
+    onTryAutologin: () => {
+      dispatch(checkAuthState())
+    }
+  }
 }
 
 export default connect(null, mapDispatchToProps)(App)
