@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Badge, Spinner } from 'react-bootstrap'
+import { Badge } from 'react-bootstrap'
 import { BsFillDashCircleFill, BsPlusCircleFill } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import Spinner from '../../components/shared/spinner/spinner'
 import { fetchCategory } from '../../store/category'
-
-const contentCenter = {
-  //styling to display server response in middle of screen
-  position: 'fixed',
-  top: '45vh',
-  left: '50%',
-  zIndex: '10000000000'
-}
 
 export default function ExamListsByCat() {
   const dispatch = useDispatch()
@@ -22,15 +15,8 @@ export default function ExamListsByCat() {
   }, [dispatch])
 
   return (
-    <div className='mt-5'>
-      {catHierarchy.length < 1 && (
-        <Spinner
-          animation='grow'
-          role='status'
-          variant='dark'
-          style={contentCenter}
-        ></Spinner>
-      )}
+    <div className='my-5'>
+      {catHierarchy.length < 1 && <Spinner />}
       <h2 className='text-center'>Exam Categories</h2>
       <div>{catExtractor(catHierarchy)}</div>
     </div>

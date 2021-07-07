@@ -1,6 +1,9 @@
 import { Formik } from 'formik'
 import React, { useState } from 'react'
 import { Alert, Button, Form, Spinner } from 'react-bootstrap'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import { FaRegCalendarAlt } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 //import { useFormik } from "formik";
 import validator from 'validator'
@@ -19,6 +22,8 @@ const centeredStyle = {
 
 const ExamSpec = ({ categories, selectedQuestionIds }) => {
   const [hideMsg, setHideMsg] = useState(true)
+  const [startDate, setStartDate] = useState(new Date())
+  const [endDate, setEndDate] = useState(new Date())
   const dispatch = useDispatch()
   const loading = useSelector((state) => state.examPaper.loading)
   const successMsg = useSelector((state) => state.examPaper.success)
@@ -45,7 +50,13 @@ const ExamSpec = ({ categories, selectedQuestionIds }) => {
           timeLimit: '40'
         }}
         validate={validate}
-        onSubmit={onSubmitHandler(selectedQuestionIds, dispatch, setHideMsg)}
+        onSubmit={onSubmitHandler(
+          startDate,
+          endDate,
+          selectedQuestionIds,
+          dispatch,
+          setHideMsg
+        )}
       >
         {({ errors, handleChange, handleSubmit }) => (
           <ExamCard header='Exam Specification' showHeader={true}>
@@ -134,6 +145,30 @@ const ExamSpec = ({ categories, selectedQuestionIds }) => {
               {errors.description ? (
                 <div className='alert alert-danger'>{errors.description}</div>
               ) : null}
+              <div>
+                <div className='my-3'>
+                  <p>Start Date</p>
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    showTimeSelect
+                    minDate={new Date()}
+                    dateFormat='Pp'
+                  />
+                  <FaRegCalendarAlt size='1.7rem' />
+                </div>
+                <div className='my-3'>
+                  <p>End Date</p>
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date) => setEndDate(date)}
+                    showTimeSelect
+                    minDate={new Date()}
+                    dateFormat='Pp'
+                  />
+                  <FaRegCalendarAlt size='1.7rem' />
+                </div>
+              </div>
               <Form.Group controlId='singleQuestionMark'>
                 <Form.Label>Single Question Mark</Form.Label>
                 <Form.Control
@@ -203,9 +238,17 @@ const ExamSpec = ({ categories, selectedQuestionIds }) => {
 
 export default ExamSpec
 
-function onSubmitHandler(selectedQuestionIds, dispatch, setHideMsg) {
+function onSubmitHandler(
+  startDate,
+  endDate,
+  selectedQuestionIds,
+  dispatch,
+  setHideMsg
+) {
   return (values) => {
     if (selectedQuestionIds.length > 0) {
+      values.startDate = startDate
+      values.endDate = endDate
       dispatch(onLoadingLoader())
       setHideMsg(true)
       dispatch(postExamProfile(values, selectedQuestionIds))

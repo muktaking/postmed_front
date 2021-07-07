@@ -89,6 +89,28 @@ class ExamPaper extends Component {
           this.setState({ [e.id]: { checked: false } })
         })
         break
+      case 'mPQ':
+        paginate(
+          this.props.question.questions,
+          this.state.currentPage,
+          this.state.pageSize
+        ).forEach((e) => {
+          this.setState({
+            [e.id]: { checked: true, id: e.id, title: e.title, qText: e.qText }
+          })
+        })
+        break
+      case 'uPQ':
+        paginate(
+          this.props.question.questions,
+          this.state.currentPage,
+          this.state.pageSize
+        ).forEach((e) => {
+          this.setState({
+            [e.id]: { checked: false }
+          })
+        })
+        break
       default:
         break
     }
@@ -262,6 +284,8 @@ class ExamPaper extends Component {
                   <option>Select...</option>
                   <option value='mAll'>Mark All</option>
                   <option value='uAll'>UnMark All</option>
+                  <option value='mPQ'>Mark The On Page's Questiones </option>
+                  <option value='uPQ'>UnMark The On Page's Questiones</option>
                 </Form.Control>
               </Form.Group>
             </div>

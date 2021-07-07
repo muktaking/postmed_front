@@ -8,8 +8,7 @@ import {
   Button,
   Col, Form,
   Modal,
-  Row,
-  Spinner
+  Row
 } from "react-bootstrap";
 import Countdown from "react-countdown";
 import { Helmet } from "react-helmet";
@@ -23,6 +22,7 @@ import { Link as LinkScroll } from "react-scroll";
 import QuestionView from "../../components/exams/paper/question/question";
 import SubNavBar from "../../components/navbar/subNavBar";
 import PaginationCustom from "../../components/pagination/pagination";
+import Spinner from "../../components/shared/spinner/spinner";
 import {
   disableQuestionsAdd,
   getExamByIdLoader,
@@ -149,7 +149,7 @@ class ExamTaker extends Component {
       this.answers.push({
         id: id,
         stems: this.state[id],
-        type: _.find(this.props.exams.questions, (o) => o.id == id).qType,
+        type: _.find(this.props.exams.questions, (o) => o.id === +id).qType,
       });
     });
     if (this.props.free) {
@@ -198,27 +198,16 @@ class ExamTaker extends Component {
         )}
 
         {(this.props.exams.questions.length < 1 && !this.props.exams.examError) && (
-          <Spinner
-            animation="border"
-            role="status"
-            variant="dark"
-            className="content-center"
-          ></Spinner>
+          <Spinner />
         )}
-
-        {this.state.loading  && (
-          <Spinner
-            animation="border"
-            role="status"
-            variant="dark"
-            className="content-center"
-          ></Spinner>
-        )}
-
 
         {/* Modal tests are you want submit or time expired*/}
         <Modal show={this.state.modalShow} onHide={this.modalHide}>
-          {this.state.timeExpired ? (
+          {this.state.loading ? 
+
+          <p className="lead mt-5 text-center">Your submitted Exam is processing...</p>
+          
+          : this.state.timeExpired ? (
             <>
               <Modal.Header>
                 <Modal.Title className="text-danger">Time Expired</Modal.Title>
@@ -272,7 +261,9 @@ class ExamTaker extends Component {
                 {this.props.intl.formatMessage({id: 'et.no', defaultMessage: "Go Back"})}
                   
                 </Button>
-                <Button variant="primary" onClick={this.onSubmitHandler}>
+                <Button variant="primary" onClick={
+                  this.onSubmitHandler
+                  }>
                 {this.props.intl.formatMessage({id: 'et.yes', defaultMessage: "Yes, I Want."})}
                 </Button>
               </Modal.Footer>

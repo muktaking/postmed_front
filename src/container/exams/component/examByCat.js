@@ -1,7 +1,7 @@
 import moment from 'moment'
 import React from 'react'
 import { Badge, Button, Col } from 'react-bootstrap'
-import { BsClock, BsFileText, BsLayersFill } from 'react-icons/bs'
+import { BsFileText } from 'react-icons/bs'
 import { FormattedMessage } from 'react-intl'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -12,52 +12,67 @@ export default function ExamByCat({ exam }) {
   const authToken = useSelector((state) => (state.auth.token ? true : false))
   return (
     <>
-      <Col sm={7}>
-        <Badge
-          variant='warning'
-          style={{ position: 'absolute', top: '-25px', left: '-10px' }}
-        >
-          {!authToken &&
-            exam.categoryType.filter((cat) => cat.name === 'Free').length > 0 &&
-            'Free'}
-        </Badge>
+      <Col sm={12}>
         <h4 className=''>
-          <BsLayersFill size='1.5rem' />
-          <span className='ml-2'>{exam.title}</span>
+          {/* <BsLayersFill size='1.5rem' /> */}
+          <span className=''>{exam.title}</span>
         </h4>
         <div className=''>
-          <BsClock size='1.5rem' />
-          <Badge className='ml-2' variant='light'>
-            {moment(exam.createdAt).format('YYYY-MM-DD hh:mm A')}
+          {/* <BsClock size='1.5rem' /> */}
+          <span>Start on: </span>
+          <Badge className='' variant='light'>
+            {moment(exam.startDate).format('YYYY-MMM-DD hh:mm A')}
           </Badge>
         </div>
       </Col>
-      <Col sm={5} className='d-flex align-items-center'>
-        <Link
-          className='text-white'
-          to={
-            (!authToken &&
-            exam.categoryType.filter((cat) => cat.name === 'Free').length > 0
-              ? '/exams/free/'
-              : '/exams/') + exam.id
-          }
-        >
-          <Button
-            variant='outline-light mt-4 mt-sm-0'
-            onClick={() => {
-              dispatch(resetExamResultLoader())
-            }}
-          >
-            <FormattedMessage id='btn.start' defaultMessage='Start Exam' />
-          </Button>
-        </Link>
-      </Col>
-      <Col sm={12}>
-        <hr />
+      <Col sm={12} className='mt-1'>
         <p className=''>
-          <BsFileText size='1.5rem' />
+          <BsFileText size='1.5rem' className='m-1' />
           <span className='ml-2'>{exam.description}</span>
         </p>
+        <p className='text-right'>
+          Ends on:{' '}
+          <Badge className='ml-2' variant='danger'>
+            {moment(exam.endDate).format('YYYY-MMM-DD hh:mm A')}
+          </Badge>
+        </p>
+        {/* <Badge variant='light' className='mt-3'>
+          {!authToken &&
+            exam.categoryType.filter((cat) => cat.name === 'Free').length > 0 &&
+            'Free'}
+        </Badge> */}
+        <hr />
+        <div>
+          <Link
+            className='text-white'
+            to={
+              (!authToken &&
+              exam.categoryType.filter((cat) => cat.name === 'Free').length > 0
+                ? '/exams/free/'
+                : '/exams/') + exam.id
+            }
+          >
+            <Button
+              variant='outline-primary'
+              onClick={() => {
+                dispatch(resetExamResultLoader())
+              }}
+            >
+              <FormattedMessage id='btn.start' defaultMessage='Start Exam' />
+            </Button>
+          </Link>
+          <Link className='text-white' to={'/result/rank/' + exam.id}>
+            <Button
+              onClick={() => {
+                dispatch(resetExamResultLoader())
+              }}
+              variant='outline-primary'
+              className='ml-2'
+            >
+              <FormattedMessage id='btn.rank' defaultMessage='Rank' />
+            </Button>
+          </Link>
+        </div>
       </Col>
     </>
   )

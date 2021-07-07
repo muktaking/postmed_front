@@ -15,7 +15,6 @@ export default function ListCard({ title, exams, landing, examLoader }) {
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
-
   return (
     <>
       <Modal show={show} onHide={handleClose} size={'xl'}>
@@ -51,6 +50,7 @@ export default function ListCard({ title, exams, landing, examLoader }) {
                     }
                     description={exam.description}
                     createdAt={exam.createdAt}
+                    endDate={exam.endDate}
                     free={
                       !authToken &&
                       exam.categoryType.filter((cat) => cat.name === 'Free')
@@ -119,7 +119,8 @@ export default function ListCard({ title, exams, landing, examLoader }) {
                       : [{ name: 'Uncategorized' }]
                   }
                   description={exam.description}
-                  createdAt={exam.createdAt}
+                  createdAt={exam.startDate}
+                  endDate={exam.endDate}
                   free={
                     !authToken &&
                     exam.categoryType.filter((cat) => cat.name === 'Free')

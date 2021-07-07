@@ -69,6 +69,7 @@ class Sidebar extends Component {
       this.faIcons = [
         <FaHome size='1.6em' className='mr-2' />,
         <FaCog size='1.6em' className='mr-2' />,
+        <FaPen size='1.6em' className='mr-2' />,
         <FaQuestion size='1.6em' className='mr-2' />,
         <FaPen size='1.6em' className='mr-2' />,
         <FaCog size='1.6em' className='mr-2' />,
@@ -78,6 +79,7 @@ class Sidebar extends Component {
       this.menuName = [
         'Dashboard',
         'Category',
+        'Routine Builder',
         'Question',
         'Exam Builder',
         'Exam Edit',
@@ -88,6 +90,7 @@ class Sidebar extends Component {
       this.navLinks = [
         '/dashboard',
         '/category',
+        '/routine',
         '/question',
         '/exambuilder',
         '/examedit',

@@ -5,12 +5,15 @@ import 'react-datepicker/dist/react-datepicker.css'
 import ExamFeaturedCard from './mainContentCards/examsFeaturedCard'
 import ReportCard from './mainContentCards/reportCard'
 import RecentActivityCard from './sideCards/recentActivityCard'
+import Routine from './sideCards/routine'
 
 const BigCards = (props) => {
   return (
     <>
       <Row>
         <Col xl={8} lg={12}>
+          <Routine />
+          <hr />
           <ReportCard />
           <hr />
           <ExamFeaturedCard />

@@ -25,13 +25,13 @@ const Home = (props) => {
           {process.env.REACT_APP_NAME + ''} <br />
           <FormattedMessage
             id='site.title'
-            defaultMessage='Welcome to The Best Online Exam  Platform'
+            defaultMessage='The Best Online Exam  Platform For Fcps or Residency Exam'
           />
         </h1>
         <h3 style={{ fontSize: '1.8rem' }}>
           <FormattedMessage
             id='site.subtitle'
-            defaultMessage='With the suffix of staying ahead'
+            defaultMessage='Find Your Lacking & Make You Strong For Post-Graduate Exam'
           />
         </h3>
         <Link to='/exams'>

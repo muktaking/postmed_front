@@ -20,7 +20,7 @@ const contact = (props) => {
             <p className='lead'>
               <FormattedMessage
                 id='footer.msg'
-                defaultMessage='We are highly trained team to manage the exam system for you'
+                defaultMessage='We are highly trained team to manage the exam system.'
               />
             </p>
             <strong>

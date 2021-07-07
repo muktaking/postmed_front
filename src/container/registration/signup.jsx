@@ -219,7 +219,7 @@ class SignUp extends Component {
           {/* </div> */}
         </div>
         <div className='caption text-center'>
-          <h1>Registration Form</h1>
+          <h1>Signup Form</h1>
           {this.state.loading && (
             <Spinner
               animation='border'
@@ -349,6 +349,7 @@ class SignUp extends Component {
                 label='By checking the box, You will agree our terms and conditions.'
                 //checked={true}
                 onChange={this.handleChange}
+                defaultChecked
                 className={formErrors.checked.length > 0 && 'is-invalid'}
               />
               {formErrors.checked.length > 0 && (

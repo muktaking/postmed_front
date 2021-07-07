@@ -97,6 +97,7 @@ const RoutePages = (props) => {
           <Route path='/dashboard' component={InnerContent} />
           <Route path='/profile' component={InnerContent} />
           <Route path='/category' component={InnerContent} />
+          <Route path='/routine' exact component={InnerContent} />
           <Route path='/question' component={InnerContent} />
           <Route path='/exambuilder' component={InnerContent} />
           <Route path='/examedit' component={InnerContent} />

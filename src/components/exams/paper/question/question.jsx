@@ -1,12 +1,15 @@
 import React from 'react'
-import { ListGroup } from 'react-bootstrap'
+import { Badge, ListGroup } from 'react-bootstrap'
 import Stem from './stem'
 
 const QuestionForm = ({ question, handleChange, defaultChecked }) => {
   return (
     <ListGroup as='ul' className='mt-3'>
       <ListGroup.Item as='li' active>
-        {question.qText}
+        <Badge variant='danger p-1 mr-2' style={{ fontSize: '1rem' }}>
+          Question
+        </Badge>
+        <span>{question.qText}</span>
       </ListGroup.Item>
 
       {question.stems.map((stem, index) => (

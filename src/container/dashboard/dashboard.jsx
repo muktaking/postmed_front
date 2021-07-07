@@ -1,22 +1,14 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Spinner } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import BigCards from '../../components/dashboard/bigCards/bigCards'
 import MiniCards from '../../components/dashboard/miniCards/miniCards'
 import MetaInfo from '../../components/seo/metainfo'
+import Spinner from '../../components/shared/spinner/spinner'
 import { RoutesConfig } from '../../config/routes.config'
 import { dashboardStudent } from '../../store/dashboard'
 import { resetExamResultLoader } from '../../store/exams'
 import { getUserLoader } from '../../store/user'
-
-const contentCenter = {
-  //styling to display server response in middle of screen
-  position: 'fixed',
-  top: '45vh',
-  left: '50%',
-  zIndex: '10000000000'
-}
 
 const Dashboard = (props) => {
   const [loading, setLoading] = useState(false)
@@ -41,16 +33,8 @@ const Dashboard = (props) => {
 
   return (
     <div className=''>
-      {loading && (
-        <Spinner
-          animation='grow'
-          role='status'
-          variant='dark'
-          style={contentCenter}
-        ></Spinner>
-      )}
+      {loading && <Spinner />}
       <MetaInfo {...RoutesConfig.Dashboard.metaInfo} />
-
       <MiniCards />
       <hr className='my-3' />
       <BigCards />

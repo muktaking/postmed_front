@@ -7,6 +7,7 @@ const slice = createSlice({
     id: null,
     questions: [],
     questionIdsByOrder: [],
+    examId: null,
     singleQuestionMark: null,
     singleStemMark: null,
     penaltyMark: null,
@@ -26,12 +27,14 @@ const slice = createSlice({
   },
   reducers: {
     resetExamResult: (state) => {
+      state.examId = null
       state.examResult = null
       state.totalMark = null
       state.totalScore = null
       state.totalPenaltyMark = null
       state.totalScorePercentage = null
       state.timeTakenToComplete = null
+      state.timeLimit = null
       state.rank = null
       state.exam = null
       state.error = null
@@ -70,6 +73,7 @@ const slice = createSlice({
       state.examError = null
     },
     postExamById: (state, action) => {
+      state.examId = action.payload.examId
       state.examResult = action.payload.resultArray
       state.totalMark = action.payload.totalMark
       state.totalScore = action.payload.totalScore

@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "homepage": "https://bcs.rajdoctors.com",
+  "homepage": "https://postmed.rajdoctors.com",
   "private": true,
   "dependencies": {
     "@babel/core": "7.7.4",

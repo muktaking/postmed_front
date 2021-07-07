@@ -38,7 +38,10 @@ class Rank extends Component {
                 id='penalty mark'
                 defaultMessage='Penalty Mark'
               />{' '}
-              : {this.props.exam.penaltyMark}
+              :{' '}
+              {(
+                this.props.exam.penaltyMark * this.props.exam.questionStemLength
+              ).toFixed(2)}
             </ListGroup.Item>
             <ListGroup.Item>
               <FormattedMessage id='timelimit' defaultMessage='Time Limit' /> :{' '}

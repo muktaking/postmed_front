@@ -13,7 +13,8 @@ const slice = createSlice({
     mobile: null,
     userFrom: Date.now(),
     address: null,
-    avatar: null
+    avatar: null,
+    gender: null
   },
   reducers: {
     getUser: (user, action) => {
@@ -27,6 +28,7 @@ const slice = createSlice({
       user.role = action.payload.role
       user.address = action.payload.address
       user.avatar = action.payload.avatar
+      user.gender = action.payload.gender
     }
   }
 })

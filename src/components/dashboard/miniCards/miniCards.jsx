@@ -18,7 +18,7 @@ class MiniCards extends Component {
         <UpcomingExam
           value={upcomingExam[0]}
           id={upcomingExam[2]}
-          footerValue={moment(upcomingExam[1]).format('DD-MM-YYYY')}
+          footerValue={moment(upcomingExam[1]).format('DD-MMM-YYYY')}
         />
         <Result value={result[0]} footerValue={result[1]} />
       </div>

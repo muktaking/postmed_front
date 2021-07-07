@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import SubNavBar from '../../components/navbar/subNavBar'
 import Gist from '../../components/result/gist'
 import QuestionResultStem from '../../components/result/stem'
-
+import Feedback from './feedback'
 const QType = {
   SingleBestAnswer: 'sba',
   Matrix: 'matrix'
@@ -17,6 +17,7 @@ const QType = {
 class Result extends Component {
   render() {
     const {
+      examId,
       examResult,
       totalMark,
       totalScore,
@@ -26,6 +27,7 @@ class Result extends Component {
       timeTakenToComplete,
       error
     } = this.props.exams
+    console.log(examId)
     return (
       <div>
         {error && (
@@ -37,7 +39,7 @@ class Result extends Component {
           </>
         )}
         {examResult && (
-          <div>
+          <div className='mb-5'>
             <Card className='mt-3'>
               <Card.Header as='h5' className='text-center'>
                 <FormattedMessage id='result' defaultMessage='Result' />
@@ -207,6 +209,7 @@ class Result extends Component {
                 ))}
               </Card.Body>
             </Card>
+            <Feedback examId={examId} />
           </div>
         )}
       </div>

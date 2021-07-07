@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Spinner } from 'react-bootstrap'
 import { injectIntl } from 'react-intl'
 import { connect } from 'react-redux'
 import GallaryCard from '../../components/exams/gallary/gallaryCard'
 import MetaInfo from '../../components/seo/metainfo'
+import Spinner from '../../components/shared/spinner/spinner'
 import { RoutesConfig } from '../../config/routes.config'
 import { getAllExamsLoader } from '../../store/exams'
 
@@ -17,14 +17,6 @@ export const examType = [
   'Final'
 ]
 
-const contentCenter = {
-  //styling to display server response in middle of screen
-  position: 'fixed',
-  top: '45vh',
-  left: '50%',
-  zIndex: '10000000000'
-}
-
 class ExamLists extends Component {
   componentDidMount() {
     this.props.onGetAllExamsLoader()
@@ -34,14 +26,7 @@ class ExamLists extends Component {
     return (
       <>
         <MetaInfo {...RoutesConfig.Exams.metaInfo} />
-        {this.props.exams.exams.length < 1 && (
-          <Spinner
-            animation='grow'
-            role='status'
-            variant='dark'
-            style={contentCenter}
-          ></Spinner>
-        )}
+        {this.props.exams.exams.length < 1 && <Spinner />}
         {/* {this.props.exams.exams.length < 1 && (
           <Spinner
             animation="border"

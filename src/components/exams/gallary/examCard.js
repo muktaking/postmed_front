@@ -103,8 +103,10 @@ export default function ExamCard({
   categoryType,
   description,
   createdAt,
+  endDate,
   free,
-  examLoader
+  examLoader,
+  landing
 }) {
   const dispatch = useDispatch()
   const token = useSelector((state) => state.auth.token)
@@ -140,9 +142,24 @@ export default function ExamCard({
           <div className='mt-1 pt-2'>
             <p className=''>{description} </p>
 
-            <p className='text-muted text-right'>
-              {intl.formatMessage({ id: 'db.so', defaultMessage: 'Start on' })}{' '}
-              : {moment(createdAt).calendar()}
+            <p className='text-right'>
+              <span className='text-muted'>
+                {intl.formatMessage({
+                  id: 'db.so',
+                  defaultMessage: 'Start on'
+                })}{' '}
+                : {moment(createdAt).format('YYYY-MMM-DD hh:mm A')}
+              </span>
+              <br />
+              {
+                <span className='text-danger'>
+                  {intl.formatMessage({
+                    id: 'db.eo',
+                    defaultMessage: 'Ends on'
+                  })}{' '}
+                  : {moment(endDate).format('YYYY-MMM-DD hh:mm A')}
+                </span>
+              }
             </p>
           </div>
 
