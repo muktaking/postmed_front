@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/rajdocto/fcps.rajdoctors.com/
+    - export DEPLOYPATH=/home/rajdocto/postmed.rajdoctors.com/
     - /bin/cp -R build/* $DEPLOYPATH
