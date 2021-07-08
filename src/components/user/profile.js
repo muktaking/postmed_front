@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getUserLoader } from '../../store/user'
 import { roleToString } from '../../utils/canActivate'
 import Details from './details'
+import EditUserModal from './editUserModal'
 
 const images = [
   'boy',
@@ -25,13 +26,27 @@ export default function ProfileSnippet({ isProfile, size = '100' }) {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
   const [show, setShow] = useState(false)
+  const [editUserShow, setEditUserShow] = useState(false)
   const [pickedImg, setPickedImage] = useState(user.avatar)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
+  const handleEditUserClose = () => setEditUserShow(false)
+  const handleEditUserShow = () => setEditUserShow(true)
+
+  const updater = () => {
+    dispatch(getUserLoader())
+  }
+
   return (
     <div>
+      <EditUserModal
+        user={user}
+        updater={updater}
+        show={editUserShow}
+        handleClose={handleEditUserClose}
+      />
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Pick Your desired avatar</Modal.Title>
@@ -111,14 +126,24 @@ export default function ProfileSnippet({ isProfile, size = '100' }) {
       </div>
 
       {isProfile && (
-        <Details
-          firstName={user.firstName}
-          lastName={user.lastName}
-          email={user.email}
-          userFrom={user.userFrom}
-          mobile={user.mobile}
-          address={user.address}
-        />
+        <>
+          <AiFillEdit
+            size='1.7rem'
+            style={{ cursor: 'pointer' }}
+            onClick={handleEditUserShow}
+            className='mb-2 ml-3'
+          />
+          <Details
+            firstName={user.firstName}
+            lastName={user.lastName}
+            email={user.email}
+            userFrom={user.userFrom}
+            mobile={user.mobile}
+            address={user.address}
+            institution={user.institution}
+            faculty={user.faculty}
+          />
+        </>
       )}
     </div>
   )

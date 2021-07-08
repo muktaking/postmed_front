@@ -33,6 +33,8 @@ module.exports = {
         jsxSingleQuote: true,
         singleQuote: true,
         useTabs: true,
+        endOfLine: 'auto',
+        tabWidth: 2
       },
     ],
   },

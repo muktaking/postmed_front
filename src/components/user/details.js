@@ -1,5 +1,6 @@
 import moment from 'moment'
 import React from 'react'
+import { facultyToString } from '../../utils/faculty'
 
 export default function Details({
   firstName,
@@ -7,7 +8,9 @@ export default function Details({
   email,
   mobile,
   userFrom,
-  address
+  address,
+  institution,
+  faculty
 }) {
   return (
     <div className='card mb-3'>
@@ -41,6 +44,22 @@ export default function Details({
           </div>
           <div className='col-sm-9 text-secondary'>
             {moment(userFrom).format('MMM Do YY')}
+          </div>
+        </div>
+        <hr />
+        <div className='row'>
+          <div className='col-sm-3'>
+            <h6 className='mb-0'>Institution</h6>
+          </div>
+          <div className='col-sm-9 text-secondary'>{institution}</div>
+        </div>
+        <hr />
+        <div className='row'>
+          <div className='col-sm-3'>
+            <h6 className='mb-0'>Faculty</h6>
+          </div>
+          <div className='col-sm-9 text-secondary'>
+            {facultyToString(faculty)}
           </div>
         </div>
         <hr />
