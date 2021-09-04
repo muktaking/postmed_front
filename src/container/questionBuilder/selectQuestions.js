@@ -90,7 +90,9 @@ export default function SelectQuestions({ viewHandler }) {
                 variant={index % 2 === 0 ? 'dark' : 'light'}
                 className='d-flex'
               >
-                <div className='mt-1 mr-3'>{(index + 1) * currentPage}.</div>
+                <div className='mt-1 mr-3'>
+                  {index + 1 + (currentPage - 1) * 10}.
+                </div>
                 <MiniQues question={question} viewHandler={viewHandler} />
               </ListGroup.Item>
             ))}
