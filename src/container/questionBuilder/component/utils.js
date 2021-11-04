@@ -4,6 +4,7 @@ import {
 } from '../../../store/question'
 
 export const stem = (initialStems) => {
+  console.log('iNum ' + initialStems)
   if (typeof initialStems === 'number') {
     const arr = []
     for (let i = 0; i < initialStems; i++) {
@@ -23,6 +24,7 @@ export function submitHandler(stemNum, dispatch, edit) {
     let error = ''
 
     if (values.stems && values.stems.length > 0 && values['qStem0']) {
+      values.stems = [...stem(stemNum)]
       values.stems.forEach((stem, index) => {
         if (
           index > 0 &&
@@ -61,7 +63,6 @@ export function submitHandler(stemNum, dispatch, edit) {
               ? values['aStem' + index]
               : (parseInt(values['aStemSba']) + 1).toString()
           stem['fbStem'] = values['fbStem' + index]
-          console.log(stem)
           // delete values['qStem' + index];
           // delete values['aStem' + index];
           // delete values['fbStem' + index];
@@ -69,7 +70,6 @@ export function submitHandler(stemNum, dispatch, edit) {
         }
       })
     } else {
-      error += 'Stems can not be emty'
       values.stems = [...stem(stemNum)]
     }
 
