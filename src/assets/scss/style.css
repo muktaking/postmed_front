@@ -31,7 +31,7 @@
   /*--- iOS Fixed Background Image --*/
 }
 
-.__landing__upper [class*="col-"] {
+.__landing__upper [class*='col-'] {
   padding: 1rem;
 }
 
@@ -145,7 +145,7 @@
   z-index: 1000;
   border-radius: 50%;
   -webkit-box-shadow: 2px 2px 5px #515151;
-          box-shadow: 2px 2px 5px #515151;
+  box-shadow: 2px 2px 5px #515151;
 }
 
 .__landing__upper .scrollToTop svg.svg-inline--fa {
@@ -320,9 +320,8 @@
 
 .content-center {
   position: fixed;
-  top: 50%;
+  top: 45vh;
   left: 50%;
-  /* bring your own prefixes */
-  z-index: 1000000;
+  z-index: 10000000000;
 }
 /*# sourceMappingURL=style.css.map */

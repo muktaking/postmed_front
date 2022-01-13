@@ -19,6 +19,7 @@ import Pagination from '../../components/pagination/pagination'
 import MetaInfo from '../../components/seo/metainfo'
 import { RoutesConfig } from '../../config/routes.config'
 import { fetchCategory } from '../../store/category'
+import { fetchCourseLoader } from '../../store/courses'
 import {
   getQuestionByCategoryLoader,
   getQuestionLoader
@@ -38,6 +39,7 @@ class ExamPaper extends Component {
 
   componentDidMount() {
     this.props.onFetchCategoryLoader()
+    this.props.onFetchCoursesLoader()
     this.props.onGetQuestionLoader()
   }
 
@@ -207,6 +209,7 @@ class ExamPaper extends Component {
             />
             <ExamSpec
               categories={this.props.category.categories}
+              courses={this.props.courses.courses}
               selectedQuestionIds={this.state.selectedQuestions.map(
                 (q) => q.id
               )}
@@ -299,6 +302,7 @@ class ExamPaper extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     onFetchCategoryLoader: () => dispatch(fetchCategory()),
+    onFetchCoursesLoader: () => dispatch(fetchCourseLoader()),
     onGetQuestionLoader: () => dispatch(getQuestionLoader()),
     onGetQuestionByCategoryLoader: (id) =>
       dispatch(getQuestionByCategoryLoader(id))
@@ -309,7 +313,8 @@ const mapStateToProps = (state) => {
     auth: state.auth,
     question: state.question,
     category: state.category,
-    api: state.api
+    api: state.api,
+    courses: state.courses
   }
 }
 

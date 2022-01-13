@@ -2,11 +2,10 @@ import * as _ from 'lodash'
 import React from 'react'
 import { Bar } from 'react-chartjs-2'
 import { useIntl } from 'react-intl'
-import { useSelector } from 'react-redux'
 import BigCard from '../bigCard/bigCard'
 
-const ReportCard = (props) => {
-  const userExamStat = useSelector((state) => state.dashboard.userExamStat)
+const ReportCard = ({ userExamStat }) => {
+  //const userExamStat = useSelector((state) => state.dashboard.userExamStat)
   const intl = useIntl()
 
   const examTitles = userExamStat ? _.map(userExamStat.examTitles, 'title') : []

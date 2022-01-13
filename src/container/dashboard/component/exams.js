@@ -18,7 +18,7 @@ function getExamStatus(start, end) {
 export default function Exams({ exams }) {
   return (
     <div style={{ maxHeight: '350px', overflowY: 'scroll' }}>
-      <Table striped bordered hover responsive>
+      <Table striped bordered hover responsive size='sm'>
         <thead>
           <tr>
             <th>#</th>

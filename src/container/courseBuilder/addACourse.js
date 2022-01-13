@@ -1,39 +1,29 @@
 import axios from 'axios'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Button, Form, Toast } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { FaRegCalendarAlt } from 'react-icons/fa'
-import Spinner from '../shared/spinner/spinner'
+import Spinner from '../../components/shared/spinner/spinner'
 
-export default function AddASyllabus({ defaultValue = [], ...props }) {
+export default function AddACourse({ defaultValue = [] }) {
   const [loading, setLoading] = useState(false)
   const [msg, setMsg] = useState(null)
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
-  const [courses, setCourses] = useState([])
   const ref = useRef()
-  const courseRef = useRef()
-
-  useEffect(() => {
-    axios
-      .get(process.env.REACT_APP_SITE_URL + '/courses')
-      .then((response) => {
-        setCourses(response.data)
-      })
-      .catch((e) => console.log(e))
-  }, [])
+  const ref1 = useRef()
 
   function submitHandler() {
     setLoading(true)
     if (defaultValue.length > 0) {
       axios
-        .put(process.env.REACT_APP_SITE_URL + '/routine', {
+        .patch(process.env.REACT_APP_SITE_URL + '/courses/' + defaultValue[0], {
           id: defaultValue[0],
-          startDate: defaultValue[1],
-          endDate: defaultValue[2],
-          syllabus: ref.current.value,
-          courseId: courseRef.current.value
+          title: defaultValue[1],
+          description: defaultValue[2],
+          startDate: defaultValue[3],
+          endDate: defaultValue[4]
         })
         .then((res) => {
           setLoading(false)
@@ -46,11 +36,11 @@ export default function AddASyllabus({ defaultValue = [], ...props }) {
       return
     }
     axios
-      .post(process.env.REACT_APP_SITE_URL + '/routine', {
+      .post(process.env.REACT_APP_SITE_URL + '/courses', {
+        title: ref.current.value,
+        description: ref1.current.value,
         startDate,
-        endDate,
-        syllabus: ref.current.value,
-        courseId: courseRef.current.value
+        endDate
       })
       .then((res) => {
         setLoading(false)
@@ -77,15 +67,15 @@ export default function AddASyllabus({ defaultValue = [], ...props }) {
         </Toast.Header>
         <Toast.Body>{msg}</Toast.Body>
       </Toast>
-      <h4>Routine Builder</h4>
+      <h4>Course Builder</h4>
       <div className='d-flex'>
         <div className='my-3 mr-5'>
           <p>Start Date</p>
           <DatePicker
-            selected={defaultValue.length > 0 ? defaultValue[1] : startDate}
+            selected={defaultValue.length > 0 ? defaultValue[3] : startDate}
             onChange={(date) => {
               if (defaultValue.length > 0) {
-                defaultValue[1] = date
+                defaultValue[3] = date
               }
               setStartDate(date)
             }}
@@ -98,10 +88,10 @@ export default function AddASyllabus({ defaultValue = [], ...props }) {
         <div className='my-3'>
           <p>End Date</p>
           <DatePicker
-            selected={defaultValue.length > 0 ? defaultValue[2] : endDate}
+            selected={defaultValue.length > 0 ? defaultValue[4] : endDate}
             onChange={(date) => {
               if (defaultValue.length > 0) {
-                defaultValue[2] = date
+                defaultValue[4] = date
               }
               setEndDate(date)
             }}
@@ -114,26 +104,23 @@ export default function AddASyllabus({ defaultValue = [], ...props }) {
       </div>
 
       <Form.Group controlId='exampleForm.ControlTextarea1'>
-        <Form.Label>Syllabus</Form.Label>
+        <Form.Label>Title</Form.Label>
         <Form.Control
           as='textarea'
           ref={ref}
-          rows={2}
-          defaultValue={defaultValue.length > 0 ? defaultValue[3] : ''}
+          rows={1}
+          defaultValue={defaultValue.length > 0 ? defaultValue[1] : ''}
         />
       </Form.Group>
 
-      <Form.Group controlId='exampleForm.ControlSelect1'>
-        <Form.Label>Select A Course</Form.Label>
+      <Form.Group controlId='exampleForm.ControlTextarea2'>
+        <Form.Label>description</Form.Label>
         <Form.Control
-          as='select'
-          ref={courseRef}
-          value={defaultValue.length > 0 ? defaultValue[4] : ''}
-        >
-          {courses.map((course) => (
-            <option value={course.id}>{course.title}</option>
-          ))}
-        </Form.Control>
+          as='textarea'
+          ref={ref1}
+          rows={2}
+          defaultValue={defaultValue.length > 0 ? defaultValue[2] : ''}
+        />
       </Form.Group>
 
       <Button variant='primary' onClick={submitHandler}>

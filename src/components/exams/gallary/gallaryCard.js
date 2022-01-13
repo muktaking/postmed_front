@@ -127,6 +127,7 @@ export default function ListCard({ title, exams, landing, examLoader }) {
                       .length > 0
                   }
                   examLoader={examLoader}
+                  landing={landing}
                 />
               ) : (
                 ''

@@ -143,6 +143,8 @@ class ExamTaker extends Component {
 
   // for submitting Answer Sheet
   onSubmitHandler = () => {
+    const examId = this.props.match.params.id.split('_')[0];
+    const courseId = this.props.match.params.id.split('_')[1]
     this.setState({ loading: true });
 
     this.answerIds.forEach((id) => {
@@ -154,14 +156,15 @@ class ExamTaker extends Component {
     });
     if (this.props.free) {
       this.props.onPostFreeExamByIdLoader({
-        examId: this.props.match.params.id,
+        examId,
         timeTakenToComplete: (this.timeTakenToComplete / 60).toFixed(4),
         answers: this.answers,
         questionIdsByOrder: this.props.exams.questionIdsByOrder,
       });
     } else {
       this.props.onPostExamByIdLoader({
-        examId: this.props.match.params.id,
+        examId,
+        courseId,
         timeTakenToComplete: Math.ceil(this.timeTakenToComplete / 60).toFixed(
           4
         ),
@@ -201,6 +204,7 @@ class ExamTaker extends Component {
           <Spinner />
         )}
 
+        
         {/* Modal tests are you want submit or time expired*/}
         <Modal show={this.state.modalShow} onHide={this.modalHide}>
           {this.state.loading ? 
@@ -308,6 +312,13 @@ class ExamTaker extends Component {
           </>
         ) : (
           <Row >
+            {/* <div>
+          {
+            window.confirm(
+              'Are you sure to proced to exam?'
+            )
+          }
+        </div> */}
             <div className="scroll-container d-flex justify-content-center flex-wrap">
               <LinkScroll
                 to={"et-top"}

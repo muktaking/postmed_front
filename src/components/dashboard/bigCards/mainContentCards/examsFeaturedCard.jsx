@@ -1,6 +1,5 @@
 import React from 'react'
 import { useIntl } from 'react-intl'
-import { useSelector } from 'react-redux'
 import ExamCard from '../../../exams/gallary/examCard'
 import BigCard from '../bigCard/bigCard'
 
@@ -8,8 +7,8 @@ function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min)) + min
 }
 
-const ExamsFeaturedCard = () => {
-  const featuredExams = useSelector((state) => state.dashboard.featuredExams)
+const ExamsFeaturedCard = ({ featuredExams, courseId }) => {
+  //const featuredExams = useSelector((state) => state.dashboard.featuredExams)
   const intl = useIntl()
 
   return (
@@ -26,6 +25,7 @@ const ExamsFeaturedCard = () => {
           <ExamCard
             key={exam.id}
             examId={exam.id}
+            courseId={courseId}
             imgSrc={
               exam.categoryType.length > 0
                 ? process.env.REACT_APP_SITE_URL +

@@ -41,6 +41,7 @@ const RoutePages = (props) => {
         <Route path='/reset/:id' component={Reset} />
         <Route path='/exams' exact component={InnerContent} />
         <Route path='/exams/:id' exact component={InnerContent} />
+        <Route path='/courses/:id' exact component={InnerContent} />
         <Route path='/exams/category/:id' exact component={InnerContent} />
         <Route path='/exams/free/:id' component={InnerContent} />
         <Route path='/result' component={InnerContent} />
@@ -59,6 +60,7 @@ const RoutePages = (props) => {
       <Suspense fallback={<ClimbingBoxLoader css={override} />}>
         <Switch>
           <Route path='/dashboard' component={InnerContent} />
+          <Route path='/courses' component={InnerContent} />
           <Route path='/profile' component={InnerContent} />
           <Route path='/exams' component={InnerContent} />
           <Route path='/exams/:id' component={InnerContent} />
@@ -99,6 +101,7 @@ const RoutePages = (props) => {
           <Route path='/category' component={InnerContent} />
           <Route path='/routine' exact component={InnerContent} />
           <Route path='/question' component={InnerContent} />
+          <Route path='/coursebuilder' component={InnerContent} />
           <Route path='/exambuilder' component={InnerContent} />
           <Route path='/examedit' component={InnerContent} />
           <Route path='/settings' component={InnerContent} />

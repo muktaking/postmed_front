@@ -9,7 +9,7 @@ const subNavBar = (props) => {
     : ['exams', 'signup', 'login']
 
   return (
-    <Nav className=''>
+    <Nav className='bg-light'>
       <Nav.Item as='li' className='mr-3'>
         <NavLink to={{ pathname: '/' }} className='nav-link'>
           {'Home'.toUpperCase()}

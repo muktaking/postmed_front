@@ -176,6 +176,37 @@
   margin-left: 0;
 }
 
+.cat-card {
+  width: 350px;
+}
+
+.cat-card div.parent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.cat-card div.parent a {
+  color: black;
+  text-decoration: none;
+}
+
+.cat-card div.parent a:hover {
+  color: #1010c7;
+}
+
+.cat-card div.parent svg {
+  margin-left: auto;
+  color: white;
+}
+
+.cat-card div.parent svg :hover {
+  color: #4d4d4d;
+}
+
 @media (min-width: 768px) {
   #sidebar-wrapper {
     margin-left: 0;

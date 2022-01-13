@@ -3,7 +3,11 @@ import moment from 'moment'
 import React, { useRef, useState } from 'react'
 import { Button, Form, Image, Modal, Table, Toast } from 'react-bootstrap'
 import { FaEdit, FaTimes } from 'react-icons/fa'
-import { roleToString } from '../../../utils/canActivate'
+import {
+  identityStatusToString,
+  loginProviderToString,
+  roleToString
+} from '../../../utils/canActivate'
 
 const styles = {
   cursor: 'pointer'
@@ -48,6 +52,7 @@ const EditModal = ({ handleClose, user, updater, ...props }) => {
   const userNameRef = useRef()
   const emailRef = useRef()
   const roleRef = useRef()
+  const identityStatusRef = useRef()
   const genderRef = useRef()
   const passwordRef = useRef()
 
@@ -63,6 +68,7 @@ const EditModal = ({ handleClose, user, updater, ...props }) => {
       userName: userNameRef.current.value,
       email: emailRef.current.value,
       role: roleRef.current.value,
+      identityStatus: identityStatusRef.current.value,
       gender: genderRef.current.value,
       password: passwordRef.current ? passwordRef.current.value : null
     }
@@ -156,6 +162,23 @@ const EditModal = ({ handleClose, user, updater, ...props }) => {
               <option value='5'>Admin</option>
             </Form.Control>
           </Form.Group>
+
+          {user.loginProvider === 1 && (
+            <Form.Group>
+              <Form.Label>Change Identity Status</Form.Label>
+              <Form.Control
+                ref={identityStatusRef}
+                as='select'
+                name='identityStatus'
+                defaultValue={user.identityStatus}
+              >
+                <option value='0'>Unchecked</option>
+                <option value='1'>Checked</option>
+                <option value='2'>Unrequired</option>
+              </Form.Control>
+            </Form.Group>
+          )}
+
           <Form.Group controlId='formGridState'>
             <Form.Label>Gender</Form.Label>
             <Form.Control
@@ -221,7 +244,7 @@ export default function Users({ users, updater }) {
           />
         )}
       </Modal>
-      <Table striped bordered hover responsive>
+      <Table striped bordered hover responsive size='sm'>
         <thead>
           <tr>
             <th>#</th>
@@ -231,19 +254,37 @@ export default function Users({ users, updater }) {
             <th>Username</th>
             <th>Email</th>
             <th>Role</th>
+            <th>Login Provider</th>
+            <th>Identity Status</th>
             <th>User From</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {users.map((user, ind) => (
-            <tr key={ind}>
+            <tr
+              key={ind}
+              className={
+                user.loginProvider === 1
+                  ? user.identityStatus === 1
+                    ? 'bg-primary text-white'
+                    : 'bg-warning'
+                  : ''
+              }
+            >
               <td>{ind + 1}</td>
               <td className=''>
                 <Image
                   height='35'
                   width='35'
-                  src={'/assets/image/avatar/' + user.avatar + '.png'}
+                  src={
+                    user.avatar &&
+                    user.avatar.includes('platform-lookaside.fbsbx.com')
+                      ? user.avatar
+                      : '/assets/image/avatar/' +
+                        (user.avatar ? user.avatar : 'boy') +
+                        '.png'
+                  }
                   roundedCircle
                 />
               </td>
@@ -252,6 +293,8 @@ export default function Users({ users, updater }) {
               <td>{user.userName}</td>
               <td>{user.email}</td>
               <td>{roleToString(user.role)}</td>
+              <td>{loginProviderToString(user.loginProvider)}</td>
+              <td>{identityStatusToString(user.identityStatus)}</td>
               <td>{moment(user.createdAt).format('YYYY-MM-DD')}</td>
               <td>
                 <span

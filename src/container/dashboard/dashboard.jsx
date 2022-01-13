@@ -1,17 +1,16 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import BigCards from '../../components/dashboard/bigCards/bigCards'
-import MiniCards from '../../components/dashboard/miniCards/miniCards'
+import StuDashCourseComponent from '../../components/dashboard/stuDashCourseComponent'
 import MetaInfo from '../../components/seo/metainfo'
 import Spinner from '../../components/shared/spinner/spinner'
 import { RoutesConfig } from '../../config/routes.config'
-import { dashboardStudent } from '../../store/dashboard'
 import { resetExamResultLoader } from '../../store/exams'
 import { getUserLoader } from '../../store/user'
 
 const Dashboard = (props) => {
   const [loading, setLoading] = useState(false)
+  const [userDashExamInfo, setUserDashExamInfo] = useState([])
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(resetExamResultLoader())
@@ -22,7 +21,7 @@ const Dashboard = (props) => {
       .then((response) => {
         setLoading(false)
         if (response.status === 200) {
-          dispatch({ type: dashboardStudent.type, payload: response.data })
+          setUserDashExamInfo(response.data)
         }
       })
       .catch((e) => {
@@ -35,9 +34,11 @@ const Dashboard = (props) => {
     <div className=''>
       {loading && <Spinner />}
       <MetaInfo {...RoutesConfig.Dashboard.metaInfo} />
-      <MiniCards />
+      <StuDashCourseComponent userDashExamInfo={userDashExamInfo} />
+
+      {/* <MiniCards />
       <hr className='my-3' />
-      <BigCards />
+      <BigCards /> */}
     </div>
   )
 }

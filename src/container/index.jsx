@@ -9,6 +9,7 @@ import IconBar from '../components/sidebar/iconBar'
 import Sidebar from '../components/sidebar/sidebar'
 import Topbar from '../components/topbar/topbar'
 import Category from './category/category'
+import Courses from './courses/index'
 //importing routing parts
 import Dashboard from './dashboard/dashboard'
 import ExamPaper from './examPaper/examPaper'
@@ -46,6 +47,7 @@ const innerContent = (props) => {
               {
                 <>
                   <Route path='/dashboard' exact component={Dashboard} />
+                  <Route path='/courses' exact component={Courses} />
                   <Route path='/category' exact component={Category} />
                   <Route path='/question' exact component={Question} />
                   <Route path='/exampaper' exact component={ExamPaper} />

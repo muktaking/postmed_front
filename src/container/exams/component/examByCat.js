@@ -6,8 +6,9 @@ import { FormattedMessage } from 'react-intl'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { resetExamResultLoader } from '../../../store/exams'
+import { examTypeToString } from '../../../utils/faculty'
 
-export default function ExamByCat({ exam }) {
+export default function ExamByCat({ exam, courseId = null }) {
   const dispatch = useDispatch()
   const authToken = useSelector((state) => (state.auth.token ? true : false))
   return (
@@ -49,7 +50,7 @@ export default function ExamByCat({ exam }) {
               (!authToken &&
               exam.categoryType.filter((cat) => cat.name === 'Free').length > 0
                 ? '/exams/free/'
-                : '/exams/') + exam.id
+                : '/exams/') + (courseId ? exam.id + '_' + courseId : exam.id)
             }
           >
             <Button
@@ -61,7 +62,12 @@ export default function ExamByCat({ exam }) {
               <FormattedMessage id='btn.start' defaultMessage='Start Exam' />
             </Button>
           </Link>
-          <Link className='text-white' to={'/result/rank/' + exam.id}>
+          <Link
+            className='text-white'
+            to={
+              '/result/rank/' + (courseId ? courseId + '_' + exam.id : exam.id)
+            }
+          >
             <Button
               onClick={() => {
                 dispatch(resetExamResultLoader())
@@ -72,6 +78,9 @@ export default function ExamByCat({ exam }) {
               <FormattedMessage id='btn.rank' defaultMessage='Rank' />
             </Button>
           </Link>
+          <span className='bg-warning text-white p-2 ml-5'>
+            {examTypeToString(exam.type)}
+          </span>
         </div>
       </Col>
     </>

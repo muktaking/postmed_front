@@ -98,6 +98,7 @@ export default function ExamCard({
   width = '350',
   height = '180',
   examId,
+  courseId,
   imgSrc,
   title,
   categoryType,
@@ -112,6 +113,8 @@ export default function ExamCard({
   const token = useSelector((state) => state.auth.token)
   const intl = useIntl()
   const [res, setRes] = useState(null)
+
+  console.log(landing, courseId)
 
   return (
     <>
@@ -163,12 +166,18 @@ export default function ExamCard({
             </p>
           </div>
 
-          {!canActivate(rolePermitted.admin, token) && (
+          {!landing && !canActivate(rolePermitted.admin, token) && (
             <>
               <div className='d-flex justify-content-around'>
                 <Link
                   className='text-white'
-                  to={(free ? '/exams/free/' : '/exams/') + examId}
+                  to={
+                    courseId
+                      ? `/exams/${examId}_${courseId}`
+                      : free
+                      ? `/exams/free/${examId}`
+                      : ''
+                  }
                 >
                   <Button
                     variant='outline-primary'

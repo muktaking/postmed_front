@@ -185,11 +185,12 @@ export const postFreeExamByIdLoader = (data) => (dispatch) => {
   )
 }
 
-export const examRankByIdLoader = (id) => (dispatch) => {
+export const examRankByIdLoader = (id, courseId) => (dispatch) => {
   dispatch(
     apiCallBegun({
       url: '/postexams/rank/' + id,
-      method: 'get',
+      data: { id, courseId },
+      method: 'post',
       onSuccess: examRankById.type,
       onError: postExamError.type
     })

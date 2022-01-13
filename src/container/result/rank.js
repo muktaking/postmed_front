@@ -7,7 +7,13 @@ import { examRankByIdLoader } from '../../store/exams'
 
 class Rank extends Component {
   componentDidMount() {
-    this.props.onExamRankByLoader(this.props.match.params.id)
+    const courseId = this.props.match.params.id.includes('_')
+      ? this.props.match.params.id.split('_')[0]
+      : null
+    this.props.onExamRankByLoader(
+      this.props.match.params.id.split('_')[1],
+      courseId
+    )
   }
   render() {
     return (
@@ -68,7 +74,7 @@ class Rank extends Component {
                 <tr
                   key={ind}
                   className={
-                    this.props.userId === rank.user.id
+                    +this.props.userId === +rank.user.id
                       ? 'bg-success text-light '
                       : ''
                   }
@@ -96,7 +102,8 @@ class Rank extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onExamRankByLoader: (id) => dispatch(examRankByIdLoader(id))
+    onExamRankByLoader: (id, courseId) =>
+      dispatch(examRankByIdLoader(id, courseId))
   }
 }
 

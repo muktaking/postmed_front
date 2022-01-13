@@ -11,6 +11,7 @@ const miniBlock = ({
   color,
   value,
   id,
+  courseId,
   faIcon,
   footerHeading,
   footerValue,
@@ -21,7 +22,13 @@ const miniBlock = ({
       <Card.Body>
         <Row>
           <Col sm={8}>
-            <Header heading={heading} color={color} value={value} id={id} />
+            <Header
+              heading={heading}
+              color={color}
+              value={value}
+              id={id}
+              courseId={courseId}
+            />
           </Col>
           <Col sm={4}>
             <div className='d-flex  align-items-center justify-content-end h-100'>

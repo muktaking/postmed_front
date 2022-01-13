@@ -2,7 +2,7 @@ import React from 'react'
 import { useIntl } from 'react-intl'
 import MiniBlock from './miniBlock'
 
-const UpcomingExam = ({ value, footerValue, id }) => {
+const UpcomingExam = ({ value, footerValue, id, courseId }) => {
   const intl = useIntl()
   return (
     <MiniBlock
@@ -14,6 +14,7 @@ const UpcomingExam = ({ value, footerValue, id }) => {
       value={value}
       //
       id={id}
+      courseId={courseId}
       faIcon={'file'}
       footerHeading={intl.formatMessage({
         id: 'db.so',

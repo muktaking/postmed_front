@@ -23,3 +23,25 @@ export function facultyToString(num) {
       return 'Null'
   }
 }
+
+export function examTypeToString(num) {
+  switch (num) {
+    case 0:
+      return 'Assignment'
+    case 1:
+      return 'Weekly'
+    case 2:
+      return 'Monthly'
+    case 3:
+      return 'Assesment'
+    case 4:
+      return 'Term'
+    case 5:
+      return 'Test'
+    case 6:
+      return 'Final'
+
+    default:
+      return 'Null'
+  }
+}

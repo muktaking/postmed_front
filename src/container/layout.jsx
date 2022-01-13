@@ -3,11 +3,13 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import { slide as Menu } from 'react-burger-menu'
+import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 import '../assets/scss/section/dashboard.scss'
 import Sidebar from '../components/sidebar/sidebar'
 import SidebarMini from '../components/sidebar/sidebarMini'
 import Topbar from '../components/topbar/topbar'
+import { canActivate, rolePermitted } from '../utils/canActivate'
 import Profile from './profile/profile'
 
 //const Profile = lazy(()=> import('./profile/profile'));
@@ -18,6 +20,11 @@ const Category = lazy(() => import('./category/category'))
 //importing routing parts
 //import Dashboard from "./dashboard/dashboard";
 const Dashboard = lazy(() => import('./dashboard/'))
+
+const CourseLists = lazy(() => import('./courses/'))
+
+const CourseBuilder = lazy(() => import('./courseBuilder/'))
+
 const RoutineBuilder = lazy(() => import('./routine'))
 //import ExamBuilder from "./examBuilder/examBuilder";
 const ExamBuilder = lazy(() => import('./examBuilder/examBuilder'))
@@ -27,7 +34,14 @@ const ExamLists = lazy(() => import('./exams/examLists'))
 //const ExamListsByCat = lazy(()=> import('./exams/examListsByCat'));
 const ExamListsByCat = lazy(() => import('./exams/examsLists.index'))
 
+const ExamListsByCourse = lazy(() => import('./exams/examListByCourse'))
+
 const ExamListsByCatShower = lazy(() => import('./exams/examListsByCatShower'))
+
+const ExamListsByCourseShower = lazy(() =>
+  import('./exams/examListsByCourseShower')
+)
+
 //import ExamTaker from "./exams/examTaker";
 const ExamTaker = lazy(() => import('./exams/examTaker'))
 //import QuestionBuilder from './questionBuilder/';
@@ -63,6 +77,12 @@ const InnerContent = (props) => {
                   }
                 >
                   <Route path='/dashboard' exact component={Dashboard} />
+                  <Route path='/courses' exact component={CourseLists} />
+                  <Route
+                    path='/coursebuilder'
+                    exact
+                    component={CourseBuilder}
+                  />
                   <Route path='/profile' exact component={Profile} />
                   <Route path='/category' exact component={Category} />
                   <Route path='/routine' exact component={RoutineBuilder} />
@@ -78,10 +98,18 @@ const InnerContent = (props) => {
                     path='/exams'
                     exact
                     component={
-                      process.env.REACT_APP_APP_TYPE === 'public'
+                      props.isAuthenticated &&
+                      canActivate(rolePermitted.student, props.token)
+                        ? ExamListsByCourse
+                        : process.env.REACT_APP_APP_TYPE === 'public'
                         ? ExamListsByCat
                         : ExamLists
                     }
+                  />
+                  <Route
+                    path='/courses/:id'
+                    exact
+                    component={ExamListsByCourseShower}
                   />
                   <Route
                     path='/exams/category/:id'
@@ -106,7 +134,14 @@ const InnerContent = (props) => {
   )
 }
 
-export default InnerContent
+const mapStateToProps = (state) => {
+  return {
+    token: state.auth.token,
+    isAuthenticated: state.auth.token !== null
+  }
+}
+
+export default connect(mapStateToProps)(InnerContent)
 
 var styles = {
   bmBurgerButton: {

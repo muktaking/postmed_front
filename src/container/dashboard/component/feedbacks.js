@@ -14,11 +14,11 @@ export default function GetFeedbacks({ feedbacks, feedbackController }) {
       setIds(ids.filter((id) => id !== +e.target.name))
     }
   }
-  function submitHandler() {
+  function submitHandler(deny = false) {
+    //Boolean('') = false
     axios
-      .patch(process.env.REACT_APP_SITE_URL + '/exams/feedback', { ids })
+      .patch(process.env.REACT_APP_SITE_URL + '/exams/feedback', { ids, deny })
       .then((response) => {
-        console.log(response)
         feedbackController(ids)
         setIds(null)
       })
@@ -38,7 +38,7 @@ export default function GetFeedbacks({ feedbacks, feedbackController }) {
               <div className='d-flex'>
                 <Form.Check
                   type='checkbox'
-                  label='Publish this:'
+                  label=''
                   name={feedback.id}
                   onChange={feedbackHandleChange}
                   className='border-right mr-2 pr-2'
@@ -59,10 +59,22 @@ export default function GetFeedbacks({ feedbacks, feedbackController }) {
       </ListGroup>
       <Button
         className='mt-2'
-        onClick={submitHandler}
+        onClick={() => {
+          submitHandler()
+        }}
         disabled={feedbacks.length < 1}
       >
-        Submit
+        Approve
+      </Button>
+      <Button
+        variant='danger'
+        className='mt-2 ml-2'
+        onClick={() => {
+          submitHandler(true)
+        }}
+        disabled={feedbacks.length < 1}
+      >
+        Deny
       </Button>
     </div>
   )

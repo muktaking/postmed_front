@@ -1,44 +1,18 @@
 import axios from 'axios'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import {
-  Badge,
-  Button,
-  Modal,
-  OverlayTrigger,
-  Toast,
-  Tooltip
-} from 'react-bootstrap'
+import { Button, Modal, OverlayTrigger, Toast, Tooltip } from 'react-bootstrap'
 import { GrUpdate } from 'react-icons/gr'
-import AddASyllabus from './addASyllabus'
-
-function getStatus(start, end) {
-  const date = new Date()
-  const startDate = new Date(start)
-  const endDate = new Date(end)
-
-  if (
-    startDate.getTime() <= date.getTime() &&
-    endDate.getTime() >= date.getTime()
-  ) {
-    return 'Ongoing'
-  }
-
-  if (endDate.getTime() <= date.getTime()) {
-    return 'Past'
-  }
-
-  return 'Upcoming'
-}
+import AddACourse from './addACourse'
 
 const RenderTooltip = React.forwardRef(({ id, setMsg, ...props }, ref) => (
   <Tooltip ref={ref} id='button-tooltip' {...props}>
-    <p>Are you sure to delete this syllabus.</p>
+    <p>Are you sure to delete this Course.</p>
     <Button
       variant='danger'
       onClick={() => {
         axios
-          .delete(process.env.REACT_APP_SITE_URL + '/routine/' + id)
+          .delete(process.env.REACT_APP_SITE_URL + '/courses/' + id)
           .then((res) => {
             console.log(res)
             setMsg(res.data.message)
@@ -54,11 +28,11 @@ const RenderTooltip = React.forwardRef(({ id, setMsg, ...props }, ref) => (
   </Tooltip>
 ))
 
-export default function ShowRoutine({ showRaw, id }) {
-  const [routine, setRoutine] = useState([])
+export default function ShowCourses({ showRaw }) {
+  const [courses, setCourses] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [msg, setMsg] = useState(null)
-  const [editSyllabusVale, setEditSyllabusValue] = useState([])
+  const [editCourseValue, setEditCourseValue] = useState([])
 
   const modalClose = () => {
     setShowModal(false)
@@ -66,22 +40,18 @@ export default function ShowRoutine({ showRaw, id }) {
 
   const handleUpdate = () => {
     axios
-      .get(process.env.REACT_APP_SITE_URL + '/routine/raw')
+      .get(process.env.REACT_APP_SITE_URL + '/courses')
       .then((res) => {
-        setRoutine(res.data)
+        setCourses(res.data)
       })
       .catch()
   }
 
   useEffect(() => {
     axios
-      .get(
-        process.env.REACT_APP_SITE_URL +
-          '/routine' +
-          (showRaw ? '/raw' : '/course/' + id)
-      )
+      .get(process.env.REACT_APP_SITE_URL + '/courses')
       .then((res) => {
-        setRoutine(res.data)
+        setCourses(res.data)
       })
       .catch()
   }, [showRaw])
@@ -89,10 +59,10 @@ export default function ShowRoutine({ showRaw, id }) {
     <div className='container'>
       <Modal show={showModal} onHide={modalClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit The Syllabus</Modal.Title>
+          <Modal.Title>Edit The Course</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <AddASyllabus defaultValue={editSyllabusVale} />
+          <AddACourse defaultValue={editCourseValue} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={modalClose}>
@@ -118,7 +88,7 @@ export default function ShowRoutine({ showRaw, id }) {
                     </Toast.Header>
                     <Toast.Body>{msg}</Toast.Body>
                   </Toast>
-                  <h4 className='card-title'>Raw Routine</h4>
+                  <h4 className='card-title'>Courses</h4>
                   <Button variant='light' onClick={handleUpdate}>
                     <GrUpdate size={'1.3rem'} />
                   </Button>
@@ -129,24 +99,19 @@ export default function ShowRoutine({ showRaw, id }) {
                 style={{ maxHeight: '350px', overflowY: 'scroll' }}
               >
                 <ul className='timeline'>
-                  {routine.map((syllabus, ind) => (
+                  {courses.map((course, ind) => (
                     <li
-                      key={syllabus.id}
+                      key={course.id}
                       className='event'
-                      data-date={moment(syllabus.startDate).format(
+                      data-date={moment(course.startDate).format(
                         'YYYY-MMM-DD, h:mm a'
                       )}
                     >
-                      <p>{syllabus.syllabus}</p>
-                      <p className='text-danger'>
-                        <Badge variant='info' className='mr-2'>
-                          Status:{' '}
-                        </Badge>
-                        {getStatus(syllabus.startDate, syllabus.endDate)}
-                      </p>
+                      <p>{course.title}</p>
+                      <p className='text-danger'>{course.description}</p>
                       <p className='text-secondary'>
-                        Exam ends:{' '}
-                        {moment(syllabus.endDate).format('YYYY-MMM-DD, h:mm a')}
+                        Course ends:{' '}
+                        {moment(course.endDate).format('YYYY-MMM-DD, h:mm a')}
                       </p>
                       {showRaw && (
                         <>
@@ -154,12 +119,12 @@ export default function ShowRoutine({ showRaw, id }) {
                             variant='warning'
                             onClick={() => {
                               setShowModal(true)
-                              setEditSyllabusValue([
-                                syllabus.id,
-                                new Date(syllabus.startDate),
-                                new Date(syllabus.endDate),
-                                syllabus.syllabus,
-                                syllabus.courseId
+                              setEditCourseValue([
+                                course.id,
+                                course.title,
+                                course.description,
+                                new Date(course.startDate),
+                                new Date(course.endDate)
                               ])
                             }}
                           >
@@ -169,7 +134,7 @@ export default function ShowRoutine({ showRaw, id }) {
                             trigger='click'
                             placement='right'
                             overlay={
-                              <RenderTooltip setMsg={setMsg} id={syllabus.id} />
+                              <RenderTooltip setMsg={setMsg} id={course.id} />
                             }
                           >
                             <Button variant='danger' className='ml-2'>

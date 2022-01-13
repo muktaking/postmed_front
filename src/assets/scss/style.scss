@@ -23,3 +23,9 @@
   left: 50%;
   z-index: 10000000000;
 }
+
+nav.nav-tabs {
+  a.nav-item .active {
+    font-size: '40px';
+  }
+}

@@ -27,6 +27,30 @@ export function roleToString(num) {
   }
 }
 
+export function identityStatusToString(num) {
+  switch (num) {
+    case 0:
+      return 'Unchecked'
+    case 1:
+      return 'Checked'
+    case 2:
+      return 'Unrequired'
+    default:
+      return 'Unrequired'
+  }
+}
+
+export function loginProviderToString(num) {
+  switch (num) {
+    case 0:
+      return 'Local'
+    case 1:
+      return 'Facebook'
+    default:
+      return 'Local'
+  }
+}
+
 export const canActivate = (role, token) => {
   const tokenRole = token ? jwtDecode(token).role : -1
   return tokenRole >= role

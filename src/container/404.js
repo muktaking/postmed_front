@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../assets/scss/section/registration.scss'
 import NavbarHome from '../components/navbar/navbarHome'
+import SubNavBar from '../components/navbar/subNavBar'
 
 class NotFound extends Component {
   render() {
@@ -22,8 +23,8 @@ class NotFound extends Component {
               ? this.props.location.state.message
               : 'Your Desired Content -> Not Found'}
           </p>
+          <SubNavBar />
         </div>
-        {/* End of Landing */}
       </div>
     )
   }

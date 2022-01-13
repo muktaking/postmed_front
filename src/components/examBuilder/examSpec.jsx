@@ -20,7 +20,7 @@ const centeredStyle = {
   zIndex: '1000'
 }
 
-const ExamSpec = ({ categories, selectedQuestionIds }) => {
+const ExamSpec = ({ categories, courses, selectedQuestionIds }) => {
   const [hideMsg, setHideMsg] = useState(true)
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
@@ -44,6 +44,7 @@ const ExamSpec = ({ categories, selectedQuestionIds }) => {
           title: '',
           type: '0',
           categoryType: [],
+          courseType: [],
           singleQuestionMark: '1',
           questionStemLength: '5',
           penaltyMark: '0',
@@ -130,6 +131,24 @@ const ExamSpec = ({ categories, selectedQuestionIds }) => {
                     if (value.name !== 'Uncategorized')
                       return <option value={value.id}>{categorySlug}</option>
                   })}
+                </Form.Control>
+              </Form.Group>
+
+              <Form.Group controlId='courseType'>
+                <Form.Label>Course Type</Form.Label>
+                <Form.Control
+                  as='select'
+                  multiple
+                  name='courseType'
+                  onChange={handleChange}
+                  //value={categories[0] && categories[0].id}
+                  // eslint-disable-next-line react/jsx-no-comment-textnodes
+                >
+                  // eslint-disable-next-line react/prop-types //
+                  eslint-disable-next-line react/prop-types
+                  {courses.map((value) => (
+                    <option value={value.id}>{value.title}</option>
+                  ))}
                 </Form.Control>
               </Form.Group>
 

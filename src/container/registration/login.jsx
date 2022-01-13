@@ -8,12 +8,12 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import validator from 'validator'
 import '../../assets/scss/section/registration.scss'
+import FacebookLogin from '../../components/facebook/facebook'
 import NavbarHome from '../../components/navbar/navbarHome'
 import MetaInfo from '../../components/seo/metainfo'
 import { RoutesConfig } from '../../config/routes.config'
 import { auth } from '../../store/auth'
 import ResetInit from './resetInit'
-
 const isValid = (formErrors) => {
   let valid = true
   Object.values(formErrors).forEach((v) => {
@@ -152,7 +152,9 @@ class Home extends Component {
               Submit
             </Button>
           </Form>
-          <Row></Row>
+          <Row>
+            <FacebookLogin />
+          </Row>
           <Row>
             <Col md={6}>
               <p className='lead'>Forget Your Password</p>

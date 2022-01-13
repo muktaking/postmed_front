@@ -3,18 +3,18 @@ import { useIntl } from 'react-intl'
 import ShowRoutine from '../../../routine/showRoutine'
 import BigCard from '../bigCard/bigCard'
 
-export default function RoutineSideCard() {
+export default function RoutineSideCard({ id }) {
   const intl = useIntl()
   return (
     <BigCard
       header={intl.formatMessage({
-        id: 'db.ra',
+        id: 'db.routine',
         defaultMessage: 'Routine'
       })}
       headerColor={'warning'}
       showDatePicker={false}
     >
-      <ShowRoutine />
+      <ShowRoutine id={id} />
     </BigCard>
   )
 }

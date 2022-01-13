@@ -4,11 +4,10 @@ import { Badge } from 'react-bootstrap'
 import ListGroup from 'react-bootstrap/ListGroup'
 import { MdInfo } from 'react-icons/md'
 import { useIntl } from 'react-intl'
-import { useSelector } from 'react-redux'
 import BigCard from '../bigCard/bigCard'
 
-const SideCard = (props) => {
-  const userExamStat = useSelector((state) => state.dashboard.userExamStat)
+const SideCard = ({ userExamStat }) => {
+  //const userExamStat = useSelector((state) => state.dashboard.userExamStat)
   const intl = useIntl()
 
   const examTitles = userExamStat ? userExamStat.examTitles : []

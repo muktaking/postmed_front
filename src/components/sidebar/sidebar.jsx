@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import {
   FaBookOpen,
   FaCog,
+  FaDiceD20,
   FaHome,
   FaPen,
   FaQuestion,
@@ -32,13 +33,26 @@ class Sidebar extends Component {
     if (canActivate(rolePermitted.student, this.props.token)) {
       this.faIcons = [
         <FaHome size='1.6em' className='mr-2' />,
+        <FaDiceD20 size='1.6em' className='mr-2' />,
         <FaBookOpen size='1.6em' className='mr-2' />,
         <FaUser size='1.6em' className='mr-2' />,
         <FaTools size='1.6em' className='mr-2' />
       ]
-      this.menuName = ['Dashboard', 'Exams', 'Profile', 'Settings']
-      this.menuIntlId = ['btn.db', 'btn.exams', 'profile', 'settings']
-      this.navLinks = ['/dashboard', '/exams', '/profile', '/settings']
+      this.menuName = ['Dashboard', 'Courses', 'Exams', 'Profile', 'Settings']
+      this.menuIntlId = [
+        'btn.db',
+        'btn.courses',
+        'btn.exams',
+        'profile',
+        'settings'
+      ]
+      this.navLinks = [
+        '/dashboard',
+        '/courses',
+        '/exams',
+        '/profile',
+        '/settings'
+      ]
     }
 
     if (canActivate(rolePermitted.mentor, this.props.token)) {
@@ -69,6 +83,7 @@ class Sidebar extends Component {
       this.faIcons = [
         <FaHome size='1.6em' className='mr-2' />,
         <FaCog size='1.6em' className='mr-2' />,
+        <FaDiceD20 size='1.6em' className='mr-2' />,
         <FaPen size='1.6em' className='mr-2' />,
         <FaQuestion size='1.6em' className='mr-2' />,
         <FaPen size='1.6em' className='mr-2' />,
@@ -79,6 +94,7 @@ class Sidebar extends Component {
       this.menuName = [
         'Dashboard',
         'Category',
+        'CourseBuilder',
         'Routine Builder',
         'Question',
         'Exam Builder',
@@ -90,6 +106,7 @@ class Sidebar extends Component {
       this.navLinks = [
         '/dashboard',
         '/category',
+        'coursebuilder',
         '/routine',
         '/question',
         '/exambuilder',

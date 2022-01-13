@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Badge, Col, Row } from 'react-bootstrap'
 import { FaPaperclip, FaUsers } from 'react-icons/fa'
 import Exams from './component/exams'
+import Expectedenrolled from './component/expectedenrolled'
 import GetFeedbacks from './component/feedbacks'
 import UploadUsers from './component/uploadUsers'
 import Users from './component/users'
@@ -12,6 +13,7 @@ export default function Admin() {
   const [users, setUsers] = useState([])
   const [exams, setExams] = useState([])
   const [feedbacks, setFeedbacks] = useState([])
+  const [expectedEnrolled, setExpectedEnrolled] = useState([])
 
   function feedbackController(ids) {
     if (ids) setFeedbacks(feedbacks.filter((f) => !ids.includes(f.id)))
@@ -24,6 +26,7 @@ export default function Admin() {
         setUsers(response.data.users)
         setExams(_.flatMap(response.data.exams))
         setFeedbacks(response.data.feedbacks)
+        setExpectedEnrolled(response.data.expectedEnrolled)
       })
       .catch((error) => console.log(error))
   }, [])
@@ -35,6 +38,7 @@ export default function Admin() {
         setUsers(response.data.users)
         setExams(_.flatMap(response.data.exams))
         setFeedbacks(response.data.feedbacks)
+        setExpectedEnrolled(response.data.expectedEnrolled)
       })
       .catch((error) => console.log(error))
   }
@@ -61,6 +65,11 @@ export default function Admin() {
           <Exams exams={exams} updater={updater} />
         </Col>
         <Col md={4}>
+          <Expectedenrolled
+            expectedEnrolled={expectedEnrolled}
+            updater={updater}
+          />
+          <hr />
           <GetFeedbacks
             feedbacks={feedbacks}
             feedbackController={feedbackController}
