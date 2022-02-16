@@ -1,2 +1,0 @@
-(this.webpackJsonpclient=this.webpackJsonpclient||[]).push([[44],{618:function(t,e,n){"use strict";n.r(e),n.d(e,"default",(function(){return s}));var a=n(0),c=n.n(a),i=n(155),r=n(149);function s(){return c.a.createElement("div",{className:"mt-5 text-center text-danger"},c.a.createElement(i.a,r.a.Settings.metaInfo),"No Settings Available for You.")}}}]);
-//# sourceMappingURL=44.e7e2ad6f.chunk.js.map

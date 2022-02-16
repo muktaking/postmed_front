@@ -1,4 +1,5 @@
-import moment from 'moment'
+//import moment from 'moment'
+import * as moment from 'dayjs'
 import React, { Component } from 'react'
 import { Tab, Tabs } from 'react-bootstrap'
 import { connect } from 'react-redux'

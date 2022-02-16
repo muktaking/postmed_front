@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { Button, Nav, Navbar } from 'react-bootstrap'
+import { FaSignOutAlt } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
@@ -23,11 +23,7 @@ const TopNavBar = (props) => {
       {isLoggedIn && (
         <Nav.Item className='ml-md-auto'>
           <NavLink to={{ pathname: '/logout' }} className='nav-link'>
-            <FontAwesomeIcon
-              icon='sign-out-alt'
-              size='lg'
-              className='text-danger'
-            />
+            <FaSignOutAlt className='text-danger' />
           </NavLink>
         </Nav.Item>
       )}

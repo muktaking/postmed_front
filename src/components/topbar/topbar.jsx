@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import Col from 'react-bootstrap/Col'
 import Nav from 'react-bootstrap/Nav'
 import Row from 'react-bootstrap/Row'
+import { FaSignOutAlt } from 'react-icons/fa'
 import { FormattedMessage } from 'react-intl'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
@@ -34,6 +34,11 @@ const Topbar = (props) => {
               </NavLink>
             </Nav.Item>
             <Nav.Item className=''>
+              <NavLink to={{ pathname: '/courses' }} className='nav-link'>
+                <FormattedMessage id='btn.courses' defaultMessage='Courses' />
+              </NavLink>
+            </Nav.Item>
+            <Nav.Item className=''>
               <NavLink to={{ pathname: '/exams' }} className='nav-link'>
                 <FormattedMessage id='btn.exams' defaultMessage='Exams' />
               </NavLink>
@@ -46,7 +51,7 @@ const Topbar = (props) => {
                   to={{ pathname: '/logout' }}
                   className='nav-link'
                 >
-                  <FontAwesomeIcon icon='sign-out-alt' size='lg' className='' />
+                  <FaSignOutAlt />
                 </NavLink>
               </Nav.Item>
             ) : (

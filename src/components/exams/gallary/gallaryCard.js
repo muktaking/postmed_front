@@ -52,7 +52,6 @@ export default function ListCard({ title, exams, landing, examLoader }) {
                     createdAt={exam.createdAt}
                     endDate={exam.endDate}
                     free={
-                      !authToken &&
                       exam.categoryType.filter((cat) => cat.name === 'Free')
                         .length > 0
                     }
@@ -122,12 +121,12 @@ export default function ListCard({ title, exams, landing, examLoader }) {
                   createdAt={exam.startDate}
                   endDate={exam.endDate}
                   free={
-                    !authToken &&
                     exam.categoryType.filter((cat) => cat.name === 'Free')
                       .length > 0
                   }
                   examLoader={examLoader}
                   landing={landing}
+                  authToken={authToken}
                 />
               ) : (
                 ''

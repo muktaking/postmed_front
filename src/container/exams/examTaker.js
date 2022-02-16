@@ -32,6 +32,7 @@ import {
   resetExamError
 } from "../../store/exams";
 import { paginate } from "../../utils/paginate";
+import PreExamNotification from "./component/preExamNotification";
 
 // Random component
 const Completionist = () => (
@@ -89,6 +90,7 @@ class ExamTaker extends Component {
     modalShow: false,
     arrowState: true,
     showPagination: true,
+    examStartDialogue: true,
   };
 
   timeTakenToComplete = 0;
@@ -101,6 +103,12 @@ class ExamTaker extends Component {
   modalHide = () => {
     this.setState({ modalShow: false });
   };
+
+  examStartDialogueHandler = ()=>{
+    this.setState({ examStartDialogue: false });
+  }
+
+
 
   //For paination
   onPageHandler = (page) => {
@@ -132,7 +140,7 @@ class ExamTaker extends Component {
   onSwithchHandleChange = (e) => {
     const checked = e.target.checked;
     if(checked) {
-      this.setState({pageSize: this.props.exams.questions.length, currentPage: 1 ,showPagination: false});
+      this.setState({pageSize: this.props.exams.questions.length, currentPage: 1 , showPagination: false});
     }
     else{
       this.setState({pageSize: 1, showPagination: true});
@@ -274,32 +282,8 @@ class ExamTaker extends Component {
             </>
           )}
         </Modal>
-
-        {this.props.exams.timeLimit && (
-          <div className="text-dark text-center mt-1" id="et-top">
-            <Form.Switch
-            id="custom-switch"
-            label={this.props.intl.formatMessage({id: 'btn.aqv', defaultMessage: "Switch to All Questions View"})}
-            className="mb-2"
-            onChange={this.onSwithchHandleChange}
-            > 
-
-            </Form.Switch>
-            <Countdown
-              date={this.state.date + this.props.exams.timeLimit * 60 * 1000}
-              renderer={renderer}
-              onTick={() => {
-                this.timeTakenToComplete++;
-              }}
-              onComplete={() => {
-                this.setState({ timeExpired: true, modalShow: true });
-              }}
-            />
-          </div>
-        )}
         {this.props.exams.examError ? (
           <>
-            {" "}
             <Alert variant="danger" className="text-center mt-5">
               <h2>{this.props.exams.examError}</h2>
               <h4>Possible Solution</h4>
@@ -310,80 +294,98 @@ class ExamTaker extends Component {
             </Alert>
             <SubNavBar />
           </>
-        ) : (
-          <Row >
-            {/* <div>
-          {
-            window.confirm(
-              'Are you sure to proced to exam?'
-            )
-          }
-        </div> */}
-            <div className="scroll-container d-flex justify-content-center flex-wrap">
-              <LinkScroll
-                to={"et-top"}
-                spy={true}
-                smooth={true}
-                offset={-50}
-                duration={500}
-                //className="text-secondary"
-                //to={{ pathname: "/" }}
-              >
-                <FaRegArrowAltCircleUp size={"1.2rem"} />
-                
-              </LinkScroll>
+        ) :
+          this.props.exams.timeLimit && (
+            this.state.examStartDialogue ? <PreExamNotification exams={this.props.exams} examStartDialogueHandler={this.examStartDialogueHandler} /> :
+            // !window.confirm('Are You Sure.\n Exam Rules: 1) For True-false based question select true or false for each stem. \n 2) For multiple choice question, select the correct answer only.') ? this.props.history.goBack() :
+            
+            <>
+              <div className="text-dark text-center mt-1" id="et-top">
+                <Form.Switch
+                id="custom-switch"
+                label={this.props.intl.formatMessage({id: 'btn.aqv', defaultMessage: "Switch to All Questions View"})}
+                className="mb-2"
+                onChange={this.onSwithchHandleChange}
+                > 
 
-              <LinkScroll
-                to={"qNavigator"}
-                spy={true}
-                smooth={true}
-                offset={-50}
-                duration={500}
-                //className="text-secondary"
-                //to={{ pathname: "/" }}
-              >
-                <FaRegArrowAltCircleDown size={"1.2rem"}/>
-
-              </LinkScroll>
-            </div>
-            <Col lg={9}>
-              {questions.map((question) => (
-                <QuestionView
-                  key={question.id}
-                  question={question}
-                  handleChange={this.onHandleChange}
-                  defaultChecked={
-                    this.state[question.id] ? this.state[question.id] : null
-                  }
+                </Form.Switch>
+                <Countdown
+                  date={this.state.date + this.props.exams.timeLimit * 60 * 1000}
+                  renderer={renderer}
+                  onTick={() => {
+                    this.timeTakenToComplete++;
+                  }}
+                  onComplete={() => {
+                    this.setState({ timeExpired: true, modalShow: true });
+                  }}
                 />
-              ))}
-              <div className="mt-2 d-flex justify-content-center">
-                {this.state.showPagination && <Pagination
-                  activePage={this.state.currentPage}
-                  itemsCountPerPage={1}
-                  totalItemsCount={this.props.exams.questions.length}
-                  pageRangeDisplayed={1}
-                  onChange={this.onPageHandler}
-                  itemClass="page-item"
-                  linkClass="page-link"
-                  prevPageText="Previous"
-                  nextPageText="Next"
-                /> }
-                <Button onClick={this.modalShow} className="mb-3 ml-5 btn-md" id="qNavigator">
-                {this.props.intl.formatMessage({id: 'btn.sas', defaultMessage: "Submit Answer Sheet"})}
-                </Button>
               </div>
-            </Col>
-            <Col lg={3} className="mt-3">
-              {this.state.showPagination && <PaginationCustom
-                itemsCount={this.props.exams.questions.length}
-                pageSize={this.state.pageSize}
-                currentPage={this.state.currentPage}
-                onPageHandler={this.onPageHandler}
-              />}
-            </Col>
+                          
+              <div className="scroll-container d-flex justify-content-center flex-wrap">
+                <LinkScroll
+                  to={"et-top"}
+                  spy={true}
+                  smooth={true}
+                  offset={-50}
+                  duration={500}
+                >
+                  <FaRegArrowAltCircleUp size={"1.2rem"} />
+                  
+                </LinkScroll>
+
+                <LinkScroll
+                  to={"qNavigator"}
+                  spy={true}
+                  smooth={true}
+                  offset={-50}
+                  duration={500}
+                >
+                  <FaRegArrowAltCircleDown size={"1.2rem"}/>
+
+                </LinkScroll>
+              </div>
+              
+            <Row >  
+              <Col lg={9}>
+                {questions.map((question, ind) => (
+                  <QuestionView
+                    key={question.id}
+                    question={question}
+                    handleChange={this.onHandleChange}
+                    defaultChecked={
+                      this.state[question.id] ? this.state[question.id] : null
+                    }
+                    index={this.state.showPagination ? (this.state.currentPage * this.state.pageSize) : (ind + 1)}
+                  />
+                ))}
+                <div className="mt-2 d-flex justify-content-center">
+                  {this.state.showPagination && <Pagination
+                    activePage={this.state.currentPage}
+                    itemsCountPerPage={1}
+                    totalItemsCount={this.props.exams.questions.length}
+                    pageRangeDisplayed={1}
+                    onChange={this.onPageHandler}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    prevPageText="Previous"
+                    nextPageText="Next"
+                  /> }
+                  <Button onClick={this.modalShow} className="mb-3 ml-5 btn-md" id="qNavigator">
+                  {this.props.intl.formatMessage({id: 'btn.sas', defaultMessage: "Submit Answer Sheet"})}
+                  </Button>
+                </div>
+              </Col>
+              <Col lg={3} className="mt-3">
+                {this.state.showPagination && <PaginationCustom
+                  itemsCount={this.props.exams.questions.length}
+                  pageSize={this.state.pageSize}
+                  currentPage={this.state.currentPage}
+                  onPageHandler={this.onPageHandler}
+                />}
+              </Col>
           </Row>
-        )}
+          </>
+          )}
       </>
     );
   }

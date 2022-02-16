@@ -15,7 +15,7 @@ class Exam extends Component {
     axios
       .get(process.env.REACT_APP_SITE_URL + '/exams/featured')
       .then((res) => {
-        if (res.status == 200) this.setState({ exams: res.data })
+        if (res.status === 200) this.setState({ exams: res.data })
       })
       .catch((e) => {
         console.log(e)

@@ -2,12 +2,13 @@ import React from 'react'
 import { Badge, ListGroup } from 'react-bootstrap'
 import Stem from './stem'
 
-const QuestionForm = ({ question, handleChange, defaultChecked }) => {
+const QuestionForm = ({ question, handleChange, defaultChecked, index }) => {
+  console.log(index)
   return (
     <ListGroup as='ul' className='mt-3'>
       <ListGroup.Item as='li' active>
         <Badge variant='danger p-1 mr-2' style={{ fontSize: '1rem' }}>
-          Question
+          Question No. {index}
         </Badge>
         <span>{question.qText}</span>
       </ListGroup.Item>

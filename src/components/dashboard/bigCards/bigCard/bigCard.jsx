@@ -1,10 +1,10 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Component } from 'react'
 import Accordion from 'react-bootstrap/Accordion'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import { FaBars, FaCalendarAlt } from 'react-icons/fa'
 
 // CSS Modules, react-datepicker-cssmodules.css
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
@@ -37,11 +37,7 @@ class BigCard extends Component {
             <div className='d-flex justify-content-between'>
               {this.props.header}
               <Accordion.Toggle as={Button} variant='link' eventKey='0'>
-                <FontAwesomeIcon
-                  icon={'bars'}
-                  size='lg'
-                  className='text-light'
-                />
+                <FaBars size='1.6rem' className='text-light' />
               </Accordion.Toggle>
               {/* <span className="">More..</span> */}
             </div>
@@ -52,11 +48,7 @@ class BigCard extends Component {
                 <div className='d-flex flex-wrap justify-content-between mb-3'>
                   <div>
                     <span>Start Date:</span>
-                    <FontAwesomeIcon
-                      icon={'calendar-alt'}
-                      size='2x'
-                      className='mx-2'
-                    />
+                    <FaCalendarAlt size='1.6rem' className='mx-2' />
                     <DatePicker
                       selected={this.state.startDate}
                       onChange={this.startHandleChange}
@@ -64,11 +56,7 @@ class BigCard extends Component {
                   </div>
                   <div>
                     <span className=''>End Date:</span>
-                    <FontAwesomeIcon
-                      icon={'calendar-alt'}
-                      size='2x'
-                      className='mx-2'
-                    />
+                    <FaCalendarAlt size='1.6rem' className='mx-2' />
                     <DatePicker
                       selected={this.state.endDate}
                       onChange={this.endHandleChange}
@@ -78,7 +66,7 @@ class BigCard extends Component {
                   <Button onClick={this.reportHandler}>Show</Button>
                 </div>
               )}
-              <hr />
+
               {this.props.children}
             </Card.Body>
           </Accordion.Collapse>

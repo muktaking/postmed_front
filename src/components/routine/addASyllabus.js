@@ -17,7 +17,7 @@ export default function AddASyllabus({ defaultValue = [], ...props }) {
 
   useEffect(() => {
     axios
-      .get(process.env.REACT_APP_SITE_URL + '/courses')
+      .get(process.env.REACT_APP_SITE_URL + '/courses/auth')
       .then((response) => {
         setCourses(response.data)
       })

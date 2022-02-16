@@ -1,9 +1,8 @@
 import React from 'react'
-import Card from 'react-bootstrap/Card'
 import { Link } from 'react-router-dom'
 
 const cardHeader = ({ heading, color, value, id, courseId }) => (
-  <Card.Text className='text-right text-secondary'>
+  <div className='text-right text-secondary'>
     <h5>{heading}</h5>
     <h3 className={'text-' + color}>
       {courseId ? (
@@ -12,7 +11,7 @@ const cardHeader = ({ heading, color, value, id, courseId }) => (
         value
       )}
     </h3>
-  </Card.Text>
+  </div>
 )
 
 export default cardHeader

@@ -1,5 +1,5 @@
 import { Formik } from 'formik'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Alert, Button, Form, Spinner } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -20,7 +20,12 @@ const centeredStyle = {
   zIndex: '1000'
 }
 
-const ExamSpec = ({ categories, courses, selectedQuestionIds }) => {
+const ExamSpec = ({
+  categories,
+  courses,
+  selectedQuestionIds,
+  editExamSpec
+}) => {
   const [hideMsg, setHideMsg] = useState(true)
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
@@ -28,6 +33,28 @@ const ExamSpec = ({ categories, courses, selectedQuestionIds }) => {
   const loading = useSelector((state) => state.examPaper.loading)
   const successMsg = useSelector((state) => state.examPaper.success)
   const errorMsg = useSelector((state) => state.examPaper.error)
+  const initialValues = {
+    title: editExamSpec ? editExamSpec.title : '',
+    type: editExamSpec ? editExamSpec.type.toString() : '0',
+    description: editExamSpec ? editExamSpec.description : '',
+    categoryType: editExamSpec ? editExamSpec.categoryIds : [],
+    courseType: editExamSpec ? editExamSpec.courseIds : [],
+    singleQuestionMark: editExamSpec
+      ? editExamSpec.singleQuestionMark.toString()
+      : '1',
+    questionStemLength: editExamSpec
+      ? editExamSpec.questionStemLength.toString()
+      : '5',
+    penaltyMark: editExamSpec ? editExamSpec.penaltyMark.toString() : '0',
+    timeLimit: editExamSpec ? editExamSpec.timeLimit.toString() : '40'
+  }
+
+  useEffect(() => {
+    if (editExamSpec) {
+      setStartDate(new Date(editExamSpec.startDate))
+      setEndDate(new Date(editExamSpec.endDate))
+    }
+  }, [editExamSpec])
 
   return (
     <>
@@ -40,26 +67,19 @@ const ExamSpec = ({ categories, courses, selectedQuestionIds }) => {
         ></Spinner>
       )}
       <Formik
-        initialValues={{
-          title: '',
-          type: '0',
-          categoryType: [],
-          courseType: [],
-          singleQuestionMark: '1',
-          questionStemLength: '5',
-          penaltyMark: '0',
-          timeLimit: '40'
-        }}
+        initialValues={initialValues}
         validate={validate}
         onSubmit={onSubmitHandler(
           startDate,
           endDate,
           selectedQuestionIds,
           dispatch,
-          setHideMsg
+          setHideMsg,
+          editExamSpec && editExamSpec.id
         )}
+        enableReinitialize
       >
-        {({ errors, handleChange, handleSubmit }) => (
+        {({ errors, handleChange, handleSubmit, values }) => (
           <ExamCard header='Exam Specification' showHeader={true}>
             {hideMsg && successMsg && (
               <Alert //
@@ -96,6 +116,7 @@ const ExamSpec = ({ categories, courses, selectedQuestionIds }) => {
                   placeholder='Enter title'
                   name='title'
                   onChange={handleChange}
+                  value={values.title}
                 />
               </Form.Group>
               {errors.title ? (
@@ -103,7 +124,12 @@ const ExamSpec = ({ categories, courses, selectedQuestionIds }) => {
               ) : null}
               <Form.Group controlId='type'>
                 <Form.Label>Exam Type</Form.Label>
-                <Form.Control as='select' name='type' onChange={handleChange}>
+                <Form.Control
+                  as='select'
+                  name='type'
+                  value={values.type}
+                  onChange={handleChange}
+                >
                   <option value='0'>Assignment</option>
                   <option value='1'>Weekly</option>
                   <option value='2'>Monthly</option>
@@ -120,6 +146,7 @@ const ExamSpec = ({ categories, courses, selectedQuestionIds }) => {
                   multiple
                   name='categoryType'
                   onChange={handleChange}
+                  value={values.categoryType}
                   //value={categories[0] && categories[0].id}
                   // eslint-disable-next-line react/jsx-no-comment-textnodes
                 >
@@ -141,6 +168,7 @@ const ExamSpec = ({ categories, courses, selectedQuestionIds }) => {
                   multiple
                   name='courseType'
                   onChange={handleChange}
+                  value={values.courseType}
                   //value={categories[0] && categories[0].id}
                   // eslint-disable-next-line react/jsx-no-comment-textnodes
                 >
@@ -159,6 +187,7 @@ const ExamSpec = ({ categories, courses, selectedQuestionIds }) => {
                   placeholder='description'
                   name='description'
                   onChange={handleChange}
+                  value={values.description}
                 />
               </Form.Group>
               {errors.description ? (
@@ -171,7 +200,7 @@ const ExamSpec = ({ categories, courses, selectedQuestionIds }) => {
                     selected={startDate}
                     onChange={(date) => setStartDate(date)}
                     showTimeSelect
-                    minDate={new Date()}
+                    minDate={!editExamSpec && new Date()}
                     dateFormat='Pp'
                   />
                   <FaRegCalendarAlt size='1.7rem' />
@@ -195,6 +224,7 @@ const ExamSpec = ({ categories, courses, selectedQuestionIds }) => {
                   placeholder='1'
                   name='singleQuestionMark'
                   onChange={handleChange}
+                  value={values.singleQuestionMark}
                 />
                 <Form.Text className='text-muted'>
                   ** It is value for the question, not for the single stem.
@@ -212,6 +242,7 @@ const ExamSpec = ({ categories, courses, selectedQuestionIds }) => {
                   placeholder='5'
                   name='questionStemLength'
                   onChange={handleChange}
+                  value={values.questionStemLength}
                 />
               </Form.Group>
               {errors.questionStemLength ? (
@@ -226,6 +257,7 @@ const ExamSpec = ({ categories, courses, selectedQuestionIds }) => {
                   placeholder='0'
                   name='penaltyMark'
                   onChange={handleChange}
+                  value={values.penaltyMark}
                 />
                 <Form.Text className='text-muted'>
                   ** It is value for single stem, not for the question.
@@ -240,6 +272,7 @@ const ExamSpec = ({ categories, courses, selectedQuestionIds }) => {
                   type='text'
                   placeholder='40'
                   name='timeLimit'
+                  value={values.timeLimit}
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -262,15 +295,18 @@ function onSubmitHandler(
   endDate,
   selectedQuestionIds,
   dispatch,
-  setHideMsg
+  setHideMsg,
+  editExamId
 ) {
   return (values) => {
+    console.log(editExamId)
+
     if (selectedQuestionIds.length > 0) {
       values.startDate = startDate
       values.endDate = endDate
       dispatch(onLoadingLoader())
       setHideMsg(true)
-      dispatch(postExamProfile(values, selectedQuestionIds))
+      dispatch(postExamProfile(values, selectedQuestionIds, editExamId))
     } else {
       alert('Their is no selected Question')
     }

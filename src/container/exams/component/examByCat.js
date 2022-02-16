@@ -1,4 +1,5 @@
-import moment from 'moment'
+//import moment from 'moment'
+import * as moment from 'dayjs'
 import React from 'react'
 import { Badge, Button, Col } from 'react-bootstrap'
 import { BsFileText } from 'react-icons/bs'
@@ -18,6 +19,11 @@ export default function ExamByCat({ exam, courseId = null }) {
           {/* <BsLayersFill size='1.5rem' /> */}
           <span className=''>{exam.title}</span>
         </h4>
+        <div>
+          <Badge variant='warning' className='px-2 py-1'>
+            {examTypeToString(exam.type)}
+          </Badge>
+        </div>
         <div className=''>
           {/* <BsClock size='1.5rem' /> */}
           <span>Start on: </span>
@@ -78,9 +84,6 @@ export default function ExamByCat({ exam, courseId = null }) {
               <FormattedMessage id='btn.rank' defaultMessage='Rank' />
             </Button>
           </Link>
-          <span className='bg-warning text-white p-2 ml-5'>
-            {examTypeToString(exam.type)}
-          </span>
         </div>
       </Col>
     </>

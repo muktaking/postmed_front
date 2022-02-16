@@ -241,7 +241,7 @@ class Question extends Component {
     return (
       <>
         <Helmet>
-          <title>Question</title>
+          <title>Question Builder</title>
         </Helmet>
         <Edit />
 

@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form'
 import Spinner from 'react-bootstrap/Spinner'
 import validator from 'validator'
 import '../../assets/scss/section/registration.scss'
+import Facebook from '../../components/facebook/facebook'
 import NavbarHome from '../../components/navbar/navbarHome'
 import MetaInfo from '../../components/seo/metainfo'
 import { RoutesConfig } from '../../config/routes.config'
@@ -361,6 +362,8 @@ class SignUp extends Component {
               Submit
             </Button>
           </Form>
+          <p className='mt-3 lead'>Or</p>
+          <Facebook />
         </div>
         {/* End of Landing */}
       </div>

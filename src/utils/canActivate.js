@@ -9,6 +9,14 @@ export const rolePermitted = {
   admin: 5
 }
 
+export const roleArray = [
+  'Student',
+  'Mentor',
+  'Moderator',
+  'Coordinator',
+  'Admin'
+]
+
 export function roleToString(num) {
   switch (num) {
     case 1:

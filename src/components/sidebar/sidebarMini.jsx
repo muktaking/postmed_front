@@ -1,12 +1,14 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Component } from 'react'
 import Nav from 'react-bootstrap/Nav'
 import {
   FaBookOpen,
+  FaChartLine,
   FaCog,
+  FaDiceD20,
   FaHome,
   FaPen,
   FaQuestion,
+  FaSignOutAlt,
   FaTools,
   FaUser
 } from 'react-icons/fa'
@@ -51,13 +53,36 @@ class Sidebar extends Component {
     if (canActivate(rolePermitted.student, this.props.token)) {
       this.faIcons = [
         <FaHome size='1.6em' className='mr-2' />,
+        <FaDiceD20 size='1.6em' className='mr-2' />,
         <FaBookOpen size='1.6em' className='mr-2' />,
+        <FaChartLine size='1.6em' className='mr-2' />,
         <FaUser size='1.6em' className='mr-2' />,
         <FaTools size='1.6em' className='mr-2' />
       ]
-      this.menuName = ['Dashboard', 'Exams', 'Profile', 'Settings']
-      this.menuIntlId = ['btn.db', 'btn.exams', 'profile', 'settings']
-      this.navLinks = ['/dashboard', '/exams', '/profile', '/settings']
+      this.menuName = [
+        'Dashboard',
+        'Courses',
+        'Exams',
+        'Reports',
+        'Profile',
+        'Settings'
+      ]
+      this.menuIntlId = [
+        'btn.db',
+        'btn.courses',
+        'btn.exams',
+        'btn.reports',
+        'profile',
+        'settings'
+      ]
+      this.navLinks = [
+        '/dashboard',
+        '/courses',
+        '/exams',
+        '/reports',
+        '/profile',
+        '/settings'
+      ]
     }
 
     if (canActivate(rolePermitted.mentor, this.props.token)) {
@@ -157,11 +182,7 @@ class Sidebar extends Component {
                   to={{ pathname: '/logout' }}
                   className='nav-link'
                 >
-                  <FontAwesomeIcon
-                    icon='sign-out-alt'
-                    size='lg'
-                    className='text-danger'
-                  />
+                  <FaSignOutAlt className='text-danger' />
                 </NavLink>
               </Nav.Item>
             ) : (

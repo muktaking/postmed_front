@@ -1,6 +1,10 @@
-import moment from 'moment'
-import React from 'react'
+//import moment from 'moment'
+import * as moment from 'dayjs'
+import React, { useState } from 'react'
 import { Table } from 'react-bootstrap'
+import { FaEdit, FaTimes } from 'react-icons/fa'
+import DeleteExam from '../../examBuilder/deleteExam'
+import EditExam from '../../examBuilder/editExam'
 import { examType } from '../../exams/examLists'
 
 function getExamStatus(start, end) {
@@ -16,8 +20,31 @@ function getExamStatus(start, end) {
 }
 
 export default function Exams({ exams }) {
+  const [editExamId, setEditExamId] = useState(null)
+  const [delExamId, setDelExamId] = useState(null)
+  const [delExamTitle, setDelExamTitle] = useState('')
+
+  function editExamHandleClose() {
+    setEditExamId(null)
+  }
+  function delExamHandleClose() {
+    setDelExamId(null)
+  }
   return (
     <div style={{ maxHeight: '350px', overflowY: 'scroll' }}>
+      {editExamId && (
+        <EditExam
+          editExamHandleClose={editExamHandleClose}
+          editExamId={editExamId}
+        />
+      )}
+      {delExamId && (
+        <DeleteExam
+          title={delExamTitle}
+          delExamId={delExamId}
+          delExamHandleClose={delExamHandleClose}
+        />
+      )}
       <Table striped bordered hover responsive size='sm'>
         <thead>
           <tr>
@@ -30,6 +57,7 @@ export default function Exams({ exams }) {
             <th>Status</th>
             <th>Start From</th>
             <th>Ends on</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -44,6 +72,27 @@ export default function Exams({ exams }) {
               <td>{getExamStatus(exam.startDate, exam.endDate)}</td>
               <td>{moment(exam.startDate).format('YYYY-MM-DD, hh:mm a')}</td>
               <td>{moment(exam.endDate).format('YYYY-MM-DD, hh:mm a')}</td>
+              <td>
+                <span
+                  onClick={() => {
+                    setEditExamId(exam.id)
+                  }}
+                  style={{ cursor: 'pointer' }}
+                  className='mb-2'
+                >
+                  <FaEdit />
+                </span>
+                <br />
+                <span
+                  onClick={() => {
+                    setDelExamId(exam.id)
+                    setDelExamTitle(exam.title)
+                  }}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <FaTimes />
+                </span>
+              </td>
             </tr>
           ))}
         </tbody>

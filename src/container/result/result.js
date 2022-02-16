@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
-import moment from 'moment'
+//import moment from 'moment'
+import * as moment from 'dayjs'
 import React, { Component } from 'react'
 import { Alert, Badge, Card, Image, ListGroup } from 'react-bootstrap'
 import { FaMinusCircle } from 'react-icons/fa'
@@ -9,6 +10,11 @@ import SubNavBar from '../../components/navbar/subNavBar'
 import Gist from '../../components/result/gist'
 import QuestionResultStem from '../../components/result/stem'
 import Feedback from './feedback'
+const duration = require('dayjs/plugin/duration')
+const relativeTime = require('dayjs/plugin/relativeTime')
+moment.extend(relativeTime)
+moment.extend(duration)
+
 const QType = {
   SingleBestAnswer: 'sba',
   Matrix: 'matrix'
@@ -56,7 +62,7 @@ class Result extends Component {
                   title='Time'
                   bgColor='bg-info'
                   value={moment
-                    .duration(timeTakenToComplete, 'minute')
+                    .duration(timeTakenToComplete, 'minutes')
                     .humanize()}
                 />
                 <Gist

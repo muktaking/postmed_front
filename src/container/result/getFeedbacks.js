@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Badge, ListGroup } from 'react-bootstrap'
+import { ListGroup } from 'react-bootstrap'
+import { FaStar, FaUserCircle } from 'react-icons/fa'
 
 export default function GetFeedbacks({ examId }) {
   const [feedbacks, setFeedbacks] = useState([])
@@ -22,14 +23,19 @@ export default function GetFeedbacks({ examId }) {
       <ListGroup as='ul'>
         {feedbacks.map((feedback) => (
           <ListGroup.Item as='li'>
-            <p className='lead'>
-              <span className='ml-2'>{feedback.name}</span>
-              <span className='ml-2'>reviewd as </span>
-              <Badge variant='info'>
-                {getFeedbackStatus(feedback.feedbackStatus)}
-              </Badge>
+            <p className='p-3 bg-light'>
+              <span>
+                <FaUserCircle size='2.3rem' />
+              </span>
+              <br />
+              <span style={{ fontSize: '1.5rem' }}>{feedback.name}</span>
+              <hr />
+              <span>
+                reviewd as {getFeedbackStatus(feedback.feedbackStatus)}
+              </span>
+              <br />
+              <q className='p-5 text-muted'>{feedback.message}</q>
             </p>
-            <p>{feedback.message}</p>
           </ListGroup.Item>
         ))}
       </ListGroup>
@@ -38,15 +44,20 @@ export default function GetFeedbacks({ examId }) {
 }
 
 function getFeedbackStatus(status) {
-  switch (status) {
-    case 1:
-      return 'Below Average'
-    case 2:
-      return 'Average'
-    case 4:
-      return 'Best'
-
-    default:
-      return 'Good'
+  const stars = []
+  for (let i = 0; i < status; i++) {
+    stars.push(<FaStar size='1.1rem' color=' #FFD700' />)
   }
+  return stars
+  // switch (status) {
+  //   case 1:
+  //     return 'Below Average'
+  //   case 2:
+  //     return 'Average'
+  //   case 4:
+  //     return 'Best'
+
+  //   default:
+  //     return 'Good'
+  // }
 }

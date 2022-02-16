@@ -27,14 +27,6 @@ class ExamLists extends Component {
       <>
         <MetaInfo {...RoutesConfig.Exams.metaInfo} />
         {this.props.exams.exams.length < 1 && <Spinner />}
-        {/* {this.props.exams.exams.length < 1 && (
-          <Spinner
-            animation="border"
-            role="status"
-            variant="dark"
-            className="content-center"
-          ></Spinner>
-        )} */}
         {Object.keys(this.props.exams.exams).map(
           (key) =>
             this.props.exams.exams[key] && (

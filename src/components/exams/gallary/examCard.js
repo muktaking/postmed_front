@@ -1,82 +1,25 @@
 import axios from 'axios'
-import moment from 'moment'
-import React, { useState } from 'react'
-import { Badge, Button, Card, OverlayTrigger, Popover } from 'react-bootstrap'
+//import moment from 'moment'
+import * as moment from 'dayjs'
+import React, { Suspense, useState } from 'react'
+import {
+  Alert,
+  Badge,
+  Button,
+  Card,
+  OverlayTrigger,
+  Popover
+} from 'react-bootstrap'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { LazyLoadComponent } from 'react-lazy-load-image-component'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import {
-  EmailIcon,
-  EmailShareButton,
-  FacebookIcon,
-  FacebookShareButton,
-  LinkedinIcon,
-  LinkedinShareButton,
-  TwitterIcon,
-  TwitterShareButton
-} from 'react-share'
 import { resetExamResultLoader } from '../../../store/exams'
 import { canActivate, rolePermitted } from '../../../utils/canActivate'
-
-const iconStyle = {
-  size: 35,
-  round: true
-}
-
-const SocialShare = ({ title, description, url, ...props }) => {
-  url = process.env.REACT_APP_BASE_URL + url
-
-  return (
-    <div className='mt-3' {...props}>
-      <hr />
-
-      <Badge
-        variant='success'
-        className='mr-1 p-1'
-        style={{ fontSize: '.8rem' }}
-      >
-        Share on
-      </Badge>
-
-      <FacebookShareButton
-        url={url}
-        quote={description}
-        hashtag={title}
-        className='mr-1'
-      >
-        <FacebookIcon size={iconStyle.size} round={iconStyle.round} />
-      </FacebookShareButton>
-
-      <TwitterShareButton
-        url={url}
-        title={description}
-        hashtag={title}
-        className='mr-1'
-      >
-        <TwitterIcon size={iconStyle.size} round={iconStyle.round} />
-      </TwitterShareButton>
-
-      <EmailShareButton
-        url={url}
-        body={description}
-        title={title}
-        className='mr-1'
-      >
-        <EmailIcon size={iconStyle.size} round={iconStyle.round} />
-      </EmailShareButton>
-
-      <LinkedinShareButton
-        url={url}
-        source={url}
-        body={description}
-        title={title}
-        className='mr-1'
-      >
-        <LinkedinIcon size={iconStyle.size} round={iconStyle.round} />
-      </LinkedinShareButton>
-    </div>
-  )
-}
+import SocialShare from '../../socialShare/socialShare'
+const EditExam = React.lazy(() =>
+  import('../../../container/examBuilder/editExam')
+)
 
 const categoryTypeVariant = (name) => {
   let variant = 'primary'
@@ -107,21 +50,32 @@ export default function ExamCard({
   endDate,
   free,
   examLoader,
-  landing
+  landing,
+  authToken
 }) {
   const dispatch = useDispatch()
   const token = useSelector((state) => state.auth.token)
   const intl = useIntl()
   const [res, setRes] = useState(null)
+  const [editExam, setEditExam] = useState(false)
 
-  console.log(landing, courseId)
+  function editExamHandleClose() {
+    setEditExam(false)
+  }
 
   return (
     <>
       <Card key={examId} className='mr-2 mb-2' style={{ width: width + 'px' }}>
-        {!canActivate(rolePermitted.admin, token) && (
-          <Card.Img variant='top' src={imgSrc} width={width} height={height} />
-        )}
+        <LazyLoadComponent>
+          {!canActivate(rolePermitted.coordinator, token) && (
+            <Card.Img
+              variant='top'
+              src={imgSrc}
+              width={width}
+              height={height}
+            />
+          )}
+        </LazyLoadComponent>
         <Card.Body>
           <div>
             <Card.Title style={{ fontSize: '1.4rem', fontWeight: '900' }}>
@@ -166,55 +120,75 @@ export default function ExamCard({
             </p>
           </div>
 
-          {!landing && !canActivate(rolePermitted.admin, token) && (
-            <>
-              <div className='d-flex justify-content-around'>
-                <Link
-                  className='text-white'
-                  to={
-                    courseId
-                      ? `/exams/${examId}_${courseId}`
-                      : free
-                      ? `/exams/free/${examId}`
-                      : ''
-                  }
-                >
-                  <Button
-                    variant='outline-primary'
-                    onClick={() => {
-                      dispatch(resetExamResultLoader())
-                    }}
-                  >
-                    <FormattedMessage
-                      id='btn.start'
-                      defaultMessage='Start Exam'
-                    />
-                  </Button>
-                </Link>
-                <Link className='text-white' to={'/result/rank/' + examId}>
-                  <Button
-                    onClick={() => {
-                      dispatch(resetExamResultLoader())
-                    }}
-                    variant='outline-dark'
-                  >
-                    <FormattedMessage id='btn.rank' defaultMessage='Rank' />
-                  </Button>
-                </Link>
-              </div>
-              <SocialShare
-                url={'/exams/' + examId}
-                title={title}
-                description={description}
-              />
-            </>
-          )}
+          <div className='d-flex justify-content-around'>
+            <Link
+              className='text-white'
+              to={
+                courseId
+                  ? `/exams/${examId}_${courseId}`
+                  : free
+                  ? `/exams/free/${examId}`
+                  : ''
+              }
+            >
+              <Button
+                variant='outline-primary'
+                onClick={() => {
+                  dispatch(resetExamResultLoader())
+                }}
+                disabled={!free}
+              >
+                <FormattedMessage id='btn.start' defaultMessage='Start Exam' />
+              </Button>
+            </Link>
+            <Link className='text-white' to={'/result/rank/' + examId}>
+              <Button
+                onClick={() => {
+                  dispatch(resetExamResultLoader())
+                }}
+                variant='outline-dark'
+              >
+                <FormattedMessage id='btn.rank' defaultMessage='Rank' />
+              </Button>
+            </Link>
+          </div>
+          {authToken &&
+            (free ? (
+              <Alert variant='warning' className='mt-2'>
+                Taking part to this exam will not be added to your exam profile.{' '}
+              </Alert>
+            ) : (
+              <Alert variant='danger' className='mt-2'>
+                You can not take part this exam. Go to{' '}
+                <Link to='/exams'>avaiable exams </Link>
+              </Alert>
+            ))}
+          <SocialShare
+            url={'/exams/' + examId}
+            title={title}
+            description={description}
+          />
 
-          {canActivate(rolePermitted.admin, token) && (
-            <div>
-              <Button disabled={true} variant='primary' className='mr-3'>
+          {canActivate(rolePermitted.coordinator, token) && (
+            <div className='mt-2'>
+              {editExam && (
+                <Suspense fallback={<div>Loading...</div>}>
+                  <EditExam
+                    editExam={editExam}
+                    editExamHandleClose={editExamHandleClose}
+                  />
+                </Suspense>
+              )}
+              <Button
+                variant='primary'
+                className='mr-3'
+                onClick={() => {
+                  setEditExam(true)
+                }}
+              >
                 Edit
               </Button>
+
               <OverlayTrigger
                 trigger='click'
                 placement='top'

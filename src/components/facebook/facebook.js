@@ -13,38 +13,40 @@ class Facebook extends Component {
   }
   componentClicked = () => console.log('clicked')
   responseFacebook = (fbRes) => {
-    axios
-      .post(process.env.REACT_APP_SITE_URL + '/auth/facebook', {
-        fbApi: fbRes
+    if (fbRes.status === 'unknown') {
+      this.setState({
+        photo: null,
+        message: 'Something wrong. To continue you have to approve our app'
       })
-      .then((res) => {
-        this.props.onAuth(res.data)
-
-        const expirationDate = new Date(
-          new Date().getTime() + res.data.expireIn * 1000
-        )
-
-        localStorage.setItem('jwtToken', res.data.accessToken)
-        localStorage.setItem('expirationDate', expirationDate)
-        localStorage.setItem('userId', res.data.id)
-        this.props.checkAuthTimeOutLoader(res.data.expireIn)
-      })
-      .catch((e) => {
-        this.setState({
-          name: fbRes.name,
-          photo: fbRes.picture.data.url,
-          message:
-            'Admin has not approved your account yet.Please wait or contact with admin.'
+    } else {
+      axios
+        .post(process.env.REACT_APP_SITE_URL + '/auth/facebook', {
+          fbApi: fbRes
         })
-      })
+        .then((res) => {
+          this.props.onAuth(res.data)
 
-    this.setState({
-      isLoggedIn: true
-      // userId: res.userId,
-      // name: res.name,
-      // email: res.email,
-      // photo: res.picture.data.url
-    })
+          const expirationDate = new Date(
+            new Date().getTime() + res.data.expireIn * 1000
+          )
+
+          localStorage.setItem('jwtToken', res.data.accessToken)
+          localStorage.setItem('expirationDate', expirationDate)
+          localStorage.setItem('userId', res.data.id)
+          this.props.checkAuthTimeOutLoader(res.data.expireIn)
+        })
+        .catch((e) => {
+          this.setState({
+            name: fbRes.name,
+            photo: fbRes.picture.data.url,
+            message:
+              'Admin has not approved your account yet.Please wait or contact with admin.'
+          })
+        })
+      this.setState({
+        isLoggedIn: true
+      })
+    }
   }
   render() {
     let fbContent
@@ -52,7 +54,7 @@ class Facebook extends Component {
     if (this.state.isLoggedIn) {
       fbContent = (
         <div className='d-flex bg-danger p-2'>
-          <img src={this.state.photo} alt='fb_avatar' />
+          {this.state.photo && <img src={this.state.photo} alt='fb_avatar' />}
           <p className='mt-1'>
             Sorry,{' ' + this.state.name + ' ' + this.state.message}
           </p>
@@ -64,7 +66,7 @@ class Facebook extends Component {
           <FacebookLogin
             appId='969018100693636'
             size='small'
-            autoLoad={false}
+            autoLoad={true}
             fields='name,email,picture'
             onClick={this.componentClicked}
             callback={this.responseFacebook}

@@ -94,7 +94,7 @@ export default function Index({ viewHandler, id }) {
       {
         <Toast show={res} onClose={setRes} style={resStyle}>
           <Toast.Header>
-            <strong className='mr-auto'>Question Edited Successfully</strong>
+            <strong className='mr-auto'>Question Edited Response</strong>
           </Toast.Header>
           <Toast.Body>
             {res && 'id' in res ? (

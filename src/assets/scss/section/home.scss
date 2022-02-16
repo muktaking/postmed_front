@@ -27,9 +27,12 @@
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   will-change: transform;
+  //background-color: #515151;
   background-image: $homeBgImg;
 }
-
+// .home-inner.visible {
+//   background-image: $homeBgImg;
+// }
 //landing page Navbar
 .navbar {
   text-transform: uppercase;
@@ -71,12 +74,30 @@
   letter-spacing: 0.3rem;
   text-shadow: 0.1rem 0.1rem 0.8rem black;
   padding-bottom: 1rem;
+  @media (max-width: 991.98px) {
+    font-size: 2.8rem;
+  }
+  @media (max-width: 767.98px) {
+    font-size: 2.2rem;
+  }
+  @media (max-width: 575.98px) {
+    font-size: 1.8rem;
+  }
 }
 
 .caption h3 {
   font-size: 2rem;
   text-shadow: 0.1rem 0.1rem 0.5rem black;
   padding-bottom: 1.6rem;
+  @media (max-width: 991.98px) {
+    font-size: 1.4rem;
+  }
+  @media (max-width: 767.98px) {
+    font-size: 1rem;
+  }
+  @media (max-width: 575.98px) {
+    font-size: 0.8rem;
+  }
 }
 
 .btn-lg {

@@ -1,32 +1,43 @@
 import axios from 'axios'
-import moment from 'moment'
+//import moment from 'moment'
+import * as moment from 'dayjs'
 import React, { useEffect, useState } from 'react'
-import { Button, Modal, OverlayTrigger, Toast, Tooltip } from 'react-bootstrap'
+import {
+  Button,
+  Image,
+  Modal,
+  OverlayTrigger,
+  Toast,
+  Tooltip
+} from 'react-bootstrap'
 import { GrUpdate } from 'react-icons/gr'
 import AddACourse from './addACourse'
 
-const RenderTooltip = React.forwardRef(({ id, setMsg, ...props }, ref) => (
-  <Tooltip ref={ref} id='button-tooltip' {...props}>
-    <p>Are you sure to delete this Course.</p>
-    <Button
-      variant='danger'
-      onClick={() => {
-        axios
-          .delete(process.env.REACT_APP_SITE_URL + '/courses/' + id)
-          .then((res) => {
-            console.log(res)
-            setMsg(res.data.message)
-          })
-          .catch((e) => {
-            console.log(e)
-            setMsg(e.message)
-          })
-      }}
-    >
-      Yes
-    </Button>
-  </Tooltip>
-))
+const RenderTooltip = React.forwardRef(
+  ({ id, setMsg, updater, ...props }, ref) => (
+    <Tooltip ref={ref} id='button-tooltip' {...props}>
+      <p>Are you sure to delete this Course.</p>
+      <Button
+        variant='danger'
+        onClick={() => {
+          axios
+            .delete(process.env.REACT_APP_SITE_URL + '/courses/' + id)
+            .then((res) => {
+              //console.log(res)
+              setMsg(res.data.message)
+              updater()
+            })
+            .catch((e) => {
+              //console.log(e)
+              setMsg(e.message)
+            })
+        }}
+      >
+        Yes
+      </Button>
+    </Tooltip>
+  )
+)
 
 export default function ShowCourses({ showRaw }) {
   const [courses, setCourses] = useState([])
@@ -40,7 +51,7 @@ export default function ShowCourses({ showRaw }) {
 
   const handleUpdate = () => {
     axios
-      .get(process.env.REACT_APP_SITE_URL + '/courses')
+      .get(process.env.REACT_APP_SITE_URL + '/courses/raw')
       .then((res) => {
         setCourses(res.data)
       })
@@ -49,7 +60,7 @@ export default function ShowCourses({ showRaw }) {
 
   useEffect(() => {
     axios
-      .get(process.env.REACT_APP_SITE_URL + '/courses')
+      .get(process.env.REACT_APP_SITE_URL + '/courses/raw')
       .then((res) => {
         setCourses(res.data)
       })
@@ -57,12 +68,16 @@ export default function ShowCourses({ showRaw }) {
   }, [showRaw])
   return (
     <div className='container'>
-      <Modal show={showModal} onHide={modalClose}>
+      <Modal show={showModal} onHide={modalClose} size='lg'>
         <Modal.Header closeButton>
           <Modal.Title>Edit The Course</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <AddACourse defaultValue={editCourseValue} />
+          <AddACourse
+            defaultValue={editCourseValue}
+            updater={handleUpdate}
+            modalClose={modalClose}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={modalClose}>
@@ -102,13 +117,26 @@ export default function ShowCourses({ showRaw }) {
                   {courses.map((course, ind) => (
                     <li
                       key={course.id}
-                      className='event'
+                      className='event mb-3'
                       data-date={moment(course.startDate).format(
                         'YYYY-MMM-DD, h:mm a'
                       )}
                     >
-                      <p>{course.title}</p>
+                      {course.imageUrl && (
+                        <Image
+                          src={
+                            process.env.REACT_APP_SITE_URL +
+                            '/' +
+                            course.imageUrl
+                          }
+                          thumbnail
+                          width={100}
+                          height={100}
+                        />
+                      )}
+                      <p className='mt-2'>{course.title}</p>
                       <p className='text-danger'>{course.description}</p>
+                      <p className='text-primary'>Price: {course.price}</p>
                       <p className='text-secondary'>
                         Course ends:{' '}
                         {moment(course.endDate).format('YYYY-MMM-DD, h:mm a')}
@@ -123,6 +151,8 @@ export default function ShowCourses({ showRaw }) {
                                 course.id,
                                 course.title,
                                 course.description,
+                                course.price,
+                                course.imageUrl,
                                 new Date(course.startDate),
                                 new Date(course.endDate)
                               ])
@@ -134,7 +164,11 @@ export default function ShowCourses({ showRaw }) {
                             trigger='click'
                             placement='right'
                             overlay={
-                              <RenderTooltip setMsg={setMsg} id={course.id} />
+                              <RenderTooltip
+                                setMsg={setMsg}
+                                id={course.id}
+                                updater={handleUpdate}
+                              />
                             }
                           >
                             <Button variant='danger' className='ml-2'>

@@ -31,8 +31,8 @@ const miniBlock = ({
             />
           </Col>
           <Col sm={4}>
-            <div className='d-flex  align-items-center justify-content-end h-100'>
-              <Icon icon={faIcon} size={'3x'} classes={'text-' + color} />
+            <div>
+              <Icon icon={faIcon} size={'2.4rem'} classes={'text-' + color} />
             </div>
           </Col>
         </Row>

@@ -1,4 +1,5 @@
-import moment from 'moment'
+//import moment from 'moment'
+import * as moment from 'dayjs'
 import React from 'react'
 import { facultyToString } from '../../utils/faculty'
 

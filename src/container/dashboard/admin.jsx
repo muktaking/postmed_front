@@ -3,11 +3,11 @@ import * as _ from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { Badge, Col, Row } from 'react-bootstrap'
 import { FaPaperclip, FaUsers } from 'react-icons/fa'
-import Exams from './component/exams'
+import ExamsByCourse from './component/examsByCourse'
 import Expectedenrolled from './component/expectedenrolled'
 import GetFeedbacks from './component/feedbacks'
+import RoleTabs from './component/roleTabs'
 import UploadUsers from './component/uploadUsers'
-import Users from './component/users'
 
 export default function Admin() {
   const [users, setUsers] = useState([])
@@ -42,7 +42,7 @@ export default function Admin() {
       })
       .catch((error) => console.log(error))
   }
-
+  console.log(exams)
   return (
     <div>
       <Row>
@@ -60,9 +60,10 @@ export default function Admin() {
               <UploadUsers updater={updater} />
             </div>
           </div>
-          <Users users={users} updater={updater} />
+          <RoleTabs users={users} updater={updater} />
           <hr />
-          <Exams exams={exams} updater={updater} />
+          <ExamsByCourse exams={exams} updater={updater} />
+          {/* <Exams exams={exams} updater={updater} /> */}
         </Col>
         <Col md={4}>
           <Expectedenrolled

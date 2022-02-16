@@ -1,8 +1,42 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-//import { icon } from "@fortawesome/fontawesome-svg-core";
+import {
+  FaBalanceScale,
+  FaClock,
+  FaFile,
+  FaFileAlt,
+  FaFileImport,
+  FaMedal,
+  FaPoll,
+  FaUsers
+} from 'react-icons/fa'
 
-const icon = ({ icon, size, classes }) => (
-  <FontAwesomeIcon icon={icon} size={size} className={classes} />
-)
+const icon = ({ icon, size, classes }) => {
+  switch (icon) {
+    case 'file-alt':
+      return <FaFileAlt size={size} className={classes} />
+    case 'file-import':
+      return <FaFileImport size={size} className={classes} />
+
+    case 'medal':
+      return <FaMedal size={size} className={classes} />
+
+    case 'users':
+      return <FaUsers size={size} className={classes} />
+
+    case 'poll':
+      return <FaPoll size={size} className={classes} />
+
+    case 'balance-scale':
+      return <FaBalanceScale size={size} className={classes} />
+
+    case 'file':
+      return <FaFile size={size} className={classes} />
+
+    case 'clock':
+      return <FaClock size={size} className={classes} />
+
+    default:
+      return <FaFile size={size} className={classes} />
+  }
+}
 export default icon

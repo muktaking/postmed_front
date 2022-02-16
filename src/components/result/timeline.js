@@ -1,6 +1,7 @@
 import axios from 'axios'
+//import moment from 'moment'
+import * as moment from 'dayjs'
 import * as _ from 'lodash'
-import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { Badge } from 'react-bootstrap'
 import './timeline.css'

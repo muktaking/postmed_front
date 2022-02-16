@@ -10,9 +10,9 @@ import Sidebar from '../components/sidebar/sidebar'
 import SidebarMini from '../components/sidebar/sidebarMini'
 import Topbar from '../components/topbar/topbar'
 import { canActivate, rolePermitted } from '../utils/canActivate'
-import Profile from './profile/profile'
+//import Profile from './profile/profile'
 
-//const Profile = lazy(()=> import('./profile/profile'));
+const Profile = lazy(() => import('./profile/profile'))
 
 //import Category from "./category/category";
 const Category = lazy(() => import('./category/category'))
@@ -28,6 +28,9 @@ const CourseBuilder = lazy(() => import('./courseBuilder/'))
 const RoutineBuilder = lazy(() => import('./routine'))
 //import ExamBuilder from "./examBuilder/examBuilder";
 const ExamBuilder = lazy(() => import('./examBuilder/examBuilder'))
+
+const ExamEdit = lazy(() => import('./examBuilder/editExam'))
+
 //import ExamLists from "./exams/examLists";
 const ExamLists = lazy(() => import('./exams/examLists'))
 //import ExamLists from "./exams/examLists";
@@ -51,6 +54,9 @@ const Rank = lazy(() => import('./result/rank'))
 //import Result from "./result/result";
 const Result = lazy(() => import('./result/result'))
 const Settings = lazy(() => import('./settings/settings'))
+const Print = lazy(() => import('./print/print'))
+const Reports = lazy(() => import('./reports/reports'))
+const Help = lazy(() => import('./help/help'))
 
 const InnerContent = (props) => {
   const pageName = props.match.url.split('/', 2)[1]
@@ -88,7 +94,7 @@ const InnerContent = (props) => {
                   <Route path='/routine' exact component={RoutineBuilder} />
                   <Route path='/question' exact component={QuestionBuilder} />
                   <Route path='/exambuilder' exact component={ExamBuilder} />
-                  <Route path='/examedit' exact component={ExamLists} />
+                  <Route path='/examedit' exact component={ExamEdit} />
                   <Route
                     path='/exams/:id'
                     exact
@@ -123,7 +129,10 @@ const InnerContent = (props) => {
                   />
                   <Route path='/result' exact component={Result} />
                   <Route path='/result/rank/:id' exact component={Rank} />
+                  <Route path='/reports' exact component={Reports} />
                   <Route path='/settings' exact component={Settings} />
+                  <Route path='/help' exact component={Help} />
+                  <Route path='/print' exact component={Print} />
                 </Suspense>
               </div>
             </div>

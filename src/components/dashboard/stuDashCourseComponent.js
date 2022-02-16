@@ -1,4 +1,5 @@
-import moment from 'moment'
+//import moment from 'moment'
+import * as moment from 'dayjs'
 import React from 'react'
 import { Col, Jumbotron, Nav, Row, Tab } from 'react-bootstrap'
 import { FaChevronCircleRight } from 'react-icons/fa'
@@ -10,6 +11,10 @@ import Rank from './miniCards/miniInfoBlock/rank'
 import Result from './miniCards/miniInfoBlock/result'
 import TotalExam from './miniCards/miniInfoBlock/totalExam'
 import UpcomingExam from './miniCards/miniInfoBlock/upcomingExam'
+const duration = require('dayjs/plugin/duration')
+const relativeTime = require('dayjs/plugin/relativeTime')
+moment.extend(relativeTime)
+moment.extend(duration)
 
 export default function StuDashCourseComponent({ userDashExamInfo }) {
   return (
@@ -23,7 +28,7 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
           <hr />
           <Nav variant='pills' className='flex-column p-3'>
             {userDashExamInfo.map((e, i) => (
-              <Nav.Item className='mb-2'>
+              <Nav.Item key={e + i} className='mb-2'>
                 <Nav.Link eventKey={i}>
                   <FaChevronCircleRight className='mr-2' />
                   {e.title}
@@ -43,11 +48,11 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
                   featuredExams
                 } = examInfo
                 return (
-                  <Tab.Pane eventKey={ind}>
-                    <div className='d-md-flex justify-content-around flex-wrap'>
+                  <Tab.Pane key={id} eventKey={ind}>
+                    <div className='d-md-flex justify-content-between flex-wrap'>
                       <TotalExam
-                        value={userExamInfo.totalExam[0]}
-                        footerValue={userExamInfo.totalExam[1]}
+                        value={userExamInfo.totalExam[1]}
+                        footerValue={userExamInfo.totalExam[0]}
                       />
                       <Rank
                         value={userExamInfo.rank[0]}
@@ -67,23 +72,21 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
                       />{' '}
                     </div>
                     <hr className='my-3' />
-                    <Routine id={id} />
+                    <Routine id={id} title={examInfo.title} />
                     <hr />
                     <Row>
                       <Col xl={8} lg={12}>
                         <ReportCard userExamStat={userExamStat} />
-                        <hr />
-                        <ExamsFeaturedCard
-                          featuredExams={featuredExams}
-                          courseId={id}
-                        />
-                        <hr />
                       </Col>
                       <Col xl={4}>
                         <RecentActivityCard userExamStat={userExamStat} />
-                        <hr />
                       </Col>
                     </Row>
+                    <hr />
+                    <ExamsFeaturedCard
+                      featuredExams={featuredExams}
+                      courseId={id}
+                    />
                   </Tab.Pane>
                 )
               })}

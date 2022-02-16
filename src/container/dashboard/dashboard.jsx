@@ -1,12 +1,17 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { lazy, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import StuDashCourseComponent from '../../components/dashboard/stuDashCourseComponent'
+//import StuDashCourseComponent from '../../components/dashboard/stuDashCourseComponent'
 import MetaInfo from '../../components/seo/metainfo'
 import Spinner from '../../components/shared/spinner/spinner'
 import { RoutesConfig } from '../../config/routes.config'
 import { resetExamResultLoader } from '../../store/exams'
 import { getUserLoader } from '../../store/user'
+//import FreshUserDash from './component/freshUserDash'
+const StuDashCourseComponent = lazy(() =>
+  import('../../components/dashboard/stuDashCourseComponent')
+)
+const FreshUserDash = lazy(() => import('./component/freshUserDash'))
 
 const Dashboard = (props) => {
   const [loading, setLoading] = useState(false)
@@ -32,13 +37,14 @@ const Dashboard = (props) => {
 
   return (
     <div className=''>
-      {loading && <Spinner />}
       <MetaInfo {...RoutesConfig.Dashboard.metaInfo} />
-      <StuDashCourseComponent userDashExamInfo={userDashExamInfo} />
-
-      {/* <MiniCards />
-      <hr className='my-3' />
-      <BigCards /> */}
+      {loading ? (
+        <Spinner />
+      ) : userDashExamInfo.length > 0 ? (
+        <StuDashCourseComponent userDashExamInfo={userDashExamInfo} />
+      ) : (
+        <FreshUserDash />
+      )}
     </div>
   )
 }

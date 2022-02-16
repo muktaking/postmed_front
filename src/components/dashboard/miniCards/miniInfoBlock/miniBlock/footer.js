@@ -7,7 +7,7 @@ const footer = ({ color, heading, value, icon }) => {
     <Card.Footer className='bg-dark text-light text-right'>
       <span className='mr-2'>{heading}</span>
       <span className='mr-5'>{value}</span>
-      <Icon icon={icon} size='md' className='mr-2' />
+      <Icon icon={icon} size='1.8rem' className='mr-2' />
     </Card.Footer>
   )
 }

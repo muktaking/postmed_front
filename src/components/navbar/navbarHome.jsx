@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
@@ -7,10 +6,6 @@ import { connect } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 import { HashLink } from 'react-router-hash-link'
 import { Link as LinkScroll } from 'react-scroll'
-import ScrollToTop from 'react-scroll-up'
-
-//import Spinner from "react-bootstrap/Spinner";
-//import "./navbarLanding.css";
 
 const NavbarHome = (props) => {
   const intl = useIntl()
@@ -21,18 +16,20 @@ const NavbarHome = (props) => {
   const pagesName = props.isAuthenticated
     ? [
         intl.formatMessage({ id: 'btn.db', defaultMessage: 'dashboard' }),
+        intl.formatMessage({ id: 'btn.courses', defaultMessage: 'courses' }),
         intl.formatMessage({ id: 'btn.exams', defaultMessage: 'exams' }),
         intl.formatMessage({ id: 'btn.logout', defaultMessage: 'logout' })
       ]
     : [
+        intl.formatMessage({ id: 'btn.courses', defaultMessage: 'courses' }),
         intl.formatMessage({ id: 'btn.exams', defaultMessage: 'exams' }),
         intl.formatMessage({ id: 'btn.signup', defaultMessage: 'signup' }),
         intl.formatMessage({ id: 'btn.login', defaultMessage: 'login' })
       ]
   const items = ['home', 'contact']
   const pages = props.isAuthenticated
-    ? ['dashboard', 'exams', 'logout']
-    : ['exams', 'signup', 'login']
+    ? ['dashboard', 'courses', 'exams', 'logout']
+    : ['courses', 'exams', 'signup', 'login']
 
   return (
     <Navbar bg='dark' variant='dark' fixed='top' expand='md'>
@@ -98,11 +95,13 @@ const NavbarHome = (props) => {
           {/* </Scrollspy> */}
         </Nav>
       </Navbar.Collapse>
-      {props.isLanding ? (
+      {/* {props.isLanding ? (
         <ScrollToTop showUnder={160}>
-          <FontAwesomeIcon icon={'arrow-up'} size='3x' transform='shrink-4' />
+          <span className='bg-warning text-white pt-4 px-2'>
+            <FaArrowUp  size='1.6rem'  />
+          </span>
         </ScrollToTop>
-      ) : null}
+      ) : null} */}
     </Navbar>
   )
 }

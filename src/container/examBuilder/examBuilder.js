@@ -27,20 +27,47 @@ import {
 import { paginate } from '../../utils/paginate'
 
 class ExamPaper extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      show: false,
-      selectedQuestions: [],
-      pageSize: 10,
-      currentPage: 1
-    }
+  state = {
+    show: false,
+    selectedQuestions: [],
+    pageSize: 10,
+    currentPage: 1
   }
-
   componentDidMount() {
     this.props.onFetchCategoryLoader()
     this.props.onFetchCoursesLoader()
     this.props.onGetQuestionLoader()
+  }
+
+  componentDidUpdate(preProps) {
+    if (preProps.editExam !== this.props.editExam) {
+      // a very bad and resource consuming computing
+      const editQuestions = this.props.editExam.questions.map((e) => {
+        const [question] = this.props.question.questions.filter((q) => {
+          return q.id.toString() === e
+        })
+
+        this.setState({
+          [e]: {
+            checked: true,
+            id: +e,
+            title: question && question.title,
+            qText: question && question.qText
+          }
+        })
+
+        return {
+          checked: true,
+          id: +e,
+          title: question && question.title,
+          qText: question && question.qText
+        }
+      })
+
+      this.setState({
+        selectedQuestions: editQuestions
+      })
+    }
   }
 
   handleShow = () => {
@@ -213,6 +240,7 @@ class ExamPaper extends Component {
               selectedQuestionIds={this.state.selectedQuestions.map(
                 (q) => q.id
               )}
+              editExamSpec={this.props.editExam}
             />
           </Col>
           <Col lg={8}>

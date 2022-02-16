@@ -46,11 +46,13 @@ export const onLoadingLoader = () => (dispatch) => {
   dispatch({ type: onLoading.type })
 }
 
-export const postExamProfile = (examSpec, questions) => (dispatch) => {
+export const postExamProfile = (examSpec, questions, id = null) => (
+  dispatch
+) => {
   dispatch(
     apiCallBegun({
-      url: '/exams',
-      method: 'post',
+      url: id ? `/exams/${id}` : '/exams',
+      method: id ? 'patch' : 'post',
       data: { ...examSpec, questions },
       onSuccess: onSuccess.type,
       onError: onError.type,

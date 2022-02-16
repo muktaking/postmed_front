@@ -56,9 +56,7 @@ export default function SelectQuestions({ viewHandler }) {
           <Toast.Header>
             <strong className='mr-auto'>Response</strong>
           </Toast.Header>
-          <Toast.Body>
-            {res && 'message' in res ? res.message : JSON.stringify(res)}
-          </Toast.Body>
+          <Toast.Body>{res && JSON.stringify(res)}</Toast.Body>
         </Toast>
       }
 

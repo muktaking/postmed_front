@@ -8,18 +8,18 @@ const TotalExam = ({ value, footerValue }) => {
   return (
     <MiniBlock
       heading={intl.formatMessage({
-        id: 'db.te',
-        defaultMessage: 'Total Exams'
-      })}
-      value={value}
-      faIcon={'file-alt'}
-      footerHeading={intl.formatMessage({
         id: 'db.et',
         defaultMessage: 'Exam Taken'
       })}
+      value={value}
+      faIcon={'file-import'}
+      footerHeading={intl.formatMessage({
+        id: 'db.te',
+        defaultMessage: 'Total Exams'
+      })}
       footerValue={footerValue}
       color={'info'}
-      faFooterIcon={'file-import'}
+      faFooterIcon={'file-alt'}
     />
   )
 }

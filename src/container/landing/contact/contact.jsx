@@ -1,22 +1,29 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import {
+  FaFacebookSquare,
+  FaInstagramSquare,
+  FaTwitterSquare
+} from 'react-icons/fa'
 import { FormattedMessage } from 'react-intl'
+import { animateScroll as scroll } from 'react-scroll'
 import { ContactConfig } from '../../../config/contact.config'
-//import "./contact.scss";
+
+const scrollToTop = () => {
+  scroll.scrollToTop(160)
+}
+const styles = {
+  cursor: 'pointer'
+}
 
 const contact = (props) => {
-  const socials = [
-    [['fab', 'facebook-square'], ContactConfig.socials.facebook],
-    [['fab', 'twitter-square'], ContactConfig.socials.twitter],
-    [['fab', 'instagram'], ContactConfig.socials.instagram]
-  ]
   return (
     <div id='contact' className='offset'>
       <footer>
-        <Row className='justify-content-center'>
-          <Col md={6} className='text-center'>
+        <Row className=''>
+          <Col sm={4}></Col>
+          <Col sm={4} className='text-center'>
             <p className='lead'>
               <FormattedMessage
                 id='footer.msg'
@@ -34,20 +41,40 @@ const contact = (props) => {
               <br />
               {ContactConfig.email}
             </p>
-            {socials.map((value, ind) => (
-              <a
-                key={ind}
-                href={value[1]}
-                target='_blank'
-                rel='noopener noreferrer'
-              >
-                {/* <FontAwesomeIcon icon={["fab", "apple"]} /> */}
-                <FontAwesomeIcon icon={value[0]} />
-              </a>
-            ))}
+            <a
+              href={ContactConfig.socials.facebook}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <FaFacebookSquare size='2.6rem' />
+            </a>
+            <a
+              href={ContactConfig.socials.twitter}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <FaTwitterSquare size='2.6rem' />
+            </a>
+            <a
+              href={ContactConfig.socials.instagram}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <FaInstagramSquare size='2.6rem' />
+            </a>
           </Col>
+          <Col sm={4}></Col>
           <hr className='socket' />
-          &copy; E-Exam Theme Inspired By Nano theme
+
+          <Col sm={4}></Col>
+          <Col sm={4} className='text-center'>
+            &copy; E-Exam Theme Inspired By Nano theme
+          </Col>
+          <Col sm={4}>
+            <p className='text-right pr-3' style={styles} onClick={scrollToTop}>
+              Back to Top{' '}
+            </p>
+          </Col>
         </Row>
       </footer>
     </div>

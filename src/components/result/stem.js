@@ -77,18 +77,18 @@ export default function stem({qIndex, index, qType, answer, qStem, aStem,isUntou
               { answer[1] ?
                   index + 1 === answer[1] ? 
                     answer[0] === answer[1] ?
-                      <FaRegCheckCircle style={{ color: "#3c763d", marginRight: sbaStyle.marginRight }} size="1.4rem" />
-                      : <FaRegTimesCircle style={{ color: "#a94442", marginRight: sbaStyle.marginRight }} size="1.4rem" />
+                      <FaRegCheckCircle style={{ color: "#3c763d", marginRight: sbaStyle.marginRight }} size="1.2rem" />
+                      : <FaRegTimesCircle style={{ color: "#a94442", marginRight: sbaStyle.marginRight }} size="1.2rem" />
                   : index + 1 === answer[0] ?
-                      <FaRegCheckCircle style={{ color: "#3c763d", marginRight: sbaStyle.marginRight }} size="1.4rem" />
+                      <FaRegCheckCircle style={{ color: "#3c763d", marginRight: sbaStyle.marginRight }} size="1.2rem" />
                       : <div style={{width: '2rem'}}></div>
 
                 : index + 1 === answer[0] ?
-                    <FaRegCheckCircle style={{ color: "#3c763d", marginRight: sbaStyle.marginRight }} size="1.4rem" />
+                    <FaRegCheckCircle style={{ color: "#3c763d", marginRight: sbaStyle.marginRight }} size="1.2rem" />
                     : <div style={{width: '2rem'}}></div>
               }
             </div>
-            <div className="">
+            <div style={{marginTop: '.2rem'}}>
               {
                 answer[1] ?
                   index +1 === answer[1] ?

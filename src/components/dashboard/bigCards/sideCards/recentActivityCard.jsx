@@ -1,4 +1,5 @@
-import moment from 'moment'
+//import moment from 'moment'
+import * as moment from 'dayjs'
 import React from 'react'
 import { Badge } from 'react-bootstrap'
 import ListGroup from 'react-bootstrap/ListGroup'
@@ -25,7 +26,7 @@ const SideCard = ({ userExamStat }) => {
       <ListGroup as='ul' variant='flush'>
         {examTitles &&
           examTitles.map((exam, index) => {
-            if (index < 6)
+            if (index < 3)
               return (
                 <ListGroup.Item key={index} as='li' className=''>
                   {/* <Badge variant="info" className="rounded p-1"> */}

@@ -40,12 +40,13 @@ const RoutePages = (props) => {
         <Route path='/signup' component={Signup} />
         <Route path='/reset/:id' component={Reset} />
         <Route path='/exams' exact component={InnerContent} />
-        <Route path='/exams/:id' exact component={InnerContent} />
-        <Route path='/courses/:id' exact component={InnerContent} />
+        {/* <Route path='/exams/:id' exact component={InnerContent} /> */}
+        <Route path='/courses' exact component={InnerContent} />
         <Route path='/exams/category/:id' exact component={InnerContent} />
         <Route path='/exams/free/:id' component={InnerContent} />
         <Route path='/result' component={InnerContent} />
         <Route path='/result/rank/:id' component={InnerContent} />
+        <Route path='/help' component={InnerContent} />
         <Route path='/error' render={(props) => <NotFoundPage {...props} />} />
         <Route path='/' exact component={Landing} />
         <Route render={(props) => <NotFoundPage {...props} />} />
@@ -61,13 +62,16 @@ const RoutePages = (props) => {
         <Switch>
           <Route path='/dashboard' component={InnerContent} />
           <Route path='/courses' component={InnerContent} />
+          <Route path='/reports' component={InnerContent} />
           <Route path='/profile' component={InnerContent} />
           <Route path='/exams' component={InnerContent} />
           <Route path='/exams/:id' component={InnerContent} />
           <Route path='/result' component={InnerContent} />
           <Route path='/rank' component={InnerContent} />
           <Route path='/settings' component={InnerContent} />
+          <Route path='/print' component={InnerContent} />
           <Route path='/logout' component={LogoutPage} />
+          <Route path='/help' component={InnerContent} />
           <Route path='/' exact component={Landing} />
           <Redirect to='/dashboard' />
         </Switch>
@@ -82,9 +86,11 @@ const RoutePages = (props) => {
           <Route path='/dashboard' component={InnerContent} />
           <Route path='/profile' component={InnerContent} />
           <Route path='/question' component={InnerContent} />
-          <Route path='/exambuilder' component={InnerContent} />
+          {/* <Route path='/exambuilder' component={InnerContent} /> */}
           <Route path='/settings' component={InnerContent} />
+          <Route path='/print' component={InnerContent} />
           <Route path='/logout' component={LogoutPage} />
+          <Route path='/help' component={InnerContent} />
           <Route path='/' exact component={Landing} />
           <Redirect to='/dashboard' />
         </Switch>
@@ -92,7 +98,28 @@ const RoutePages = (props) => {
     )
   }
 
-  if (canActivate(rolePermitted.admin, props.token)) {
+  if (canActivate(rolePermitted.moderator, props.token)) {
+    routes = (
+      <Suspense fallback={<ClimbingBoxLoader css={override} />}>
+        <Switch>
+          <Route path='/dashboard' component={InnerContent} />
+          <Route path='/profile' component={InnerContent} />
+          <Route path='/category' component={InnerContent} />
+          <Route path='/question' component={InnerContent} />
+          <Route path='/routine' exact component={InnerContent} />
+          <Route path='/exambuilder' component={InnerContent} />
+          <Route path='/settings' component={InnerContent} />
+          <Route path='/print' component={InnerContent} />
+          <Route path='/logout' component={LogoutPage} />
+          <Route path='/help' component={InnerContent} />
+          <Route path='/' exact component={Landing} />
+          <Redirect to='/dashboard' />
+        </Switch>
+      </Suspense>
+    )
+  }
+
+  if (canActivate(rolePermitted.coordinator, props.token)) {
     routes = (
       <Suspense fallback={<ClimbingBoxLoader css={override} />}>
         <Switch>
@@ -105,7 +132,9 @@ const RoutePages = (props) => {
           <Route path='/exambuilder' component={InnerContent} />
           <Route path='/examedit' component={InnerContent} />
           <Route path='/settings' component={InnerContent} />
+          <Route path='/print' component={InnerContent} />
           <Route path='/logout' component={LogoutPage} />
+          <Route path='/help' component={InnerContent} />
           <Route path='/' exact component={Landing} />
           <Redirect to='/dashboard' />
         </Switch>

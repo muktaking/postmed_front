@@ -1,4 +1,5 @@
-import moment from 'moment'
+//import moment from 'moment'
+import * as moment from 'dayjs'
 import React, { Component } from 'react'
 import { ListGroup, Table } from 'react-bootstrap'
 import { FormattedMessage } from 'react-intl'
@@ -74,13 +75,15 @@ class Rank extends Component {
                 <tr
                   key={ind}
                   className={
-                    +this.props.userId === +rank.user.id
-                      ? 'bg-success text-light '
-                      : ''
+                    rank.user
+                      ? +this.props.userId === +rank.user.id
+                        ? 'bg-success text-light '
+                        : ''
+                      : 'text-danger'
                   }
                 >
                   <td>{ind + 1}</td>
-                  <td>{rank.user.name}</td>
+                  <td>{rank.user ? rank.user.name : '<-- Unknown -->'}</td>
                   <td>
                     {rank.exam.length > 0
                       ? rank.exam[0].score
