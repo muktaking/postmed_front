@@ -20,7 +20,6 @@ const Home = (props) => {
             zIndex: '1000'
           }}
         >
-          <Promotional />
           <NavbarHome isLanding={true} />
         </div>
       </Suspense>
