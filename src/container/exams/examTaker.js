@@ -287,10 +287,14 @@ class ExamTaker extends Component {
             <Alert variant="danger" className="text-center mt-5">
               <h2>{this.props.exams.examError}</h2>
               <h4>Possible Solution</h4>
-              <p>
-                You may not be logged in. So you can not participate exams other
+              {
+                this.props.auth.token
+                ? <p>You may not enrolled for the course. Please enroll first.</p> 
+                :<p> You are not logged in. So you can not participate exams other
                 than free. So login or participate free exam only.
               </p>
+              }
+              
             </Alert>
             <SubNavBar />
           </>

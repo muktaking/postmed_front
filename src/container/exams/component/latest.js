@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Row } from 'react-bootstrap'
 import ExamByCat from './examByCat'
 
-export default function Latest() {
+export default function Latest({ courseId = null }) {
   const [exam, setExam] = useState(null)
   useEffect(() => {
     axios
@@ -23,7 +23,11 @@ export default function Latest() {
         className='mx-auto mb-5 py-3 pl-2 border border-secondary'
         style={{ width: '350px' }}
       >
-        {exam ? <ExamByCat exam={exam} /> : <p>No current exam</p>}
+        {exam ? (
+          <ExamByCat exam={exam} courseId={courseId} />
+        ) : (
+          <p>No current exam</p>
+        )}
       </Row>
     </>
   )

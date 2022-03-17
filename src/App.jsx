@@ -3,6 +3,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
+import './assets/scss/style.scss'
 import RoutePages from './container/routePages'
 import { checkAuthState } from './store/auth'
 

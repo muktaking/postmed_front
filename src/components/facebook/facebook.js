@@ -66,7 +66,7 @@ class Facebook extends Component {
           <FacebookLogin
             appId='969018100693636'
             size='small'
-            autoLoad={true}
+            autoLoad={false}
             fields='name,email,picture'
             onClick={this.componentClicked}
             callback={this.responseFacebook}

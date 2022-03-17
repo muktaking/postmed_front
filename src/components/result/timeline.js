@@ -76,7 +76,7 @@ export default function Timeline() {
                         key={value}
                         className='event'
                         data-date={moment(lastAttemptTimes[ind]).format(
-                          'YYYY-MM-DD, h:mm a'
+                          'DD-MMM-YYYY, h:mm a'
                         )}
                       >
                         <h3>{value}</h3>

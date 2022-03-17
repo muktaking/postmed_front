@@ -8,6 +8,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { resetExamResultLoader } from '../../../store/exams'
 import { examTypeToString } from '../../../utils/faculty'
+const duration = require('dayjs/plugin/duration')
+const relativeTime = require('dayjs/plugin/relativeTime')
+moment.extend(relativeTime)
+moment.extend(duration)
 
 export default function ExamByCat({ exam, courseId = null }) {
   const dispatch = useDispatch()
@@ -24,13 +28,6 @@ export default function ExamByCat({ exam, courseId = null }) {
             {examTypeToString(exam.type)}
           </Badge>
         </div>
-        <div className=''>
-          {/* <BsClock size='1.5rem' /> */}
-          <span>Start on: </span>
-          <Badge className='' variant='light'>
-            {moment(exam.startDate).format('YYYY-MMM-DD hh:mm A')}
-          </Badge>
-        </div>
       </Col>
       <Col sm={12} className='mt-1'>
         <p className=''>
@@ -38,9 +35,9 @@ export default function ExamByCat({ exam, courseId = null }) {
           <span className='ml-2'>{exam.description}</span>
         </p>
         <p className='text-right'>
-          Ends on:{' '}
+          End on:{' '}
           <Badge className='ml-2' variant='danger'>
-            {moment(exam.endDate).format('YYYY-MMM-DD hh:mm A')}
+            {moment(exam.endDate).format('DD-MMM-YYYY hh:mm A')}
           </Badge>
         </p>
         {/* <Badge variant='light' className='mt-3'>
@@ -85,6 +82,10 @@ export default function ExamByCat({ exam, courseId = null }) {
             </Button>
           </Link>
         </div>
+        <hr />
+        <p className='text-center text-muted'>
+          Start: {moment(exam.startDate).fromNow()}
+        </p>
       </Col>
     </>
   )

@@ -32,7 +32,7 @@ const NavbarHome = (props) => {
     : ['courses', 'exams', 'signup', 'login']
 
   return (
-    <Navbar bg='dark' variant='dark' fixed='top' expand='md'>
+    <Navbar bg='dark' variant='dark' expand='md'>
       {/* {props.auth.loading && (
         <Spinner
           animation="border"

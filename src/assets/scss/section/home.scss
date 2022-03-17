@@ -24,10 +24,11 @@
   height: 100%;
   background-size: cover;
   background-position: center center;
+  background-repeat: no-repeat;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   will-change: transform;
-  //background-color: #515151;
+  background-color: #515151;
   background-image: $homeBgImg;
 }
 // .home-inner.visible {
@@ -65,7 +66,7 @@
 
 .caption {
   @include caption;
-  top: 38%;
+  top: 18%;
 }
 
 .caption h1 {
@@ -73,30 +74,33 @@
   font-weight: 700;
   letter-spacing: 0.3rem;
   text-shadow: 0.1rem 0.1rem 0.8rem black;
-  padding-bottom: 1rem;
+  padding: 0px 0.25rem 1rem 0.25rem;
+
   @media (max-width: 991.98px) {
-    font-size: 2.8rem;
+    font-size: 3rem;
   }
   @media (max-width: 767.98px) {
-    font-size: 2.2rem;
+    font-size: 2.6rem;
   }
   @media (max-width: 575.98px) {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
 }
 
 .caption h3 {
   font-size: 2rem;
   text-shadow: 0.1rem 0.1rem 0.5rem black;
-  padding-bottom: 1.6rem;
+  //padding-bottom: 1.6rem;
+  padding: 0rem 10px 1.6rem 10px;
+
   @media (max-width: 991.98px) {
-    font-size: 1.4rem;
+    font-size: 1.9rem;
   }
   @media (max-width: 767.98px) {
-    font-size: 1rem;
+    font-size: 1.7rem;
   }
   @media (max-width: 575.98px) {
-    font-size: 0.8rem;
+    font-size: 1.5rem;
   }
 }
 

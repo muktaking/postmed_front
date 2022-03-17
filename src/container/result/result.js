@@ -2,10 +2,13 @@
 //import moment from 'moment'
 import * as moment from 'dayjs'
 import React, { Component } from 'react'
-import { Alert, Badge, Card, Image, ListGroup } from 'react-bootstrap'
+import { Alert, Badge, Card, Image, ListGroup, Table } from 'react-bootstrap'
 import { FaMinusCircle } from 'react-icons/fa'
 import { FormattedMessage, injectIntl } from 'react-intl'
+import { LazyLoadComponent } from 'react-lazy-load-image-component'
+import ReactMarkdown from 'react-markdown'
 import { connect } from 'react-redux'
+import remarkGfm from 'remark-gfm'
 import SubNavBar from '../../components/navbar/subNavBar'
 import Gist from '../../components/result/gist'
 import QuestionResultStem from '../../components/result/stem'
@@ -189,7 +192,7 @@ class Result extends Component {
                       </div>
                     </ListGroup.Item>
                     {item.generalFeedback && (
-                      <ListGroup.Item className='ml-3 text-white bg-secondary'>
+                      <ListGroup.Item className='ml-3 '>
                         <p>
                           <Badge
                             variant='secondary'
@@ -200,15 +203,28 @@ class Result extends Component {
                               defaultMessage: 'General explanation is : '
                             })}
                           </Badge>
-                          {' ' + item.generalFeedback.replace(/#L(.+)L#/, '')}
                         </p>
-                        {item.generalFeedback.split(/#L(.+)L#/)[1] && (
-                          <Image
-                            src={item.generalFeedback.split(/#L(.+)L#/)[1]}
-                            width='350'
-                            height='300'
-                          />
-                        )}
+                        <ReactMarkdown
+                          remarkPlugins={[remarkGfm]}
+                          components={{
+                            table: ({ node, children, ...props }) => (
+                              <Table
+                                bordered
+                                responsive
+                                className='text-white w-50'
+                                children={children}
+                              />
+                            ),
+
+                            img: ({ node, src, alt, ...props }) => (
+                              <LazyLoadComponent>
+                                <Image src={src} alt={alt} width={350} fluid />
+                              </LazyLoadComponent>
+                            )
+                          }}
+                        >
+                          {item.generalFeedback}
+                        </ReactMarkdown>
                       </ListGroup.Item>
                     )}
                   </ListGroup>

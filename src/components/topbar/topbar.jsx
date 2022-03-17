@@ -1,18 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { Badge } from 'react-bootstrap'
 import Col from 'react-bootstrap/Col'
 import Nav from 'react-bootstrap/Nav'
 import Row from 'react-bootstrap/Row'
-import { FaSignOutAlt } from 'react-icons/fa'
+import { FaBell, FaSignOutAlt } from 'react-icons/fa'
 import { FormattedMessage } from 'react-intl'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import { fetchNotificationLoader } from '../../store/notification'
 
 const Topbar = (props) => {
+  const dispatch = useDispatch()
   const isLoggedIn = useSelector((state) => state.auth.token)
-  // const classes = {
-  //   formControl: 'search-input',
-  //   searchBtn: 'search-button'
-  // }
+  const noti = useSelector((state) => state.notification)
+
+  useEffect(() => {
+    dispatch(fetchNotificationLoader())
+  }, [dispatch])
 
   return (
     <div className='bg-dark py-2 top-navbar mb-3 w-100'>
@@ -41,6 +45,24 @@ const Topbar = (props) => {
             <Nav.Item className=''>
               <NavLink to={{ pathname: '/exams' }} className='nav-link'>
                 <FormattedMessage id='btn.exams' defaultMessage='Exams' />
+              </NavLink>
+            </Nav.Item>
+
+            <Nav.Item>
+              <NavLink
+                // href={"/" + value}
+                to={'/notification'}
+                className={'nav-link'}
+              >
+                <FaBell className='' />
+                {noti.notification.length > 0 && (
+                  <Badge
+                    variant='danger'
+                    style={{ position: 'absolute', fontSize: '.6rem' }}
+                  >
+                    {noti.notification.length}
+                  </Badge>
+                )}
               </NavLink>
             </Nav.Item>
 

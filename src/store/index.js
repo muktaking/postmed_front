@@ -6,6 +6,7 @@ import coursesReducer from './courses'
 import dashboardReducer from './dashboard'
 import examPaperReducer from './examPaper'
 import examsReducer from './exams'
+import notificationReducer from './notification'
 import questionReducer from './question'
 import userReducer from './user'
 
@@ -18,7 +19,8 @@ const appReducer = combineReducers({
   examPaper: examPaperReducer,
   exams: examsReducer,
   dashboard: dashboardReducer,
-  courses: coursesReducer
+  courses: coursesReducer,
+  notification: notificationReducer
 })
 
 export const rootReducer = (state, action) => {

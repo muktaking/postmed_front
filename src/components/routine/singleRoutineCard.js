@@ -39,7 +39,7 @@ export default function SingleRoutineCard({
     <li
       key={syllabus.id}
       className='event'
-      data-date={moment(syllabus.startDate).format('YYYY-MMM-DD, h:mm a')}
+      data-date={moment(syllabus.startDate).format('DD-MMM-YYYY, h:mm a')}
     >
       <p>{syllabus.syllabus}</p>
       <p className='text-danger'>
@@ -49,7 +49,7 @@ export default function SingleRoutineCard({
         {getStatus(syllabus.startDate, syllabus.endDate)}
       </p>
       <p className='text-secondary'>
-        Exam ends: {moment(syllabus.endDate).format('YYYY-MMM-DD, h:mm a')}
+        Exam ends: {moment(syllabus.endDate).format('DD-MMM-YYYY, h:mm a')}
       </p>
       {showRaw && (
         <>

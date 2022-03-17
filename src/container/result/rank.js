@@ -56,7 +56,7 @@ class Rank extends Component {
             </ListGroup.Item>
             <ListGroup.Item>
               <FormattedMessage id='db.so' defaultMessage='Started From' /> :{' '}
-              {moment(this.props.exam.createdAt).calendar()}
+              {moment(this.props.exam.createdAt).format('DD-MMM-YYYY, hh:mm A')}
             </ListGroup.Item>
           </ListGroup>
         )}

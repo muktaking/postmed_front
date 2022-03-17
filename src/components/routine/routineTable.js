@@ -9,7 +9,7 @@ export default function RoutineTable({ routine, title }) {
   return (
     <div>
       <h3 className='text-primary text-center'>Routine For: {title}</h3>
-      <Table striped bordered hover>
+      <Table striped bordered hover responsive>
         <thead>
           <tr>
             {headings.map((heading) => (
@@ -24,9 +24,9 @@ export default function RoutineTable({ routine, title }) {
               <td>{syllabus.syllabus}</td>
               <td>{getStatus(syllabus.startDate, syllabus.endDate)}</td>
               <td>
-                {moment(syllabus.startDate).format('YYYY-MMM-DD, h:mm a')}
+                {moment(syllabus.startDate).format('DD-MMM-YYYY, h:mm a')}
               </td>
-              <td>{moment(syllabus.endDate).format('YYYY-MMM-DD, h:mm a')}</td>
+              <td>{moment(syllabus.endDate).format('DD-MMM-YYYY, h:mm a')}</td>
             </tr>
           ))}
         </tbody>

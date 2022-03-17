@@ -22,7 +22,6 @@ export default function ExamListsByCatShower() {
       .post(process.env.REACT_APP_SITE_URL + '/exams/course/' + id)
       .then((response) => {
         setLoading(false)
-        console.log(response.data)
         setExams(response.data)
       })
       .catch((e) => {
@@ -41,7 +40,7 @@ export default function ExamListsByCatShower() {
           <ExamFilter setExams={setExams} id={id} />
         </Col>
         <Col lg={10}>
-          <Latest />
+          <Latest courseId={id} />
           <h2 className='text-center'>
             <span className='mr-2'>Available Exams</span>
           </h2>

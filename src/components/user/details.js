@@ -44,7 +44,7 @@ export default function Details({
             <h6 className='mb-0'>User From</h6>
           </div>
           <div className='col-sm-9 text-secondary'>
-            {moment(userFrom).format('MMM Do YY')}
+            {moment(userFrom).format('DD, MMM YYYY')}
           </div>
         </div>
         <hr />

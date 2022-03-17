@@ -58,7 +58,10 @@ export default function Expectedenrolled({ expectedEnrolled, updater }) {
                         className='border-right mr-2 pr-2'
                       />
                       <p>
-                        {`${stuInfo.firstName} ${stuInfo.lastName} from ${stuInfo.institution} choose ${stuInfo.faculty} faculty`}
+                        <span>{`${stuInfo.firstName} ${stuInfo.lastName}`}</span>
+                        <span className='text-danger'>{` id: < ${stuInfo.id} > `}</span>
+                        <span className='text-danger'>{` email: < ${stuInfo.email} > `}</span>
+                        <span>{`from ${stuInfo.institution} choose ${stuInfo.faculty} faculty`}</span>
                       </p>
                     </div>
                   </ListGroup.Item>

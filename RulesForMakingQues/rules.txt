@@ -1,4 +1,0 @@
-Excel Formats --> title*type*qtext*s1*s2*s3*s4*s5*a1*a2*a3*a4*a5*f1*f2*f3*f4*f5*gf*tags
-1st row will be deleted.
-
-To give generalFeedback with image wrap the link with #L<link>L# at the end of gfb.

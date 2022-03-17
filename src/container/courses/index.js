@@ -2,7 +2,7 @@ import axios from 'axios'
 //import moment from 'moment'
 import * as moment from 'dayjs'
 import React, { useEffect, useState } from 'react'
-import { Badge, Button, Card, Modal, Toast } from 'react-bootstrap'
+import { Badge, Button, Card, Modal, Spinner, Toast } from 'react-bootstrap'
 import { FaCalendarAlt, FaMoneyCheckAlt } from 'react-icons/fa'
 import { LazyLoadComponent } from 'react-lazy-load-image-component'
 import ReactMarkdown from 'react-markdown'
@@ -20,14 +20,15 @@ moment.extend(duration)
 
 export default function Index({ landing = null }) {
   const dispatch = useDispatch()
-  let courses = useSelector((state) => state.courses.courses)
+  const coursesStore = useSelector((state) => state.courses)
   const isAuthenticated = useSelector((state) => state.auth.token !== null)
   const [res, setRes] = useState(null)
   const [showModalMsg, setShowModalMsg] = useState(null)
-
-  if (landing) {
-    courses = courses.filter((course, id) => id < 3)
-  }
+  let courses = coursesStore
+    ? landing
+      ? coursesStore.courses.filter((course, id) => id < 3)
+      : coursesStore.courses
+    : []
 
   useEffect(() => {
     dispatch(fetchCourseLoader())
@@ -80,6 +81,19 @@ export default function Index({ landing = null }) {
       <h3 className='text-center heading' style={{ marginTop: '80px' }}>
         Available Courses
       </h3>
+      {coursesStore.loading &&
+        (landing ? (
+          <div className='text-center'>
+            <span>Please wait. Courses are loading </span>
+          </div>
+        ) : (
+          <Spinner
+            animation='border'
+            role='status'
+            variant='dark'
+            className='content-center'
+          />
+        ))}
       <div className='d-flex justify-content-around flex-wrap'>
         {courses.map((course) => (
           <Card className='my-3' style={{ width: '350px' }}>
@@ -130,7 +144,7 @@ export default function Index({ landing = null }) {
               </Card.Text>
               {isAuthenticated && (
                 <Card.Text className='text-center mt-2'>
-                  <Link to={'/courses/' + course.id}>
+                  <Link to={'/exams/courses/' + course.id}>
                     <Button variant='primary'>Go to Exams</Button>
                   </Link>
                 </Card.Text>

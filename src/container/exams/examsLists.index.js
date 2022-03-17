@@ -3,7 +3,6 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { FaFlickr, FaListAlt } from 'react-icons/fa'
 import MetaInfo from '../../components/seo/metainfo'
 import { RoutesConfig } from '../../config/routes.config'
-import LatestExam from './component/latest'
 import ExamLists from './examLists'
 import ExamListsByCat from './examListsByCat'
 
@@ -18,7 +17,7 @@ function DefaultView({ handler, id }) {
   return (
     <>
       <MetaInfo {...RoutesConfig.Exams.metaInfo} />
-      <LatestExam />
+
       <div className='text-center'>
         <OverlayTrigger
           placement='bottom'

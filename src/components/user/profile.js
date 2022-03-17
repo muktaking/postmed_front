@@ -125,6 +125,12 @@ export default function ProfileSnippet({ isProfile, size = '100' }) {
           <h4>{user.userName}</h4>
           <p className='mb-1'>{roleToString(user.role)}</p>
           <p className='font-size-sm'>{user.address}</p>
+          <p>
+            <span className='text-muted'>{`Id No. `}</span>{' '}
+            <span className={isProfile ? 'lead' : 'text-white lead'}>
+              {user.id}
+            </span>
+          </p>
         </div>
       </div>
 

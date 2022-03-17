@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react'
-import '../../assets/scss/style.scss'
+// import '../../assets/scss/style.scss'
 import MetaInfo from '../../components/seo/metainfo'
 import { RoutesConfig } from '../../config/routes.config'
 // import Exam from './exam/exam';

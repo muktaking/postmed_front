@@ -74,7 +74,12 @@ export default function ListCard({ title, exams, landing, examLoader }) {
       >
         <h3
           className='text-center bg-warning text-light px-2 py-1'
-          style={{ position: 'absolute', top: '-30px', left: '50px' }}
+          style={{
+            position: 'absolute',
+            top: '-30px',
+            left: '50px',
+            zIndex: '100'
+          }}
         >
           {title.toUpperCase() + ' '}{' '}
           {!landing && (
@@ -93,7 +98,7 @@ export default function ListCard({ title, exams, landing, examLoader }) {
                   ' ' +
                   intl.formatMessage({
                     id: 'noExamCreated',
-                    defaultMessage: 'Exams is not created'
+                    defaultMessage: 'are not created'
                   })}{' '}
               </p>
             )}

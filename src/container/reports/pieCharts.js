@@ -29,7 +29,7 @@ export default function PieCharts({ labels, dataSetFirst }) {
   }
   return (
     <>
-      <Pie height={60} data={data} options={options} />
+      <Pie data={data} options={options} />
     </>
   )
 }

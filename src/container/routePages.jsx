@@ -65,6 +65,7 @@ const RoutePages = (props) => {
           <Route path='/reports' component={InnerContent} />
           <Route path='/profile' component={InnerContent} />
           <Route path='/exams' component={InnerContent} />
+          <Route path='/notification' component={InnerContent} />
           <Route path='/exams/:id' component={InnerContent} />
           <Route path='/result' component={InnerContent} />
           <Route path='/rank' component={InnerContent} />
@@ -135,6 +136,7 @@ const RoutePages = (props) => {
           <Route path='/print' component={InnerContent} />
           <Route path='/logout' component={LogoutPage} />
           <Route path='/help' component={InnerContent} />
+          <Route path='/notificationbuilder' component={InnerContent} />
           <Route path='/' exact component={Landing} />
           <Redirect to='/dashboard' />
         </Switch>

@@ -83,7 +83,7 @@ export default function Reports() {
           </p>
         </Col>
         <Col sm={9}>
-          <Table striped bordered hover>
+          <Table striped bordered hover responsive>
             <thead>
               <tr>
                 <th>#</th>
@@ -97,8 +97,8 @@ export default function Reports() {
             </thead>
             <tbody>
               {examStats.length > 0 &&
-                examStats[0].courses.length > 0 &&
-                examStats[0].courses[0].exams.length > 0 &&
+              examStats[0].courses.length > 0 &&
+              examStats[0].courses[0].exams.length > 0 ? (
                 examStats[0].courses[0].exams.map((examStat, ind) => (
                   <tr
                     className={
@@ -130,16 +130,23 @@ export default function Reports() {
                     <td>{examStat.attemptNumbers}</td>
                     <td>
                       {moment(examStat.firstAttemptTime).format(
-                        'MMMM Do YYYY, h:mm a'
+                        'DD-MMM-YYYY, h:mm a'
                       )}
                     </td>
                     <td>
                       {moment(examStat.lastAttemptTime).format(
-                        'MMMM Do YYYY, h:mm a'
+                        'DD-MMM-YYYY, h:mm a'
                       )}
                     </td>
                   </tr>
-                ))}
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={7} className='text-danger text-center'>
+                    You do not take part any exam under the course.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </Table>
           <div className='bg-light pl-3 py-2 my-3'>
@@ -156,7 +163,7 @@ export default function Reports() {
                     setAdvancedAnalyTics(!advancedAnalyTics)
                   }}
                 />
-                <Table striped bordered hover className='mt-2'>
+                <Table striped bordered hover responsive className='mt-2'>
                   <thead>
                     <tr>
                       <th>#</th>
@@ -183,7 +190,7 @@ export default function Reports() {
                         <td>{stat.totalWrongSbaQuestions}</td>
                         <td>
                           {moment(stat.attemptTime).format(
-                            'MMMM Do YYYY, h:mm a'
+                            'DD-MMM-YYYY, h:mm a'
                           )}
                         </td>
                       </tr>
@@ -220,7 +227,7 @@ export default function Reports() {
                       <h5>Stems Analytics</h5>
                       <div className='row'>
                         {examActivityStat.map((stat) => (
-                          <div className='col-6 mb-3'>
+                          <div className='col-lg-6 col-md-12 mb-3'>
                             <PieCharts
                               labels={['Right', 'Wrong', 'UnTouched']}
                               dataSetFirst={[
@@ -235,7 +242,7 @@ export default function Reports() {
                               Fig: Stems Analytics at
                               {' ' +
                                 moment(stat.attemptTime).format(
-                                  'MMM Do YY, h:mm a'
+                                  'DD-MMM-YY, h:mm a'
                                 )}
                             </p>
                           </div>
@@ -248,7 +255,6 @@ export default function Reports() {
             )}
           </div>
         </Col>
-        <Col></Col>
       </Row>
     </div>
   )

@@ -57,6 +57,10 @@ const Settings = lazy(() => import('./settings/settings'))
 const Print = lazy(() => import('./print/print'))
 const Reports = lazy(() => import('./reports/reports'))
 const Help = lazy(() => import('./help/help'))
+const NotificationBuilder = lazy(() =>
+  import('./notificationBuilder/notificationBuilder')
+)
+const Notification = lazy(() => import('./notification/notification'))
 
 const InnerContent = (props) => {
   const pageName = props.match.url.split('/', 2)[1]
@@ -113,7 +117,7 @@ const InnerContent = (props) => {
                     }
                   />
                   <Route
-                    path='/courses/:id'
+                    path='/exams/courses/:id'
                     exact
                     component={ExamListsByCourseShower}
                   />
@@ -132,6 +136,12 @@ const InnerContent = (props) => {
                   <Route path='/reports' exact component={Reports} />
                   <Route path='/settings' exact component={Settings} />
                   <Route path='/help' exact component={Help} />
+                  <Route
+                    path='/notificationbuilder'
+                    exact
+                    component={NotificationBuilder}
+                  />
+                  <Route path='/notification' exact component={Notification} />
                   <Route path='/print' exact component={Print} />
                 </Suspense>
               </div>

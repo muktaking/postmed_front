@@ -2,12 +2,15 @@ import React, { Component } from 'react'
 import Nav from 'react-bootstrap/Nav'
 import {
   FaBookOpen,
+  FaCalendarAlt,
   FaChartLine,
   FaCog,
   FaDiceD20,
+  FaEdit,
   FaHome,
   FaPen,
   FaQuestion,
+  FaQuora,
   FaSignOutAlt,
   FaTools,
   FaUser
@@ -41,14 +44,23 @@ class Sidebar extends Component {
   render() {
     this.faIcons = [
       <FaHome size='1.6em' className='mr-2' />,
+      <FaDiceD20 size='1.6em' className='mr-2' />,
       <FaPen size='1.6em' className='mr-2' />,
       <FaUser size='1.6em' className='mr-2' />,
-      <FaUser size='1.6em' className='mr-2' />
+      <FaUser size='1.6em' className='mr-2' />,
+      <FaQuestion size='1.6em' className='mr-2' />
     ]
-    this.menuName = ['Home', 'Exams', 'Signup', 'Login']
-    this.menuIntlId = ['btn.home', 'btn.exams', 'btn.signup', 'btn.login']
+    this.menuName = ['Home', 'Courses', 'Exams', 'Signup', 'Login', 'Help']
+    this.menuIntlId = [
+      'btn.home',
+      'btn.courses',
+      'btn.exams',
+      'btn.signup',
+      'btn.login',
+      'btn.help'
+    ]
 
-    this.navLinks = ['/', '/exams', '/signup', '/login']
+    this.navLinks = ['/', '/courses', '/exams', '/signup', '/login', '/help']
 
     if (canActivate(rolePermitted.student, this.props.token)) {
       this.faIcons = [
@@ -57,6 +69,7 @@ class Sidebar extends Component {
         <FaBookOpen size='1.6em' className='mr-2' />,
         <FaChartLine size='1.6em' className='mr-2' />,
         <FaUser size='1.6em' className='mr-2' />,
+        <FaQuestion size='1.6em' className='mr-2' />,
         <FaTools size='1.6em' className='mr-2' />
       ]
       this.menuName = [
@@ -65,6 +78,7 @@ class Sidebar extends Component {
         'Exams',
         'Reports',
         'Profile',
+        'Help',
         'Settings'
       ]
       this.menuIntlId = [
@@ -73,6 +87,7 @@ class Sidebar extends Component {
         'btn.exams',
         'btn.reports',
         'profile',
+        'btn.help',
         'settings'
       ]
       this.navLinks = [
@@ -81,6 +96,7 @@ class Sidebar extends Component {
         '/exams',
         '/reports',
         '/profile',
+        '/help',
         '/settings'
       ]
     }
@@ -88,9 +104,10 @@ class Sidebar extends Component {
     if (canActivate(rolePermitted.mentor, this.props.token)) {
       this.faIcons = [
         <FaHome size='1.6em' className='mr-2' />,
-        <FaQuestion size='1.6em' className='mr-2' />,
+        <FaQuora size='1.6em' className='mr-2' />,
         <FaPen size='1.6em' className='mr-2' />,
         <FaUser size='1.6em' className='mr-2' />,
+        <FaQuestion size='1.6em' className='mr-2' />,
         <FaTools size='1.6em' className='mr-2' />
       ]
       this.menuName = [
@@ -109,25 +126,26 @@ class Sidebar extends Component {
         '/settings'
       ]
     }
-    if (canActivate(rolePermitted.admin, this.props.token)) {
+
+    if (canActivate(rolePermitted.moderator, this.props.token)) {
       this.faIcons = [
         <FaHome size='1.6em' className='mr-2' />,
         <FaCog size='1.6em' className='mr-2' />,
-        <FaPen size='1.6em' className='mr-2' />,
-        <FaQuestion size='1.6em' className='mr-2' />,
-        <FaPen size='1.6em' className='mr-2' />,
-        <FaCog size='1.6em' className='mr-2' />,
+        <FaCalendarAlt size='1.6em' className='mr-2' />,
+        <FaQuora size='1.6em' className='mr-2' />,
+        <FaEdit size='1.6em' className='mr-2' />,
         <FaUser size='1.6em' className='mr-2' />,
+        <FaQuestion size='1.6em' className='mr-2' />,
         <FaTools size='1.6em' className='mr-2' />
       ]
       this.menuName = [
         'Dashboard',
-        'Category',
+        'Category Builder',
         'Routine Builder',
-        'Question',
+        'Question Builder',
         'Exam Builder',
-        'Exam Edit',
         'Profile',
+        'Help',
         'Settings'
       ]
       this.menuIntlId = []
@@ -137,8 +155,48 @@ class Sidebar extends Component {
         '/routine',
         '/question',
         '/exambuilder',
+        '/profile',
+        '/help',
+        '/settings'
+      ]
+    }
+
+    if (canActivate(rolePermitted.coordinator, this.props.token)) {
+      this.faIcons = [
+        <FaHome size='1.6em' className='mr-2' />,
+        <FaCog size='1.6em' className='mr-2' />,
+        <FaDiceD20 size='1.6em' className='mr-2' />,
+        <FaCalendarAlt size='1.6em' className='mr-2' />,
+        <FaQuora size='1.6em' className='mr-2' />,
+        <FaEdit size='1.6em' className='mr-2' />,
+        <FaCog size='1.6em' className='mr-2' />,
+        <FaUser size='1.6em' className='mr-2' />,
+        <FaQuestion size='1.6em' className='mr-2' />,
+        <FaTools size='1.6em' className='mr-2' />
+      ]
+      this.menuName = [
+        'Dashboard',
+        'Category Builder',
+        'Course Builder',
+        'Routine Builder',
+        'Question Builder',
+        'Exam Builder',
+        'Exam Edit',
+        'Profile',
+        'Help',
+        'Settings'
+      ]
+      this.menuIntlId = []
+      this.navLinks = [
+        '/dashboard',
+        '/category',
+        'coursebuilder',
+        '/routine',
+        '/question',
+        '/exambuilder',
         '/examedit',
         '/profile',
+        '/help',
         '/settings'
       ]
     }

@@ -11,7 +11,7 @@ import CoursesComponent from '../courses/'
 
 export default function ExamListsByCat() {
   const dispatch = useDispatch()
-  const courses = useSelector((state) => state.courses.coursesEnrolledByStu)
+  const courses = useSelector((state) => state.courses)
 
   useEffect(() => {
     dispatch(fetchCourseEnrolledByStuLoader())
@@ -19,9 +19,9 @@ export default function ExamListsByCat() {
 
   return (
     <div className='my-5'>
-      <h2 className='text-center'>Courses</h2>
+      <h2 className='text-center'>Enrolled Courses</h2>
       <div className='m-5 d-flex justify-content-around flex-wrap'>
-        {courses.length < 1 ? (
+        {courses.coursesEnrolledByStu.length < 1 ? (
           <div>
             <p className='text-center text-danger'>
               {' '}
@@ -31,7 +31,7 @@ export default function ExamListsByCat() {
             <CoursesComponent />
           </div>
         ) : (
-          courses.map((course) => (
+          courses.coursesEnrolledByStu.map((course) => (
             <div className='mt-3 mr-3 px-5 pt-5 pb-3 bg-dark text-white'>
               <h4>{course.title}</h4>
               <p className='mt-5 text-center'>
@@ -40,7 +40,7 @@ export default function ExamListsByCat() {
                     This Course is ended
                   </Badge>
                 ) : (
-                  <Link to={'/courses/' + course.id}>
+                  <Link to={'/exams/courses/' + course.id}>
                     <Badge variant='light' className='p-3'>
                       Go to Exams
                     </Badge>

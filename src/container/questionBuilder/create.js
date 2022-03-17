@@ -88,6 +88,7 @@ export default function Index({ viewHandler }) {
           <Form onSubmit={handleSubmit}>
             <StepOne
               values={values}
+              qText={values.qText}
               errors={errors}
               handleChange={handleChange}
             />
