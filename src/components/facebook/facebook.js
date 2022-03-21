@@ -21,7 +21,8 @@ class Facebook extends Component {
     } else {
       axios
         .post(process.env.REACT_APP_SITE_URL + '/auth/facebook', {
-          fbApi: fbRes
+          userID: fbRes.userID,
+          accessToken: fbRes.accessToken
         })
         .then((res) => {
           this.props.onAuth(res.data)
@@ -64,7 +65,7 @@ class Facebook extends Component {
       fbContent = (
         <div className='mx-auto'>
           <FacebookLogin
-            appId='969018100693636'
+            appId={process.env.REACT_APP_FACEBOOK_APP_ID}
             size='small'
             autoLoad={false}
             fields='name,email,picture'

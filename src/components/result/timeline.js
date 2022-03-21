@@ -1,9 +1,8 @@
 import axios from 'axios'
-//import moment from 'moment'
 import * as moment from 'dayjs'
 import * as _ from 'lodash'
 import React, { useEffect, useState } from 'react'
-import { Badge } from 'react-bootstrap'
+import { Accordion, Badge, Button, Card } from 'react-bootstrap'
 import './timeline.css'
 
 const type = [
@@ -55,42 +54,56 @@ export default function Timeline() {
   //   ? _.map(userExamStat.stat, 'lastAttemptTime')
   //   : []
 
-  return userExamStat.map(
-    ({ examTitles, examType, marks, lastAttemptTimes }, ind) => (
-      <div className='container'>
-        <div className='row'>
-          <div className='col-md-12'>
-            <div className='card'>
-              <div className='card-body'>
-                <h6 className='card-title text-center'>
-                  Exams Under{' '}
-                  <Badge variant='primary' style={{ fontSize: '1rem' }}>
-                    {userDashExamInfo[ind].title}
-                  </Badge>{' '}
-                  Course
-                </h6>
-                <div id='content'>
-                  <ul className='timeline'>
-                    {examTitles.map((value, ind) => (
-                      <li
-                        key={value}
-                        className='event'
-                        data-date={moment(lastAttemptTimes[ind]).format(
-                          'DD-MMM-YYYY, h:mm a'
-                        )}
-                      >
-                        <h3>{value}</h3>
-                        <p className='text-danger'>{type[examType[ind]]}</p>
-                        <p className='text-secondary'>{marks[ind]}</p>
-                      </li>
-                    ))}
-                  </ul>
+  return (
+    <Accordion>
+      {userExamStat.map(
+        ({ examTitles, examType, marks, lastAttemptTimes }, ind) => (
+          <Card>
+            <Card.Header>
+              <Accordion.Toggle as={Button} variant='link' eventKey={ind}>
+                Exams Under{' '}
+                <Badge variant='primary' style={{ fontSize: '1rem' }}>
+                  {userDashExamInfo[ind].title}
+                </Badge>{' '}
+                Course
+              </Accordion.Toggle>
+            </Card.Header>
+            <Accordion.Collapse eventKey={ind}>
+              <Card.Body>
+                <div className='container'>
+                  <div className='row'>
+                    <div className='col-md-12'>
+                      <div className='card'>
+                        <div className='card-body'>
+                          <div id='content'>
+                            <ul className='timeline'>
+                              {examTitles.map((value, ind) => (
+                                <li
+                                  key={value}
+                                  className='event'
+                                  data-date={moment(
+                                    lastAttemptTimes[ind]
+                                  ).format('DD-MMM-YYYY, h:mm a')}
+                                >
+                                  <h3>{value}</h3>
+                                  <p className='text-danger'>
+                                    {type[examType[ind]]}
+                                  </p>
+                                  <p className='text-secondary'>{marks[ind]}</p>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        )
+      )}
+    </Accordion>
   )
 }

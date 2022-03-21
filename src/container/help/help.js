@@ -6,9 +6,9 @@ import { AccordionCard, AccordionStart } from '../../components/customAccordion'
 
 export default function Help() {
   return (
-    <div className='mt-5'>
+    <div>
       <Row>
-        <Col lg={4} md={12} className='mt-5'>
+        <Col lg={4} md={12} className='mb-5'>
           <h3>Login and Credentials</h3>
           <hr />
           <div className='px-2'>
@@ -94,7 +94,7 @@ export default function Help() {
             </AccordionStart>
           </div>
         </Col>
-        <Col lg={4} md={12} className='mt-5'>
+        <Col lg={4} md={12} className='mb-5'>
           <h3>Courses & Exams</h3>
           <hr />
           <div className='px-2'>
@@ -148,7 +148,7 @@ export default function Help() {
             </AccordionStart>
           </div>
         </Col>
-        <Col lg={4} md={12} className='mt-5'>
+        <Col lg={4} md={12}>
           <AccordionStart>
             {/* <AccordionCard heading={h} eventKey={i}></AccordionCard> */}
           </AccordionStart>

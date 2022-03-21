@@ -299,8 +299,6 @@ function onSubmitHandler(
   editExamId
 ) {
   return (values) => {
-    console.log(editExamId)
-
     if (selectedQuestionIds.length > 0) {
       values.startDate = startDate
       values.endDate = endDate

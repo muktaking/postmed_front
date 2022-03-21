@@ -15,7 +15,10 @@
   @import './section/clients';
   @import './section/contact';
 }
-
+.link-hover:hover{
+  color: $primaryColor;
+  text-decoration: none;
+}  
 .content-center {
   //styling to display server response in middle of screen
   position: fixed;

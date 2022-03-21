@@ -6,6 +6,7 @@ import { BsFileText } from 'react-icons/bs'
 import { FormattedMessage } from 'react-intl'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import ExamCatBadges from '../../../components/exams/gallary/examCatBadges'
 import { resetExamResultLoader } from '../../../store/exams'
 import { examTypeToString } from '../../../utils/faculty'
 const duration = require('dayjs/plugin/duration')
@@ -23,10 +24,19 @@ export default function ExamByCat({ exam, courseId = null }) {
           {/* <BsLayersFill size='1.5rem' /> */}
           <span className=''>{exam.title}</span>
         </h4>
-        <div>
-          <Badge variant='warning' className='px-2 py-1'>
-            {examTypeToString(exam.type)}
-          </Badge>
+        <div className='d-flex justify-content-between'>
+          <div>
+            <ExamCatBadges
+              categoryType={exam.categoryType.filter(
+                (ct) => ct.name !== 'Free'
+              )}
+            />
+          </div>
+          <div>
+            <Badge variant='dark' className='px-2 py-1'>
+              {examTypeToString(exam.type)}
+            </Badge>
+          </div>
         </div>
       </Col>
       <Col sm={12} className='mt-1'>

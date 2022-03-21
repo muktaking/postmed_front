@@ -14,7 +14,7 @@ export default function ExamFilter({ setExams, id }) {
     { name: 'Final', value: 6 }
   ]
   return (
-    <div className='mt-5'>
+    <div>
       <Formik
         initialValues={{ text: '' }}
         onSubmit={(values, { setSubmitting }) => {

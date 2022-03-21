@@ -11,6 +11,7 @@ import errorHandler from '../../utils/errorHandler'
 import setAuthorizationToken from '../../utils/setAuthorizationToken'
 import { apiCallBegun, apiCallFail, apiCallSuccess } from '../api'
 import { authSuccess, checkAuthTimeOut } from '../auth'
+import { fetchFreshNotification, getNotification } from '../notification'
 
 //api middleware function
 
@@ -65,6 +66,9 @@ export const api = ({ getState, dispatch }) => (next) => async (action) => {
         localStorage.setItem('userId', response.data.id)
         dispatch(checkAuthTimeOut(response.data.expireIn))
         dispatch({ type: authSuccess.type, payload: response.data })
+      } else if (onSuccess === getNotification.type) {
+        dispatch({ type: getNotification.type, payload: response.data })
+        dispatch(fetchFreshNotification())
       } else dispatch({ type: onSuccess, payload: response.data })
     }
   } catch (error) {

@@ -15,7 +15,7 @@ export default function ExamListsByCat() {
   }, [dispatch])
 
   return (
-    <div className='my-5'>
+    <div className=''>
       {catHierarchy.length < 1 && <Spinner />}
       <h2 className='text-center'>Exam Categories</h2>
       <div>{catExtractor(catHierarchy)}</div>

@@ -18,6 +18,13 @@ const relativeTime = require('dayjs/plugin/relativeTime')
 moment.extend(relativeTime)
 moment.extend(duration)
 
+const styles = {
+  position: 'fixed',
+  top: '70px',
+  right: '10px',
+  zIndex: 100
+}
+
 export default function Index({ landing = null }) {
   const dispatch = useDispatch()
   const coursesStore = useSelector((state) => state.courses)
@@ -61,16 +68,7 @@ export default function Index({ landing = null }) {
         </Modal.Footer>
       </Modal>
 
-      <Toast
-        show={res}
-        onClose={handleClose}
-        style={{
-          position: 'fixed',
-          top: '70px',
-          right: '10px',
-          zIndex: 100
-        }}
-      >
+      <Toast show={res} onClose={handleClose} style={styles}>
         <Toast.Header className='bg-warning text-white'>
           <img src='holder.js/20x20?text=%20' className='rounded me-2' alt='' />
           <strong className='me-auto'>Server Response</strong>
@@ -78,9 +76,8 @@ export default function Index({ landing = null }) {
         <Toast.Body>{res}</Toast.Body>
       </Toast>
 
-      <h3 className='text-center heading' style={{ marginTop: '80px' }}>
-        Available Courses
-      </h3>
+      <h3 className='text-center heading'>Available Courses</h3>
+      {landing && <div className='heading-underline'></div>}
       {coursesStore.loading &&
         (landing ? (
           <div className='text-center'>

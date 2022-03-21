@@ -1,6 +1,13 @@
 import React from 'react'
 import Col from 'react-bootstrap/Col'
-import { FaCloud, FaHourglass, FaThumbsUp } from 'react-icons/fa'
+import {
+  FaChartBar,
+  FaCloud,
+  FaHourglass,
+  FaHubspot,
+  FaStopCircle,
+  FaThumbsUp
+} from 'react-icons/fa'
 
 const miniBlock = (props) => {
   let icon = null
@@ -12,7 +19,16 @@ const miniBlock = (props) => {
       icon = <FaHourglass size='4rem' />
       break
     case 'thumbs-up':
-      icon = <FaThumbsUp size='4rem' />
+      icon = <FaThumbsUp color='rgb(255, 193, 7)' size='4rem' />
+      break
+    case 'bar':
+      icon = <FaChartBar color='rgb(255, 193, 7)' size='4rem' />
+      break
+    case 'hubspot':
+      icon = <FaHubspot size='4rem' />
+      break
+    case 'stop':
+      icon = <FaStopCircle color='tomato' size='4rem' />
       break
 
     default:

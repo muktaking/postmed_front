@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Badge, Button, Col, Modal, Row } from 'react-bootstrap'
 import { useIntl } from 'react-intl'
-import { useSelector } from 'react-redux'
 import ExamCard from './examCard'
 
 function getRndInteger(min, max) {
@@ -9,7 +8,6 @@ function getRndInteger(min, max) {
 }
 
 export default function ListCard({ title, exams, landing, examLoader }) {
-  const authToken = useSelector((state) => (state.auth.token ? true : false))
   const intl = useIntl()
 
   const [show, setShow] = useState(false)
@@ -68,18 +66,10 @@ export default function ListCard({ title, exams, landing, examLoader }) {
           </Button>
         </Modal.Footer>
       </Modal>
-      <div
-        className='mb-2 border position-relative'
-        style={{ marginTop: '100px' }}
-      >
+      <div className='my-5 position-relative'>
         <h3
-          className='text-center bg-warning text-light px-2 py-1'
-          style={{
-            position: 'absolute',
-            top: '-30px',
-            left: '50px',
-            zIndex: '100'
-          }}
+          className='text-center bg-warning text-light p-3 mx-auto'
+          style={{ maxWidth: '400px' }}
         >
           {title.toUpperCase() + ' '}{' '}
           {!landing && (
@@ -89,7 +79,7 @@ export default function ListCard({ title, exams, landing, examLoader }) {
             </Badge>
           )}{' '}
         </h3>
-        <div className='mt-4'>
+        <div className='mt-5'>
           <div className='d-flex justify-content-around flex-wrap'>
             {exams.length < 1 && (
               <p className='lead text-danger'>
@@ -125,13 +115,8 @@ export default function ListCard({ title, exams, landing, examLoader }) {
                   description={exam.description}
                   createdAt={exam.startDate}
                   endDate={exam.endDate}
-                  free={
-                    exam.categoryType.filter((cat) => cat.name === 'Free')
-                      .length > 0
-                  }
                   examLoader={examLoader}
                   landing={landing}
-                  authToken={authToken}
                 />
               ) : (
                 ''

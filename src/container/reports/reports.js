@@ -3,6 +3,7 @@ import axios from 'axios'
 import * as moment from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import { Badge, Col, Form, Row, Table } from 'react-bootstrap'
+import Timeline from '../../components/result/timeline'
 import MetaInfo from '../../components/seo/metainfo'
 import { RoutesConfig } from '../../config/routes.config'
 import LineCharts from './lineCharts'
@@ -14,6 +15,7 @@ export default function Reports() {
   const [examStats, setExamStats] = useState([])
   const [examDetails, setExamDetails] = useState(null)
   const [advancedAnalyTics, setAdvancedAnalyTics] = useState(false)
+  const [showTimeline, setShowTimeline] = useState(false)
   // const [examTitle, setExamTitle] = useState('')
   // const [examTotalMark, setExamTotalMark] = useState(0)
   const [examActivityStat, setExamActivityStat] = useState([])
@@ -72,7 +74,9 @@ export default function Reports() {
             ))}
           </Form.Control>
 
-          <p className='mt-4 mr-1'>
+          <p className='mt-4 mr-1 pl-3'>
+            <span className='text-info'>Steps</span>
+            <br />
             <span>1. First Select A Course</span>
             <br />
             <span>2. Then click on any</span>{' '}
@@ -80,9 +84,35 @@ export default function Reports() {
               -
             </Badge>{' '}
             <span>colored 'Exam Title' cell to get details</span>
+            <br />
+            <span>
+              3. Switched to 'Advanced Analytics' to get in depth view
+            </span>
           </p>
+          <hr />
+          <div>
+            <p>More Options</p>
+            <Form.Check
+              type='switch'
+              id='custom-switch-timeline'
+              label='Show Timeline'
+              onChange={() => {
+                setShowTimeline(!showTimeline)
+              }}
+            />
+          </div>
         </Col>
         <Col sm={9}>
+          {showTimeline && (
+            <div className='mb-3'>
+              <h4>
+                Timeline <Badge>(Click title to expand)</Badge>
+              </h4>
+              <Timeline />
+              <hr />
+            </div>
+          )}
+          <h4>Exams Reports</h4>
           <Table striped bordered hover responsive>
             <thead>
               <tr>

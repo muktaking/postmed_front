@@ -7,7 +7,9 @@ export default function Promotional() {
       {/* <Container className='bg-secondary'> */}
       <div className='d-flex justify-content-center'>
         <Image
-          src='https://via.placeholder.com/1200x55.png?text=Visit+WhoIsHostingThis.com+Buyers+Guide'
+          src={
+            process.env.REACT_APP_SITE_URL + '/images/bootstrap/promotional.png'
+          }
           fluid
         />
       </div>

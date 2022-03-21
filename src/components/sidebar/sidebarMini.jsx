@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Nav from 'react-bootstrap/Nav'
 import {
+  FaBell,
   FaBookOpen,
   FaCalendarAlt,
   FaChartLine,
@@ -18,6 +19,7 @@ import {
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import NotiBadge from '../../container/notification/notiBadge'
 import { userExamStatLoader } from '../../store/dashboard'
 import { getUserLoader } from '../../store/user'
 import { canActivate, rolePermitted } from '../../utils/canActivate'
@@ -68,6 +70,10 @@ class Sidebar extends Component {
         <FaDiceD20 size='1.6em' className='mr-2' />,
         <FaBookOpen size='1.6em' className='mr-2' />,
         <FaChartLine size='1.6em' className='mr-2' />,
+        <span className='mr-2'>
+          <FaBell size='1.6em' />
+          <NotiBadge />
+        </span>,
         <FaUser size='1.6em' className='mr-2' />,
         <FaQuestion size='1.6em' className='mr-2' />,
         <FaTools size='1.6em' className='mr-2' />
@@ -77,6 +83,7 @@ class Sidebar extends Component {
         'Courses',
         'Exams',
         'Reports',
+        'Notification',
         'Profile',
         'Help',
         'Settings'
@@ -86,6 +93,7 @@ class Sidebar extends Component {
         'btn.courses',
         'btn.exams',
         'btn.reports',
+        'btn.noti',
         'profile',
         'btn.help',
         'settings'
@@ -95,6 +103,7 @@ class Sidebar extends Component {
         '/courses',
         '/exams',
         '/reports',
+        '/notification',
         '/profile',
         '/help',
         '/settings'

@@ -13,10 +13,13 @@ const Feature = (props) => {
     heading: [
       intl.formatMessage({ id: 'feature.cb', defaultMessage: 'Cloud Based' }),
       intl.formatMessage({
+        id: 'feature.gf',
+        defaultMessage: 'No More Google Form'
+      }),
+      intl.formatMessage({
         id: 'feature.an',
         defaultMessage: 'Anywhere At Anytime'
-      }),
-      intl.formatMessage({ id: 'feature.ac', defaultMessage: 'Accurecy' })
+      })
     ],
     para: [
       intl.formatMessage({
@@ -25,17 +28,17 @@ const Feature = (props) => {
           'All System is based on cloud. Test the digitalization in exam management system'
       }),
       intl.formatMessage({
+        id: 'feature.ac.details',
+        defaultMessage:
+          'Stop using google form based online exam. Get customized web application for exam'
+      }),
+      intl.formatMessage({
         id: 'feature.an.details',
         defaultMessage:
           'You can give exam at anytime from anywhere. Home, sweet home!! '
-      }),
-      intl.formatMessage({
-        id: 'feature.ac.details',
-        defaultMessage:
-          'We try hard to make all questions and answers 100% accuret'
       })
     ],
-    faIcons: ['cloud', 'hourglass', 'thumbs-up']
+    faIcons: ['cloud', 'stop', 'hourglass']
   }
   return (
     <div id='feature' className='offset'>

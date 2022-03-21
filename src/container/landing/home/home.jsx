@@ -8,21 +8,9 @@ const Promotional = lazy(() => import('../promotional'))
 
 const Home = (props) => {
   return (
-    <div id='home'>
+    <div className='mb-5' id='home'>
       <Suspense fallback={<div />}>
-        <div
-          id='fixedTop'
-          style={{
-            position: 'absolute',
-            top: '0px',
-            left: '0px',
-            width: '100%',
-            zIndex: '1000'
-          }}
-        >
-          <Promotional />
-          <NavbarHome isLanding={true} />
-        </div>
+        <NavbarHome isLanding={true} />
       </Suspense>
       {/* Landing */}
       <div className='landing'>

@@ -2,14 +2,7 @@ import axios from 'axios'
 //import moment from 'moment'
 import * as moment from 'dayjs'
 import React, { Suspense, useState } from 'react'
-import {
-  Alert,
-  Badge,
-  Button,
-  Card,
-  OverlayTrigger,
-  Popover
-} from 'react-bootstrap'
+import { Alert, Button, Card, OverlayTrigger, Popover } from 'react-bootstrap'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { LazyLoadComponent } from 'react-lazy-load-image-component'
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,24 +10,13 @@ import { Link } from 'react-router-dom'
 import { resetExamResultLoader } from '../../../store/exams'
 import { canActivate, rolePermitted } from '../../../utils/canActivate'
 import SocialShare from '../../socialShare/socialShare'
+import ExamCatBadges from './examCatBadges'
 const EditExam = React.lazy(() =>
   import('../../../container/examBuilder/editExam')
 )
 
-const categoryTypeVariant = (name) => {
-  let variant = 'primary'
-  switch (name) {
-    case 'Featured':
-      variant = 'warning'
-      break
-    case 'Free':
-      variant = 'secondary'
-      break
-
-    default:
-      break
-  }
-  return variant
+function isExamFree(categoryType) {
+  return categoryType.filter((cat) => cat.name === 'Free').length > 0
 }
 
 export default function ExamCard({
@@ -48,10 +30,7 @@ export default function ExamCard({
   description,
   createdAt,
   endDate,
-  free,
-  examLoader,
-  landing,
-  authToken
+  examLoader
 }) {
   const dispatch = useDispatch()
   const token = useSelector((state) => state.auth.token)
@@ -83,16 +62,13 @@ export default function ExamCard({
             </Card.Title>
 
             <Card.Subtitle>
-              {categoryType &&
-                categoryType.map((category) => (
-                  <Badge
-                    key={category.name}
-                    variant={categoryTypeVariant(category.name)}
-                    className='mr-1'
-                  >
-                    {category.name}
-                  </Badge>
-                ))}
+              <ExamCatBadges
+                categoryType={
+                  token
+                    ? categoryType.filter((ct) => ct.name !== 'Free')
+                    : categoryType
+                }
+              />
             </Card.Subtitle>
           </div>
 
@@ -126,7 +102,7 @@ export default function ExamCard({
               to={
                 courseId
                   ? `/exams/${examId}_${courseId}`
-                  : free
+                  : isExamFree(categoryType)
                   ? `/exams/free/${examId}`
                   : ''
               }
@@ -136,7 +112,7 @@ export default function ExamCard({
                 onClick={() => {
                   dispatch(resetExamResultLoader())
                 }}
-                disabled={!free}
+                disabled={!isExamFree(categoryType)}
               >
                 <FormattedMessage id='btn.start' defaultMessage='Start Exam' />
               </Button>
@@ -152,8 +128,8 @@ export default function ExamCard({
               </Button>
             </Link>
           </div>
-          {authToken &&
-            (free ? (
+          {token &&
+            (isExamFree(categoryType) ? (
               <Alert variant='warning' className='mt-2'>
                 Taking part to this exam will not be added to your exam profile.{' '}
               </Alert>

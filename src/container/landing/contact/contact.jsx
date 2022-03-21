@@ -2,17 +2,22 @@ import React from 'react'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import {
+  FaEnvelope,
   FaFacebookSquare,
   FaInstagramSquare,
+  FaMapMarkerAlt,
+  FaPhoneSquareAlt,
   FaTwitterSquare
 } from 'react-icons/fa'
 import { FormattedMessage } from 'react-intl'
+import { Link } from 'react-router-dom'
 import { animateScroll as scroll } from 'react-scroll'
 import { ContactConfig } from '../../../config/contact.config'
 
 const scrollToTop = () => {
   scroll.scrollToTop(160)
 }
+
 const styles = {
   cursor: 'pointer'
 }
@@ -22,24 +27,26 @@ const contact = (props) => {
     <div id='contact' className='offset'>
       <footer>
         <Row className=''>
-          <Col sm={4}></Col>
-          <Col sm={4} className='text-center'>
-            <p className='lead'>
-              <FormattedMessage
-                id='footer.msg'
-                defaultMessage='We are highly trained team to manage the exam system.'
-              />
-            </p>
-            <strong>
+          <Col className='text-center' md={4}>
+            <h4>About Us</h4>
+            <p className=''>{ContactConfig.about}</p>
+          </Col>
+          <Col md={4} className='text-center'>
+            <h4>
               <FormattedMessage
                 id='btn.contact'
                 defaultMessage='Contact Info'
               />
-            </strong>
+            </h4>
             <p>
-              {ContactConfig.mobile}
+              <FaPhoneSquareAlt size='1.4rem' className='mr-2' />
+              <span>{ContactConfig.mobile}</span>
               <br />
-              {ContactConfig.email}
+              <FaEnvelope size='1.4rem' className='mr-2' />
+              <span>{ContactConfig.email}</span>
+              <br />
+              <FaMapMarkerAlt size='1.4rem' className='mr-2' />
+              <span>{ContactConfig.location}</span>
             </p>
             <a
               href={ContactConfig.socials.facebook}
@@ -63,15 +70,36 @@ const contact = (props) => {
               <FaInstagramSquare size='2.6rem' />
             </a>
           </Col>
-          <Col sm={4}></Col>
-          <hr className='socket' />
-
-          <Col sm={4}></Col>
-          <Col sm={4} className='text-center'>
+          <Col className='text-center' md={4}>
+            <h4>Useful Links</h4>
+            <Link to='/courses' className='link-hover'>
+              Courses
+            </Link>
+            <br />
+            <Link to='/exams' className='link-hover'>
+              Exams
+            </Link>
+            <br />
+            <Link to='/help' className='link-hover'>
+              Helps
+            </Link>
+            <br />
+            <Link to='/terms' className='link-hover'>
+              Terms & Conditions
+            </Link>
+          </Col>
+        </Row>
+        <Row className=''>
+          <Col md={4}></Col>
+          <Col md={4} className='text-center'>
             &copy; E-Exam Theme Inspired By Nano theme
           </Col>
-          <Col sm={4}>
-            <p className='text-right pr-3' style={styles} onClick={scrollToTop}>
+          <Col md={4}>
+            <p
+              className='text-right pr-3 link-hover'
+              style={styles}
+              onClick={scrollToTop}
+            >
               Back to Top{' '}
             </p>
           </Col>

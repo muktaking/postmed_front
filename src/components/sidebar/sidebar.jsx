@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import {
+  FaBell,
   FaBookOpen,
   FaCalendarAlt,
   FaChartLine,
@@ -139,7 +140,8 @@ class Sidebar extends Component {
         <FaCalendarAlt size='1.6em' className='mr-2' />,
         <FaQuora size='1.6em' className='mr-2' />,
         <FaEdit size='1.6em' className='mr-2' />,
-        <FaCog size='1.6em' className='mr-2' />,
+        //<FaCog size='1.6em' className='mr-2' />,
+        <FaBell size='1.6em' className='mr-2' />,
         <FaUser size='1.6em' className='mr-2' />,
         <FaQuestion size='1.6em' className='mr-2' />,
         <FaTools size='1.6em' className='mr-2' />
@@ -151,7 +153,8 @@ class Sidebar extends Component {
         'Routine Builder',
         'Question Builder',
         'Exam Builder',
-        'Exam Edit',
+        //'Exam Edit',
+        'Notification Builder',
         'Profile',
         'Help',
         'Settings'
@@ -164,7 +167,8 @@ class Sidebar extends Component {
         '/routine',
         '/question',
         '/exambuilder',
-        '/examedit',
+        //'/examedit',
+        '/notificationbuilder',
         '/profile',
         '/help',
         '/settings'

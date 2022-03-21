@@ -26,7 +26,7 @@ export default function ExamListsByCatShower() {
       })
   }, [idA])
   return (
-    <div className='mt-5'>
+    <div className=''>
       {loading && <Spinner />}
       <h2 className='text-center'>
         <span className='mr-2'>Available Exams Under</span>

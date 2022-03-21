@@ -33,7 +33,7 @@ export default function ExamListsByCatShower() {
   const paginatedExams = paginate(exams, currentPage, pageSize)
 
   return (
-    <div className='mt-5'>
+    <div>
       {loading && <Spinner />}
       <Row>
         <Col lg={2}>

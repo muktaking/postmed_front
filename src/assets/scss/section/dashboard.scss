@@ -14,10 +14,10 @@
 }
 
 .top-navbar .hideInSm div.nav div.nav-item a.nav-link:hover {
-  color: rgb(53, 226, 53);
+  color: $primaryColor;
 }
 .top-navbar .hideInSm div.nav div.nav-item a.nav-link:hover svg {
-  color: rgb(226, 53, 82);
+  color: $primaryColor;
 }
 
 .top-navbar {

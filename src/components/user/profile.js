@@ -102,8 +102,7 @@ export default function ProfileSnippet({ isProfile, size = '100' }) {
         <div>
           <img
             src={
-              user.avatar &&
-              user.avatar.includes('platform-lookaside.fbsbx.com')
+              user.avatar && user.avatar.includes('.')
                 ? user.avatar
                 : '/assets/image/avatar/' +
                   (user.avatar ? user.avatar : 'boy') +

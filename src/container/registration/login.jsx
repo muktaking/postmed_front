@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 import validator from 'validator'
 import '../../assets/scss/section/registration.scss'
 import FacebookLogin from '../../components/facebook/facebook'
+import Google from '../../components/google/google'
 import NavbarHome from '../../components/navbar/navbarHome'
 import MetaInfo from '../../components/seo/metainfo'
 import { RoutesConfig } from '../../config/routes.config'
@@ -153,7 +154,12 @@ class Home extends Component {
             </Button>
           </Form>
           <Row>
-            <FacebookLogin />
+            <Col sm='6'>
+              <FacebookLogin />
+            </Col>
+            <Col sm='6'>
+              <Google />
+            </Col>
           </Row>
           <Row>
             <Col md={6}>

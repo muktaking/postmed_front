@@ -5,19 +5,14 @@ import { NavLink } from 'react-router-dom'
 
 const subNavBar = (props) => {
   const pages = props.isAuthenticated
-    ? ['dashboard', 'exams', 'logout']
-    : ['exams', 'signup', 'login']
+    ? ['dashboard', 'courses', 'exams', 'logout']
+    : ['courses', 'exams', 'signup', 'login']
 
   return (
     <Nav className='bg-light'>
       <Nav.Item as='li' className='mr-3'>
-        <NavLink to={{ pathname: '/' }} className='nav-link'>
+        <NavLink to={{ pathname: '/' }} className='nav-link link-hover'>
           {'Home'.toUpperCase()}
-        </NavLink>
-      </Nav.Item>
-      <Nav.Item as='li' className='mr-3'>
-        <NavLink to='/#contact' className='nav-link'>
-          {'Contact'.toUpperCase()}
         </NavLink>
       </Nav.Item>
       {pages.map((value) => (
@@ -25,13 +20,17 @@ const subNavBar = (props) => {
           <NavLink
             // href={"/" + value}
             to={{ pathname: '/' + value }}
-            className='nav-link'
+            className='nav-link link-hover'
           >
             {value.toUpperCase()}
           </NavLink>
         </Nav.Item>
       ))}
-      {/* </Scrollspy> */}
+      <Nav.Item as='li' className='mr-3'>
+        <NavLink to='/#contact' className='nav-link link-hover'>
+          {'Contact'.toUpperCase()}
+        </NavLink>
+      </Nav.Item>
     </Nav>
   )
 }

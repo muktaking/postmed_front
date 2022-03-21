@@ -6,6 +6,7 @@ import { slide as Menu } from 'react-burger-menu'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 import '../assets/scss/section/dashboard.scss'
+import DomHistory from '../components/domHistory/domHistory'
 import Sidebar from '../components/sidebar/sidebar'
 import SidebarMini from '../components/sidebar/sidebarMini'
 import Topbar from '../components/topbar/topbar'
@@ -78,6 +79,7 @@ const InnerContent = (props) => {
           <Col xl={10} lg={9} md={8} sm={12}>
             <div>
               <Topbar pageName={pageName} />
+
               <div className='px-1 ml-md-4' style={{ marginTop: '70px' }}>
                 <Suspense
                   fallback={
@@ -86,6 +88,7 @@ const InnerContent = (props) => {
                     </div>
                   }
                 >
+                  <DomHistory />
                   <Route path='/dashboard' exact component={Dashboard} />
                   <Route path='/courses' exact component={CourseLists} />
                   <Route
