@@ -77,7 +77,7 @@ function NotiItem(color, icon, n, dispatch) {
           onClick={() => {
             const notiStore = JSON.parse(localStorage.getItem('noti'))
             const now = new Date()
-            const ttl = 1000 * 60 * 60 * 24 * 3
+            const ttl = 1000 * 60 * 60 * 24 * 30
             if (notiStore) {
               if (now.getTime() > notiStore.expiry) {
                 localStorage.setItem(

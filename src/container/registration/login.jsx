@@ -154,10 +154,10 @@ class Home extends Component {
             </Button>
           </Form>
           <Row>
-            <Col sm='6'>
+            <Col lg='6'>
               <FacebookLogin />
             </Col>
-            <Col sm='6'>
+            <Col lg='6'>
               <Google />
             </Col>
           </Row>

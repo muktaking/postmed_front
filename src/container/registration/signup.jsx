@@ -1,13 +1,16 @@
 //import React from "react";
 import axios from 'axios'
 import React, { Component } from 'react'
+import { Row } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Spinner from 'react-bootstrap/Spinner'
+import { Link } from 'react-router-dom'
 import validator from 'validator'
 import '../../assets/scss/section/registration.scss'
 import Facebook from '../../components/facebook/facebook'
+import Google from '../../components/google/google'
 import NavbarHome from '../../components/navbar/navbarHome'
 import MetaInfo from '../../components/seo/metainfo'
 import { RoutesConfig } from '../../config/routes.config'
@@ -241,7 +244,7 @@ class SignUp extends Component {
                 <Form.Control
                   name='firstName'
                   type='text'
-                  placeholder='Eaqub'
+                  placeholder='Type firstname'
                   onChange={this.handleChange}
                   className={formErrors.firstName.length > 0 && 'is-invalid'}
                 />
@@ -255,7 +258,7 @@ class SignUp extends Component {
                 <Form.Control
                   name='lastName'
                   type='text'
-                  placeholder='Sarder'
+                  placeholder='Type lastname'
                   onChange={this.handleChange}
                   className={formErrors.lastName.length > 0 && 'is-invalid'}
                 />
@@ -270,7 +273,7 @@ class SignUp extends Component {
                 <Form.Control
                   name='userName'
                   type='text'
-                  placeholder='Enter username'
+                  placeholder='Type username'
                   onChange={this.handleChange}
                   className={formErrors.userName.length > 0 && 'is-invalid'}
                 />
@@ -284,7 +287,7 @@ class SignUp extends Component {
                 <Form.Control
                   name='email'
                   type='email'
-                  placeholder='Enter email'
+                  placeholder='Type email'
                   onChange={this.handleChange}
                   className={formErrors.email.length > 0 && 'is-invalid'}
                 />
@@ -300,11 +303,11 @@ class SignUp extends Component {
                   ref={this.passwordRef}
                   name='password'
                   type='password'
-                  placeholder='Password'
+                  placeholder='Type password'
                   onChange={this.handleChange}
                   className={formErrors.password.length > 0 && 'is-invalid'}
                 />
-                <Form.Text className='text-warning'>e.g. 123abcDEF</Form.Text>
+                <Form.Text className=''>e.g. 123abcDEF</Form.Text>
                 {formErrors.password.length > 0 && (
                   <span className='errorMessage'>{formErrors.password}</span>
                 )}
@@ -315,7 +318,7 @@ class SignUp extends Component {
                 <Form.Control
                   name='repeatPassword'
                   type='password'
-                  placeholder='Enter again Password'
+                  placeholder='Type password again'
                   onChange={this.handleChange}
                   className={
                     formErrors.repeatPassword.length > 0 && 'is-invalid'
@@ -347,7 +350,12 @@ class SignUp extends Component {
               <Form.Check
                 name='checked'
                 type='checkbox'
-                label='By checking the box, You will agree our terms and conditions.'
+                label={
+                  <>
+                    <span>By checking the box, You will agree our</span>{' '}
+                    <Link to='/terms'>'terms and conditions.'</Link>
+                  </>
+                }
                 //checked={true}
                 onChange={this.handleChange}
                 defaultChecked
@@ -363,7 +371,14 @@ class SignUp extends Component {
             </Button>
           </Form>
           <p className='mt-3 lead'>Or</p>
-          <Facebook />
+          <Row>
+            <Col lg='6'>
+              <Facebook />
+            </Col>
+            <Col lg='6'>
+              <Google />
+            </Col>
+          </Row>
         </div>
         {/* End of Landing */}
       </div>

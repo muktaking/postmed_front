@@ -24,51 +24,55 @@ const Topbar = (props) => {
         </Col>
 
         <Col md={8} className='hideInSm pr-5'>
-          <Nav className='' style={{ fontSize: '1.2rem' }}>
+          <Nav style={{ fontSize: '1.2rem' }}>
             <Nav.Item className=''>
-              <NavLink to={{ pathname: '/' }} className='nav-link'>
+              <NavLink exact to={{ pathname: '/' }} className='nav-link'>
                 <FormattedMessage id='btn.home' defaultMessage='Home' />
               </NavLink>
             </Nav.Item>
             <Nav.Item className=''>
-              <NavLink to={{ pathname: '/courses' }} className='nav-link'>
+              <NavLink
+                exact
+                to={{ pathname: '/courses' }}
+                activeClassName='activeLink'
+                className='nav-link'
+              >
                 <FormattedMessage id='btn.courses' defaultMessage='Courses' />
               </NavLink>
             </Nav.Item>
             <Nav.Item className=''>
-              <NavLink to={{ pathname: '/exams' }} className='nav-link'>
+              <NavLink
+                to={{ pathname: '/exams' }}
+                activeClassName='activeLink'
+                className='nav-link'
+              >
                 <FormattedMessage id='btn.exams' defaultMessage='Exams' />
               </NavLink>
             </Nav.Item>
 
-            <Nav.Item>
-              <NavLink
-                to={{ pathname: '/notification' }}
-                className={'nav-link'}
-              >
-                <FaBell className='' />
-                <NotiBadge />
-                {/* {freshNoti.length > 0 && (
-                  <Badge
-                    variant='danger'
-                    style={{ position: 'absolute', fontSize: '.6rem' }}
-                  >
-                    {freshNoti.length}
-                  </Badge>
-                )} */}
-              </NavLink>
-            </Nav.Item>
-
             {isLoggedIn ? (
-              <Nav.Item className=''>
-                <NavLink
-                  // href={"/" + value}
-                  to={{ pathname: '/logout' }}
-                  className='nav-link'
-                >
-                  <FaSignOutAlt />
-                </NavLink>
-              </Nav.Item>
+              <>
+                <Nav.Item>
+                  <NavLink
+                    exact
+                    to={{ pathname: '/notification' }}
+                    activeClassName='activeLink'
+                    className={'nav-link'}
+                  >
+                    <FaBell className='' />
+                    <NotiBadge />
+                  </NavLink>
+                </Nav.Item>
+                <Nav.Item className=''>
+                  <NavLink
+                    // href={"/" + value}
+                    to={{ pathname: '/logout' }}
+                    className='nav-link'
+                  >
+                    <FaSignOutAlt />
+                  </NavLink>
+                </Nav.Item>
+              </>
             ) : (
               <>
                 <Nav.Item className=''>

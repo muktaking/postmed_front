@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Badge, Button, Col, Modal, Row } from 'react-bootstrap'
 import { useIntl } from 'react-intl'
+import { Link } from 'react-router-dom'
 import ExamCard from './examCard'
 
 function getRndInteger(min, max) {
@@ -54,6 +55,7 @@ export default function ListCard({ title, exams, landing, examLoader }) {
                         .length > 0
                     }
                     examLoader={examLoader}
+                    landing={landing}
                   />
                 ))}
               </Col>
@@ -92,38 +94,42 @@ export default function ListCard({ title, exams, landing, examLoader }) {
                   })}{' '}
               </p>
             )}
-            {exams.map((exam, i) =>
-              i < 3 ? (
-                <ExamCard
-                  key={exam.id}
-                  examId={exam.id}
-                  imgSrc={
-                    exam.categoryType.length > 0
-                      ? process.env.REACT_APP_SITE_URL +
-                        '/' +
-                        exam.categoryType[
-                          getRndInteger(0, exam.categoryType.length)
-                        ].imageUrl
-                      : '/assets/image/uncat.jpg'
-                  }
-                  title={exam.title}
-                  categoryType={
-                    exam.categoryType.length > 0
-                      ? exam.categoryType
-                      : [{ name: 'Uncategorized' }]
-                  }
-                  description={exam.description}
-                  createdAt={exam.startDate}
-                  endDate={exam.endDate}
-                  examLoader={examLoader}
-                  landing={landing}
-                />
-              ) : (
-                ''
-              )
-            )}
+            {exams.map((exam, i) => (
+              <ExamCard
+                key={exam.id}
+                examId={exam.id}
+                imgSrc={
+                  exam.categoryType.length > 0
+                    ? process.env.REACT_APP_SITE_URL +
+                      '/images/bootstrap/featured_0' +
+                      (Math.floor(Math.random() * 3) + 1) +
+                      '.svg'
+                    : process.env.REACT_APP_SITE_URL +
+                      '/images/bootstrap/uncat.svg'
+                }
+                title={exam.title}
+                categoryType={
+                  exam.categoryType.length > 0
+                    ? exam.categoryType
+                    : [{ name: 'Uncategorized' }]
+                }
+                description={exam.description}
+                createdAt={exam.startDate}
+                endDate={exam.endDate}
+                examLoader={examLoader}
+                landing={landing}
+              />
+            ))}
           </div>
-          {!landing && (
+          {landing ? (
+            <div className='d-flex justify-content-center'>
+              <Link to='/exams/category/Featured-2'>
+                <Button variant='warning' size='lg' className='text-white'>
+                  More Featured Exams...
+                </Button>
+              </Link>
+            </div>
+          ) : (
             <div className='my-2 d-flex justify-content-center'>
               {exams.length > 2 ? (
                 <Button

@@ -36,7 +36,7 @@ const ExamEdit = lazy(() => import('./examBuilder/editExam'))
 const ExamLists = lazy(() => import('./exams/examLists'))
 //import ExamLists from "./exams/examLists";
 //const ExamListsByCat = lazy(()=> import('./exams/examListsByCat'));
-const ExamListsByCat = lazy(() => import('./exams/examsLists.index'))
+const ExamListsByCat = lazy(() => import('./exams/examListsByCat'))
 
 const ExamListsByCourse = lazy(() => import('./exams/examListByCourse'))
 
@@ -57,7 +57,9 @@ const Result = lazy(() => import('./result/result'))
 const Settings = lazy(() => import('./settings/settings'))
 const Print = lazy(() => import('./print/print'))
 const Reports = lazy(() => import('./reports/reports'))
+const ShowQuestions = lazy(() => import('./reports/actions/showQuestions'))
 const Help = lazy(() => import('./help/help'))
+const Terms = lazy(() => import('./terms/terms'))
 const NotificationBuilder = lazy(() =>
   import('./notificationBuilder/notificationBuilder')
 )
@@ -137,6 +139,11 @@ const InnerContent = (props) => {
                   <Route path='/result' exact component={Result} />
                   <Route path='/result/rank/:id' exact component={Rank} />
                   <Route path='/reports' exact component={Reports} />
+                  <Route
+                    path='/reports/actions'
+                    exact
+                    component={ShowQuestions}
+                  />
                   <Route path='/settings' exact component={Settings} />
                   <Route path='/help' exact component={Help} />
                   <Route
@@ -146,6 +153,7 @@ const InnerContent = (props) => {
                   />
                   <Route path='/notification' exact component={Notification} />
                   <Route path='/print' exact component={Print} />
+                  <Route path='/terms' exact component={Terms} />
                 </Suspense>
               </div>
             </div>

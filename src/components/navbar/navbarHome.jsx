@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 import { HashLink } from 'react-router-hash-link'
 import { Link as LinkScroll } from 'react-scroll'
-//import Promotional from '../../container/landing/promotional'
 
 const styles = {
   position: 'fixed',
@@ -64,10 +63,10 @@ const NavbarHome = (props) => {
                     to={value}
                     spy={true}
                     smooth={true}
-                    offset={-50}
+                    offset={-100}
                     duration={500}
                     // //onSetActive={this.handleSetActive}
-                    href={'/'}
+                    href={value === 'home' ? '/' : `/#${value}`}
                     className='nav-link'
                     //to={{ pathname: "/" }}
                   >

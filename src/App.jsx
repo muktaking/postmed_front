@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import './assets/scss/style.scss'
+import ScrollToTopPage from './components/scrollToTopPage/scrollToTopPage'
 import RoutePages from './container/routePages'
 import { checkAuthState } from './store/auth'
 
@@ -15,6 +16,7 @@ class App extends Component {
     return (
       <>
         <BrowserRouter>
+          <ScrollToTopPage />
           <RoutePages />
         </BrowserRouter>
       </>

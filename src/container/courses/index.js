@@ -78,7 +78,7 @@ export default function Index({ landing = null }) {
 
       <h3 className='text-center heading'>Available Courses</h3>
       {landing && <div className='heading-underline'></div>}
-      {coursesStore.loading &&
+      {coursesStore.courses.length < 1 &&
         (landing ? (
           <div className='text-center'>
             <span>Please wait. Courses are loading </span>
@@ -147,34 +147,38 @@ export default function Index({ landing = null }) {
                 </Card.Text>
               )}
               <hr />
-              {isAuthenticated ? (
-                <Button
-                  variant='primary'
-                  style={{ width: '320px', height: '55px', fontSize: '18px' }}
-                  onClick={() => {
-                    //setAuthorizationToken(token);
-                    axios({
-                      baseURL: process.env.REACT_APP_SITE_URL,
-                      url: '/courses/enroll/' + course.id,
-                      method: 'patch'
-                    })
-                      .then((response) => {
-                        setRes(response.data.message)
+              <div className='d-flex justify-content-center align-items-center'>
+                {isAuthenticated ? (
+                  <Button
+                    variant='primary'
+                    //size='lg'
+                    //className='px-5'
+                    style={{ width: '300px', height: '55px', fontSize: '18px' }}
+                    onClick={() => {
+                      //setAuthorizationToken(token);
+                      axios({
+                        baseURL: process.env.REACT_APP_SITE_URL,
+                        url: '/courses/enroll/' + course.id,
+                        method: 'patch'
                       })
-                      .catch((error) => {
-                        setRes(
-                          'Sorry. Enrollment to this course is not possible due to server error. Please contact with admin.'
-                        )
-                      })
-                  }}
-                >
-                  Enroll
-                </Button>
-              ) : (
-                <Badge variant='warning' className='p-2'>
-                  Please Login to Enroll.
-                </Badge>
-              )}
+                        .then((response) => {
+                          setRes(response.data.message)
+                        })
+                        .catch((error) => {
+                          setRes(
+                            'Sorry. Enrollment to this course is not possible due to server error. Please contact with admin.'
+                          )
+                        })
+                    }}
+                  >
+                    Enroll
+                  </Button>
+                ) : (
+                  <Badge variant='warning' className='p-2'>
+                    Please Login to Enroll.
+                  </Badge>
+                )}
+              </div>
               <hr />
               <Card.Text className='text-muted text-center'>
                 <span>Start: {moment(course.startDate).fromNow()}</span>
@@ -190,6 +194,15 @@ export default function Index({ landing = null }) {
           </Card>
         ))}
       </div>
+      {landing && coursesStore.courses.length > 3 && (
+        <div className='d-flex justify-content-center'>
+          <Link to='/courses'>
+            <Button variant='warning' size='xl' className='text-white'>
+              More Ongoing Courses...
+            </Button>
+          </Link>
+        </div>
+      )}
     </div>
   )
 }

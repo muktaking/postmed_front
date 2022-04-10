@@ -72,14 +72,14 @@ export const autoAuth = () => (dispatch) => {
 
 export const checkAuthTimeOut = (expirationTime) => (dispatch) => {
   setTimeout(() => {
-    dispatch(logout())
+    dispatch(logoutLoader())
   }, expirationTime * 1000)
 }
 
 export const checkAuthState = () => (dispatch) => {
   const token = localStorage.getItem('jwtToken')
   if (!token) {
-    dispatch(logout)
+    dispatch(logout())
   } else {
     const expirationDate = new Date(localStorage.getItem('expirationDate'))
     if (expirationDate > new Date()) {
@@ -91,12 +91,13 @@ export const checkAuthState = () => (dispatch) => {
         )
       )
     } else {
-      dispatch(logout())
+      dispatch(logoutLoader())
     }
   }
 }
 
 export const logoutLoader = () => (dispatch) => {
+  console.log('removed')
   localStorage.removeItem('expirationDate')
   localStorage.removeItem('userId')
   localStorage.removeItem('jwtToken')

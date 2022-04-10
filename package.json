@@ -1,7 +1,7 @@
 {
   "name": "eexam_front",
   "version": "2.00.0",
-  "homepage": "https://postmed.rajdoctors.com",
+  "homepage": "https://medionexam.com",
   "private": true,
   "dependencies": {
     "@babel/core": "7.7.4",

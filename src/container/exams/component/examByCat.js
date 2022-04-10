@@ -44,19 +44,19 @@ export default function ExamByCat({ exam, courseId = null }) {
           <BsFileText size='1.5rem' className='m-1' />
           <span className='ml-2'>{exam.description}</span>
         </p>
-        <p className='text-right'>
+        {/* <p className='text-right'>
           End on:{' '}
           <Badge className='ml-2' variant='danger'>
             {moment(exam.endDate).format('DD-MMM-YYYY hh:mm A')}
           </Badge>
-        </p>
+        </p> */}
         {/* <Badge variant='light' className='mt-3'>
           {!authToken &&
             exam.categoryType.filter((cat) => cat.name === 'Free').length > 0 &&
             'Free'}
         </Badge> */}
         <hr />
-        <div>
+        <div className='d-flex justify-content-center'>
           <Link
             className='text-white'
             to={
@@ -75,22 +75,22 @@ export default function ExamByCat({ exam, courseId = null }) {
               <FormattedMessage id='btn.start' defaultMessage='Start Exam' />
             </Button>
           </Link>
-          <Link
-            className='text-white'
-            to={
-              '/result/rank/' + (courseId ? courseId + '_' + exam.id : exam.id)
-            }
-          >
-            <Button
-              onClick={() => {
-                dispatch(resetExamResultLoader())
-              }}
-              variant='outline-primary'
-              className='ml-2'
+          {courseId && (
+            <Link
+              className='text-white'
+              to={'/result/rank/' + (courseId + '_' + exam.id)}
             >
-              <FormattedMessage id='btn.rank' defaultMessage='Rank' />
-            </Button>
-          </Link>
+              <Button
+                onClick={() => {
+                  dispatch(resetExamResultLoader())
+                }}
+                variant='outline-primary'
+                className='ml-2'
+              >
+                <FormattedMessage id='btn.rank' defaultMessage='Rank' />
+              </Button>
+            </Link>
+          )}
         </div>
         <hr />
         <p className='text-center text-muted'>

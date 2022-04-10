@@ -31,7 +31,8 @@ class ExamPaper extends Component {
     show: false,
     selectedQuestions: [],
     pageSize: 10,
-    currentPage: 1
+    currentPage: 1,
+    qTypeState: 'all'
   }
   componentDidMount() {
     this.props.onFetchCategoryLoader()
@@ -163,14 +164,39 @@ class ExamPaper extends Component {
     })
   }
 
+  handleSwitch = (e) => {
+    if (e.target.name === 'sbaOnly') {
+      if (e.target.checked) {
+        this.setState({ qTypeState: 'sba' })
+      } else {
+        this.setState({ qTypeState: 'all' })
+      }
+    } else {
+      if (e.target.checked) {
+        this.setState({ qTypeState: 'matrix' })
+      } else {
+        this.setState({ qTypeState: 'all' })
+      }
+    }
+  }
+
   onPageHandler = (page) => {
     // for pagination
     this.setState({ currentPage: page })
   }
 
   render() {
+    const quesByQType =
+      this.state.qTypeState === 'sba'
+        ? this.props.question.questions.filter((ques) => ques.qType === 'sba')
+        : this.state.qTypeState === 'matrix'
+        ? this.props.question.questions.filter(
+            (ques) => ques.qType === 'matrix'
+          )
+        : this.props.question.questions
+
     const questions = paginate(
-      this.props.question.questions,
+      quesByQType,
       this.state.currentPage,
       this.state.pageSize
     )
@@ -226,13 +252,14 @@ class ExamPaper extends Component {
         <Row>
           <Col lg={4}>
             <Alert variant={'primary'} className='text-center mt-3'>
-              Total number of Question is :
-              {this.props.question.questions.length}
+              Total number of Question is :{quesByQType.length}
             </Alert>
 
             <Filter
               handleChange={this.handleChange}
               categories={this.props.category.categories}
+              handleSwitch={this.handleSwitch}
+              qTypeState={this.qTypeState}
             />
             <ExamSpec
               categories={this.props.category.categories}
@@ -269,12 +296,14 @@ class ExamPaper extends Component {
                         }
                       />
                     }
-
-                    {`${
-                      index +
-                      1 +
-                      this.state.pageSize * (this.state.currentPage - 1)
-                    }. ${question.title} --> ${question.qText}`}
+                    <span>
+                      {`${
+                        index +
+                        1 +
+                        this.state.pageSize * (this.state.currentPage - 1)
+                      }. ${question.qText}`}
+                    </span>
+                    <Badge className='ml-2'>{question.qType}</Badge>
                   </ListGroup.Item>
                 ))}
               </ListGroup>
@@ -285,7 +314,7 @@ class ExamPaper extends Component {
               will be avaiable in exam.
             </p>
             <Pagination
-              itemsCount={this.props.question.questions.length}
+              itemsCount={quesByQType.length}
               pageSize={this.state.pageSize}
               currentPage={this.state.currentPage}
               onPageHandler={this.onPageHandler}

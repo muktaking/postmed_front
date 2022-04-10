@@ -24,7 +24,6 @@ export default function ExamListsByCat() {
         {courses.coursesEnrolledByStu.length < 1 ? (
           <div>
             <p className='text-center text-danger'>
-              {' '}
               You have not enrolled for any course yet. Please enroll for course
               first.
             </p>

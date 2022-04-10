@@ -7,7 +7,12 @@ export default function Latest({ courseId = null }) {
   const [exam, setExam] = useState(null)
   useEffect(() => {
     axios
-      .get(process.env.REACT_APP_SITE_URL + '/exams/current')
+      .get(
+        process.env.REACT_APP_SITE_URL +
+          '/exams/current' +
+          '?courseId=' +
+          courseId
+      )
       .then((res) => {
         setExam(res.data)
       })

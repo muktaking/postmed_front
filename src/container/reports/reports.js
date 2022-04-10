@@ -2,7 +2,8 @@ import axios from 'axios'
 //import moment from 'moment'
 import * as moment from 'dayjs'
 import React, { useEffect, useState } from 'react'
-import { Badge, Col, Form, Row, Table } from 'react-bootstrap'
+import { Badge, Button, Col, Form, Row, Table } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import Timeline from '../../components/result/timeline'
 import MetaInfo from '../../components/seo/metainfo'
 import { RoutesConfig } from '../../config/routes.config'
@@ -113,16 +114,15 @@ export default function Reports() {
             </div>
           )}
           <h4>Exams Reports</h4>
-          <Table striped bordered hover responsive>
+          <Table striped bordered hover responsive size='sm'>
             <thead>
               <tr>
                 <th>#</th>
                 <th>Exam Title</th>
-                <th>Average Score</th>
+                <th>Avg Score</th>
                 <th>Total Mark</th>
-                <th>Attempt Numbers</th>
-                <th>First Attempt Time</th>
-                <th>Last Attempt Time</th>
+                <th>Attempt</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -159,14 +159,17 @@ export default function Reports() {
                     <td>{examStat.totalMark}</td>
                     <td>{examStat.attemptNumbers}</td>
                     <td>
-                      {moment(examStat.firstAttemptTime).format(
-                        'DD-MMM-YYYY, h:mm a'
-                      )}
-                    </td>
-                    <td>
-                      {moment(examStat.lastAttemptTime).format(
-                        'DD-MMM-YYYY, h:mm a'
-                      )}
+                      <Link
+                        className='mb-2 mr-2'
+                        to={`/reports/actions?courseId=${examStats[0].courses[0].courseId}&examId=${examStat.examId}&answers=0`}
+                      >
+                        <Button size='sm'>Questions</Button>
+                      </Link>
+                      <Link
+                        to={`/reports/actions?courseId=${examStats[0].courses[0].courseId}&examId=${examStat.examId}&answers=1`}
+                      >
+                        <Button size='sm'>Questions With Answers</Button>
+                      </Link>
                     </td>
                   </tr>
                 ))

@@ -1,9 +1,9 @@
 export const ContactConfig = {
-  mobile: '+8801641622541',
+  mobile: '+8801521500642, +8801641622541',
   email: 'contact@medionexam.com',
-  location: 'Salbagan, Rajshahi',
+  location: 'Mohakhali, Dhaka',
   socials: {
-    facebook: '#####',
+    facebook: 'https://www.facebook.com/medionexam/',
     twitter: '#',
     instagram: '#'
   },

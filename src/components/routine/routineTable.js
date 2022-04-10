@@ -5,7 +5,7 @@ import { Table } from 'react-bootstrap'
 import { getStatus } from './showRoutine'
 
 export default function RoutineTable({ routine, title }) {
-  const headings = ['#', 'Topics', 'Status', 'Start Date', 'End Date']
+  const headings = ['#', 'Topics', 'Status', 'Start Date']
   return (
     <div>
       <h3 className='text-primary text-center'>Routine For: {title}</h3>
@@ -26,7 +26,7 @@ export default function RoutineTable({ routine, title }) {
               <td>
                 {moment(syllabus.startDate).format('DD-MMM-YYYY, h:mm a')}
               </td>
-              <td>{moment(syllabus.endDate).format('DD-MMM-YYYY, h:mm a')}</td>
+              {/* <td>{moment(syllabus.endDate).format('DD-MMM-YYYY, h:mm a')}</td> */}
             </tr>
           ))}
         </tbody>

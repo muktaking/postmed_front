@@ -6,7 +6,7 @@ import styles from './hero.module.scss'
 
 export default function Hero() {
   return (
-    <Container className={`${styles.container}`}>
+    <Container id='home' className={`${styles.container}`}>
       <Row>
         <Col lg={{ span: 8 }}>
           <Image src={imgSrc} />

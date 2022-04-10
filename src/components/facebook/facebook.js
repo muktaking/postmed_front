@@ -53,14 +53,19 @@ class Facebook extends Component {
     let fbContent
 
     if (this.state.isLoggedIn) {
-      fbContent = (
-        <div className='d-flex bg-danger p-2'>
-          {this.state.photo && <img src={this.state.photo} alt='fb_avatar' />}
-          <p className='mt-1'>
-            Sorry,{' ' + this.state.name + ' ' + this.state.message}
-          </p>
-        </div>
-      )
+      fbContent =
+        this.state.message !== '' ? (
+          <div className='d-flex bg-danger p-2'>
+            {this.state.photo && <img src={this.state.photo} alt='fb_avatar' />}
+            <p className='mt-1'>
+              Sorry,{' ' + this.state.name + ' ' + this.state.message}
+            </p>
+          </div>
+        ) : (
+          <div className='d-flex bg-success p-2'>
+            Wait... You are redirecting to dashboard.
+          </div>
+        )
     } else {
       fbContent = (
         <div className='mx-auto'>
@@ -82,7 +87,7 @@ class Facebook extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     onAuth: (payload) => dispatch(authSuccess(payload)),
-    checkAuthTimeOut: (payload) => dispatch(checkAuthTimeOut(payload))
+    checkAuthTimeOutLoader: (payload) => dispatch(checkAuthTimeOut(payload))
   }
 }
 

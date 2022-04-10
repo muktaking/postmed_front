@@ -136,18 +136,34 @@ export default function ShowRoutine({ showRaw, id, title }) {
                   </Tabs>
                 ) : (
                   <div>
+                    <p className='text-muted'>
+                      *** Only Ongoing & Upcoming exam's routine is showed here.
+                      For all click details. ***
+                    </p>
                     <ul className='timeline'>
-                      {routine.map((syllabus) => (
-                        <SingleRoutineCard
-                          key={syllabus.id}
-                          syllabus={syllabus}
-                          showRaw={showRaw}
-                          getStatus={getStatus}
-                          setShowModal={setShowModal}
-                          setEditSyllabusValue={setEditSyllabusValue}
-                          setMsg={setMsg}
-                        />
-                      ))}
+                      {routine
+                        //filtering to get the onging and future routine here
+                        .filter((syllabus, ind) => {
+                          console.log(syllabus)
+                          if (
+                            new Date(syllabus.endDate).getTime() <=
+                            new Date().getTime()
+                          ) {
+                            return false
+                          }
+                          return true
+                        })
+                        .map((syllabus) => (
+                          <SingleRoutineCard
+                            key={syllabus.id}
+                            syllabus={syllabus}
+                            showRaw={showRaw}
+                            getStatus={getStatus}
+                            setShowModal={setShowModal}
+                            setEditSyllabusValue={setEditSyllabusValue}
+                            setMsg={setMsg}
+                          />
+                        ))}
                     </ul>
                     <Link
                       to={{

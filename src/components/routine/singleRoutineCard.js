@@ -28,7 +28,6 @@ const RenderTooltip = React.forwardRef(({ id, setMsg, ...props }, ref) => (
 
 export default function SingleRoutineCard({
   syllabus,
-  ind,
   showRaw,
   getStatus,
   setShowModal,
@@ -49,10 +48,13 @@ export default function SingleRoutineCard({
         {getStatus(syllabus.startDate, syllabus.endDate)}
       </p>
       <p className='text-secondary'>
-        Exam ends: {moment(syllabus.endDate).format('DD-MMM-YYYY, h:mm a')}
+        Exam Starts: {moment(syllabus.startDate).format('DD-MMM-YYYY, h:mm a')}
       </p>
       {showRaw && (
         <>
+          <p className='text-secondary'>
+            Exam ends: {moment(syllabus.endDate).format('DD-MMM-YYYY, h:mm a')}
+          </p>
           <Button
             variant='warning'
             onClick={() => {

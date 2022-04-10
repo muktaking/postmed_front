@@ -29,10 +29,10 @@ const ExamsFeaturedCard = ({ featuredExams, courseId }) => {
             imgSrc={
               exam.categoryType.length > 0
                 ? process.env.REACT_APP_SITE_URL +
-                  '/' +
-                  exam.categoryType[getRndInteger(0, exam.categoryType.length)]
-                    .imageUrl
-                : '/assets/image/uncat.jpg'
+                  '/images/bootstrap/featured_0' +
+                  (Math.floor(Math.random() * 3) + 1) +
+                  '.svg'
+                : process.env.REACT_APP_SITE_URL + '/images/bootstrap/uncat.svg'
             }
             title={exam.title}
             categoryType={

@@ -1,6 +1,4 @@
 import axios from 'axios'
-//import moment from 'moment'
-import * as moment from 'dayjs'
 import React, { Suspense, useState } from 'react'
 import { Alert, Button, Card, OverlayTrigger, Popover } from 'react-bootstrap'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -30,7 +28,8 @@ export default function ExamCard({
   description,
   createdAt,
   endDate,
-  examLoader
+  examLoader,
+  landing
 }) {
   const dispatch = useDispatch()
   const token = useSelector((state) => state.auth.token)
@@ -75,7 +74,7 @@ export default function ExamCard({
           <div className='mt-1 pt-2'>
             <p className=''>{description} </p>
 
-            <p className='text-right'>
+            {/* <p className='text-right'>
               <span className='text-muted'>
                 {intl.formatMessage({
                   id: 'db.so',
@@ -93,9 +92,21 @@ export default function ExamCard({
                   : {moment(endDate).format('YYYY-MMM-DD hh:mm A')}
                 </span>
               }
-            </p>
+            </p> */}
           </div>
-
+          <hr />
+          {token &&
+            landing &&
+            (isExamFree(categoryType) ? (
+              <Alert variant='warning' className='mt-2'>
+                Taking part to this exam will not be added to your exam profile.{' '}
+              </Alert>
+            ) : (
+              <Alert variant='danger' className='mt-2'>
+                You can not take part this exam. Go to{' '}
+                <Link to='/exams'>avaiable exams </Link>
+              </Alert>
+            ))}
           <div className='d-flex justify-content-around'>
             <Link
               className='text-white'
@@ -117,7 +128,7 @@ export default function ExamCard({
                 <FormattedMessage id='btn.start' defaultMessage='Start Exam' />
               </Button>
             </Link>
-            <Link className='text-white' to={'/result/rank/' + examId}>
+            {/* <Link className='text-white' to={'/result/rank/' + examId}>
               <Button
                 onClick={() => {
                   dispatch(resetExamResultLoader())
@@ -126,19 +137,10 @@ export default function ExamCard({
               >
                 <FormattedMessage id='btn.rank' defaultMessage='Rank' />
               </Button>
-            </Link>
+            </Link> */}
           </div>
-          {token &&
-            (isExamFree(categoryType) ? (
-              <Alert variant='warning' className='mt-2'>
-                Taking part to this exam will not be added to your exam profile.{' '}
-              </Alert>
-            ) : (
-              <Alert variant='danger' className='mt-2'>
-                You can not take part this exam. Go to{' '}
-                <Link to='/exams'>avaiable exams </Link>
-              </Alert>
-            ))}
+
+          <hr />
           <SocialShare
             url={'/exams/' + examId}
             title={title}

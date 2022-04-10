@@ -99,12 +99,12 @@ class Category extends Component {
   submitHandler = (e) => {
     e.preventDefault()
 
-    const { formErrors, name, order, description, image } = this.state
+    const { formErrors, name, order, description } = this.state
 
     const parentId =
       this.state.parentId || this.selectOptionValueRef.current.value
 
-    const rest = { name, parentId, order, description, image }
+    const rest = { name, parentId, order, description }
 
     const { valid, error } = formValid({ rest, formErrors })
 
@@ -239,11 +239,11 @@ class Category extends Component {
           ? ''
           : 'Order should be only number'
         break
-      case 'image':
-        formErrors.image = !validator.isEmpty(value)
-          ? ''
-          : 'Choose a valid image'
-        break
+      // case 'image':
+      //   formErrors.image = !validator.isEmpty(value)
+      //     ? ''
+      //     : 'Choose a valid image'
+      //   break
       default:
         break
     }

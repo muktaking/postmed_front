@@ -2,7 +2,8 @@
 import * as moment from 'dayjs'
 import React, { useState } from 'react'
 import { Table } from 'react-bootstrap'
-import { FaEdit, FaTimes } from 'react-icons/fa'
+import { FaEdit, FaFileAlt, FaTimes } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 import DeleteExam from '../../examBuilder/deleteExam'
 import EditExam from '../../examBuilder/editExam'
 import { examType } from '../../exams/examLists'
@@ -73,6 +74,12 @@ export default function Exams({ exams }) {
               <td>{moment(exam.startDate).format('YYYY-MM-DD, hh:mm a')}</td>
               <td>{moment(exam.endDate).format('YYYY-MM-DD, hh:mm a')}</td>
               <td>
+                <Link to={`/reports/actions?examId=${exam.id}&answers=1`}>
+                  <span className='mb-2'>
+                    <FaFileAlt />
+                  </span>
+                </Link>
+                <br />
                 <span
                   onClick={() => {
                     setEditExamId(exam.id)

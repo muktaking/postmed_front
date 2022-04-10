@@ -177,11 +177,11 @@ class Sidebar extends Component {
 
     return (
       <div className='px-4'>
-        <Navbar.Brand className='text-white d-block mx-auto text-center py-3 mb-4 bottom-border'>
-          <NavLink to='/' className='text-white'>
+        <NavLink exact to='/' className='text-white'>
+          <Navbar.Brand className='text-white d-block mx-auto text-center py-3 mb-4 bottom-border'>
             {process.env.REACT_APP_NAME}
-          </NavLink>
-        </Navbar.Brand>
+          </Navbar.Brand>
+        </NavLink>
         <h3 className='text-white text-center mb-2'>
           <FormattedMessage id='goodDay' defaultMessage='Good Day' />
         </h3>

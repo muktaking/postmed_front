@@ -1,3 +1,3 @@
-import React from "react";
+import React from 'react'
 
-export const Locale =  React.createContext('en-US');
+export const Locale = React.createContext('en-US')
