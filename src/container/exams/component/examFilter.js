@@ -20,6 +20,8 @@ export default function ExamFilter({ setExams, id }) {
         onSubmit={(values, { setSubmitting }) => {
           const { text, ...rest } = values
           let examType = Object.values(rest).map((e) => e[0])
+          //discarding all null values
+          examType = examType.filter((eT) => eT)
           if (examType.length < 1) {
             examType = ['0', '1', '2', '3', '4', '5', '6']
           }
