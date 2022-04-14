@@ -123,7 +123,7 @@ export default function ExamCard({
                 onClick={() => {
                   dispatch(resetExamResultLoader())
                 }}
-                disabled={!isExamFree(categoryType)}
+                disabled={courseId ? false : !isExamFree(categoryType)}
               >
                 <FormattedMessage id='btn.start' defaultMessage='Start Exam' />
               </Button>

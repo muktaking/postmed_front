@@ -3,9 +3,9 @@ import { useIntl } from 'react-intl'
 import ExamCard from '../../../exams/gallary/examCard'
 import BigCard from '../bigCard/bigCard'
 
-function getRndInteger(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min
-}
+// function getRndInteger(min, max) {
+//   return Math.floor(Math.random() * (max - min)) + min
+// }
 
 const ExamsFeaturedCard = ({ featuredExams, courseId }) => {
   //const featuredExams = useSelector((state) => state.dashboard.featuredExams)

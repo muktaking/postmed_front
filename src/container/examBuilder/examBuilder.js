@@ -160,7 +160,8 @@ class ExamPaper extends Component {
     e = e.target
     this.props.onGetQuestionByCategoryLoader(e.value)
     this.setState({
-      id: e.value
+      id: e.value,
+      currentPage: 1
     })
   }
 
@@ -296,13 +297,14 @@ class ExamPaper extends Component {
                         }
                       />
                     }
-                    <span>
-                      {`${
-                        index +
+                    <span className='mr-2'>
+                      {index +
                         1 +
-                        this.state.pageSize * (this.state.currentPage - 1)
-                      }. ${question.qText}`}
+                        this.state.pageSize * (this.state.currentPage - 1)}
+                      .
                     </span>
+                    <Badge className='mr-2'>{question.title}</Badge>
+                    <span>{question.qText}</span>
                     <Badge className='ml-2'>{question.qType}</Badge>
                   </ListGroup.Item>
                 ))}
