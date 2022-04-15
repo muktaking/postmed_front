@@ -9,7 +9,6 @@ import MiniManyQues from './component/miniManyQues'
 
 const formValid = (formErrors, ...rest) => {
   //to check if form fields are null or contain error
-  console.log(rest, formErrors)
   let valid = true
   let error = ''
   Object.values(formErrors).forEach((v) => {

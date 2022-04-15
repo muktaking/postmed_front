@@ -9,8 +9,6 @@ export default function StemTwo({
   stemInc,
   stemDec
 }) {
-  console.log(values)
-
   return (
     <div>
       {stems.map((stem, index) => (

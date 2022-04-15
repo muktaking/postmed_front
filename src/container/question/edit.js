@@ -89,7 +89,6 @@ export default function Index({ initialValues }) {
     setStemNum(stemNum - 1)
   }
   const toggleShowA = () => setShowA(!showA)
-  console.log(data)
 
   return (
     <div>
@@ -245,7 +244,6 @@ function submitHandler(stemNum, dispatch) {
 
     if (error === '') {
       values.stems = values.stems.filter((stem) => stem.qStem)
-      console.log('object')
       dispatch(
         createQuestionLoader({
           title: values.title,

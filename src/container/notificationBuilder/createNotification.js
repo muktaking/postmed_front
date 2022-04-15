@@ -7,7 +7,6 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 
 export default function CreateNotification({ defaultValue = null }) {
-  console.log(defaultValue)
   const [loading, setLoading] = useState(false)
   const [msg, setMsg] = useState(null)
   const [startDate, setStartDate] = useState(

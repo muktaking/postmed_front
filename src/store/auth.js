@@ -97,7 +97,6 @@ export const checkAuthState = () => (dispatch) => {
 }
 
 export const logoutLoader = () => (dispatch) => {
-  console.log('removed')
   localStorage.removeItem('expirationDate')
   localStorage.removeItem('userId')
   localStorage.removeItem('jwtToken')

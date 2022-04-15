@@ -3,7 +3,7 @@ import { Formik } from 'formik'
 import React from 'react'
 import { Button, Form } from 'react-bootstrap'
 
-export default function ExamFilter({ setExams, id }) {
+export default function ExamFilter({ setExams, id, setCurrentPage }) {
   const examTypes = [
     { name: 'Assignment', value: 0 },
     { name: 'Weekly', value: 1 },
@@ -34,6 +34,7 @@ export default function ExamFilter({ setExams, id }) {
             .then((response) => {
               //setLoading(false)
               setExams(response.data)
+              setCurrentPage(1)
             })
             .catch((e) => {
               //setLoading(false)

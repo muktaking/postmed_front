@@ -8,7 +8,6 @@ export default function PreExamNotification({
 }) {
   const history = useHistory()
   const [show, setShow] = useState(true)
-  console.log(exams)
   const handleClose = () => {
     examStartDialogueHandler()
     setShow(false)

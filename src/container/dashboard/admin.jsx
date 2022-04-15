@@ -42,7 +42,7 @@ export default function Admin() {
       })
       .catch((error) => console.log(error))
   }
-  console.log(exams)
+
   return (
     <div>
       <Row>

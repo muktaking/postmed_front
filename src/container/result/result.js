@@ -36,7 +36,7 @@ class Result extends Component {
       timeTakenToComplete,
       error
     } = this.props.exams
-    console.log(examId)
+
     return (
       <div>
         {error && (

@@ -144,7 +144,6 @@ export default function ShowRoutine({ showRaw, id, title }) {
                       {routine
                         //filtering to get the onging and future routine here
                         .filter((syllabus, ind) => {
-                          console.log(syllabus)
                           if (
                             new Date(syllabus.endDate).getTime() <=
                             new Date().getTime()

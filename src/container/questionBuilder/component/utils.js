@@ -4,7 +4,6 @@ import {
 } from '../../../store/question'
 
 export const stem = (initialStems) => {
-  console.log('iNum ' + initialStems)
   if (typeof initialStems === 'number') {
     const arr = []
     for (let i = 0; i < initialStems; i++) {

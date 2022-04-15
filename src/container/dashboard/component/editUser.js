@@ -16,7 +16,6 @@ export default function EditUser({
   const showPasswordToggle = () => {
     setShowPassword(!showPassword)
   }
-  console.log(user.accessRight)
   const initials = {
     id: user.id,
     firstName: user.firstName,

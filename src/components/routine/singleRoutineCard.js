@@ -12,7 +12,6 @@ const RenderTooltip = React.forwardRef(({ id, setMsg, ...props }, ref) => (
       onClick={() => {
         Axios.delete(process.env.REACT_APP_SITE_URL + '/routine/' + id)
           .then((res) => {
-            console.log(res)
             setMsg(res.data.message)
           })
           .catch((e) => {

@@ -22,7 +22,6 @@ const DeleteModal = ({ handleClose, user, updater, ...props }) => {
     axios
       .delete(process.env.REACT_APP_SITE_URL + '/users/' + user.id)
       .then((response) => {
-        console.log(response)
         updater()
       })
       .catch((error) => {

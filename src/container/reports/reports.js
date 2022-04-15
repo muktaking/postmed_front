@@ -50,7 +50,7 @@ export default function Reports() {
     axios
       .get(process.env.REACT_APP_SITE_URL + '/exams/' + examId)
       .then((res) => {
-        console.log(res.data)
+        //console.log(res.data)
         setExamDetails(res.data)
       })
       .catch((error) => console.log(error))

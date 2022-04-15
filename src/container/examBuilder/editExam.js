@@ -8,7 +8,6 @@ export default function EditExam({ editExamId, editExamHandleClose }) {
   useEffect(() => {
     Axios.get(`${process.env.REACT_APP_SITE_URL}/exams/${editExamId}`)
       .then((res) => {
-        console.log(res.data)
         setExam(res.data)
       })
       .catch((e) => console.log(e))

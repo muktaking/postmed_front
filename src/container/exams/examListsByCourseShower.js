@@ -37,7 +37,11 @@ export default function ExamListsByCatShower() {
       {loading && <Spinner />}
       <Row>
         <Col lg={2}>
-          <ExamFilter setExams={setExams} id={id} />
+          <ExamFilter
+            setExams={setExams}
+            id={id}
+            setCurrentPage={setCurrentPage}
+          />
         </Col>
         <Col lg={10}>
           <Latest courseId={id} />

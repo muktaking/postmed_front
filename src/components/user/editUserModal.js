@@ -32,7 +32,6 @@ export default function EditUserModal({ user, updater, show, handleClose }) {
     axios
       .put(process.env.REACT_APP_SITE_URL + '/users/' + user.id, data)
       .then((response) => {
-        console.log(response)
         setRes(response.data.message)
         updater()
         handleClose()

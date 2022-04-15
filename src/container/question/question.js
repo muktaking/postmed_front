@@ -181,7 +181,6 @@ class Question extends Component {
 
     if (valid && stem.length !== 0) {
       this.resetState()
-      console.log({ ...rest, stem })
       this.props.onCreateQuestionLoader({ ...rest, stem })
     } else {
       this.setState({
