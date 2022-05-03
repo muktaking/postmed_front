@@ -10,17 +10,25 @@ import NotiBadge from '../../container/notification/notiBadge'
 
 const Topbar = (props) => {
   const isLoggedIn = useSelector((state) => state.auth.token)
+  const user = useSelector((state) => state.user)
 
   return (
     <div className='bg-dark py-2 top-navbar mb-3 w-100'>
       <Row className='align-items-center'>
         <Col md={4} style={{ paddingLeft: '3rem' }}>
-          <h4 className='text-light text-uppercase mb-0'>
-            <FormattedMessage
-              id={props.pageName}
-              defaultMessage={props.pageName}
-            />
-          </h4>
+          <div className='d-flex'>
+            <h4 className='text-light text-uppercase mb-0 mr-2'>
+              <FormattedMessage
+                id={props.pageName}
+                defaultMessage={props.pageName}
+              />
+            </h4>
+            <p className='text-white'>
+              <span className='ml-2 text-warning'>
+                User ID.{'  ' + user.id}
+              </span>
+            </p>
+          </div>
         </Col>
 
         <Col md={8} className='hideInSm pr-5'>
@@ -47,6 +55,11 @@ const Topbar = (props) => {
                 className='nav-link'
               >
                 <FormattedMessage id='btn.exams' defaultMessage='Exams' />
+              </NavLink>
+            </Nav.Item>
+            <Nav.Item className=''>
+              <NavLink to={{ pathname: '/help' }} className='nav-link'>
+                <FormattedMessage id='btn.help' defaultMessage='Help' />
               </NavLink>
             </Nav.Item>
 

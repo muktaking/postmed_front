@@ -17,6 +17,16 @@ export const examType = [
   'Final'
 ]
 
+export const examTypeBgColor = [
+  'primary',
+  'secondary',
+  'success',
+  'danger',
+  'warning',
+  'info',
+  'dark'
+]
+
 class ExamLists extends Component {
   componentDidMount() {
     this.props.onGetAllExamsLoader()

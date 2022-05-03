@@ -35,7 +35,7 @@ export default function ShowQuestions() {
         {isAnswers === '0' ? 'Questions' : 'Questions With Answers'}
       </h3>
       {errorMsg && <Alert variant='danger'>{errorMsg}</Alert>}
-      <div>
+      <div style={{ overflow: 'auto' }}>
         {questions.map((ques, ind) => (
           <ListGroup className='mb-2'>
             <ListGroup.Item>

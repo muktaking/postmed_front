@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Button, Image, Modal } from 'react-bootstrap'
+import { Badge, Button, Image, Modal } from 'react-bootstrap'
 import { AiFillEdit } from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserLoader } from '../../store/user'
@@ -124,11 +124,11 @@ export default function ProfileSnippet({ isProfile, size = '100' }) {
           <h4>{user.userName}</h4>
           <p className='mb-1'>{roleToString(user.role)}</p>
           <p className='font-size-sm'>{user.address}</p>
-          <p>
-            <span className='text-muted'>{`Id No. `}</span>{' '}
-            <span className={isProfile ? 'lead' : 'text-white lead'}>
+          <p className={isProfile ? 'lead' : 'text-white lead'}>
+            <span>{`User ID No. `}</span>{' '}
+            <Badge variant='warning' className='p-1'>
               {user.id}
-            </span>
+            </Badge>
           </p>
         </div>
       </div>

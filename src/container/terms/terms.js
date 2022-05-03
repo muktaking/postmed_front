@@ -282,6 +282,16 @@ export default function Terms() {
       </p>
 
       <h3>
+        <strong>Return Policy</strong>
+      </h3>
+
+      <p>
+        If you have money loss claim due to technical issue, you have to inform
+        us within 24 hour. You can message, call at hour help number, mail or
+        message at messenger. After 24 hour, no claim will not be valid.
+      </p>
+
+      <h3>
         <strong>Disclaimer</strong>
       </h3>
 

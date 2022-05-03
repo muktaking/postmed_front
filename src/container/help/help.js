@@ -1,8 +1,18 @@
 import React from 'react'
 import { Alert, Col, ListGroup, ListGroupItem, Row } from 'react-bootstrap'
 import { AiFillEdit } from 'react-icons/ai'
+import {
+  FaEnvelope,
+  FaFacebookSquare,
+  FaInstagramSquare,
+  FaMapMarkerAlt,
+  FaPhoneSquareAlt,
+  FaTwitterSquare
+} from 'react-icons/fa'
+import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 import { AccordionCard, AccordionStart } from '../../components/customAccordion'
+import { ContactConfig } from '../../config/contact.config'
 
 export default function Help() {
   return (
@@ -149,10 +159,117 @@ export default function Help() {
           </div>
         </Col>
         <Col lg={4} md={12}>
-          <AccordionStart>
-            {/* <AccordionCard heading={h} eventKey={i}></AccordionCard> */}
-          </AccordionStart>
+          <h3 id='payment'>Payement Process</h3>
+          <hr />
+          <div className='px-2'>
+            <AccordionStart>
+              <AccordionCard
+                heading={'Steps in bKash Payement Process'}
+                eventKey={0}
+              >
+                <ListGroup>
+                  <ListGroupItem>
+                    Go to your bKash Mobile Menu by dialing *247# or go to your
+                    mobile bKash app
+                  </ListGroupItem>
+                  <ListGroupItem>Choose “Send Money”</ListGroupItem>
+                  <ListGroupItem>
+                    Enter the bKash Account Number: 01737313915
+                  </ListGroupItem>
+                  <ListGroupItem>
+                    Enter the amount you want to send (Payment Amount of The
+                    Course)
+                  </ListGroupItem>
+                  <ListGroupItem>
+                    Enter a reference about the transaction.* (Enter Your User
+                    ID)
+                    <Alert variant='warning'>
+                      You will Get Your user id at Topbar with golden color text
+                      or your <Link to='/profile'>Profile</Link> marked with
+                      golden background at the top section
+                    </Alert>
+                  </ListGroupItem>
+                  <ListGroupItem>
+                    Now enter your bKash Mobile Menu PIN to confirm the
+                    transaction
+                  </ListGroupItem>
+                  <ListGroupItem>
+                    <p className='mt-2'>Now Message at 01737313915</p>
+                    <Alert variant='info'>
+                      Write - Your name &lt;Space&gt; Your User ID / Your Email
+                      &lt;Space&gt; The bKash Number (From which you send money)
+                    </Alert>
+                    <Alert variant='warning'>
+                      You will Get Your user id at Topbar with golden color text
+                      or your <Link to='/profile'>Profile</Link> marked with
+                      golden background at the top section
+                    </Alert>
+                  </ListGroupItem>
+                  <ListGroupItem>
+                    <p>Or message at Facebook messenger</p>
+                    <Alert variant='primary'>
+                      Write - Your name &lt;Space&gt; Your User ID / Your Email
+                      &lt;Space&gt; The bKash Number (From you send money)
+                    </Alert>
+                    <Alert variant='warning'>
+                      You will Get Your user id at Topbar with golden color text
+                      or your <Link to='/profile'>Profile</Link> marked with
+                      golden background at the top section
+                    </Alert>
+                  </ListGroupItem>
+                  <ListGroupItem>
+                    You will be informed through message or mobile call within 8
+                    hours.
+                  </ListGroupItem>
+                </ListGroup>
+                <p>
+                  *Do not use more than one word, avoid space or special
+                  characters
+                </p>
+              </AccordionCard>
+            </AccordionStart>
+          </div>
         </Col>
+      </Row>
+      <Row className='my-3'>
+        <Col></Col>
+        <Col md={4} className='text-center'>
+          <h4>
+            <FormattedMessage id='btn.contact' defaultMessage='Contact Info' />
+          </h4>
+          <p>
+            <FaPhoneSquareAlt size='1.4rem' className='mr-2' />
+            <span>{ContactConfig.mobile}</span>
+            <br />
+            <FaEnvelope size='1.4rem' className='mr-2' />
+            <span>{ContactConfig.email}</span>
+            <br />
+            <FaMapMarkerAlt size='1.4rem' className='mr-2' />
+            <span>{ContactConfig.location}</span>
+          </p>
+          <a
+            href={ContactConfig.socials.facebook}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <FaFacebookSquare size='2.6rem' />
+          </a>
+          <a
+            href={ContactConfig.socials.twitter}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <FaTwitterSquare size='2.6rem' />
+          </a>
+          <a
+            href={ContactConfig.socials.instagram}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <FaInstagramSquare size='2.6rem' />
+          </a>
+        </Col>
+        <Col></Col>
       </Row>
     </div>
   )

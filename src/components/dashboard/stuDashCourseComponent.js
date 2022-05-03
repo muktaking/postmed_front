@@ -58,18 +58,22 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
                         value={userExamInfo.rank[0]}
                         footerValue={userExamInfo.rank[1]}
                       />
-                      <UpcomingExam
-                        value={userExamInfo.upcomingExam[0]}
-                        id={userExamInfo.upcomingExam[2]}
-                        footerValue={moment(
-                          userExamInfo.upcomingExam[1]
-                        ).format('DD-MMM-YYYY')}
-                        courseId={id}
-                      />
+                      {userExamInfo.upcomingExam ? (
+                        <UpcomingExam
+                          value={userExamInfo.upcomingExam[0]}
+                          id={userExamInfo.upcomingExam[2]}
+                          footerValue={moment(
+                            userExamInfo.upcomingExam[1]
+                          ).fromNow()}
+                          courseId={id}
+                        />
+                      ) : (
+                        <UpcomingExam />
+                      )}
                       <Result
                         value={userExamInfo.result[0]}
                         footerValue={userExamInfo.result[1]}
-                      />{' '}
+                      />
                     </div>
                     <hr className='my-3' />
                     <Routine id={id} title={examInfo.title} />

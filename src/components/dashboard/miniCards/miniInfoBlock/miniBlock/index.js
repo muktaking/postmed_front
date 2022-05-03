@@ -18,7 +18,7 @@ const miniBlock = ({
   faFooterIcon
 }) => {
   return (
-    <Card className='card-common mt-2'>
+    <Card className='card-common mt-2' style={{ width: '15.8rem' }}>
       <Card.Body>
         <Row>
           <Col sm={8}>

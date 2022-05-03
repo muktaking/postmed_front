@@ -26,18 +26,20 @@ const NavbarHome = (props) => {
         intl.formatMessage({ id: 'btn.db', defaultMessage: 'dashboard' }),
         intl.formatMessage({ id: 'btn.courses', defaultMessage: 'courses' }),
         intl.formatMessage({ id: 'btn.exams', defaultMessage: 'exams' }),
+        intl.formatMessage({ id: 'btn.help', defaultMessage: 'help' }),
         intl.formatMessage({ id: 'btn.logout', defaultMessage: 'logout' })
       ]
     : [
         intl.formatMessage({ id: 'btn.courses', defaultMessage: 'courses' }),
         intl.formatMessage({ id: 'btn.exams', defaultMessage: 'exams' }),
+        intl.formatMessage({ id: 'btn.help', defaultMessage: 'help' }),
         intl.formatMessage({ id: 'btn.signup', defaultMessage: 'signup' }),
         intl.formatMessage({ id: 'btn.login', defaultMessage: 'login' })
       ]
   const items = ['home', 'contact']
   const pages = props.isAuthenticated
-    ? ['dashboard', 'courses', 'exams', 'logout']
-    : ['courses', 'exams', 'signup', 'login']
+    ? ['dashboard', 'courses', 'exams', 'help', 'logout']
+    : ['courses', 'exams', 'help', 'signup', 'login']
 
   return (
     <div style={styles}>

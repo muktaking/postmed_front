@@ -160,7 +160,7 @@ export default function Reports() {
                     <td>{examStat.attemptNumbers}</td>
                     <td>
                       <Link
-                        className='mb-2 mr-2'
+                        className='mr-2'
                         to={`/reports/actions?courseId=${examStats[0].courses[0].courseId}&examId=${examStat.examId}&answers=0`}
                       >
                         <Button size='sm'>Questions</Button>

@@ -6,7 +6,7 @@ import { FaEdit, FaFileAlt, FaTimes } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import DeleteExam from '../../examBuilder/deleteExam'
 import EditExam from '../../examBuilder/editExam'
-import { examType } from '../../exams/examLists'
+import { examType, examTypeBgColor } from '../../exams/examLists'
 
 function getExamStatus(start, end) {
   const today = new Date()
@@ -54,7 +54,7 @@ export default function Exams({ exams }) {
             <th>Type</th>
             <th>Description</th>
             <th>Category</th>
-            <th>Created At</th>
+            {/* <th>Created At</th> */}
             <th>Status</th>
             <th>Start From</th>
             <th>Ends on</th>
@@ -64,12 +64,14 @@ export default function Exams({ exams }) {
         <tbody>
           {exams.map((exam, ind) => (
             <tr key={ind}>
-              <td>{ind + 1}</td>
+              <td className={'text-white bg-' + examTypeBgColor[exam.type]}>
+                {ind + 1}
+              </td>
               <td>{exam.title}</td>
               <td>{examType[exam.type]}</td>
               <td>{exam.description}</td>
               <td>{exam.categoryType.map((cat) => cat.name).join(', ')}</td>
-              <td>{moment(exam.createdAt).format('YYYY-MM-DD, hh:mm a')}</td>
+              {/* <td>{moment(exam.createdAt).format('YYYY-MM-DD, hh:mm a')}</td> */}
               <td>{getExamStatus(exam.startDate, exam.endDate)}</td>
               <td>{moment(exam.startDate).format('YYYY-MM-DD, hh:mm a')}</td>
               <td>{moment(exam.endDate).format('YYYY-MM-DD, hh:mm a')}</td>

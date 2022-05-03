@@ -5,8 +5,8 @@ import { NavLink } from 'react-router-dom'
 
 const subNavBar = (props) => {
   const pages = props.isAuthenticated
-    ? ['dashboard', 'courses', 'exams', 'logout']
-    : ['courses', 'exams', 'signup', 'login']
+    ? ['dashboard', 'courses', 'exams', 'logout', 'help']
+    : ['courses', 'exams', 'signup', 'login', 'help']
 
   return (
     <Nav className='bg-light'>

@@ -25,9 +25,6 @@ export default function EditExam({ editExamId, editExamHandleClose }) {
           <Button variant='secondary' onClick={editExamHandleClose}>
             Close
           </Button>
-          <Button variant='primary' onClick={editExamHandleClose}>
-            Save Changes
-          </Button>
         </Modal.Footer>
       </Modal>
     </div>

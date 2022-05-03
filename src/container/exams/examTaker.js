@@ -380,6 +380,7 @@ class ExamTaker extends Component {
                 </div>
               </Col>
               <Col lg={3} className="mt-3">
+                <Alert variant="warning">First {this.props.exams.questions.filter(q=>q.qType === 'matrix').length} questions are True/False type. Rest {this.props.exams.questions.filter(q=>q.qType === 'sba').length} questions are SBA type.</Alert>
                 {this.state.showPagination && <PaginationCustom
                   itemsCount={this.props.exams.questions.length}
                   pageSize={this.state.pageSize}
