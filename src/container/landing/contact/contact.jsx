@@ -87,6 +87,9 @@ const contact = (props) => {
             <Link to='/terms' className='link-hover'>
               Terms & Conditions
             </Link>
+            <Link to='/sitemap.xml' className='link-hover'>
+              Sitemap
+            </Link>
           </Col>
         </Row>
         <Row className=''>

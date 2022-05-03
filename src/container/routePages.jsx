@@ -49,7 +49,7 @@ const RoutePages = (props) => {
         <Route path='/help' component={InnerContent} />
         <Route path='/terms' component={InnerContent} />
         <Route path='/error' render={(props) => <NotFoundPage {...props} />} />
-        <Route path='/' exact component={Landing} />
+        <Route path='/' exact component={Login} />
         <Route render={(props) => <NotFoundPage {...props} />} />
       </Switch>
     </Suspense>
@@ -76,7 +76,7 @@ const RoutePages = (props) => {
           <Route path='/logout' component={LogoutPage} />
           <Route path='/help' component={InnerContent} />
           <Route path='/terms' component={InnerContent} />
-          <Route path='/' exact component={Landing} />
+          <Route path='/' exact component={Login} />
           <Redirect to='/dashboard' />
         </Switch>
       </Suspense>
@@ -96,7 +96,7 @@ const RoutePages = (props) => {
           <Route path='/logout' component={LogoutPage} />
           <Route path='/help' component={InnerContent} />
           <Route path='/terms' component={InnerContent} />
-          <Route path='/' exact component={Landing} />
+          <Route path='/' exact component={Login} />
           <Redirect to='/dashboard' />
         </Switch>
       </Suspense>
@@ -119,7 +119,7 @@ const RoutePages = (props) => {
           <Route path='/logout' component={LogoutPage} />
           <Route path='/help' component={InnerContent} />
           <Route path='/terms' component={InnerContent} />
-          <Route path='/' exact component={Landing} />
+          <Route path='/' exact component={Login} />
           <Redirect to='/dashboard' />
         </Switch>
       </Suspense>
@@ -145,7 +145,7 @@ const RoutePages = (props) => {
           <Route path='/help' component={InnerContent} />
           <Route path='/terms' component={InnerContent} />
           <Route path='/notificationbuilder' component={InnerContent} />
-          <Route path='/' exact component={Landing} />
+          <Route path='/' exact component={Login} />
           <Redirect to='/dashboard' />
         </Switch>
       </Suspense>
