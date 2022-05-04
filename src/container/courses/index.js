@@ -78,7 +78,7 @@ export default function Index({ landing = null }) {
 
       <h3 className='text-center heading'>Available Courses</h3>
       {landing && <div className='heading-underline'></div>}
-      {coursesStore.courses.length < 1 &&
+      {coursesStore.loading &&
         (landing ? (
           <div className='text-center'>
             <span>Please wait. Courses are loading </span>
