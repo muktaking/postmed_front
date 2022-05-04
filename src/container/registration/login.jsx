@@ -101,85 +101,83 @@ class Home extends Component {
         <MetaInfo {...RoutesConfig.Login.metaInfo} />
         {/* {authRedirect} */}
         <NavbarHome isLanding={false} />
-        {/* Landing */}
-        <div className='landing'>
-          {/* <div className="home-wrap"> */}
-          <div className='home-inner'></div>
-          {/* </div> */}
-        </div>
-        <div className='caption text-center' style={{ top: '15%' }}>
-          {/* <Spinner animation="border" role="status"></Spinner> */}
-          <h1>Login Form</h1>
-          {this.props.auth.loading && (
-            <Spinner
-              animation='border'
-              role='status'
-              variant='light'
-              className='mr-2'
-            ></Spinner>
-          )}
-          <div className='heading-underline'></div>
-          <Form className='mb-4' onSubmit={this.submitHandler} noValidate>
-            <div className='text-white mb-2 bg-danger'>
-              {this.props.auth.error && this.props.auth.error}
+        <Row style={{ marginTop: '70px' }}>
+          <Col sm={2} md={3} lg='4'></Col>
+          <Col sm={8} md={6} lg='4'>
+            <div className='text-center'>
+              <h1>Welcome To MediOnExam</h1>
+              <p>
+                You can Login with facebook or google from below. It is easy and
+                quick.
+              </p>
             </div>
-            <Form.Group as={Col} controlId='formGridEmail'>
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type='email'
-                placeholder='Enter email'
-                name='username' // do not be confused; due to passportjs use only "username" for password verification though it is actually the user email
-                onChange={this.handleChange}
-                className={formErrors.username.length > 0 && 'is-invalid'}
-              />
-              {formErrors.username.length > 0 && (
-                <span className='errorMessage'>{formErrors.username}</span>
-              )}
-            </Form.Group>
-            <Form.Group as={Col} controlId='formGridPassword'>
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type='password'
-                placeholder='Password'
-                name='password'
-                onChange={this.handleChange}
-                className={formErrors.password.length > 0 && 'is-invalid'}
-              />
-              {formErrors.password.length > 0 && (
-                <span className='errorMessage'>{formErrors.password}</span>
-              )}
-            </Form.Group>
-            <Button type='submit' className='btn-submit'>
-              Submit
-            </Button>
-          </Form>
-          <Row>
-            <Col lg='6'>
-              <FacebookLogin />
-            </Col>
-            <Col lg='6'>
-              <Google />
-            </Col>
-          </Row>
-          <Row>
-            <Col md={6}>
-              <p className='lead'>Forget Your Password</p>
-              {/* <Button variant="danger">
+
+            {this.props.auth.loading && (
+              <Spinner
+                animation='border'
+                role='status'
+                variant='light'
+                className='mr-2'
+              ></Spinner>
+            )}
+            <div className='heading-underline'></div>
+            <Form className='mb-4' onSubmit={this.submitHandler} noValidate>
+              <div className='text-white mb-2 bg-danger'>
+                {this.props.auth.error && this.props.auth.error}
+              </div>
+              <Form.Group controlId='formGridEmail'>
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type='email'
+                  placeholder='Enter email'
+                  name='username' // do not be confused; due to passportjs use only "username" for password verification though it is actually the user email
+                  onChange={this.handleChange}
+                  className={formErrors.username.length > 0 && 'is-invalid'}
+                />
+                {formErrors.username.length > 0 && (
+                  <span className='errorMessage'>{formErrors.username}</span>
+                )}
+              </Form.Group>
+              <Form.Group controlId='formGridPassword'>
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type='password'
+                  placeholder='Password'
+                  name='password'
+                  onChange={this.handleChange}
+                  className={formErrors.password.length > 0 && 'is-invalid'}
+                />
+                {formErrors.password.length > 0 && (
+                  <span className='errorMessage'>{formErrors.password}</span>
+                )}
+              </Form.Group>
+              <Button type='submit' className='btn-submit'>
+                Submit
+              </Button>
+            </Form>
+            <FacebookLogin />
+            <br />
+            <Google />
+            <div className='mt-3 d-flex justify-content-between'>
+              <div>
+                <p className='lead'>Forget Your Password</p>
+                {/* <Button variant="danger">
                 Reset Your Password
               </Button> */}
-              <Button variant='danger' onClick={this.resetShow}>
-                Reset
-              </Button>
-            </Col>
-            <Col md={6}>
-              <p className='lead'>I am not a member yet!</p>
-              <Link to='/signup' className='btn btn-secondary'>
-                Sign up
-              </Link>
-            </Col>
-          </Row>
-        </div>
-        {/* End of Landing */}
+                <Button variant='danger' onClick={this.resetShow}>
+                  Reset
+                </Button>
+              </div>
+              <div>
+                <p className='lead'>I am not a member yet!</p>
+                <Link to='/signup' className='btn btn-secondary'>
+                  Sign up
+                </Link>
+              </div>
+            </div>
+          </Col>
+          <Col sm={8} md={3} lg='4'></Col>
+        </Row>
       </div>
     )
   }

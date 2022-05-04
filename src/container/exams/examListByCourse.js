@@ -1,7 +1,7 @@
 //import moment from 'moment'
 import * as moment from 'dayjs'
 import React, { useEffect } from 'react'
-import { Badge } from 'react-bootstrap'
+import { Badge, Spinner } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import MetaInfo from '../../components/seo/metainfo'
@@ -21,7 +21,14 @@ export default function ExamListsByCat() {
     <div className=''>
       <h2 className='text-center'>Enrolled Courses</h2>
       <div className='m-3 d-flex justify-content-around flex-wrap'>
-        {courses.coursesEnrolledByStu.length < 1 ? (
+        {courses.loading ? (
+          <Spinner
+            animation='border'
+            role='status'
+            variant='dark'
+            className='content-center'
+          />
+        ) : courses.coursesEnrolledByStu.length < 1 ? (
           <div>
             <p className='text-center text-danger'>
               You have not enrolled for any course yet. Please enroll for course
