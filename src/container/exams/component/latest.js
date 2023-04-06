@@ -23,17 +23,22 @@ export default function Latest({ courseId = null }) {
 
   return (
     <>
-      <h3 className='text-center'>Current Exam</h3>
-      <Row
-        className='mx-auto mb-5 py-3 pl-2 border border-secondary'
-        style={{ width: '350px' }}
-      >
-        {exam ? (
-          <ExamByCat exam={exam} courseId={courseId} />
-        ) : (
-          <p>No current exam</p>
-        )}
-      </Row>
+      <h3 className='text-center'>Ongoing Exam</h3>
+      <div className='d-flex justify-content-center'>
+        <Row
+          className='mb-5 py-3 px-1 border border-secondary justify-content-center'
+          style={{ width: '350px' }}
+        >
+          {exam ? (
+            <ExamByCat exam={exam} courseId={courseId} />
+          ) : (
+            <p>
+              Sorry! No ongoing exam but do not worry. Please try avaiable
+              previous exams.
+            </p>
+          )}
+        </Row>
+      </div>
     </>
   )
 }

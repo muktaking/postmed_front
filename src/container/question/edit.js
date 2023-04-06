@@ -1,9 +1,10 @@
 import axios from 'axios'
 import { Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
-import { Button, Form, Spinner, Toast } from 'react-bootstrap'
+import { Button, Form, Toast } from 'react-bootstrap'
 import MultiStep from 'react-multistep'
 import { useDispatch, useSelector } from 'react-redux'
+import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 import { fetchCategory } from '../../store/category'
 import { createQuestionLoader } from '../../store/question'
 import StepThree from '././editQuestion/stepThree'
@@ -92,14 +93,7 @@ export default function Index({ initialValues }) {
 
   return (
     <div>
-      {loading && (
-        <Spinner
-          animation='grow'
-          role='status'
-          variant='dark'
-          className='content-center'
-        ></Spinner>
-      )}
+      {loading && <CircleLoader />}
       {res && (
         <Toast
           show={showA}

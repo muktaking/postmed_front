@@ -25,7 +25,7 @@ const Topbar = (props) => {
             </h4>
             <p className='text-white'>
               <span className='ml-2 text-warning'>
-                User ID.{'  ' + user.id}
+                {user.id && `User ID. ${user.id}`}
               </span>
             </p>
           </div>

@@ -1,8 +1,9 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Button, Form, Spinner, Toast } from 'react-bootstrap'
+import { Button, Form, Toast } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import validator from 'validator'
+import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 import { fetchCategory } from '../../store/category'
 import errorHandler from '../../utils/errorHandler'
 import MiniManyQues from './component/miniManyQues'
@@ -98,14 +99,7 @@ const QuestionUpload = ({ viewHandler }) => {
 
   return (
     <div>
-      {loading && (
-        <Spinner
-          animation='grow'
-          role='status'
-          variant='dark'
-          className='content-center'
-        ></Spinner>
-      )}
+      {loading && <CircleLoader />}
       {
         <Toast
           show={res}

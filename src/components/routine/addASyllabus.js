@@ -130,9 +130,10 @@ export default function AddASyllabus({ defaultValue = [], ...props }) {
           ref={courseRef}
           value={defaultValue.length > 0 ? defaultValue[4] : ''}
         >
-          {courses.map((course) => (
-            <option value={course.id}>{course.title}</option>
-          ))}
+          {courses &&
+            courses.map((course) => (
+              <option value={course.id}>{course.title}</option>
+            ))}
         </Form.Control>
       </Form.Group>
 

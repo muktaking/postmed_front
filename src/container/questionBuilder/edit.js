@@ -1,8 +1,9 @@
 import axios from 'axios'
 import { Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
-import { Button, Form, Spinner, Toast } from 'react-bootstrap'
+import { Button, Form, Toast } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 import { resetResponseLoader } from '../../store/question'
 import MiniQues from './component/miniques'
 import StepOne from './component/stepOne'
@@ -83,14 +84,7 @@ export default function Index({ viewHandler, id }) {
 
   return (
     <div>
-      {loading && (
-        <Spinner
-          animation='grow'
-          role='status'
-          variant='dark'
-          className='content-center'
-        ></Spinner>
-      )}
+      {loading && <CircleLoader />}
       {
         <Toast show={res} onClose={setRes} style={resStyle}>
           <Toast.Header>

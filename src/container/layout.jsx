@@ -5,12 +5,15 @@ import Row from 'react-bootstrap/Row'
 import { slide as Menu } from 'react-burger-menu'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
+
 import '../assets/scss/section/dashboard.scss'
+import CircleLoader from '../components/customSpinner/circleLoader/circleLoader'
 import DomHistory from '../components/domHistory/domHistory'
 import Sidebar from '../components/sidebar/sidebar'
 import SidebarMini from '../components/sidebar/sidebarMini'
 import Topbar from '../components/topbar/topbar'
 import { canActivate, rolePermitted } from '../utils/canActivate'
+import ScrollToTop from '../components/customScroller/scrollToTop'
 //import Profile from './profile/profile'
 
 const Profile = lazy(() => import('./profile/profile'))
@@ -23,6 +26,7 @@ const Category = lazy(() => import('./category/category'))
 const Dashboard = lazy(() => import('./dashboard/'))
 
 const CourseLists = lazy(() => import('./courses/'))
+const CourseDetails = lazy(() => import('./courses/courseDetails'))
 
 const CourseBuilder = lazy(() => import('./courseBuilder/'))
 
@@ -59,6 +63,7 @@ const Print = lazy(() => import('./print/print'))
 const Reports = lazy(() => import('./reports/reports'))
 const ShowQuestions = lazy(() => import('./reports/actions/showQuestions'))
 const Help = lazy(() => import('./help/help'))
+const Payment = lazy(() => import('./payment/payment'))
 const Terms = lazy(() => import('./terms/terms'))
 const NotificationBuilder = lazy(() =>
   import('./notificationBuilder/notificationBuilder')
@@ -85,14 +90,16 @@ const InnerContent = (props) => {
               <div className='px-1 ml-md-4' style={{ marginTop: '70px' }}>
                 <Suspense
                   fallback={
-                    <div className='text-center' style={{ marginTop: '45vh' }}>
-                      Loading...
-                    </div>
+                    <CircleLoader />
+                    // <div className='text-center' style={{ marginTop: '45vh' }}>
+                    //   Loading...
+                    // </div>
                   }
                 >
                   <DomHistory />
                   <Route path='/dashboard' exact component={Dashboard} />
                   <Route path='/courses' exact component={CourseLists} />
+                  <Route path='/courses/:id' exact component={CourseDetails} />
                   <Route
                     path='/coursebuilder'
                     exact
@@ -139,6 +146,7 @@ const InnerContent = (props) => {
                   <Route path='/result' exact component={Result} />
                   <Route path='/result/rank/:id' exact component={Rank} />
                   <Route path='/reports' exact component={Reports} />
+                  <Route path='/reports/user/:id' exact component={Reports} />
                   <Route
                     path='/reports/actions'
                     exact
@@ -146,6 +154,7 @@ const InnerContent = (props) => {
                   />
                   <Route path='/settings' exact component={Settings} />
                   <Route path='/help' exact component={Help} />
+                  <Route path='/payment' exact component={Payment} />
                   <Route
                     path='/notificationbuilder'
                     exact
@@ -156,6 +165,7 @@ const InnerContent = (props) => {
                   <Route path='/terms' exact component={Terms} />
                 </Suspense>
               </div>
+              <ScrollToTop />
             </div>
           </Col>
         </Row>

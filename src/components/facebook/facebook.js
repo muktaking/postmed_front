@@ -2,22 +2,27 @@ import axios from 'axios'
 import React, { Component } from 'react'
 import FacebookLogin from 'react-facebook-login'
 import { connect } from 'react-redux'
-import { authSuccess, checkAuthTimeOut } from '../../store/auth'
+import {
+  authFail,
+  authStart,
+  authSuccess,
+  checkAuthTimeOut
+} from '../../store/auth'
 
 class Facebook extends Component {
   state = {
-    isLoggedIn: false,
-    name: '',
-    photo: '',
-    message: ''
+    //loading: false,
+    name: null,
+    photo: null
   }
-  componentClicked = () => console.log('clicked')
+  componentClicked = () => {
+    this.props.onAuthStart()
+  }
   responseFacebook = (fbRes) => {
     if (fbRes.status === 'unknown') {
-      this.setState({
-        photo: null,
-        message: 'Something wrong. To continue you have to approve our app'
-      })
+      this.props.onAuthFail(
+        'Something wrong. To continue you have to approve our app'
+      )
     } else {
       axios
         .post(process.env.REACT_APP_SITE_URL + '/auth/facebook', {
@@ -25,7 +30,7 @@ class Facebook extends Component {
           accessToken: fbRes.accessToken
         })
         .then((res) => {
-          this.props.onAuth(res.data)
+          this.props.onAuthSuccess(res.data)
 
           const expirationDate = new Date(
             new Date().getTime() + res.data.expireIn * 1000
@@ -39,56 +44,45 @@ class Facebook extends Component {
         .catch((e) => {
           this.setState({
             name: fbRes.name,
-            photo: fbRes.picture.data.url,
-            message:
-              'Admin has not approved your account yet.Please wait or contact with admin.'
+            photo: fbRes.picture.data.url
           })
+          this.props.onAuthFail(
+            'Sorry ' +
+              this.state.name +
+              ', admin has not approved your account yet. Please wait or contact with admin.'
+          )
         })
-      this.setState({
-        isLoggedIn: true
-      })
     }
   }
   render() {
-    let fbContent
-
-    if (this.state.isLoggedIn) {
-      fbContent =
-        this.state.message !== '' ? (
-          <div className='d-flex bg-danger p-2'>
-            {this.state.photo && <img src={this.state.photo} alt='fb_avatar' />}
-            <p className='mt-1'>
-              Sorry,{' ' + this.state.name + ' ' + this.state.message}
-            </p>
-          </div>
-        ) : (
-          <div className='d-flex bg-success p-2'>
-            Wait... You are redirecting to dashboard.
-          </div>
-        )
-    } else {
-      fbContent = (
-        <div className='mx-auto'>
-          <FacebookLogin
-            appId={process.env.REACT_APP_FACEBOOK_APP_ID}
-            size='small'
-            autoLoad={false}
-            fields='name,email,picture'
-            onClick={this.componentClicked}
-            callback={this.responseFacebook}
-          />
-        </div>
-      )
-    }
-    return fbContent
+    return (
+      <div className='mx-auto'>
+        <FacebookLogin
+          appId={process.env.REACT_APP_FACEBOOK_APP_ID}
+          size='small'
+          autoLoad={false}
+          fields='name,email,picture'
+          onClick={this.componentClicked}
+          callback={this.responseFacebook}
+        />
+      </div>
+    )
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAuth: (payload) => dispatch(authSuccess(payload)),
+    onAuthStart: (payload) => dispatch(authStart(payload)),
+    onAuthSuccess: (payload) => dispatch(authSuccess(payload)),
+    onAuthFail: (payload) => dispatch(authFail(payload)),
     checkAuthTimeOutLoader: (payload) => dispatch(checkAuthTimeOut(payload))
   }
 }
 
-export default connect(null, mapDispatchToProps)(Facebook)
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Facebook)

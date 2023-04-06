@@ -4,6 +4,7 @@ import * as moment from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import { Button, Image, Modal, Table } from 'react-bootstrap'
 import { FaEdit, FaTimes } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 import {
   identityStatusToString,
   loginProviderToString,
@@ -111,14 +112,15 @@ export default function Users({ role, users, updater }) {
                   : ''
               }
             >
-              <td>{ind + 1}</td>
+              <td>
+                <Link to={'/reports/user/' + user.id}>{ind + 1}</Link>{' '}
+              </td>
               <td className=''>
                 <Image
                   height='35'
                   width='35'
                   src={
-                    user.avatar &&
-                    user.avatar.includes('platform-lookaside.fbsbx.com')
+                    user.avatar && user.avatar.includes('.')
                       ? user.avatar
                       : '/assets/image/avatar/' +
                         (user.avatar ? user.avatar : 'boy') +

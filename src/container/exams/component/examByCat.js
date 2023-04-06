@@ -26,11 +26,7 @@ export default function ExamByCat({ exam, courseId = null }) {
         </h4>
         <div className='d-flex justify-content-between'>
           <div>
-            <ExamCatBadges
-              categoryType={exam.categoryType.filter(
-                (ct) => ct.name !== 'Free'
-              )}
-            />
+            <ExamCatBadges categoryType={exam.categoryType} />
           </div>
           <div>
             <Badge variant='dark' className='px-2 py-1'>

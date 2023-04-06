@@ -17,7 +17,7 @@ const store = configureStore({
   middleware: [...getDefaultMiddleware(), api],
 });
 
-ReactDOM.render(
+ReactDOM.hydrate(
   <Provider store={store}>
     <IntlProvider locale={process.env.REACT_APP_LANG} defaultLocale={process.env.REACT_APP_DEFAULT_LANG}  messages={process.env.REACT_APP_LANG === 'bn' && Bangla}>
       <App />

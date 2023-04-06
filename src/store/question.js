@@ -27,12 +27,8 @@ const slice = createSlice({
   }
 })
 
-export const {
-  getQuestions,
-  loadingStart,
-  getResponse,
-  resetResponse
-} = slice.actions
+export const { getQuestions, loadingStart, getResponse, resetResponse } =
+  slice.actions
 
 export default slice.reducer
 

@@ -3,14 +3,16 @@ import axios from 'axios'
 import * as moment from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import { Badge, Button, Col, Form, Row, Table } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import Timeline from '../../components/result/timeline'
 import MetaInfo from '../../components/seo/metainfo'
 import { RoutesConfig } from '../../config/routes.config'
 import LineCharts from './lineCharts'
 import PieCharts from './pieCharts'
+import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 
 export default function Reports() {
+  const [loading, setLoading] = useState(false)
   const [isActive, setIsActive] = useState(null)
   const [courses, setCourses] = useState([])
   const [examStats, setExamStats] = useState([])
@@ -20,8 +22,20 @@ export default function Reports() {
   // const [examTitle, setExamTitle] = useState('')
   // const [examTotalMark, setExamTotalMark] = useState(0)
   const [examActivityStat, setExamActivityStat] = useState([])
+  const { id } = useParams()
 
   useEffect(() => {
+    if (id) {
+      axios
+        .get(process.env.REACT_APP_SITE_URL + '/courses/enrolled/courses/' + id)
+        .then((res) => {
+          setCourses(res.data)
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+      return
+    }
     axios
       .get(process.env.REACT_APP_SITE_URL + '/courses/enrolled/courses')
       .then((res) => {
@@ -33,32 +47,41 @@ export default function Reports() {
   }, [])
 
   const courseSelectHandler = (e) => {
+    setLoading(true)
     axios
       .get(
         process.env.REACT_APP_SITE_URL +
           '/userExamProfile/courses/' +
-          e.target.value
+          (id ? `${id}_${e.target.value}` : e.target.value)
       )
       .then((res) => {
         //console.log(res.data)
+        setLoading(false)
         setExamStats(res.data)
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        setLoading(false)
+      })
   }
 
   const getExamDetailsById = (examId) => {
+    setLoading(true)
     axios
       .get(process.env.REACT_APP_SITE_URL + '/exams/' + examId)
       .then((res) => {
         //console.log(res.data)
+        setLoading(false)
         setExamDetails(res.data)
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        setLoading(false)
+      })
   }
 
   return (
     <div>
       <MetaInfo {...RoutesConfig.Reports.metaInfo} />
+      {loading && <CircleLoader />}
       <h3>Reports</h3>
       <Row>
         <Col sm={3}>
@@ -159,17 +182,20 @@ export default function Reports() {
                     <td>{examStat.totalMark}</td>
                     <td>{examStat.attemptNumbers}</td>
                     <td>
-                      <Link
-                        className='mr-2'
-                        to={`/reports/actions?courseId=${examStats[0].courses[0].courseId}&examId=${examStat.examId}&answers=0`}
-                      >
-                        <Button size='sm'>Questions</Button>
-                      </Link>
-                      <Link
-                        to={`/reports/actions?courseId=${examStats[0].courses[0].courseId}&examId=${examStat.examId}&answers=1`}
-                      >
-                        <Button size='sm'>Questions With Answers</Button>
-                      </Link>
+                      <div className='mb-1'>
+                        <Link
+                          to={`/reports/actions?courseId=${examStats[0].courses[0].courseId}&examId=${examStat.examId}&answers=0`}
+                        >
+                          <Button size='sm'>Questions</Button>
+                        </Link>
+                      </div>
+                      <div>
+                        <Link
+                          to={`/reports/actions?courseId=${examStats[0].courses[0].courseId}&examId=${examStat.examId}&answers=1`}
+                        >
+                          <Button size='sm'>Answers</Button>
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                 ))

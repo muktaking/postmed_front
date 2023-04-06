@@ -11,16 +11,7 @@ import {
 } from 'react-icons/fa'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
-import { animateScroll as scroll } from 'react-scroll'
 import { ContactConfig } from '../../../config/contact.config'
-
-const scrollToTop = () => {
-  scroll.scrollToTop(160)
-}
-
-const styles = {
-  cursor: 'pointer'
-}
 
 const contact = (props) => {
   return (
@@ -80,6 +71,10 @@ const contact = (props) => {
               Exams
             </Link>
             <br />
+            <Link to='/payment' className='link-hover'>
+              Payment
+            </Link>
+            <br />
             <Link to='/help' className='link-hover'>
               Helps
             </Link>
@@ -87,6 +82,7 @@ const contact = (props) => {
             <Link to='/terms' className='link-hover'>
               Terms & Conditions
             </Link>
+            <br />
             <Link to='/sitemap.xml' className='link-hover'>
               Sitemap
             </Link>
@@ -96,15 +92,6 @@ const contact = (props) => {
           <Col md={4}></Col>
           <Col md={4} className='text-center'>
             &copy; E-Exam Theme Inspired By Nano theme
-          </Col>
-          <Col md={4}>
-            <p
-              className='text-right pr-3 link-hover'
-              style={styles}
-              onClick={scrollToTop}
-            >
-              Back to Top{' '}
-            </p>
           </Col>
         </Row>
       </footer>

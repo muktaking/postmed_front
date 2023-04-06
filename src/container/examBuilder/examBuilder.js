@@ -12,6 +12,7 @@ import {
 } from 'react-bootstrap'
 import { FaShoppingBasket } from 'react-icons/fa'
 import { connect } from 'react-redux'
+import { FaRegCheckCircle } from 'react-icons/fa'
 import ExamSpec from '../../components/examBuilder/examSpec'
 import Filter from '../../components/examBuilder/filter'
 import SelectedQuestionsPreview from '../../components/examBuilder/selectedQuestionsPreview'
@@ -30,6 +31,7 @@ class ExamPaper extends Component {
   state = {
     show: false,
     selectedQuestions: [],
+    massQIds: [],
     pageSize: 10,
     currentPage: 1,
     qTypeState: 'all'
@@ -306,6 +308,18 @@ class ExamPaper extends Component {
                     <Badge className='mr-2'>{question.title}</Badge>
                     <span>{question.qText}</span>
                     <Badge className='ml-2'>{question.qType}</Badge>
+                    {question.generalFeedback && (
+                      <Badge className='ml-2'>
+                        GF: <FaRegCheckCircle className='ml-1' color='green' />
+                      </Badge>
+                    )}
+                    {question.stems[0].fbStem && (
+                      <Badge className='ml-2'>
+                        FbStem:{' '}
+                        <FaRegCheckCircle className='ml-1' color='green' />
+                      </Badge>
+                    )}
+                    <Badge className='ml-2'>Id No. {question.id}</Badge>
                   </ListGroup.Item>
                 ))}
               </ListGroup>
@@ -322,13 +336,34 @@ class ExamPaper extends Component {
               onPageHandler={this.onPageHandler}
             />
 
+            <div className='my-3'>
+              <Form>
+                <Form.Group controlId='massQIds'>
+                  <Form.Label>
+                    Enter Question's Ids (Comma seperated Values)
+                  </Form.Label>
+                  <Form.Control
+                    type='text'
+                    name=' massQIds'
+                    placeholder='12,3,25,103,...'
+                    onChange={(e) => {
+                      this.setState({
+                        massQIds: e.target.value.split(',').map((e) => +e)
+                      })
+                    }}
+                  />
+                </Form.Group>
+              </Form>
+            </div>
+
             <div className='d-flex justify-content-center align-items-center'>
               <Button
                 onClick={() => {
                   this.setState({
-                    selectedQuestions: checkedQuestionIds.map(
-                      (id) => this.state[id]
-                    )
+                    selectedQuestions: [
+                      ...checkedQuestionIds.map((id) => this.state[id]),
+                      ...this.state.massQIds
+                    ]
                   })
                 }}
                 className='mr-5 mb-2 mb-sm-0'
@@ -350,6 +385,26 @@ class ExamPaper extends Component {
                   <option value='uPQ'>UnMark The On Page's Questiones</option>
                 </Form.Control>
               </Form.Group>
+            </div>
+            <div className='my-3'>
+              <Alert
+                className='d-flex justify-content-between'
+                variant='success'
+              >
+                <span className='mr-3 overflow-auto'>
+                  {this.state.selectedQuestions.map((q) => q.id).join(',')}
+                </span>
+                <Button
+                  variant='primary'
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      this.state.selectedQuestions.map((q) => q.id).join(',')
+                    )
+                  }}
+                >
+                  Copy
+                </Button>
+              </Alert>
             </div>
           </Col>
         </Row>

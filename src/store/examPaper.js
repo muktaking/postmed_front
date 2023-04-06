@@ -29,12 +29,8 @@ const slice = createSlice({
   }
 })
 
-export const {
-  selectedQuestions,
-  onSuccess,
-  onError,
-  onLoading
-} = slice.actions
+export const { selectedQuestions, onSuccess, onError, onLoading } =
+  slice.actions
 
 export default slice.reducer
 
@@ -46,17 +42,17 @@ export const onLoadingLoader = () => (dispatch) => {
   dispatch({ type: onLoading.type })
 }
 
-export const postExamProfile = (examSpec, questions, id = null) => (
-  dispatch
-) => {
-  dispatch(
-    apiCallBegun({
-      url: id ? `/exams/${id}` : '/exams',
-      method: id ? 'patch' : 'post',
-      data: { ...examSpec, questions },
-      onSuccess: onSuccess.type,
-      onError: onError.type,
-      sendToken: true
-    })
-  )
-}
+export const postExamProfile =
+  (examSpec, questions, id = null) =>
+  (dispatch) => {
+    dispatch(
+      apiCallBegun({
+        url: id ? `/exams/${id}` : '/exams',
+        method: id ? 'patch' : 'post',
+        data: { ...examSpec, questions },
+        onSuccess: onSuccess.type,
+        onError: onError.type,
+        sendToken: true
+      })
+    )
+  }

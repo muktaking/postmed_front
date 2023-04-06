@@ -1,8 +1,9 @@
 import axios from 'axios'
 import * as _ from 'lodash'
+import * as moment from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import { Badge, Col, Row } from 'react-bootstrap'
-import { FaPaperclip, FaUsers } from 'react-icons/fa'
+import { FaUsers, FaRegListAlt, FaReceipt } from 'react-icons/fa'
 import ExamsByCourse from './component/examsByCourse'
 import Expectedenrolled from './component/expectedenrolled'
 import GetFeedbacks from './component/feedbacks'
@@ -11,6 +12,7 @@ import UploadUsers from './component/uploadUsers'
 
 export default function Admin() {
   const [users, setUsers] = useState([])
+  const [courses, setCourses] = useState([])
   const [exams, setExams] = useState([])
   const [feedbacks, setFeedbacks] = useState([])
   const [expectedEnrolled, setExpectedEnrolled] = useState([])
@@ -24,6 +26,7 @@ export default function Admin() {
       .get(process.env.REACT_APP_SITE_URL + '/dashboard/admin')
       .then((response) => {
         setUsers(response.data.users)
+        setCourses(_.flatMap(response.data.courses))
         setExams(_.flatMap(response.data.exams))
         setFeedbacks(response.data.feedbacks)
         setExpectedEnrolled(response.data.expectedEnrolled)
@@ -36,6 +39,7 @@ export default function Admin() {
       .get(process.env.REACT_APP_SITE_URL + '/dashboard/admin')
       .then((response) => {
         setUsers(response.data.users)
+        setCourses(_.flatMap(response.data.courses))
         setExams(_.flatMap(response.data.exams))
         setFeedbacks(response.data.feedbacks)
         setExpectedEnrolled(response.data.expectedEnrolled)
@@ -49,12 +53,30 @@ export default function Admin() {
         <Col md={8}>
           <div className='d-flex'>
             <div title='Users' className='p-2 m-2'>
-              <FaUsers className='mt-3' size={'2.4rem'} />
-              <Badge style={{ fontSize: '1.1rem' }}>{users.length}</Badge>
+              <FaUsers className='mt-3' size={'1rem'} />
+              <Badge>{users.length}</Badge>
+            </div>
+            <div title='Courses' className='p-2 m-2'>
+              <FaRegListAlt className='mt-3' size={'1rem'} />
+              <Badge>
+                {courses.length}
+                {'  '}
+                <span className='text-success'>
+                  (
+                  {courses &&
+                    courses.filter(
+                      (course) =>
+                        moment(new Date(course.endDate)).diff(
+                          moment(new Date())
+                        ) > 0
+                    ).length}
+                  )
+                </span>
+              </Badge>
             </div>
             <div title='Exams' className='p-2 m-2'>
-              <FaPaperclip className='mt-3' size={'2.4rem'} />
-              <Badge style={{ fontSize: '1.1rem' }}>{exams.length}</Badge>
+              <FaReceipt className='mt-3' size={'1em'} />
+              <Badge>{exams.length}</Badge>
             </div>
             <div className='p-2 m-2 mt-3'>
               <UploadUsers updater={updater} />

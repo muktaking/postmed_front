@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Badge, Row } from 'react-bootstrap'
 import { useParams } from 'react-router'
-import Spinner from '../../components/shared/spinner/spinner'
+import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 import ExamByCat from './component/examByCat'
 
 export default function ExamListsByCatShower() {
@@ -27,7 +27,7 @@ export default function ExamListsByCatShower() {
   }, [idA])
   return (
     <div className=''>
-      {loading && <Spinner />}
+      {loading && <CircleLoader />}
       <h2 className='text-center'>
         <span className='mr-2'>Available Exams Under</span>
         <Badge variant='warning'>{name}</Badge>

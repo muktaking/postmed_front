@@ -10,9 +10,15 @@ import 'react-markdown-editor-lite/lib/index.css'
 import remarkGfm from 'remark-gfm'
 import Spinner from '../../components/shared/spinner/spinner'
 
-export default function AddACourse({ defaultValue = [], updater, modalClose }) {
+export default function AddACourse({
+  defaultValue = [],
+  updater,
+  modalClose,
+  msg,
+  setMsg
+}) {
   const [loading, setLoading] = useState(false)
-  const [msg, setMsg] = useState(null)
+  //const [msg, setMsg] = useState(null)
   const [startDate, setStartDate] = useState(
     defaultValue.length > 0 ? defaultValue[5] : new Date()
   )
@@ -46,20 +52,40 @@ export default function AddACourse({ defaultValue = [], updater, modalClose }) {
       Object.keys(dataObj).forEach((key) => {
         dataObj[key] && data.append(key, dataObj[key])
       })
-      axios
-        .patch(
-          process.env.REACT_APP_SITE_URL + '/courses/' + defaultValue[0],
-          data
-        )
-        .then((res) => {
-          setLoading(false)
-          setMsg(res.data.message)
-          updater()
-        })
-        .catch((e) => {
-          setLoading(false)
-          setMsg(e.message)
-        })
+      if (defaultValue[7]) {
+        axios
+          .post(
+            process.env.REACT_APP_SITE_URL +
+              '/courses/duplicate/' +
+              defaultValue[0],
+            data
+          )
+          .then((res) => {
+            setLoading(false)
+            setMsg(res.data.message)
+            updater()
+          })
+          .catch((e) => {
+            setLoading(false)
+            setMsg(e.message)
+          })
+      } else {
+        axios
+          .patch(
+            process.env.REACT_APP_SITE_URL + '/courses/' + defaultValue[0],
+            data
+          )
+          .then((res) => {
+            setLoading(false)
+            setMsg(res.data.message)
+            updater()
+          })
+          .catch((e) => {
+            setLoading(false)
+            //setMsg(e.message)
+          })
+      }
+
       return
     }
     const dataObj = {
@@ -94,18 +120,7 @@ export default function AddACourse({ defaultValue = [], updater, modalClose }) {
   return (
     <div>
       {loading && <Spinner />}
-      <Toast
-        show={msg}
-        onClose={() => {
-          setMsg(null)
-        }}
-        style={{ position: 'absolute' }}
-      >
-        <Toast.Header>
-          <strong className='mr-auto'>Message</strong>
-        </Toast.Header>
-        <Toast.Body>{msg}</Toast.Body>
-      </Toast>
+
       <h4>Course Builder</h4>
       <div className='d-flex'>
         <div className='my-3 mr-5'>

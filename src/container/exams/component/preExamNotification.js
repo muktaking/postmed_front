@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Badge, Button, ListGroup, Modal } from 'react-bootstrap'
+import { Alert, Badge, Button, ListGroup, Modal, Table } from 'react-bootstrap'
 import { useHistory } from 'react-router'
 
 export default function PreExamNotification({
@@ -8,6 +8,7 @@ export default function PreExamNotification({
 }) {
   const history = useHistory()
   const [show, setShow] = useState(true)
+  const [showRules, setShowRules] = useState(false)
   const handleClose = () => {
     examStartDialogueHandler()
     setShow(false)
@@ -16,10 +17,10 @@ export default function PreExamNotification({
     <div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Are You Sure to Proceed?</Modal.Title>
+          <Modal.Title>Do You want to Proceed to Exam?</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Exam's Rules</p>
+          <p>Exam's Stats</p>
           {exams && (
             <ListGroup>
               <ListGroup.Item>
@@ -48,13 +49,64 @@ export default function PreExamNotification({
                 Time Limit: <Badge>{exams.timeLimit && exams.timeLimit}</Badge>{' '}
                 Mins
               </ListGroup.Item>
-              <ListGroup.Item>
-                Penalty Mark:{' '}
-                <Badge>
-                  {exams.totalPenaltyMark && exams.totalPenaltyMark}
-                </Badge>
-              </ListGroup.Item>
+              {exams.penaltyMark && (
+                <ListGroup.Item>
+                  Penalty Mark:{' '}
+                  <Badge variant='danger'>{exams.penaltyMark}</Badge> (for each
+                  wrong stem)
+                  {/* or{' '}
+                  <Badge variant='danger'>{exams.penaltyMark * 5}</Badge> (for 
+                  wrong SBA ) */}
+                </ListGroup.Item>
+              )}
             </ListGroup>
+          )}
+          <Table striped bordered className='mt-3'>
+            <thead>
+              <tr>
+                <th>Question Type</th>
+                <th>Number</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>True/False questions</td>
+                <td>
+                  {exams.questions.filter((q) => q.qType === 'matrix').length}
+                </td>
+              </tr>
+              <tr>
+                <td>SBA questions</td>
+                <td>
+                  {exams.questions.filter((q) => q.qType === 'sba').length}
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+          <Button
+            onClick={() => {
+              setShowRules(!showRules)
+            }}
+            variant='dark'
+          >
+            Exam's Ruless
+          </Button>
+
+          {showRules && (
+            <Alert variant='warning' className='mt-3'>
+              <p>
+                1. First{' '}
+                {exams.questions.filter((q) => q.qType === 'matrix').length}{' '}
+                questions are True/False type. Rest{' '}
+                {exams.questions.filter((q) => q.qType === 'sba').length}{' '}
+                questions are SBA type.
+              </p>
+              <p>2. You can not modify your answer after clicking an option.</p>
+              <p>
+                3. After timelimit you will push to result page or you can
+                submit your answer anytime.
+              </p>
+            </Alert>
           )}
         </Modal.Body>
         <Modal.Footer>

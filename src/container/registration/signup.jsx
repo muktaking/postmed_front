@@ -5,15 +5,17 @@ import { Row } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
-import Spinner from 'react-bootstrap/Spinner'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import validator from 'validator'
 import '../../assets/scss/section/registration.scss'
+import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 import Facebook from '../../components/facebook/facebook'
 import Google from '../../components/google/google'
 import NavbarHome from '../../components/navbar/navbarHome'
 import MetaInfo from '../../components/seo/metainfo'
 import { RoutesConfig } from '../../config/routes.config'
+import { authEnd, authFail, authReset, authStart } from '../../store/auth'
 
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true
@@ -30,18 +32,14 @@ const formValid = ({ formErrors, ...rest }) => {
 class SignUp extends Component {
   constructor(props) {
     super(props)
-
     this.passwordRef = React.createRef()
-
     this.state = {
-      loading: false,
       firstName: null,
       lastName: null,
       userName: null,
       password: null,
       repeatPassword: null,
       gender: 'male',
-      errorMessage: null,
       formErrors: {
         firstName: '',
         lastName: '',
@@ -54,11 +52,15 @@ class SignUp extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.onAuthReset()
+  }
+
   handleChange = (e) => {
     const { name, value } = e.target
     let formErrors = this.state.formErrors
 
-    this.setState({ errorMessage: null })
+    this.props.onAuthReset()
 
     switch (name) {
       case 'firstName':
@@ -121,7 +123,6 @@ class SignUp extends Component {
 
   submitHandler = (e) => {
     e.preventDefault()
-    this.setState({ errorMessage: null })
     const {
       firstName,
       lastName,
@@ -132,7 +133,7 @@ class SignUp extends Component {
       gender,
       formErrors
     } = this.state
-    this.setState({ loading: true })
+    // this.setState({ loading: true })
 
     if (
       formValid({
@@ -146,6 +147,7 @@ class SignUp extends Component {
         formErrors
       })
     ) {
+      this.props.onAuthStart()
       axios
         .post(process.env.REACT_APP_SITE_URL + '/auth/registration', {
           firstName,
@@ -157,56 +159,49 @@ class SignUp extends Component {
           gender
         })
         .then((res) => {
-          this.setState({ loading: false })
+          this.props.onAuthEnd()
           if (res.status === 201) {
             // <Route exact path="/">
-            this.props.history.push({ pathname: '/login' })
+            return this.props.history.push({ pathname: '/login' })
             // </Route>;
           }
         })
 
-        .catch((e) => {
-          this.setState({ loading: false })
-          //  console.log("/b/b onError:  ", e.response);
-          if (e.response) {
+        .catch((error) => {
+          console.log(error)
+          if (error.response) {
             // if server has response
-            e = e.response
-            if (e.data.statusCode === 409) {
+            error = error.response.data
+            if (error.statusCode === 409) {
               // user duplication error, so redirecting to login page
-              this.setState({
-                errorMessage: e.data.message + ' Redirecting .....'
-              })
+              this.props.onAuthFail(
+                error.message + ' Redirecting to login page.....'
+              )
               setTimeout(() => {
                 this.props.history.push({ pathname: '/login' })
               }, 3000)
-            } else if (e.data.statusCode === 400) {
+            } else if (error.statusCode === 400) {
               // specific server validation error
               let message = ''
-              e.data.message.forEach((v) => {
+              error.message.forEach((v) => {
                 message += `${v.value} is not valid in [ ${
                   v.property
                 } ] field due to " ${Object.values(v.constraints).toString()} "`
               })
-              //  console.log(message);
-              this.setState({
-                errorMessage: message
-              })
+              this.props.onAuthFail(message)
             } else {
               // for any other server error response
-              this.props.history.push({ pathname: '/' })
+              this.props.onAuthFail(e.data.message)
             }
           } else {
             // if server has no any response
-            this.setState({
-              errorMessage: 'Server may be down. Please try sometime later'
-            })
+            this.props.onAuthFail(
+              'Server may be down. Please try sometime later'
+            )
           }
         })
     } else {
-      this.setState({
-        loading: false,
-        errorMessage: 'Please fill form correctly.'
-      })
+      this.props.onAuthFail('Please fill form correctly.')
     }
   }
 
@@ -215,6 +210,7 @@ class SignUp extends Component {
     return (
       <div className='registration'>
         <MetaInfo {...RoutesConfig.Signup.metaInfo} />
+        {this.props.auth.loading && <CircleLoader />}
         <NavbarHome isLanding={false} />
         {/* Landing */}
         <div className='landing'>
@@ -224,19 +220,21 @@ class SignUp extends Component {
         </div>
         <div className='caption text-center'>
           <h1>Signup Form</h1>
-          {this.state.loading && (
-            <Spinner
-              animation='border'
-              role='status'
-              variant='light'
-              className='mb-2'
-            ></Spinner>
-          )}
           <div className='heading-underline'></div>
-
+          <p className='mt-3'>Easily Signup with your Facebook or Google</p>
+          <Row>
+            <Col lg='6'>
+              <Facebook />
+            </Col>
+            <Col lg='6'>
+              <Google />
+            </Col>
+          </Row>
+          <p className='mt-3'>Or, Create One</p>
           <Form onSubmit={this.submitHandler} novalidate>
             <div className='text-white mb-2 bg-danger'>
-              {this.state.errorMessage}
+              {/* {this.state.errorMessage} */}
+              {this.props.auth.error && this.props.auth.error}
             </div>
             <Form.Row>
               <Form.Group as={Col} controlId='formGridFirstName'>
@@ -370,15 +368,14 @@ class SignUp extends Component {
               Submit
             </Button>
           </Form>
-          <p className='mt-3 lead'>Or</p>
-          <Row>
-            <Col lg='6'>
-              <Facebook />
-            </Col>
-            <Col lg='6'>
-              <Google />
-            </Col>
-          </Row>
+          <div className='mt-3'>
+            <p>
+              Already have an account?
+              <Link to='/login' className='btn btn-primary ml-2'>
+                Log In
+              </Link>
+            </p>
+          </div>
         </div>
         {/* End of Landing */}
       </div>
@@ -386,4 +383,19 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAuthStart: () => dispatch(authStart()),
+    onAuthEnd: () => dispatch(authEnd()),
+    onAuthFail: (errorMsg) => dispatch(authFail(errorMsg)),
+    onAuthReset: (errorMsg) => dispatch(authReset(errorMsg))
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp)

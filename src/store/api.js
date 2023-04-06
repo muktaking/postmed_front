@@ -21,11 +21,7 @@ const slice = createSlice({
   }
 })
 
-export const {
-  apiCallBegun,
-  apiCallSuccess,
-  apiCallFail,
-  apiCallReset
-} = slice.actions
+export const { apiCallBegun, apiCallSuccess, apiCallFail, apiCallReset } =
+  slice.actions
 
 export default slice.reducer

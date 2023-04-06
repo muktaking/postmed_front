@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Form, ListGroup, Spinner, Toast } from 'react-bootstrap'
+import { Form, ListGroup, Toast } from 'react-bootstrap'
 import Pagination from 'react-js-pagination'
 import { useDispatch, useSelector } from 'react-redux'
+import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 import { fetchCategory } from '../../store/category'
 import {
   getQuestionByCategoryLoader,
@@ -39,14 +40,7 @@ export default function SelectQuestions({ viewHandler }) {
 
   return (
     <div>
-      {loading && (
-        <Spinner
-          animation='grow'
-          role='status'
-          variant='dark'
-          className='content-center'
-        ></Spinner>
-      )}
+      {loading && <CircleLoader />}
       {
         <Toast
           show={res}

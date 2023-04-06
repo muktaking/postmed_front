@@ -12,17 +12,17 @@ import {
 } from "react-bootstrap";
 import Countdown from "react-countdown";
 import { Helmet } from "react-helmet";
-import { FaRegArrowAltCircleDown, FaRegArrowAltCircleUp } from 'react-icons/fa';
+//import { FaRegArrowAltCircleDown, FaRegArrowAltCircleUp} from 'react-icons/fa';
 import { injectIntl } from 'react-intl';
 import Pagination from "react-js-pagination";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { Redirect } from "react-router-dom";
-import { Link as LinkScroll } from "react-scroll";
+//import { Link as LinkScroll } from "react-scroll";
+import CircleLoader from "../../components/customSpinner/circleLoader/circleLoader";
 import QuestionView from "../../components/exams/paper/question/question";
 import SubNavBar from "../../components/navbar/subNavBar";
 import PaginationCustom from "../../components/pagination/pagination";
-import Spinner from "../../components/shared/spinner/spinner";
 import {
   disableQuestionsAdd,
   getExamByIdLoader,
@@ -209,7 +209,7 @@ class ExamTaker extends Component {
         )}
 
         {(this.props.exams.questions.length < 1 && !this.props.exams.examError) && (
-          <Spinner />
+          <CircleLoader />
         )}
 
         
@@ -252,10 +252,12 @@ class ExamTaker extends Component {
               <Modal.Body>
                 <div>
                   <p className="lead">
-                    {this.props.intl.formatMessage({id: 'et.agree', defaultMessage: "Are You Sure ? You will Taken To Result Page."})}
+                    {this.props.intl.formatMessage({id: 'et.agree', defaultMessage: "Are You Sure ? You will Taken To Result Page. "})}
+                  You do no answer<span className="text-danger"> {this.props.exams.questions.length - this.answerIds.size} </span> questions.
                   </p>
+                  {/* countdown to proceed for result after clicking the submit button */}
                   <Countdown
-                    date={Date.now() + 5 * 1000}
+                    date={Date.now() + 10 * 1000}
                     renderer={({ seconds }) => (
                       <p
                         className="text-center text-danger"
@@ -304,15 +306,20 @@ class ExamTaker extends Component {
             // !window.confirm('Are You Sure.\n Exam Rules: 1) For True-false based question select true or false for each stem. \n 2) For multiple choice question, select the correct answer only.') ? this.props.history.goBack() :
             
             <>
-              <div className="text-dark text-center mt-1" id="et-top">
-                <Form.Switch
-                id="custom-switch"
-                label={this.props.intl.formatMessage({id: 'btn.aqv', defaultMessage: "Switch to All Questions View"})}
-                className="mb-2"
-                onChange={this.onSwithchHandleChange}
-                > 
+              <div className="text-dark text-center px-2 pt-3 pb-2 mt-1 bg-light sticky-top">
+                <div className="d-flex justify-content-around mb-2">
+                  <Form.Switch
+                  id="custom-switch"
+                  label={this.props.intl.formatMessage({id: 'btn.aqv', defaultMessage: "Switch to All Questions View"})}
+                  className="mr-2"
+                  onChange={this.onSwithchHandleChange}
+                  > 
 
-                </Form.Switch>
+                  </Form.Switch>
+                  <Button onClick={this.modalShow} className="btn-md">
+                    {this.props.intl.formatMessage({id: 'btn.sas', defaultMessage: "Submit Answer Sheet"})}
+                  </Button>
+                </div>
                 <Countdown
                   date={this.state.date + this.props.exams.timeLimit * 60 * 1000}
                   renderer={renderer}
@@ -323,9 +330,10 @@ class ExamTaker extends Component {
                     this.setState({ timeExpired: true, modalShow: true });
                   }}
                 />
+                
               </div>
                           
-              <div className="scroll-container d-flex justify-content-center flex-wrap">
+              {/* <div className="scroll-container d-flex justify-content-center flex-wrap">
                 <LinkScroll
                   to={"et-top"}
                   spy={true}
@@ -347,9 +355,9 @@ class ExamTaker extends Component {
                   <FaRegArrowAltCircleDown size={"1.2rem"}/>
 
                 </LinkScroll>
-              </div>
+              </div> */}
               
-            <Row >  
+            <Row id="et-top">  
               <Col lg={9}>
                 {questions.map((question, ind) => (
                   <QuestionView
@@ -374,14 +382,11 @@ class ExamTaker extends Component {
                     prevPageText="Previous"
                     nextPageText="Next"
                   /> }
-                  <Button onClick={this.modalShow} className="mb-3 ml-5 btn-md" id="qNavigator">
-                  {this.props.intl.formatMessage({id: 'btn.sas', defaultMessage: "Submit Answer Sheet"})}
-                  </Button>
+                  
                 </div>
               </Col>
-              <Col lg={3} className="mt-3">
-                <Alert variant="warning">First {this.props.exams.questions.filter(q=>q.qType === 'matrix').length} questions are True/False type. Rest {this.props.exams.questions.filter(q=>q.qType === 'sba').length} questions are SBA type.</Alert>
-                {this.state.showPagination && <PaginationCustom
+              <Col lg={3} className="mt-3" id="qNavigator">
+              {this.state.showPagination && <PaginationCustom
                   itemsCount={this.props.exams.questions.length}
                   pageSize={this.state.pageSize}
                   currentPage={this.state.currentPage}

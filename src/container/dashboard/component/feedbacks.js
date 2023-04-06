@@ -29,68 +29,74 @@ export default function GetFeedbacks({ feedbacks, feedbackController }) {
   return (
     <div>
       <h3>Review</h3>
-      {feedbacks && (
-        <>
-          <ListGroup as='ul'>
-            {feedbacks.length < 1 ? (
-              <p className='text-danger'>No more pending reviews</p>
-            ) : (
-              feedbacks.map((feedback) => (
-                <ListGroup.Item key={feedback.name + feedback.examId} as='li'>
-                  <div className='d-flex'>
-                    <Form.Check
-                      type='checkbox'
-                      label=''
-                      name={feedback.id}
-                      onChange={feedbackHandleChange}
-                      className='border-right mr-2 pr-2'
-                    />
-                    <div>
-                      <p>
-                        <span className='text-info'>
-                          {getFeedbackStatus(feedback.feedbackStatus) + '.'}
-                        </span>
-                        <span className='ml-2'>
-                          {'Message: ' + feedback.message}
-                        </span>
-                        <span className='ml-2 text-danger'>
-                          {`By ${feedback.name} (${feedback.email})`}
-                        </span>
-                        <br />
-                        Commented on:{' '}
-                        <span className='text-danger'>
-                          {feedback.exam && feedback.exam.title}
-                        </span>{' '}
-                        Exam.
-                      </p>
+      <div style={{ maxHeight: '350px', overflowY: 'scroll' }}>
+        {feedbacks && (
+          <>
+            <ListGroup as='ul'>
+              {feedbacks.length < 1 ? (
+                <p className='text-danger'>No more pending reviews</p>
+              ) : (
+                feedbacks.map((feedback) => (
+                  <ListGroup.Item key={feedback.name + feedback.examId} as='li'>
+                    <div className='d-flex'>
+                      <Form.Check
+                        type='checkbox'
+                        label=''
+                        name={feedback.id}
+                        onChange={feedbackHandleChange}
+                        className='border-right mr-2 pr-2'
+                      />
+                      <div>
+                        <p>
+                          <span className='text-info'>
+                            {getFeedbackStatus(feedback.feedbackStatus) + '.'}
+                          </span>
+                          <span className='ml-2'>
+                            {'Message: ' + feedback.message}
+                          </span>
+                          <span className='ml-2 text-danger'>
+                            {`By ${feedback.name} (${feedback.email})`}
+                          </span>
+                          <br />
+                          Commented on:{' '}
+                          <span className='text-danger'>
+                            {feedback.exam && feedback.exam.title}
+                          </span>{' '}
+                          Exam.
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </ListGroup.Item>
-              ))
-            )}
-          </ListGroup>
+                  </ListGroup.Item>
+                ))
+              )}
+            </ListGroup>
 
-          <Button
-            className='mt-2'
-            onClick={() => {
-              submitHandler()
-            }}
-            disabled={feedbacks.length < 1}
-          >
-            Approve
-          </Button>
-          <Button
-            variant='danger'
-            className='mt-2 ml-2'
-            onClick={() => {
-              submitHandler(true)
-            }}
-            disabled={feedbacks.length < 1}
-          >
-            Deny
-          </Button>
-        </>
-      )}
+            {feedbacks.length > 0 && (
+              <>
+                <Button
+                  size='sm'
+                  className='mt-2'
+                  onClick={() => {
+                    submitHandler()
+                  }}
+                >
+                  Approve
+                </Button>
+                <Button
+                  size='sm'
+                  variant='danger'
+                  className='mt-2 ml-2'
+                  onClick={() => {
+                    submitHandler(true)
+                  }}
+                >
+                  Deny
+                </Button>
+              </>
+            )}
+          </>
+        )}
+      </div>
     </div>
   )
 }

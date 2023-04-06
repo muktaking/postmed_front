@@ -7,7 +7,8 @@ const slice = createSlice({
     loading: false,
     courses: [],
     coursesEnrolledByStu: [],
-    expectedEnrolledStuIds: []
+    expectedEnrolledStuIds: [],
+    error: null
   },
   reducers: {
     getCourses: (state, action) => {
@@ -20,13 +21,23 @@ const slice = createSlice({
     },
     loadingStart: (state, action) => {
       state.loading = true
+    },
+    courseError: (state, action) => {
+      state.loading = false
+      state.error = action.payload
+    },
+    courseReset: (state, action) => {
+      state.loading = false
+      state.error = null
     }
   }
 })
 export const {
   getCourses,
   getCoursesEnrolledByStu,
-  loadingStart
+  loadingStart,
+  courseError,
+  courseReset
 } = slice.actions
 export default slice.reducer
 
@@ -39,7 +50,8 @@ export const fetchCourseLoader = () => (dispatch) => {
       url,
       method,
       onStart: loadingStart.type,
-      onSuccess: getCourses.type
+      onSuccess: getCourses.type,
+      onError: courseError.type
     })
   )
 }
@@ -53,4 +65,8 @@ export const fetchCourseEnrolledByStuLoader = () => (dispatch) => {
       onSuccess: getCoursesEnrolledByStu.type
     })
   )
+}
+
+export const courseResetLoader = () => (dispatch) => {
+  dispatch(courseReset())
 }

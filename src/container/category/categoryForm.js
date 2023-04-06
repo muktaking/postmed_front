@@ -73,6 +73,10 @@ const CategoryForm = (props) => {
               placeholder='e.g. 5 <..Order makes priority. Lower value higher order..>'
               onChange={handleChange}
             />
+            <span className='text-muted'>
+              A rudimentary options. More than 100000 valued category will not
+              be seen at examByCategory
+            </span>
             {formErrors.order.length > 0 && (
               <span className='errorMessage'>{formErrors.order}</span>
             )}
@@ -93,7 +97,7 @@ const CategoryForm = (props) => {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Upload Image</Form.Label>
+            <Form.Label>Upload Image (Not mandatory)</Form.Label>
             <input
               type='file'
               name='image'

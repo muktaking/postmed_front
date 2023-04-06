@@ -111,6 +111,7 @@ export default function ProfileSnippet({ isProfile, size = '100' }) {
             alt='Avatar'
             className='rounded-circle'
             width={size}
+            height={size}
           />
           {isProfile && (
             <AiFillEdit
@@ -125,10 +126,14 @@ export default function ProfileSnippet({ isProfile, size = '100' }) {
           <p className='mb-1'>{roleToString(user.role)}</p>
           <p className='font-size-sm'>{user.address}</p>
           <p className={isProfile ? 'lead' : 'text-white lead'}>
-            <span>{`User ID No. `}</span>{' '}
-            <Badge variant='warning' className='p-1'>
-              {user.id}
-            </Badge>
+            {user.id && (
+              <>
+                <span>{`User ID No. `}</span>{' '}
+                <Badge variant='warning' className='p-1'>
+                  {user.id}
+                </Badge>
+              </>
+            )}
           </p>
         </div>
       </div>

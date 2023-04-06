@@ -2,7 +2,7 @@
 import * as moment from 'dayjs'
 import React from 'react'
 import { Col, Jumbotron, Nav, Row, Tab } from 'react-bootstrap'
-import { FaChevronCircleRight } from 'react-icons/fa'
+import { FaChevronCircleRight, FaExclamationTriangle } from 'react-icons/fa'
 import ExamsFeaturedCard from './bigCards/mainContentCards/examsFeaturedCard'
 import ReportCard from './bigCards/mainContentCards/reportCard'
 import RecentActivityCard from './bigCards/sideCards/recentActivityCard'
@@ -31,7 +31,12 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
               <Nav.Item key={e + i} className='mb-2'>
                 <Nav.Link eventKey={i}>
                   <FaChevronCircleRight className='mr-2' />
-                  {e.title}
+                  <span>{e.title}</span>
+                  {moment(new Date(e.endDate)).diff(moment(new Date())) > 0 ? (
+                    ''
+                  ) : (
+                    <FaExclamationTriangle color='EB455F' className='ml-2' />
+                  )}
                 </Nav.Link>
               </Nav.Item>
             ))}
@@ -41,12 +46,8 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
           <Jumbotron>
             <Tab.Content>
               {userDashExamInfo.map((examInfo, ind) => {
-                const {
-                  id,
-                  userExamInfo,
-                  userExamStat,
-                  featuredExams
-                } = examInfo
+                const { id, userExamInfo, userExamStat, featuredExams } =
+                  examInfo
                 return (
                   <Tab.Pane key={id} eventKey={ind}>
                     <div className='d-md-flex justify-content-between flex-wrap'>

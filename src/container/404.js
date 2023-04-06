@@ -16,7 +16,6 @@ class NotFound extends Component {
           </div>
         </div>
         <div className='caption text-center' style={{ top: '15%' }}>
-          {/* <Spinner animation="border" role="status"></Spinner> */}
           <h1>404-Page</h1>
           <p className='lead'>
             {this.props.location.state

@@ -1,9 +1,9 @@
 import axios from 'axios'
 import React, { lazy, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 //import StuDashCourseComponent from '../../components/dashboard/stuDashCourseComponent'
 import MetaInfo from '../../components/seo/metainfo'
-import Spinner from '../../components/shared/spinner/spinner'
 import { RoutesConfig } from '../../config/routes.config'
 import { resetExamResultLoader } from '../../store/exams'
 import { getUserLoader } from '../../store/user'
@@ -39,7 +39,7 @@ const Dashboard = (props) => {
     <div className=''>
       <MetaInfo {...RoutesConfig.Dashboard.metaInfo} />
       {loading ? (
-        <Spinner />
+        <CircleLoader />
       ) : userDashExamInfo.length > 0 ? (
         <StuDashCourseComponent userDashExamInfo={userDashExamInfo} />
       ) : (

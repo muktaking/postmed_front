@@ -8,9 +8,14 @@ export default function FreshUserDash() {
       <Jumbotron>
         <h1>Welcome!</h1>
         <p>
-          We are warmly welcome you. To get your desired success, you should use
-          the most of this application. For this, please enroll for a course and
-          then take exam regularly.
+          We are warmly welcome you. Please enroll for a course and then take
+          exam regularly.
+        </p>
+        <p>
+          For help, please go to{' '}
+          <Link to='/help' className=''>
+            Help section
+          </Link>
         </p>
         <hr />
         <Link to='/courses'>

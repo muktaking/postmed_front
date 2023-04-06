@@ -22,11 +22,8 @@ const slice = createSlice({
     }
   }
 })
-export const {
-  getNotification,
-  getFreshNotification,
-  loadingStart
-} = slice.actions
+export const { getNotification, getFreshNotification, loadingStart } =
+  slice.actions
 export default slice.reducer
 
 const url = '/notification'

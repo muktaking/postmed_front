@@ -28,7 +28,7 @@ export default function Hero() {
             <div className='d-flex justify-content-center mt-5'>
               <Link to='/exams/category/Free-1'>
                 <Button variant='warning' size='lg'>
-                  Try Exam
+                  Try Demo Exam
                 </Button>
               </Link>
             </div>

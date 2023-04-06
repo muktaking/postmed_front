@@ -7,6 +7,7 @@ import { FaMinusCircle } from 'react-icons/fa'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { LazyLoadComponent } from 'react-lazy-load-image-component'
 import ReactMarkdown from 'react-markdown'
+import rehypeRaw from 'rehype-raw'
 import { connect } from 'react-redux'
 import remarkGfm from 'remark-gfm'
 import SubNavBar from '../../components/navbar/subNavBar'
@@ -53,12 +54,12 @@ class Result extends Component {
               <Card.Header as='h5' className='text-center'>
                 <FormattedMessage id='result' defaultMessage='Result' />
               </Card.Header>
-              <Card.Body className='d-flex justify-content-center'>
+              <Card.Body className='d-flex justify-content-center flex-wrap'>
                 <Gist
                   title='Score'
                   bgColor='bg-warning'
                   value={
-                    totalScore.toFixed(2) + ' Out of ' + totalMark.toFixed(2)
+                    totalScore.toFixed(2) + ' (' + totalMark.toFixed(2) + ')'
                   }
                 />
                 <Gist
@@ -206,6 +207,7 @@ class Result extends Component {
                         </p>
                         <ReactMarkdown
                           remarkPlugins={[remarkGfm]}
+                          rehypePlugins={[rehypeRaw]}
                           components={{
                             table: ({ node, children, ...props }) => (
                               <Table
@@ -223,7 +225,7 @@ class Result extends Component {
                             )
                           }}
                         >
-                          {item.generalFeedback}
+                          {item.generalFeedback.trim()}
                         </ReactMarkdown>
                       </ListGroup.Item>
                     )}

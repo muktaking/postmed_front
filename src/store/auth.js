@@ -14,6 +14,9 @@ const slice = createSlice({
     authStart: (auth) => {
       auth.loading = true
     },
+    authEnd: (auth) => {
+      auth.loading = false
+    },
     authSuccess: (auth, action) => {
       auth.loading = false
       auth.token = action.payload.accessToken
@@ -26,6 +29,9 @@ const slice = createSlice({
       auth.loading = false
       auth.error = action.payload
     },
+    authReset: (auth) => {
+      auth.error = null
+    },
     logout: (auth) => {
       auth.token = null
       auth.userId = null
@@ -34,7 +40,8 @@ const slice = createSlice({
   }
 })
 
-export const { authStart, authSuccess, authFail, logout } = slice.actions
+export const { authStart, authEnd, authSuccess, authFail, authReset, logout } =
+  slice.actions
 
 export default slice.reducer
 

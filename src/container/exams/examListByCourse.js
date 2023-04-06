@@ -1,9 +1,10 @@
 //import moment from 'moment'
 import * as moment from 'dayjs'
 import React, { useEffect } from 'react'
-import { Badge, Spinner } from 'react-bootstrap'
+import { Badge } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 import MetaInfo from '../../components/seo/metainfo'
 import { RoutesConfig } from '../../config/routes.config'
 import { fetchCourseEnrolledByStuLoader } from '../../store/courses'
@@ -18,17 +19,11 @@ export default function ExamListsByCat() {
   }, [dispatch])
 
   return (
-    <div className=''>
+    <div>
+      {courses.loading && <CircleLoader />}
       <h2 className='text-center'>Enrolled Courses</h2>
-      <div className='m-3 d-flex justify-content-around flex-wrap'>
-        {courses.loading ? (
-          <Spinner
-            animation='border'
-            role='status'
-            variant='dark'
-            className='content-center'
-          />
-        ) : courses.coursesEnrolledByStu.length < 1 ? (
+      <div className='m-3 d-flex justify-content-center flex-wrap'>
+        {courses && courses.coursesEnrolledByStu.length < 1 ? (
           <div>
             <p className='text-center text-danger'>
               You have not enrolled for any course yet. Please enroll for course
@@ -38,16 +33,19 @@ export default function ExamListsByCat() {
           </div>
         ) : (
           courses.coursesEnrolledByStu.map((course) => (
-            <div className='mt-3 mr-3 px-5 pt-5 pb-3 bg-dark text-white'>
-              <h4>{course.title}</h4>
-              <p className='mt-5 text-center'>
+            <div
+              className='mt-3 mr-3 p-3 bg-dark text-white'
+              style={{ width: '250px' }}
+            >
+              <p className='lead text-center'>{course.title}</p>
+              <p className='mt-2 text-center'>
                 {moment().isAfter(course.endDate) ? (
-                  <Badge variant='danger' className='p-3'>
+                  <Badge variant='danger' className='p-2'>
                     This Course is ended
                   </Badge>
                 ) : (
                   <Link to={'/exams/courses/' + course.id}>
-                    <Badge variant='light' className='p-3'>
+                    <Badge variant='light' className='p-2'>
                       Go to Exams
                     </Badge>
                   </Link>

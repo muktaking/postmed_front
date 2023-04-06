@@ -42,14 +42,17 @@ const RoutePages = (props) => {
         <Route path='/exams' exact component={InnerContent} />
         {/* <Route path='/exams/:id' exact component={InnerContent} /> */}
         <Route path='/courses' exact component={InnerContent} />
+        <Route path='/courses/:id' exact component={InnerContent} />
         <Route path='/exams/category/:id' exact component={InnerContent} />
         <Route path='/exams/free/:id' component={InnerContent} />
         <Route path='/result' component={InnerContent} />
         <Route path='/result/rank/:id' component={InnerContent} />
         <Route path='/help' component={InnerContent} />
+        <Route path='/payment' component={InnerContent} />
         <Route path='/terms' component={InnerContent} />
         <Route path='/error' render={(props) => <NotFoundPage {...props} />} />
-        <Route path='/' exact component={Login} />
+        {/* change to display on langing page */}
+        <Route path='/' exact component={Landing} />
         <Route render={(props) => <NotFoundPage {...props} />} />
       </Switch>
     </Suspense>
@@ -63,6 +66,7 @@ const RoutePages = (props) => {
         <Switch>
           <Route path='/dashboard' component={InnerContent} />
           <Route path='/courses' component={InnerContent} />
+          <Route path='/courses/:id' exact component={InnerContent} />
           <Route path='/reports' component={InnerContent} />
           <Route path='/reports/actions' component={InnerContent} />
           <Route path='/profile' component={InnerContent} />
@@ -75,8 +79,10 @@ const RoutePages = (props) => {
           <Route path='/print' component={InnerContent} />
           <Route path='/logout' component={LogoutPage} />
           <Route path='/help' component={InnerContent} />
+          <Route path='/payment' component={InnerContent} />
           <Route path='/terms' component={InnerContent} />
-          <Route path='/' exact component={Login} />
+          {/* change to display on langing page */}
+          <Route path='/' exact component={Landing} />
           <Redirect to='/dashboard' />
         </Switch>
       </Suspense>
@@ -95,8 +101,10 @@ const RoutePages = (props) => {
           <Route path='/print' component={InnerContent} />
           <Route path='/logout' component={LogoutPage} />
           <Route path='/help' component={InnerContent} />
+          <Route path='/payment' component={InnerContent} />
           <Route path='/terms' component={InnerContent} />
-          <Route path='/' exact component={Login} />
+          {/* change to display on langing page */}
+          <Route path='/' exact component={Landing} />
           <Redirect to='/dashboard' />
         </Switch>
       </Suspense>
@@ -111,6 +119,8 @@ const RoutePages = (props) => {
           <Route path='/profile' component={InnerContent} />
           <Route path='/category' component={InnerContent} />
           <Route path='/question' component={InnerContent} />
+          <Route path='/reports' component={InnerContent} />
+          <Route path='/reports/user/:id' component={InnerContent} />
           <Route path='/reports/actions' component={InnerContent} />
           <Route path='/routine' exact component={InnerContent} />
           <Route path='/exambuilder' component={InnerContent} />
@@ -118,8 +128,10 @@ const RoutePages = (props) => {
           <Route path='/print' component={InnerContent} />
           <Route path='/logout' component={LogoutPage} />
           <Route path='/help' component={InnerContent} />
+          <Route path='/payment' component={InnerContent} />
           <Route path='/terms' component={InnerContent} />
-          <Route path='/' exact component={Login} />
+          {/* change to display on langing page */}
+          <Route path='/' exact component={Landing} />
           <Redirect to='/dashboard' />
         </Switch>
       </Suspense>
@@ -134,6 +146,8 @@ const RoutePages = (props) => {
           <Route path='/profile' component={InnerContent} />
           <Route path='/category' component={InnerContent} />
           <Route path='/routine' exact component={InnerContent} />
+          <Route path='/reports' component={InnerContent} />
+          <Route path='/reports/user/:id' component={InnerContent} />
           <Route path='/reports/actions' component={InnerContent} />
           <Route path='/question' component={InnerContent} />
           <Route path='/coursebuilder' component={InnerContent} />
@@ -143,9 +157,11 @@ const RoutePages = (props) => {
           <Route path='/print' component={InnerContent} />
           <Route path='/logout' component={LogoutPage} />
           <Route path='/help' component={InnerContent} />
+          <Route path='/payment' component={InnerContent} />
           <Route path='/terms' component={InnerContent} />
           <Route path='/notificationbuilder' component={InnerContent} />
-          <Route path='/' exact component={Login} />
+          {/* change to display on langing page */}
+          <Route path='/' exact component={Landing} />
           <Redirect to='/dashboard' />
         </Switch>
       </Suspense>

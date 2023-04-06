@@ -8,10 +8,8 @@ import {
 } from '../../config/env.config'
 import { RoutesConfig } from '../../config/routes.config'
 
-const {
-  title: _defaultTitle,
-  description: _defaultDescription
-} = RoutesConfig.Home.metaInfo
+const { title: _defaultTitle, description: _defaultDescription } =
+  RoutesConfig.Home.metaInfo
 
 const MetaInfo = ({
   meta = [],

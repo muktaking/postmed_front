@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { injectIntl } from 'react-intl'
 import { connect } from 'react-redux'
+import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 import GallaryCard from '../../components/exams/gallary/gallaryCard'
 import MetaInfo from '../../components/seo/metainfo'
-import Spinner from '../../components/shared/spinner/spinner'
 import { RoutesConfig } from '../../config/routes.config'
 import { getAllExamsLoader } from '../../store/exams'
 
@@ -36,7 +36,7 @@ class ExamLists extends Component {
     return (
       <>
         <MetaInfo {...RoutesConfig.Exams.metaInfo} />
-        {this.props.exams.exams.length < 1 && <Spinner />}
+        {this.props.exams.exams.length < 1 && <CircleLoader />}
         {Object.keys(this.props.exams.exams).map(
           (key) =>
             this.props.exams.exams[key] && (

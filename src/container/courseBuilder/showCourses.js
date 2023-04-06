@@ -39,10 +39,9 @@ const RenderTooltip = React.forwardRef(
   )
 )
 
-export default function ShowCourses({ showRaw }) {
+export default function ShowCourses({ msg, setMsg, showRaw }) {
   const [courses, setCourses] = useState([])
   const [showModal, setShowModal] = useState(false)
-  const [msg, setMsg] = useState(null)
   const [editCourseValue, setEditCourseValue] = useState([])
 
   const modalClose = () => {
@@ -70,13 +69,17 @@ export default function ShowCourses({ showRaw }) {
     <div className='container'>
       <Modal show={showModal} onHide={modalClose} size='lg'>
         <Modal.Header closeButton>
-          <Modal.Title>Edit The Course</Modal.Title>
+          <Modal.Title>
+            {editCourseValue[7] ? 'Duplicate The Course' : 'Edit The Course'}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <AddACourse
             defaultValue={editCourseValue}
             updater={handleUpdate}
             modalClose={modalClose}
+            msg={msg}
+            setMsg={setMsg}
           />
         </Modal.Body>
         <Modal.Footer>
@@ -91,18 +94,6 @@ export default function ShowCourses({ showRaw }) {
             <div className='card-body'>
               {showRaw && (
                 <>
-                  <Toast
-                    show={msg}
-                    onClose={() => {
-                      setMsg(null)
-                    }}
-                    style={{ position: 'absolute', right: '10px', top: '10px' }}
-                  >
-                    <Toast.Header>
-                      <strong className='mr-auto'>Message</strong>
-                    </Toast.Header>
-                    <Toast.Body>{msg}</Toast.Body>
-                  </Toast>
                   <h4 className='card-title'>Courses</h4>
                   <Button variant='light' onClick={handleUpdate}>
                     <GrUpdate size={'1.3rem'} />
@@ -154,11 +145,31 @@ export default function ShowCourses({ showRaw }) {
                                 course.price,
                                 course.imageUrl,
                                 new Date(course.startDate),
-                                new Date(course.endDate)
+                                new Date(course.endDate),
+                                false //duplicate boolean
                               ])
                             }}
                           >
                             Edit
+                          </Button>
+                          <Button
+                            variant='primary'
+                            className='ml-2'
+                            onClick={() => {
+                              setShowModal(true)
+                              setEditCourseValue([
+                                course.id,
+                                course.title,
+                                course.description,
+                                course.price,
+                                course.imageUrl,
+                                new Date(course.startDate),
+                                new Date(course.endDate),
+                                true //duplicate boolean
+                              ])
+                            }}
+                          >
+                            Duplicate
                           </Button>
                           <OverlayTrigger
                             trigger='click'

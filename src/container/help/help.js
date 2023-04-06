@@ -160,6 +160,10 @@ export default function Help() {
         </Col>
         <Col lg={4} md={12}>
           <h3 id='payment'>Payement Process</h3>
+          <p>
+            (For easily payement process with QR code scanning, go to{' '}
+            <Link to='/payment'>Payment Page</Link>)
+          </p>
           <hr />
           <div className='px-2'>
             <AccordionStart>

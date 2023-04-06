@@ -2,7 +2,12 @@ import Axios from 'axios'
 import React from 'react'
 import GoogleLogin from 'react-google-login'
 import { useDispatch } from 'react-redux'
-import { authSuccess, checkAuthTimeOut } from '../../store/auth'
+import {
+  authFail,
+  authStart,
+  authSuccess,
+  checkAuthTimeOut
+} from '../../store/auth'
 
 const responseOnSuccess = (response, dispatch) => {
   Axios.post(process.env.REACT_APP_SITE_URL + '/auth/google', {
@@ -18,11 +23,14 @@ const responseOnSuccess = (response, dispatch) => {
       localStorage.setItem('userId', res.data.id)
       dispatch(checkAuthTimeOut(res.data.expireIn))
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {
+      console.log(err)
+      dispatch(authFail(err.message))
+    })
 }
 
-const responseOnFailure = (response) => {
-  console.log(response)
+const responseOnFailure = (response, dispatch) => {
+  dispatch(authFail(response.error))
 }
 
 export default function Google() {
@@ -32,10 +40,16 @@ export default function Google() {
       <GoogleLogin
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
         buttonText='LOGIN WITH GOOGLE'
+        onRequest={() => {
+          dispatch(authStart())
+        }}
         onSuccess={(response) => {
           responseOnSuccess(response, dispatch)
         }}
-        onFailure={responseOnFailure}
+        onFailure={(response) => {
+          console.log(response)
+          responseOnFailure(response, dispatch)
+        }}
         cookiePolicy={'single_host_origin'}
       />
     </div>

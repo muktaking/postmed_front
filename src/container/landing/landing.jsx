@@ -7,8 +7,9 @@ import FeatureWhyChoseUs from './feature/featureWhyChoseUs'
 // import Home from './home/home'
 //import Contact from "./contact/contact";
 import Hero from './landing2/hero'
+import ScrollToTop from '../../components/customScroller/scrollToTop'
 const Contact = lazy(() => import('./contact/contact'))
-const Exam = lazy(() => import('./exam/exam'))
+const SignupSection = lazy(() => import('./signupSection/signupSection'))
 const Feature = lazy(() => import('./feature/feature'))
 const Courses = lazy(() => import('../courses/'))
 
@@ -27,9 +28,10 @@ const landing = (props) => {
           <Courses landing={true} />
         </div>
         <Feature />
-        <Exam />
+        <SignupSection />
         <Contact />
       </Suspense>
+      <ScrollToTop />
     </div>
   )
 }

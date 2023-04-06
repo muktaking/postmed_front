@@ -1,9 +1,12 @@
 import axios from 'axios'
 import { Formik } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
+import CircleLoader from '../../../components/customSpinner/circleLoader/circleLoader'
 
 export default function ExamFilter({ setExams, id, setCurrentPage }) {
+  const [loading, setLoading] = useState(false)
+  const [showFilter, setShowFilter] = useState(false)
   const examTypes = [
     { name: 'Assignment', value: 0 },
     { name: 'Weekly', value: 1 },
@@ -18,6 +21,7 @@ export default function ExamFilter({ setExams, id, setCurrentPage }) {
       <Formik
         initialValues={{ text: '' }}
         onSubmit={(values, { setSubmitting }) => {
+          setLoading(true)
           const { text, ...rest } = values
           let examType = Object.values(rest).map((e) => e[0])
           //discarding all null values
@@ -32,12 +36,12 @@ export default function ExamFilter({ setExams, id, setCurrentPage }) {
               examType
             })
             .then((response) => {
-              //setLoading(false)
+              setLoading(false)
               setExams(response.data)
               setCurrentPage(1)
             })
             .catch((e) => {
-              //setLoading(false)
+              setLoading(false)
               console.log(e)
             })
         }}
@@ -53,34 +57,49 @@ export default function ExamFilter({ setExams, id, setCurrentPage }) {
           /* and other goodies */
         }) => (
           <Form onSubmit={handleSubmit}>
-            <Form.Group className='mb-3' controlId='formBasicPassword'>
-              <Form.Label>Search</Form.Label>
-              <Form.Control
-                type='text'
-                name='text'
-                placeholder='e.g. Abcde..'
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.text}
-              />
-            </Form.Group>
-            <h4>{'Select Exam Type'}</h4>
-            <div className='pl-2'>
-              {examTypes.map((examType, ind) => (
-                <Form.Check
-                  label={examType.name}
-                  name={examType.name}
-                  type={'checkbox'}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  id={examType.name}
-                  value={examType.value}
-                />
-              ))}
-            </div>
-            <Button className='mt-3' type='submit'>
-              Apply
-            </Button>
+            {loading && <CircleLoader />}
+            <h3>
+              <Button
+                onClick={() => {
+                  setShowFilter(!showFilter)
+                }}
+              >
+                Filter
+              </Button>
+            </h3>
+            <p className='text-muted'>(Click to expand filter options)</p>
+            {showFilter && (
+              <>
+                <Form.Group className='mb-3' controlId='formBasicPassword'>
+                  <Form.Label>Search</Form.Label>
+                  <Form.Control
+                    type='text'
+                    name='text'
+                    placeholder='e.g. Abcde..'
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.text}
+                  />
+                </Form.Group>
+                <h4>{'Select Exam Type'}</h4>
+                <div className='pl-2'>
+                  {examTypes.map((examType, ind) => (
+                    <Form.Check
+                      label={examType.name}
+                      name={examType.name}
+                      type={'checkbox'}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      id={examType.name}
+                      value={examType.value}
+                    />
+                  ))}
+                </div>
+                <div className='mt-1 d-flex justify-content-center'>
+                  <Button type='submit'>Apply</Button>
+                </div>
+              </>
+            )}
           </Form>
         )}
       </Formik>

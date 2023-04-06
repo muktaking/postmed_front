@@ -3,7 +3,7 @@ import { Badge } from 'react-bootstrap'
 import { BsFillDashCircleFill, BsPlusCircleFill } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import Spinner from '../../components/shared/spinner/spinner'
+import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 import { fetchCategory } from '../../store/category'
 
 export default function ExamListsByCat() {
@@ -16,7 +16,7 @@ export default function ExamListsByCat() {
 
   return (
     <div className=''>
-      {catHierarchy.length < 1 && <Spinner />}
+      {catHierarchy.length < 1 && <CircleLoader />}
       <h2 className='text-center'>Exam Categories</h2>
       <div>{catExtractor(catHierarchy)}</div>
     </div>
@@ -25,11 +25,15 @@ export default function ExamListsByCat() {
 
 function catExtractor(catHierarchy) {
   return catHierarchy.map((cat) => {
-    let child = null
-    if (cat.child) {
-      child = catExtractor(cat.child)
-    }
-    return <CatCard key={cat.id} cat={cat} child={child} />
+    console.log(cat)
+    if (cat.order < 100000) {
+      //more than 100000 valued order will not be seen at exams
+      let child = null
+      if (cat.child) {
+        child = catExtractor(cat.child)
+      }
+      return <CatCard key={cat.id} cat={cat} child={child} />
+    } else return null
   })
 }
 
