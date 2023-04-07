@@ -5,6 +5,7 @@ import { ListGroup, Table } from 'react-bootstrap'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { examRankByIdLoader } from '../../store/exams'
+import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 
 class Rank extends Component {
   componentDidMount() {
@@ -19,6 +20,7 @@ class Rank extends Component {
   render() {
     return (
       <div className='mt-5'>
+        {this.props.rankLoading && <CircleLoader />}
         <h3 className='text-center'>
           <FormattedMessage id='btn.rank' defaultMessage='Rank' />
         </h3>
@@ -112,6 +114,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
+    rankLoading: state.exams.rankLoading,
     rank: state.exams.rank,
     exam: state.exams.exam,
     userId: state.auth.userId

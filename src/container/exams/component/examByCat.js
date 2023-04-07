@@ -1,6 +1,6 @@
 //import moment from 'moment'
 import * as moment from 'dayjs'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Badge, Button, Col } from 'react-bootstrap'
 import { BsFileText } from 'react-icons/bs'
 import { FormattedMessage } from 'react-intl'
@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom'
 import ExamCatBadges from '../../../components/exams/gallary/examCatBadges'
 import { resetExamResultLoader } from '../../../store/exams'
 import { examTypeToString } from '../../../utils/faculty'
+import { fetchCourseEnrolledByStuLoader } from '../../../store/courses'
+import { FaLock } from 'react-icons/fa'
 const duration = require('dayjs/plugin/duration')
 const relativeTime = require('dayjs/plugin/relativeTime')
 moment.extend(relativeTime)
@@ -16,7 +18,17 @@ moment.extend(duration)
 
 export default function ExamByCat({ exam, courseId = null }) {
   const dispatch = useDispatch()
-  const authToken = useSelector((state) => (state.auth.token ? true : false))
+  const coursesEnrolledByStu = useSelector(
+    (state) => state.courses.coursesEnrolledByStu
+  )
+  useEffect(() => {
+    dispatch(fetchCourseEnrolledByStuLoader())
+  }, [dispatch])
+
+  const isFree =
+    exam.categoryType.filter((cat) => cat.name === 'Free').length > 0
+  const isEnrolledStu =
+    coursesEnrolledByStu.map((course) => course.id).indexOf(+courseId) !== -1
   return (
     <>
       <Col sm={12}>
@@ -27,6 +39,7 @@ export default function ExamByCat({ exam, courseId = null }) {
         <div className='d-flex justify-content-between'>
           <div>
             <ExamCatBadges categoryType={exam.categoryType} />
+            <span>{!isEnrolledStu && !isFree && <FaLock />}</span>
           </div>
           <div>
             <Badge variant='dark' className='px-2 py-1'>
@@ -55,11 +68,14 @@ export default function ExamByCat({ exam, courseId = null }) {
         <div className='d-flex justify-content-center'>
           <Link
             className='text-white'
+            // First get array of coursesEnrolledByStuIds, then finds in them the course id
+            // , then check the free status
             to={
-              (!authToken &&
-              exam.categoryType.filter((cat) => cat.name === 'Free').length > 0
-                ? '/exams/free/'
-                : '/exams/') + (courseId ? exam.id + '_' + courseId : exam.id)
+              isEnrolledStu
+                ? '/exams/' + exam.id + '_' + courseId
+                : isFree
+                ? '/exams/free/' + exam.id
+                : '/exams/' + exam.id
             }
           >
             <Button
@@ -67,6 +83,7 @@ export default function ExamByCat({ exam, courseId = null }) {
               onClick={() => {
                 dispatch(resetExamResultLoader())
               }}
+              disabled={!isEnrolledStu && !isFree}
             >
               <FormattedMessage id='btn.start' defaultMessage='Start Exam' />
             </Button>
@@ -82,6 +99,7 @@ export default function ExamByCat({ exam, courseId = null }) {
                 }}
                 variant='outline-primary'
                 className='ml-2'
+                disabled={!isEnrolledStu && !isFree}
               >
                 <FormattedMessage id='btn.rank' defaultMessage='Rank' />
               </Button>

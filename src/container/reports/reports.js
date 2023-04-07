@@ -64,10 +64,16 @@ export default function Reports() {
       })
   }
 
-  const getExamDetailsById = (examId) => {
+  const getExamDetailsById = (examId, courseId) => {
     setLoading(true)
     axios
-      .get(process.env.REACT_APP_SITE_URL + '/exams/' + examId)
+      .get(
+        process.env.REACT_APP_SITE_URL +
+          '/exams/reports/filterby?examId=' +
+          examId +
+          '&courseId=' +
+          courseId
+      )
       .then((res) => {
         //console.log(res.data)
         setLoading(false)
@@ -162,7 +168,10 @@ export default function Reports() {
                     <td
                       onClick={() => {
                         setIsActive(examStat.examId)
-                        getExamDetailsById(examStat.examId)
+                        getExamDetailsById(
+                          examStat.examId,
+                          examStats[0].courses[0].id
+                        )
                         // setExamTitle(examStat.examTitle)
                         // setExamTotalMark(examStat.totalMark)
                         setExamActivityStat(examStat.examActivityStat)

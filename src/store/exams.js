@@ -18,6 +18,7 @@ const slice = createSlice({
     totalPenaltyMark: null,
     totalScorePercentage: null,
     timeTakenToComplete: null,
+    rankLoading: false,
     rank: null,
     exam: null, // store the individual exam
     error: null,
@@ -35,6 +36,7 @@ const slice = createSlice({
       state.totalScorePercentage = null
       state.timeTakenToComplete = null
       state.timeLimit = null
+      state.rankLoading = false
       state.rank = null
       state.exam = null
       state.error = null
@@ -81,11 +83,16 @@ const slice = createSlice({
       state.totalScorePercentage = action.payload.totalScorePercentage
       state.timeTakenToComplete = action.payload.timeTakenToComplete
     },
+    examRankStart: (state) => {
+      state.rankLoading = true
+    },
     examRankById: (state, action) => {
+      state.rankLoading = false
       state.rank = action.payload.rank
       state.exam = action.payload.exam
     },
     postExamError: (state, action) => {
+      state.rankLoading = false
       state.error = action.payload
     },
     disableQuestionsAdd: (state, action) => {
@@ -105,6 +112,7 @@ export const {
   getExamError,
   resetExamError,
   postExamById,
+  examRankStart,
   examRankById,
   postExamError,
   disableQuestionsAdd,
@@ -191,6 +199,7 @@ export const examRankByIdLoader = (id, courseId) => (dispatch) => {
       url: '/postexams/rank/' + id,
       data: { id, courseId },
       method: 'post',
+      onStart: examRankStart.type,
       onSuccess: examRankById.type,
       onError: postExamError.type
     })

@@ -87,6 +87,7 @@ export default function CourseDetails() {
                   <span className='bg-info text-white px-3 py-1'>
                     {course.price ? course.price + ' Taka' : 'Free'}
                   </span>
+                  {/* <span>Price</span> */}
                 </div>
                 <div>
                   <FaCalendarAlt size='1.5rem' />{' '}
@@ -95,6 +96,7 @@ export default function CourseDetails() {
                       .duration(moment(course.endDate).diff(course.startDate))
                       .humanize()}
                   </span>
+                  {/* <span>Duration</span> */}
                 </div>
               </Card.Text>
               {isAuthenticated && (

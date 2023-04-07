@@ -40,6 +40,8 @@ const RoutePages = (props) => {
         <Route path='/signup' component={Signup} />
         <Route path='/reset/:id' component={Reset} />
         <Route path='/exams' exact component={InnerContent} />
+        <Route path='/exams/courses/:id' component={InnerContent} />
+        <Route path='/exams/:id' component={InnerContent} />
         {/* <Route path='/exams/:id' exact component={InnerContent} /> */}
         <Route path='/courses' exact component={InnerContent} />
         <Route path='/courses/:id' exact component={InnerContent} />
@@ -47,6 +49,7 @@ const RoutePages = (props) => {
         <Route path='/exams/free/:id' component={InnerContent} />
         <Route path='/result' component={InnerContent} />
         <Route path='/result/rank/:id' component={InnerContent} />
+        <Route path='/print' component={InnerContent} />
         <Route path='/help' component={InnerContent} />
         <Route path='/payment' component={InnerContent} />
         <Route path='/terms' component={InnerContent} />
@@ -71,6 +74,7 @@ const RoutePages = (props) => {
           <Route path='/reports/actions' component={InnerContent} />
           <Route path='/profile' component={InnerContent} />
           <Route path='/exams' component={InnerContent} />
+          <Route path='/exams/courses/:id' component={InnerContent} />
           <Route path='/notification' component={InnerContent} />
           <Route path='/exams/:id' component={InnerContent} />
           <Route path='/result' component={InnerContent} />

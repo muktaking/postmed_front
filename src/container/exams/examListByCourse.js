@@ -13,6 +13,7 @@ import CoursesComponent from '../courses/'
 export default function ExamListsByCat() {
   const dispatch = useDispatch()
   const courses = useSelector((state) => state.courses)
+  const token = useSelector((state) => state.auth.token)
 
   useEffect(() => {
     dispatch(fetchCourseEnrolledByStuLoader())

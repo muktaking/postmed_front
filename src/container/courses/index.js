@@ -163,13 +163,14 @@ export default function Index({ landing = null }) {
                     </span>
                   </div>
                 </Card.Text>
-                {isAuthenticated && (
-                  <Card.Text className='text-center mt-2'>
-                    <Link to={'/exams/courses/' + course.id}>
-                      <Button variant='primary'>Go to Exams</Button>
-                    </Link>
-                  </Card.Text>
-                )}
+                <Card.Text className='text-center mt-2'>
+                  <Link to={'/exams/courses/' + course.id}>
+                    <Button variant='primary'>Go to Exams</Button>
+                  </Link>
+                </Card.Text>
+                {/* {isAuthenticated && (
+                  
+                )} */}
                 <hr />
                 <div className='d-flex justify-content-center align-items-center'>
                   {isAuthenticated ? (
