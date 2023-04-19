@@ -19,25 +19,20 @@ export default function Latest({ courseId = null }) {
       .catch((e) => {
         console.log(e)
       })
-  }, [])
+  }, [courseId])
 
   return (
     <>
       <h3 className='text-center'>Ongoing Exam</h3>
       <div className='d-flex justify-content-center'>
-        <Row
-          className='mb-5 py-3 px-1 border border-secondary justify-content-center'
-          style={{ width: '350px' }}
-        >
-          {exam ? (
-            <ExamByCat exam={exam} courseId={courseId} />
-          ) : (
-            <p>
-              Sorry! No ongoing exam but do not worry. Please try avaiable
-              previous exams.
-            </p>
-          )}
-        </Row>
+        {exam ? (
+          <ExamByCat exam={exam} courseId={courseId} />
+        ) : (
+          <p>
+            Sorry! No ongoing exam but do not worry. Please try avaiable
+            previous exams.
+          </p>
+        )}
       </div>
     </>
   )

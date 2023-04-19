@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Button, Form, Modal, Toast } from 'react-bootstrap'
+import CircleLoader from '../../../components/customSpinner/circleLoader/circleLoader'
 
 export default function UploadUsers({ updater }) {
   const [show, setShow] = useState(false)
@@ -57,6 +58,7 @@ export default function UploadUsers({ updater }) {
             </Toast.Header>
             <Toast.Body>{res}</Toast.Body>
           </Toast>
+          {loading && <CircleLoader />}
           <Form>
             <input
               type='file'

@@ -39,9 +39,6 @@ const ExamEdit = lazy(() => import('./examBuilder/editExam'))
 
 //import ExamLists from "./exams/examLists";
 const ExamLists = lazy(() => import('./exams/examLists'))
-//import ExamLists from "./exams/examLists";
-//const ExamListsByCat = lazy(()=> import('./exams/examListsByCat'));
-const ExamListsByCat = lazy(() => import('./exams/examListsByCat'))
 
 const ExamListsByCourse = lazy(() => import('./exams/examListByCourse'))
 

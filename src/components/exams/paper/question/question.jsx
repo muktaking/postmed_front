@@ -3,7 +3,6 @@ import { Badge, Image, ListGroup, Table } from 'react-bootstrap'
 import { LazyLoadComponent } from 'react-lazy-load-image-component'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { FaFlag } from 'react-icons/fa'
 import Stem from './stem'
 
 const QuestionForm = ({ question, handleChange, defaultChecked, index }) => {

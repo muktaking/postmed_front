@@ -63,7 +63,7 @@ export default function ShowRoutine({ showRaw, id, title }) {
         setRoutine(res.data)
       })
       .catch()
-  }, [showRaw])
+  }, [showRaw, id])
 
   return (
     <div className='container'>

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Badge, Row } from 'react-bootstrap'
+import { Badge } from 'react-bootstrap'
 import { useParams } from 'react-router'
 import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 import ExamByCat from './component/examByCat'
@@ -39,13 +39,7 @@ export default function ExamListsByCatShower() {
       )}
       <div className='d-flex justify-content-center flex-wrap'>
         {exams.map((exam) => (
-          <Row
-            key={exam.title}
-            className='m-2 py-3 pl-2 border border-secondary' // bg-secondary text-white
-            style={{ width: '350px' }}
-          >
-            <ExamByCat exam={exam} />
-          </Row>
+          <ExamByCat key={exam.title} exam={exam} />
         ))}
       </div>
     </div>

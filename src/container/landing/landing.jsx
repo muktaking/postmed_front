@@ -6,28 +6,29 @@ import { RoutesConfig } from '../../config/routes.config'
 import FeatureWhyChoseUs from './feature/featureWhyChoseUs'
 // import Home from './home/home'
 //import Contact from "./contact/contact";
-import Hero from './landing2/hero'
+import Hero from './landing3/hero'
 import ScrollToTop from '../../components/customScroller/scrollToTop'
+import CourseCarousel from './landing3/courseCarousel'
+import Whatsapp from '../../components/chats/whatsapp'
 const Contact = lazy(() => import('./contact/contact'))
 const SignupSection = lazy(() => import('./signupSection/signupSection'))
 const Feature = lazy(() => import('./feature/feature'))
-const Courses = lazy(() => import('../courses/'))
 
 const landing = (props) => {
   return (
     <div className={'__landing__upper'}>
+      <Whatsapp />
       <MetaInfo {...RoutesConfig.Home.metaInfo} />
       {/* <Home /> */}
       <Suspense fallback={<div />}>
         <NavbarHome isLanding={true} />
       </Suspense>
       <Hero />
+      <Feature />
       <Suspense fallback={<div />}>
+        <CourseCarousel />
         <FeatureWhyChoseUs />
-        <div className='my-5'>
-          <Courses landing={true} />
-        </div>
-        <Feature />
+
         <SignupSection />
         <Contact />
       </Suspense>

@@ -1,24 +1,34 @@
 import axios from 'axios'
 import * as moment from 'dayjs'
 import React, { useEffect, useState } from 'react'
-import { Badge, Button, Card, Modal, Toast } from 'react-bootstrap'
-import { FaCalendarAlt, FaMoneyCheckAlt } from 'react-icons/fa'
-import { LazyLoadComponent } from 'react-lazy-load-image-component'
+import { Alert, Badge, Button, Card, Modal, Toast } from 'react-bootstrap'
 import ReactMarkdown from 'react-markdown'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import remarkGfm from 'remark-gfm'
 import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
-import RedFillLoader from '../../components/customSpinner/redFillLoader/redFillLoader'
 import MetaInfo from '../../components/seo/metainfo'
-import SocialShare from '../../components/socialShare/socialShare'
 import { RoutesConfig } from '../../config/routes.config'
-import { courseResetLoader, fetchCourseLoader } from '../../store/courses'
+import {
+  courseResetLoader,
+  fetchCourseByFilterLoader,
+  fetchCourseEnrolledByStuLoader,
+  fetchCourseLoader
+} from '../../store/courses'
+import { facultyToString, pgCourseTypeToString } from '../../utils/faculty'
+import CourseFilter from './courseFilter'
+import { paginate } from '../../utils/paginate'
+import Pagination from 'react-js-pagination'
 const duration = require('dayjs/plugin/duration')
 const relativeTime = require('dayjs/plugin/relativeTime')
 moment.extend(relativeTime)
 moment.extend(duration)
 
+function useQuery() {
+  const { search } = useLocation()
+
+  return React.useMemo(() => new URLSearchParams(search), [search])
+}
 //styles to show toast message
 const styles = {
   position: 'fixed',
@@ -28,27 +38,34 @@ const styles = {
 }
 
 /**
- *
- * @param {landing} dentotes landing page is or not; boolean
  * @returns nothing
  */
-export default function Index({ landing = null }) {
+export default function Index() {
   const dispatch = useDispatch()
+  let query = useQuery()
+  const pgCourseType = query.get('pgCourseType')
+  const faculty = query.get('faculty')
   const coursesStore = useSelector((state) => state.courses)
   const isAuthenticated = useSelector((state) => state.auth.token !== null)
   const [enrollResLoader, setEnrollResLoader] = useState(false)
   const [res, setRes] = useState(null) // get server response after enrollment request by student
+  const [currentPage, setCurrentPage] = useState(1)
   const [showModalMsg, setShowModalMsg] = useState(null) // show modal
-  let courses = coursesStore
-    ? landing
-      ? coursesStore.courses.filter((course, id) => id < 3)
-      : coursesStore.courses
-    : []
+  const courses = coursesStore ? coursesStore.courses : []
+  const enrolledCoursesId = coursesStore.coursesEnrolledByStu.map(
+    (course) => course.id
+  )
+  const pageSize = 5
 
   useEffect(() => {
     dispatch(courseResetLoader()) // reset course error msg
+    dispatch(fetchCourseEnrolledByStuLoader())
+    if (pgCourseType || faculty) {
+      return dispatch(fetchCourseByFilterLoader(pgCourseType, faculty))
+    }
+
     dispatch(fetchCourseLoader()) // fetch courses
-  }, [dispatch])
+  }, [dispatch, faculty, pgCourseType])
 
   const handleClose = () => {
     setRes(null)
@@ -57,11 +74,29 @@ export default function Index({ landing = null }) {
   const handleModalClose = () => {
     setShowModalMsg(null)
   }
-
+  const enrollmentHandler = (courseId) => {
+    setEnrollResLoader(true)
+    axios({
+      baseURL: process.env.REACT_APP_SITE_URL,
+      url: '/courses/enroll/' + courseId,
+      method: 'patch'
+    })
+      .then((response) => {
+        setEnrollResLoader(false)
+        setRes(response.data.message)
+      })
+      .catch((error) => {
+        setEnrollResLoader(false)
+        setRes(
+          'Sorry. Enrollment to this course is not possible due to server error. Please contact with admin.'
+        )
+      })
+  }
+  const paginatedCourses = paginate(courses, currentPage, pageSize)
   return (
     <div>
       {/* SEO section */}
-      {!landing && <MetaInfo {...RoutesConfig.Course.metaInfo} />}
+      {<MetaInfo {...RoutesConfig.Course.metaInfo} />}
 
       {/* Modal section --> shows details of a course after clicking 'More' button */}
       <Modal show={showModalMsg} onHide={handleModalClose}>
@@ -91,51 +126,77 @@ export default function Index({ landing = null }) {
 
       {/* Main Section */}
       <h3 className='text-center heading'>Available Courses</h3>
-      {landing && <div className='heading-underline'></div>}
       {enrollResLoader && <CircleLoader />}
-      {coursesStore.loading &&
-        (landing ? ( //show different preloader based on landing page
-          <div className='text-center'>
-            <span>Please wait. Courses are </span>
-            <RedFillLoader />
-          </div>
-        ) : (
-          <CircleLoader />
-        ))}
-      <div className='d-flex justify-content-around flex-wrap'>
+      {coursesStore.loading && <CircleLoader />}
+      <CourseFilter />
+      <div className='d-flex justify-content-around flex-wrap mt-3'>
         {coursesStore.error ? ( // show courses error messsage
           <p className='text-danger'>
             <span>Courses can not be retrived.</span>
-            {!landing && (
-              <>
-                <hr />
-                <span>Possible Reason: {coursesStore.error}</span>{' '}
-              </>
-            )}
+            <hr />
+            <span>Possible Reason: {coursesStore.error}</span>
           </p>
+        ) : courses.length < 1 ? (
+          <Alert variant='danger'>No Courses Available</Alert>
         ) : (
-          courses.map((course) => (
+          paginatedCourses.map((course) => (
             <Card className='my-3' style={{ width: '350px' }}>
-              <LazyLoadComponent>
-                <Card.Img
-                  variant='top'
-                  src={
-                    course.imageUrl
-                      ? `${process.env.REACT_APP_SITE_URL}/${course.imageUrl}`
-                      : `${process.env.REACT_APP_SITE_URL}/images/courses/index.png`
-                  }
-                />
-              </LazyLoadComponent>
               <Card.Body>
                 <Link to={`/courses/${course.id}`}>
-                  <Card.Title style={{ fontSize: '1.4rem', fontWeight: '900' }}>
+                  <Card.Title
+                    className='text-center'
+                    style={{ fontSize: '1.4rem', fontWeight: '900' }}
+                  >
                     {course.title}
                   </Card.Title>
                 </Link>
+                <Card.Text className=''>
+                  <div className='text-right'>
+                    <Badge pill variant='dark' className='mr-2'>
+                      {pgCourseTypeToString(course.pgCourseType)}
+                    </Badge>
+                    <Badge pill variant='dark'>
+                      {facultyToString(course.faculty)}
+                    </Badge>
+                  </div>
+                  <div>
+                    <span className='bg-light text-dark px-1'>
+                      Regular Price:
+                      {course.price ? course.price + ' Taka' : 'Free'}
+                    </span>
+                  </div>
+
+                  {course.price && course.discountPricePercentage ? (
+                    <div className='mt-1'>
+                      <span className='bg-secondary text-white px-1'>
+                        Special Price:{' '}
+                        {course.price -
+                          Math.ceil(
+                            (course.price * course.discountPricePercentage) /
+                              100
+                          ) +
+                          ' Taka'}{' '}
+                      </span>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+
+                  <div className='my-1'>
+                    <span className='bg-light text-dark px-1'>
+                      Duration:{' '}
+                      {moment
+                        .duration(moment(course.endDate).diff(course.startDate))
+                        .humanize() + ' long.'}
+                    </span>
+                  </div>
+                  <div>
+                    <span className='bg-light text-dark px-1'>
+                      Start: {moment(course.startDate).format('DD-MMM-YY')}
+                    </span>
+                  </div>
+                </Card.Text>
                 <Card.Text>
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                    {course.description.substring(0, 250) + ' ...'}
-                  </ReactMarkdown>
                   <p className='text-center'>
                     <Button
                       variant='outline-primary'
@@ -143,101 +204,62 @@ export default function Index({ landing = null }) {
                         setShowModalMsg(course.description)
                       }}
                     >
-                      More
+                      Details
                     </Button>
                   </p>
                 </Card.Text>
-                <Card.Text className='d-flex justify-content-between'>
-                  <div>
-                    <FaMoneyCheckAlt size='1.5rem' />{' '}
-                    <span className='bg-info text-white px-3 py-1'>
-                      {course.price ? course.price + ' Taka' : 'Free'}
-                    </span>
-                  </div>
-                  <div>
-                    <FaCalendarAlt size='1.5rem' />{' '}
-                    <span className='bg-secondary text-white px-3 py-1'>
-                      {moment
-                        .duration(moment(course.endDate).diff(course.startDate))
-                        .humanize() + ' long.'}
-                    </span>
-                  </div>
-                </Card.Text>
+                <hr />
                 <Card.Text className='text-center mt-2'>
                   <Link to={'/exams/courses/' + course.id}>
                     <Button variant='primary'>Go to Exams</Button>
                   </Link>
                 </Card.Text>
-                {/* {isAuthenticated && (
-                  
-                )} */}
-                <hr />
-                <div className='d-flex justify-content-center align-items-center'>
-                  {isAuthenticated ? (
-                    <Button
-                      variant='primary'
-                      //size='lg'
-                      //className='px-5'
-                      style={{
-                        width: '300px',
-                        height: '55px',
-                        fontSize: '18px'
-                      }}
-                      onClick={() => {
-                        //setAuthorizationToken(token);
-                        setEnrollResLoader(true)
-                        axios({
-                          baseURL: process.env.REACT_APP_SITE_URL,
-                          url: '/courses/enroll/' + course.id,
-                          method: 'patch'
-                        })
-                          .then((response) => {
-                            setEnrollResLoader(false)
-                            setRes(response.data.message)
-                          })
-                          .catch((error) => {
-                            setEnrollResLoader(false)
-                            setRes(
-                              'Sorry. Enrollment to this course is not possible due to server error. Please contact with admin.'
-                            )
-                          })
-                      }}
-                    >
-                      Enroll
-                    </Button>
-                  ) : (
-                    <Link to={'/login'}>
-                      <Badge variant='warning' className='p-2'>
-                        Please Login to Enroll.
-                      </Badge>
-                    </Link>
-                  )}
-                </div>
-                <hr />
-                <Card.Text className='text-muted text-center'>
-                  <span>Start: {moment(course.startDate).fromNow()}</span>
-                </Card.Text>
+                {isAuthenticated && (
+                  <>
+                    <hr />
+                    <div className='d-flex justify-content-center align-items-center'>
+                      {enrolledCoursesId.indexOf(course.id) > -1 ? (
+                        <p className='text-success text-center'>
+                          Already Enrolled
+                        </p>
+                      ) : (
+                        <Button
+                          variant='primary'
+                          style={{
+                            width: '300px',
+                            height: '55px',
+                            fontSize: '18px'
+                          }}
+                          onClick={() => {
+                            enrollmentHandler(course.id)
+                          }}
+                        >
+                          Enroll
+                        </Button>
+                      )}
+                    </div>
+                  </>
+                )}
               </Card.Body>
-              <Card.Footer>
-                <SocialShare
-                  title={course.title}
-                  description={course.description}
-                  url=''
-                />
-              </Card.Footer>
             </Card>
           ))
         )}
       </div>
-      {landing && coursesStore.courses.length > 3 && (
-        <div className='d-flex justify-content-center'>
-          <Link to='/courses'>
-            <Button variant='warning' size='xl' className='text-white'>
-              More Ongoing Courses...
-            </Button>
-          </Link>
-        </div>
-      )}
+      <div className='d-flex justify-content-center mt-3'>
+        <Pagination
+          activePage={currentPage}
+          itemsCountPerPage={pageSize}
+          totalItemsCount={courses.length}
+          pageRangeDisplayed={2}
+          onChange={(page) => {
+            setCurrentPage(page)
+          }}
+          itemClass='page-item'
+          linkClass='page-link'
+          prevPageText='Previous'
+          nextPageText='Next'
+        />
+      </div>
     </div>
   )
 }

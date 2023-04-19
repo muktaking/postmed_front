@@ -26,7 +26,7 @@ const SideCard = ({ userExamStat }) => {
       <ListGroup as='ul' variant='flush'>
         {examTitles &&
           examTitles.map((exam, index) => {
-            if (index < 3)
+            if (index < 3) {
               return (
                 <ListGroup.Item key={index} as='li' className=''>
                   {/* <Badge variant="info" className="rounded p-1"> */}
@@ -43,6 +43,7 @@ const SideCard = ({ userExamStat }) => {
                   </p>
                 </ListGroup.Item>
               )
+            }
           })}
       </ListGroup>
     </BigCard>

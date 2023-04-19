@@ -50,7 +50,7 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
                   examInfo
                 return (
                   <Tab.Pane key={id} eventKey={ind}>
-                    <div className='d-md-flex justify-content-between flex-wrap'>
+                    <div className='d-flex justify-content-between flex-wrap'>
                       <TotalExam
                         value={userExamInfo.totalExam[1]}
                         footerValue={userExamInfo.totalExam[0]}
@@ -58,6 +58,10 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
                       <Rank
                         value={userExamInfo.rank[0]}
                         footerValue={userExamInfo.rank[1]}
+                      />
+                      <Result
+                        value={userExamInfo.result[0]}
+                        footerValue={userExamInfo.result[1]}
                       />
                       {userExamInfo.upcomingExam ? (
                         <UpcomingExam
@@ -71,10 +75,6 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
                       ) : (
                         <UpcomingExam />
                       )}
-                      <Result
-                        value={userExamInfo.result[0]}
-                        footerValue={userExamInfo.result[1]}
-                      />
                     </div>
                     <hr className='my-3' />
                     <Routine id={id} title={examInfo.title} />

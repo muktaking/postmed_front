@@ -44,7 +44,7 @@ export default function Reports() {
       .catch((e) => {
         console.log(e)
       })
-  }, [])
+  }, [id])
 
   const courseSelectHandler = (e) => {
     setLoading(true)

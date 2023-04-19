@@ -2,14 +2,7 @@ import axios from 'axios'
 //import moment from 'moment'
 import * as moment from 'dayjs'
 import React, { useEffect, useState } from 'react'
-import {
-  Button,
-  Image,
-  Modal,
-  OverlayTrigger,
-  Toast,
-  Tooltip
-} from 'react-bootstrap'
+import { Button, Image, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { GrUpdate } from 'react-icons/gr'
 import AddACourse from './addACourse'
 
@@ -143,10 +136,13 @@ export default function ShowCourses({ msg, setMsg, showRaw }) {
                                 course.title,
                                 course.description,
                                 course.price,
+                                course.discountPricePercentage,
                                 course.imageUrl,
+                                course.pgCourseType,
+                                course.faculty,
                                 new Date(course.startDate),
                                 new Date(course.endDate),
-                                false //duplicate boolean
+                                false //duplicate course boolean
                               ])
                             }}
                           >
@@ -162,7 +158,10 @@ export default function ShowCourses({ msg, setMsg, showRaw }) {
                                 course.title,
                                 course.description,
                                 course.price,
+                                course.discountPricePercentage,
                                 course.imageUrl,
+                                course.pgCourseType,
+                                course.faculty,
                                 new Date(course.startDate),
                                 new Date(course.endDate),
                                 true //duplicate boolean

@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 
 const NavbarHome = lazy(() => import('../../../components/navbar/navbarHome'))
-const Promotional = lazy(() => import('../promotional'))
 
 const Home = (props) => {
   return (

@@ -18,24 +18,16 @@ const miniBlock = ({
   faFooterIcon
 }) => {
   return (
-    <Card className='card-common mt-2'>
+    <Card className='card-common mt-2 mx-auto' style={{ width: '11.6rem' }}>
       <Card.Body>
-        <Row>
-          <Col sm={8}>
-            <Header
-              heading={heading}
-              color={color}
-              value={value}
-              id={id}
-              courseId={courseId}
-            />
-          </Col>
-          <Col sm={4}>
-            <div>
-              <Icon icon={faIcon} size={'2.4rem'} classes={'text-' + color} />
-            </div>
-          </Col>
-        </Row>
+        <Header
+          heading={heading}
+          color={color}
+          value={value}
+          id={id}
+          courseId={courseId}
+          icon={faIcon}
+        />
       </Card.Body>
       <Footer
         color={color}

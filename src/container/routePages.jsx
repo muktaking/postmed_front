@@ -77,6 +77,7 @@ const RoutePages = (props) => {
           <Route path='/exams/courses/:id' component={InnerContent} />
           <Route path='/notification' component={InnerContent} />
           <Route path='/exams/:id' component={InnerContent} />
+          <Route path='/exams/free/:id' component={InnerContent} />
           <Route path='/result' component={InnerContent} />
           <Route path='/rank' component={InnerContent} />
           <Route path='/settings' component={InnerContent} />

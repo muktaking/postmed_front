@@ -184,7 +184,7 @@ class ExamTaker extends Component {
 
   componentDidMount() {
     this.props.onResetExamLoader();
-    if (this.props.auth.token) {
+    if (!this.props.free) {
       this.props.onGetExamByIdLoader(this.props.match.params.id);
     } else {
       this.props.onGetFreeExamByIdLoader(this.props.match.params.id);

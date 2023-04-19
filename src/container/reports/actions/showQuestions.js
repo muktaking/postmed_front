@@ -27,7 +27,7 @@ export default function ShowQuestions() {
       .catch((e) => {
         setErrorMsg(e.message)
       })
-  }, [])
+  }, [courseId, examId, isAnswers])
 
   return (
     <div>

@@ -1,16 +1,26 @@
 import React from 'react'
+import { Col, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import Icon from './icon'
 
-const cardHeader = ({ heading, color, value, id, courseId }) => (
-  <div className='text-right text-secondary'>
-    <h5>{heading}</h5>
-    <p className={'lead text-' + color}>
+const cardHeader = ({ heading, color, value, id, icon, courseId }) => (
+  <div className='d-flex justify-content-between'>
+    <Row className='text-secondary'>
+      <Col xs='3'>
+        <Icon icon={icon} size={'1.2rem'} classes={'text-' + color} />
+      </Col>
+      <Col xs='9'>{heading}</Col>
+    </Row>
+    <div className={'text-' + color}>
       {courseId ? (
-        <Link to={'exams/' + id + '_' + courseId}> {value} </Link>
+        <Link to={'exams/' + id + '_' + courseId}>
+          {' '}
+          {value.slice(0, 5)}...{' '}
+        </Link>
       ) : (
         value
       )}
-    </p>
+    </div>
   </div>
 )
 

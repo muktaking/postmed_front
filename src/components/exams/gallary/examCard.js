@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { Suspense, useState } from 'react'
 import { Alert, Button, Card, OverlayTrigger, Popover } from 'react-bootstrap'
-import { FormattedMessage, useIntl } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 import { LazyLoadComponent } from 'react-lazy-load-image-component'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -33,7 +33,6 @@ export default function ExamCard({
 }) {
   const dispatch = useDispatch()
   const token = useSelector((state) => state.auth.token)
-  const intl = useIntl()
   const [res, setRes] = useState(null)
   const [editExam, setEditExam] = useState(false)
 

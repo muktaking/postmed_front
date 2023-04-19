@@ -56,6 +56,25 @@ export const fetchCourseLoader = () => (dispatch) => {
   )
 }
 
+export const fetchCourseByFilterLoader =
+  (pgCourseType, faculty, search) => (dispatch) => {
+    console.log(search)
+    dispatch(
+      apiCallBegun({
+        url:
+          url +
+          '/filter?' +
+          (pgCourseType ? 'pgCourseType=' + pgCourseType + '&' : '') +
+          (faculty ? 'faculty=' + faculty + '&' : ' ') +
+          (search ? '&search=' + search : ''),
+        method,
+        onStart: loadingStart.type,
+        onSuccess: getCourses.type,
+        onError: courseError.type
+      })
+    )
+  }
+
 export const fetchCourseEnrolledByStuLoader = () => (dispatch) => {
   dispatch(
     apiCallBegun({

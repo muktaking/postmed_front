@@ -4,6 +4,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron'
 import Row from 'react-bootstrap/Row'
 import { FormattedMessage, useIntl } from 'react-intl'
 import MiniBlock from '../miniBlock/miniBlock'
+import CarouselComponent from './carouselComponent'
 
 //import "./feature.scss";
 
@@ -42,7 +43,7 @@ const Feature = (props) => {
   }
   return (
     <div id='feature' className='offset'>
-      <Jumbotron>
+      <Jumbotron className='feature-lg'>
         <div className='narrow text-center'>
           <Col xs={12}>
             <h3 className='heading'>
@@ -61,6 +62,9 @@ const Feature = (props) => {
             ))}
           </Row>
         </div>
+      </Jumbotron>
+      <Jumbotron className='feature-md'>
+        <CarouselComponent items={features} />
       </Jumbotron>
     </div>
   )

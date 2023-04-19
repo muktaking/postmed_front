@@ -22,10 +22,9 @@ export default function ExamFilter({ setExams, id, setCurrentPage }) {
         initialValues={{ text: '' }}
         onSubmit={(values, { setSubmitting }) => {
           setLoading(true)
-          const { text, ...rest } = values
-          let examType = Object.values(rest).map((e) => e[0])
-          //discarding all null values
-          examType = examType.filter((eT) => eT)
+          let { text, examType } = values
+          console.log(values)
+
           if (examType.length < 1) {
             examType = ['0', '1', '2', '3', '4', '5', '6']
           }
@@ -86,7 +85,7 @@ export default function ExamFilter({ setExams, id, setCurrentPage }) {
                   {examTypes.map((examType, ind) => (
                     <Form.Check
                       label={examType.name}
-                      name={examType.name}
+                      name='examType'
                       type={'checkbox'}
                       onChange={handleChange}
                       onBlur={handleBlur}

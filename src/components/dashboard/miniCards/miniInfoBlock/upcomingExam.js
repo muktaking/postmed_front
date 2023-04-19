@@ -34,7 +34,7 @@ const UpcomingExam = ({ value, footerValue, id, courseId }) => {
         defaultMessage: 'Latest Exam'
       })}
       //
-      value={'No Latest Exam Created !!!'}
+      value={'No Exam'}
       //
       // id={id}
       // courseId={courseId}

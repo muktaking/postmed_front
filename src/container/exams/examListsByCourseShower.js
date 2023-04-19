@@ -9,8 +9,12 @@ import { paginate } from '../../utils/paginate'
 import ExamByCat from './component/examByCat'
 import ExamFilter from './component/examFilter'
 import Latest from './component/latest'
+import { fetchCourseEnrolledByStuLoader } from '../../store/courses'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function ExamListsByCatShower() {
+  const dispatch = useDispatch()
+  const isAuthenticated = useSelector((state) => state.auth.token !== null)
   const { id } = useParams()
   const [exams, setExams] = useState([])
   const [loading, setLoading] = useState(false)
@@ -20,8 +24,11 @@ export default function ExamListsByCatShower() {
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   const pageSize = 5
-
+  const paginatedExams = paginate(exams, currentPage, pageSize)
   useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchCourseEnrolledByStuLoader())
+    }
     setLoading(true)
     axios
       .post(process.env.REACT_APP_SITE_URL + '/exams/course/' + id)
@@ -33,9 +40,7 @@ export default function ExamListsByCatShower() {
         setLoading(false)
         console.log(e)
       })
-  }, [id])
-
-  const paginatedExams = paginate(exams, currentPage, pageSize)
+  }, [id, isAuthenticated, dispatch])
 
   return (
     <div>
@@ -65,7 +70,7 @@ export default function ExamListsByCatShower() {
           <Col lg={2} className='mb-3'>
             <div className='mb-2'>
               <Button variant='info' onClick={handleShow}>
-                Exam's Routine
+                Exams' Routine
               </Button>
             </div>
             <ExamFilter
@@ -83,13 +88,7 @@ export default function ExamListsByCatShower() {
             <div className='d-flex justify-content-center flex-wrap'>
               {paginatedExams &&
                 paginatedExams.map((exam) => (
-                  <Row
-                    key={exam.title}
-                    className='m-2 py-3 pl-2 border border-secondary' // bg-secondary text-white
-                    style={{ width: '350px' }}
-                  >
-                    <ExamByCat exam={exam} courseId={id} />
-                  </Row>
+                  <ExamByCat key={exam.title} exam={exam} courseId={id} />
                 ))}
             </div>
             <div className='d-flex justify-content-center mt-3'>

@@ -11,7 +11,7 @@ export default function EditExam({ editExamId, editExamHandleClose }) {
         setExam(res.data)
       })
       .catch((e) => console.log(e))
-  }, [])
+  }, [editExamId])
   return (
     <div>
       <Modal show={editExamId} onHide={editExamHandleClose} size='xl'>
