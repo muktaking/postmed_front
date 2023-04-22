@@ -1,64 +1,67 @@
 export const pgProgramme = [
   {
     name: 'Residency (MD/MS)',
-    id: 1,
-    courseIds: [0, 1, 2, 4],
+    id: 2,
+    courseIds: [1, 2, 3, 5],
     imageName: 'residency.jpg'
   },
   {
     name: 'FCPS',
-    id: 0,
-    courseIds: [1, 2, 3],
+    id: 1,
+    courseIds: [2, 3, 4],
     imageName: 'bcps.png'
   },
   {
     name: 'Diploma',
-    id: '2',
-    courseIds: [1, 2],
+    id: '3',
+    courseIds: [2, 3],
     imageName: 'diploma.jpeg'
   }
 ]
 export const faculty = {
-  basic: 0,
-  medicine: 1,
-  surgery: 2,
-  gynecology: 3,
-  paediatrics: 4
+  all: 0,
+  basic: 1,
+  medicine: 2,
+  surgery: 3,
+  gynecology: 4,
+  paediatrics: 5
 }
 
 export const PgCourseType = {
-  Fellowship: 0,
-  Residency: 1,
-  Diploma: 2,
-  MembershipOfRoyalColledge: 3,
-  Usmle: 4,
-  Others: 5
+  All: 0,
+  Fellowship: 1,
+  Residency: 2,
+  Diploma: 3,
+  MembershipOfRoyalColledge: 4,
+  Usmle: 5,
+  Others: 6
 }
 
 export const PgCourseTypeHumanName = {
-  FCPS: 0,
-  'Residency (MD/MS)': 1,
-  Diploma: 2,
-  'MRCP / MRCS': 3,
-  USMLE: 4,
-  Others: 5
+  FCPS: 1,
+  'Residency (MD/MS)': 2,
+  Diploma: 3,
+  'MRCP / MRCS': 4,
+  USMLE: 5,
+  Others: 6
 }
 
 export function pgCourseTypeToString(num) {
   switch (num) {
-    case 0:
-      return 'FCPS'
     case 1:
-      return 'Residency (MD/MS)'
+      return 'FCPS'
     case 2:
-      return 'Diploma'
+      return 'Residency (MD/MS)'
     case 3:
-      return 'MRCP/ MRCS'
+      return 'Diploma'
     case 4:
-      return 'USMLE'
+      return 'MRCP/ MRCS'
     case 5:
+      return 'USMLE'
+    case 6:
       return 'Others'
-
+    case 0:
+      return 'Miscellaneous'
     default:
       return 'Null'
   }
@@ -66,16 +69,18 @@ export function pgCourseTypeToString(num) {
 
 export function facultyToString(num) {
   switch (num) {
-    case 0:
-      return 'Basic Science & Paraclinical Science'
     case 1:
-      return 'Medicine'
+      return 'Basic Science & Paraclinical Science'
     case 2:
-      return 'Surgery'
+      return 'Medicine'
     case 3:
-      return 'Gynecology'
+      return 'Surgery'
     case 4:
+      return 'Gynecology'
+    case 5:
       return 'Paediatrics'
+    case 0:
+      return 'Miscellaneous'
 
     default:
       return 'Null'

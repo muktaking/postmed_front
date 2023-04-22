@@ -5,7 +5,13 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import Stem from './stem'
 
-const QuestionForm = ({ question, handleChange, defaultChecked, index }) => {
+const QuestionForm = ({
+  question,
+  handleChange,
+  defaultChecked,
+  index,
+  isAnswerRestricted
+}) => {
   console.log(index)
   return (
     <ListGroup as='ul' className='mt-3'>
@@ -51,6 +57,7 @@ const QuestionForm = ({ question, handleChange, defaultChecked, index }) => {
                   : defaultChecked[0]
                 : null
             }
+            isAnswerRestricted={isAnswerRestricted}
           />
         </ListGroup.Item>
       ))}

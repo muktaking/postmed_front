@@ -81,7 +81,7 @@ export default function ExamFilter({ setExams, id, setCurrentPage }) {
                   />
                 </Form.Group>
                 <h4>{'Select Exam Type'}</h4>
-                <div className='pl-2'>
+                <div className='d-flex flex-wrap'>
                   {examTypes.map((examType, ind) => (
                     <Form.Check
                       label={examType.name}
@@ -91,6 +91,7 @@ export default function ExamFilter({ setExams, id, setCurrentPage }) {
                       onBlur={handleBlur}
                       id={examType.name}
                       value={examType.value}
+                      className='mr-2 mb-2'
                     />
                   ))}
                 </div>

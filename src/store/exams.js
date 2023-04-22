@@ -12,6 +12,7 @@ const slice = createSlice({
     singleStemMark: null,
     penaltyMark: null,
     timeLimit: null,
+    isAnswerRestricted: true,
     examResult: null,
     totalMark: null,
     totalScore: null,
@@ -36,6 +37,7 @@ const slice = createSlice({
       state.totalScorePercentage = null
       state.timeTakenToComplete = null
       state.timeLimit = null
+      state.isAnswerRestricted = true
       state.rankLoading = false
       state.rank = null
       state.exam = null
@@ -56,6 +58,7 @@ const slice = createSlice({
       state.singleStemMark = action.payload.exam.singleStemMark
       state.timeLimit = action.payload.exam.timeLimit
       state.penaltyMark = action.payload.exam.penaltyMark
+      state.isAnswerRestricted = action.payload.exam.isAnswerRestricted
     },
     getFreeExamById: (state, action) => {
       state.questions = action.payload.questions

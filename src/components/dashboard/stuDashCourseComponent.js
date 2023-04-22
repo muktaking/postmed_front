@@ -1,7 +1,7 @@
 //import moment from 'moment'
 import * as moment from 'dayjs'
 import React from 'react'
-import { Col, Jumbotron, Nav, Row, Tab } from 'react-bootstrap'
+import { Carousel, Col, Jumbotron, Nav, Row, Tab } from 'react-bootstrap'
 import { FaChevronCircleRight, FaExclamationTriangle } from 'react-icons/fa'
 import ExamsFeaturedCard from './bigCards/mainContentCards/examsFeaturedCard'
 import ReportCard from './bigCards/mainContentCards/reportCard'
@@ -50,32 +50,43 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
                   examInfo
                 return (
                   <Tab.Pane key={id} eventKey={ind}>
-                    <div className='d-flex justify-content-between flex-wrap'>
-                      <TotalExam
-                        value={userExamInfo.totalExam[1]}
-                        footerValue={userExamInfo.totalExam[0]}
-                      />
-                      <Rank
-                        value={userExamInfo.rank[0]}
-                        footerValue={userExamInfo.rank[1]}
-                      />
-                      <Result
-                        value={userExamInfo.result[0]}
-                        footerValue={userExamInfo.result[1]}
-                      />
-                      {userExamInfo.upcomingExam ? (
-                        <UpcomingExam
-                          value={userExamInfo.upcomingExam[0]}
-                          id={userExamInfo.upcomingExam[2]}
-                          footerValue={moment(
-                            userExamInfo.upcomingExam[1]
-                          ).fromNow()}
-                          courseId={id}
+                    {/* <div className='d-flex justify-content-between flex-wrap'> */}
+                    <Carousel nextIcon=<sapn /> prevIcon=<span />>
+                      <Carousel.Item>
+                        <TotalExam
+                          value={userExamInfo.totalExam[1]}
+                          footerValue={userExamInfo.totalExam[0]}
                         />
-                      ) : (
-                        <UpcomingExam />
-                      )}
-                    </div>
+                      </Carousel.Item>
+                      <Carousel.Item>
+                        <Rank
+                          value={userExamInfo.rank[0]}
+                          footerValue={userExamInfo.rank[1]}
+                        />
+                      </Carousel.Item>
+                      <Carousel.Item>
+                        <Result
+                          value={userExamInfo.result[0]}
+                          footerValue={userExamInfo.result[1]}
+                        />
+                      </Carousel.Item>
+                      <Carousel.Item>
+                        {userExamInfo.upcomingExam ? (
+                          <UpcomingExam
+                            value={userExamInfo.upcomingExam[0]}
+                            id={userExamInfo.upcomingExam[2]}
+                            footerValue={moment(
+                              userExamInfo.upcomingExam[1]
+                            ).fromNow()}
+                            courseId={id}
+                          />
+                        ) : (
+                          <UpcomingExam />
+                        )}
+                      </Carousel.Item>
+                    </Carousel>
+
+                    {/* </div> */}
                     <hr className='my-3' />
                     <Routine id={id} title={examInfo.title} />
                     <hr />

@@ -151,7 +151,7 @@ export default function Index() {
                   </Card.Title>
                 </Link>
                 <Card.Text className=''>
-                  <div className='text-right'>
+                  <div className='text-right mb-2'>
                     <Badge pill variant='dark' className='mr-2'>
                       {pgCourseTypeToString(course.pgCourseType)}
                     </Badge>
@@ -161,7 +161,7 @@ export default function Index() {
                   </div>
                   <div>
                     <span className='bg-light text-dark px-1'>
-                      Regular Price:
+                      Regular Price:{' '}
                       {course.price ? course.price + ' Taka' : 'Free'}
                     </span>
                   </div>

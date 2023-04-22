@@ -368,6 +368,7 @@ class ExamTaker extends Component {
                       this.state[question.id] ? this.state[question.id] : null
                     }
                     index={this.state.showPagination ? (this.state.currentPage * this.state.pageSize) : (ind + 1)}
+                    isAnswerRestricted = {this.props.exams.isAnswerRestricted}
                   />
                 ))}
                 <div className="mt-2 d-flex justify-content-center">

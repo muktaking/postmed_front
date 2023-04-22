@@ -7,14 +7,19 @@ const QuestionStemView = ({
   stem,
   index,
   handleChange,
-  defaultChecked
+  defaultChecked,
+  isAnswerRestricted
 }) => {
   //const dispatch = useDispatch();
   const disableQuestions = useSelector((state) => state.exams.disableQuestions)
 
   // const disableQuestionsAddLoader = (name)=>{
   //   dispatch({type: disableQuestionsAdd.type, payload: name})
-
+  /*
+   *  disabled = true make exam to restrict answering only one time (residency, diploma and bcs)
+   * For fcps it should be false to let student try more than once
+   *  retrive a feild as isRestrictedToOneTimeTry from backend
+   */
   return (
     <Row className='px-md-4 px-xs-2'>
       <Col xs='9'>{index + '. ' + stem}</Col>
@@ -25,8 +30,10 @@ const QuestionStemView = ({
               <Form.Check.Input
                 //inline
                 disabled={
-                  disableQuestions &&
-                  disableQuestions.includes(id + '_' + index)
+                  isAnswerRestricted
+                    ? disableQuestions &&
+                      disableQuestions.includes(id + '_' + index)
+                    : false
                 }
                 type='radio'
                 //label="True"
@@ -46,8 +53,10 @@ const QuestionStemView = ({
               <Form.Check.Input
                 //inline
                 disabled={
-                  disableQuestions &&
-                  disableQuestions.includes(id + '_' + index)
+                  isAnswerRestricted
+                    ? disableQuestions &&
+                      disableQuestions.includes(id + '_' + index)
+                    : false
                 }
                 type='radio'
                 //label="False"
@@ -68,7 +77,9 @@ const QuestionStemView = ({
           <Form.Check>
             <Form.Check.Input
               disabled={
-                disableQuestions && disableQuestions.includes(id.toString())
+                isAnswerRestricted
+                  ? disableQuestions && disableQuestions.includes(id.toString())
+                  : false
               }
               type='radio'
               name={id}

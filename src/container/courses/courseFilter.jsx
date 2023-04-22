@@ -66,7 +66,7 @@ export default function CourseFilter() {
                     value={values.search}
                   />
                 </Form.Group>
-                <div className='pl-2 d-flex'>
+                <div className='pl-2'>
                   <Form.Group
                     controlId='courseFilter.pgCourseType'
                     className='mr-2'
@@ -80,11 +80,13 @@ export default function CourseFilter() {
                       value={values.pgCourseType}
                     >
                       <option value='-1'>All</option>
-                      {Object.values(PgCourseType).map((value) => (
-                        <option value={value}>
-                          {pgCourseTypeToString(value)}
-                        </option>
-                      ))}
+                      {Object.values(PgCourseType)
+                        .slice(1) // removing the first value (All: 0)
+                        .map((value) => (
+                          <option value={value}>
+                            {pgCourseTypeToString(value)}
+                          </option>
+                        ))}
                     </Form.Control>
                   </Form.Group>
                   <Form.Group controlId='courseFilter.faculty'>
@@ -97,9 +99,13 @@ export default function CourseFilter() {
                       value={values.faculty}
                     >
                       <option value='-1'>All</option>
-                      {Object.values(faculty).map((value) => (
-                        <option value={value}>{facultyToString(value)}</option>
-                      ))}
+                      {Object.values(faculty)
+                        .slice(1) // removing the first value (all: 0)
+                        .map((value) => (
+                          <option value={value}>
+                            {facultyToString(value)}
+                          </option>
+                        ))}
                     </Form.Control>
                   </Form.Group>
                 </div>

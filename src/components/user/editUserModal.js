@@ -101,9 +101,10 @@ export default function EditUserModal({ user, updater, show, handleClose }) {
                 type='email'
                 placeholder='Enter email'
                 defaultValue={user.email}
+                disabled={true}
               />
               <Form.Text className='text-muted'>
-                We'll never share your email with anyone else.
+                To change email address please contact with admin.
               </Form.Text>
             </Form.Group>
             <Form.Group controlId='formBasicMobile'>

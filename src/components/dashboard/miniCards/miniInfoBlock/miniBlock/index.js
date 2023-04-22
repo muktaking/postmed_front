@@ -1,10 +1,7 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card'
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
 import Footer from './footer'
 import Header from './header'
-import Icon from './icon'
 
 const miniBlock = ({
   heading,
@@ -18,7 +15,7 @@ const miniBlock = ({
   faFooterIcon
 }) => {
   return (
-    <Card className='card-common mt-2 mx-auto' style={{ width: '11.6rem' }}>
+    <Card className='card-common mt-2 mx-auto'>
       <Card.Body>
         <Header
           heading={heading}
