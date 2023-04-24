@@ -10,7 +10,7 @@ import {
   FaUsers
 } from 'react-icons/fa'
 
-const icon = ({ icon, size, classes }) => {
+const Icon = ({ icon, size, classes }) => {
   switch (icon) {
     case 'file-alt':
       return <FaFileAlt size={size} className={classes} />
@@ -39,4 +39,4 @@ const icon = ({ icon, size, classes }) => {
       return <FaFile size={size} className={classes} />
   }
 }
-export default icon
+export default Icon

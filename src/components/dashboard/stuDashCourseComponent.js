@@ -11,6 +11,8 @@ import Rank from './miniCards/miniInfoBlock/rank'
 import Result from './miniCards/miniInfoBlock/result'
 import TotalExam from './miniCards/miniInfoBlock/totalExam'
 import UpcomingExam from './miniCards/miniInfoBlock/upcomingExam'
+import { Link } from 'react-router-dom'
+import { Button } from 'react-bootstrap'
 const duration = require('dayjs/plugin/duration')
 const relativeTime = require('dayjs/plugin/relativeTime')
 moment.extend(relativeTime)
@@ -43,7 +45,7 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
           </Nav>
         </Col>
         <Col sm={10}>
-          <Jumbotron>
+          <Jumbotron className='py-4 px-3'>
             <Tab.Content>
               {userDashExamInfo.map((examInfo, ind) => {
                 const { id, userExamInfo, userExamStat, featuredExams } =
@@ -51,6 +53,15 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
                 return (
                   <Tab.Pane key={id} eventKey={ind}>
                     {/* <div className='d-flex justify-content-between flex-wrap'> */}
+                    <div className='d-flex justify-content-center mb-2'>
+                      <Link to={'/exams/courses/' + id} className='mb-2'>
+                        <Button>Exams</Button>
+                      </Link>
+                      <Link to={'/reports?courseId=' + id} className='ml-2'>
+                        <Button>Reports</Button>
+                      </Link>
+                    </div>
+                    <h5 className='ml-3'>Exam Stat</h5>
                     <Carousel nextIcon=<sapn /> prevIcon=<span />>
                       <Carousel.Item>
                         <TotalExam

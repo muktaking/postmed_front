@@ -1,7 +1,8 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card'
-import Footer from './footer'
-import Header from './header'
+import { Table } from 'react-bootstrap'
+import Icon from './icon'
+import { Link } from 'react-router-dom'
 
 const miniBlock = ({
   heading,
@@ -16,22 +17,31 @@ const miniBlock = ({
 }) => {
   return (
     <Card className='card-common mt-2 mx-auto'>
+      <div className='d-flex justify-content-center mt-3'>
+        <span className={'text-white p-2 rounded-circle mx-auto bg-' + color}>
+          <Icon icon={faIcon} size={'2rem'} />
+        </span>
+      </div>
       <Card.Body>
-        <Header
-          heading={heading}
-          color={color}
-          value={value}
-          id={id}
-          courseId={courseId}
-          icon={faIcon}
-        />
+        <Table bordered>
+          <tbody>
+            <tr>
+              <td>{heading}</td>
+              <td>
+                {courseId ? (
+                  <Link to={'exams/' + id + '_' + courseId}>{value}</Link>
+                ) : (
+                  value
+                )}
+              </td>
+            </tr>
+            <tr>
+              <td>{footerHeading}</td>
+              <td>{footerValue}</td>
+            </tr>
+          </tbody>
+        </Table>
       </Card.Body>
-      <Footer
-        color={color}
-        heading={footerHeading}
-        value={footerValue}
-        icon={faFooterIcon}
-      />
     </Card>
   )
 }

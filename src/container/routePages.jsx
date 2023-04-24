@@ -152,7 +152,6 @@ const RoutePages = (props) => {
           <Route path='/category' component={InnerContent} />
           <Route path='/routine' exact component={InnerContent} />
           <Route path='/reports' component={InnerContent} />
-          <Route path='/reports/user/:id' component={InnerContent} />
           <Route path='/reports/actions' component={InnerContent} />
           <Route path='/question' component={InnerContent} />
           <Route path='/coursebuilder' component={InnerContent} />

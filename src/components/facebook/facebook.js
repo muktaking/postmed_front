@@ -65,7 +65,7 @@ class Facebook extends Component {
           fields='name,email,picture'
           onClick={this.componentClicked}
           callback={this.responseFacebook}
-          isMobile={false}
+          disableMobileRedirect={true}
         />
       </div>
     )

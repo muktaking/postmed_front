@@ -144,7 +144,6 @@ const InnerContent = (props) => {
                   <Route path='/result' exact component={Result} />
                   <Route path='/result/rank/:id' exact component={Rank} />
                   <Route path='/reports' exact component={Reports} />
-                  <Route path='/reports/user/:id' exact component={Reports} />
                   <Route
                     path='/reports/actions'
                     exact

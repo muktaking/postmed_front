@@ -12,7 +12,7 @@ const TotalExam = ({ value, footerValue }) => {
         defaultMessage: 'Exam Taken'
       })}
       value={value}
-      faIcon={'file-import'}
+      faIcon={'file-alt'}
       footerHeading={intl.formatMessage({
         id: 'db.te',
         defaultMessage: 'Total Exams'

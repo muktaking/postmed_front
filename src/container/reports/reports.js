@@ -3,13 +3,14 @@ import axios from 'axios'
 import * as moment from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import { Badge, Button, Col, Form, Row, Table } from 'react-bootstrap'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Timeline from '../../components/result/timeline'
 import MetaInfo from '../../components/seo/metainfo'
 import { RoutesConfig } from '../../config/routes.config'
 import LineCharts from './lineCharts'
 import PieCharts from './pieCharts'
 import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
+import { useQuery } from '../../utils/queryRouter'
 
 export default function Reports() {
   const [loading, setLoading] = useState(false)
@@ -22,12 +23,17 @@ export default function Reports() {
   // const [examTitle, setExamTitle] = useState('')
   // const [examTotalMark, setExamTotalMark] = useState(0)
   const [examActivityStat, setExamActivityStat] = useState([])
-  const { id } = useParams()
+  let query = useQuery()
+  const userId = query.get('userId')
+  const queryCourseId = query.get('courseId')
 
   useEffect(() => {
-    if (id) {
+    //admin uses userId to get respective user's reports
+    if (userId) {
       axios
-        .get(process.env.REACT_APP_SITE_URL + '/courses/enrolled/courses/' + id)
+        .get(
+          process.env.REACT_APP_SITE_URL + '/courses/enrolled/courses/' + userId
+        )
         .then((res) => {
           setCourses(res.data)
         })
@@ -35,6 +41,10 @@ export default function Reports() {
           console.log(e)
         })
       return
+    }
+    //will get all courses enrolled by user's
+    if (queryCourseId) {
+      courseSelectHandler(null, queryCourseId)
     }
     axios
       .get(process.env.REACT_APP_SITE_URL + '/courses/enrolled/courses')
@@ -44,20 +54,27 @@ export default function Reports() {
       .catch((e) => {
         console.log(e)
       })
-  }, [id])
+  }, [])
 
-  const courseSelectHandler = (e) => {
+  const courseSelectHandler = (e, courseId = null) => {
     setLoading(true)
+    //userId will used for admin to get respective user's reports; then, couseId to get only specific course's reports
     axios
       .get(
         process.env.REACT_APP_SITE_URL +
           '/userExamProfile/courses/' +
-          (id ? `${id}_${e.target.value}` : e.target.value)
+          (userId
+            ? `${userId}_${e.target.value}`
+            : courseId
+            ? courseId
+            : e.target.value)
       )
       .then((res) => {
         //console.log(res.data)
         setLoading(false)
         setExamStats(res.data)
+        setExamDetails(null)
+        setAdvancedAnalyTics(false)
       })
       .catch((error) => {
         setLoading(false)
@@ -100,7 +117,12 @@ export default function Reports() {
           >
             <option>Select Course</option>
             {courses.map((course) => (
-              <option value={course.id}>{course.title}</option>
+              <option
+                selected={queryCourseId && queryCourseId}
+                value={course.id}
+              >
+                {course.title}
+              </option>
             ))}
           </Form.Control>
 

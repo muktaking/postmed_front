@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Alert, Badge, Button, Card, Modal, Toast } from 'react-bootstrap'
 import ReactMarkdown from 'react-markdown'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import remarkGfm from 'remark-gfm'
 import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 import MetaInfo from '../../components/seo/metainfo'
@@ -19,16 +19,12 @@ import { facultyToString, pgCourseTypeToString } from '../../utils/faculty'
 import CourseFilter from './courseFilter'
 import { paginate } from '../../utils/paginate'
 import Pagination from 'react-js-pagination'
+import { useQuery } from '../../utils/queryRouter'
 const duration = require('dayjs/plugin/duration')
 const relativeTime = require('dayjs/plugin/relativeTime')
 moment.extend(relativeTime)
 moment.extend(duration)
 
-function useQuery() {
-  const { search } = useLocation()
-
-  return React.useMemo(() => new URLSearchParams(search), [search])
-}
 //styles to show toast message
 const styles = {
   position: 'fixed',

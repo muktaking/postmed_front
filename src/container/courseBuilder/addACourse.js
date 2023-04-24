@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { FaRegCalendarAlt } from 'react-icons/fa'
+import { FaEdit, FaRegCalendarAlt } from 'react-icons/fa'
 import ReactMarkdown from 'react-markdown'
 import MdEditor from 'react-markdown-editor-lite'
 import 'react-markdown-editor-lite/lib/index.css'
@@ -38,6 +38,7 @@ export default function AddACourse({
   const [faculty, setFaculty] = useState(
     defaultValue.length > 0 ? defaultValue[7] : 0
   )
+  const [forceEdit, setForceEdit] = useState(false)
 
   const ref = useRef()
   const priceRef = useRef()
@@ -164,7 +165,7 @@ export default function AddACourse({
               setStartDate(date)
             }}
             showTimeSelect
-            minDate={new Date()}
+            minDate={forceEdit ? false : new Date()}
             dateFormat='yyyy-MMM-dd, hh:mm a'
           />
           <FaRegCalendarAlt size='1.7rem' />
@@ -180,11 +181,21 @@ export default function AddACourse({
               setEndDate(date)
             }}
             showTimeSelect
-            minDate={new Date()}
+            minDate={forceEdit ? false : new Date()}
             dateFormat='yyyy-MMM-dd, hh:mm a'
           />
           <FaRegCalendarAlt size='1.7rem' />
         </div>
+      </div>
+      <div>
+        <FaEdit
+          color='red'
+          onClick={() => {
+            setForceEdit(!forceEdit)
+          }}
+          className='mr-2'
+        />
+        <span>Force Edit Date</span>
       </div>
 
       <Form.Group controlId='exampleForm.ControlTextarea1'>

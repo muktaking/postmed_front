@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import MetaInfo from '../../components/seo/metainfo'
@@ -8,6 +8,7 @@ import CreateQuestion from './create'
 import EditQuestion from './edit'
 import SelectQuestions from './selectQuestions'
 import Upload from './upload'
+import { useQuery } from '../../utils/queryRouter'
 
 const DefaultView = ({ viewHandler, disable }) => {
   return (
@@ -56,11 +57,21 @@ export default function QuestionBuilder() {
   const [questionId, setQuestionId] = useState(null)
   const dispatch = useDispatch()
 
+  const query = useQuery()
+  const queryQuestionId = query.get('questionId')
+
   const viewHandler = (view, id) => {
     dispatch(resetResponseLoader())
     if (id) setQuestionId(id)
     setView(view)
   }
+
+  useEffect(() => {
+    if (queryQuestionId) {
+      setQuestionId(queryQuestionId)
+      setView('edit')
+    }
+  }, [queryQuestionId])
 
   switch (view) {
     case 'create':

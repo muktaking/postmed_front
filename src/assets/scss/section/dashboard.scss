@@ -227,3 +227,10 @@
     display: none;
   }
 }
+
+.carousel-indicators li {
+  background-color: #000000;   
+}
+.carousel-indicators .active {
+  background-color: #ec2d2d;
+}

@@ -1,17 +1,16 @@
 import Axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Alert, Badge, ListGroup } from 'react-bootstrap'
-import { useLocation } from 'react-router'
-
-function useQuery() {
-  const { search } = useLocation()
-
-  return React.useMemo(() => new URLSearchParams(search), [search])
-}
+import { useQuery } from '../../../utils/queryRouter'
+import { useSelector } from 'react-redux'
+import { canActivate, rolePermitted } from '../../../utils/canActivate'
+import { Link } from 'react-router-dom'
+import { FaEdit } from 'react-icons/fa'
 
 export default function ShowQuestions() {
   const [questions, setQuestions] = useState([])
   const [errorMsg, setErrorMsg] = useState(null)
+  const token = useSelector((state) => state.auth.token)
   let query = useQuery()
   const examId = query.get('examId')
   const courseId = query.get('courseId')
@@ -43,6 +42,11 @@ export default function ShowQuestions() {
                 Question No. {ind + 1}
               </Badge>
               <span>{ques.qText}</span>
+              {token && canActivate(rolePermitted.coordinator, token) && (
+                <Link to={'/question?questionId=' + ques.id} className='ml-2'>
+                  <FaEdit />
+                </Link>
+              )}
               <br />
               <Badge variant='info'>
                 {ques.qType === 'sba' ? 'Single Best Answer' : 'True/False'}
