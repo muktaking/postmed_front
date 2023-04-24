@@ -9,13 +9,13 @@ export const pgProgramme = [
     name: 'FCPS',
     id: 1,
     courseIds: [2, 3, 4],
-    imageName: 'bcps.png'
+    imageName: 'bcps.jpg'
   },
   {
     name: 'Diploma',
     id: '3',
     courseIds: [2, 3],
-    imageName: 'diploma.jpeg'
+    imageName: 'diploma.jpg'
   }
 ]
 export const faculty = {

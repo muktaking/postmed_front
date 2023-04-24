@@ -128,7 +128,7 @@ export default function Index() {
       <h3 className='text-center heading'>Available Courses</h3>
       {enrollResLoader && <CircleLoader />}
       {coursesStore.loading && <CircleLoader />}
-      <CourseFilter />
+      <CourseFilter pgCourseType={pgCourseType} faculty={faculty} />
       <div className='d-flex justify-content-around flex-wrap mt-3'>
         {coursesStore.error ? ( // show courses error messsage
           <p className='text-danger'>

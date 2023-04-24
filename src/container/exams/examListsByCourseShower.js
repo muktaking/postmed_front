@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Jumbotron, Modal, Row } from 'react-bootstrap'
+import { Button, Col, Form, Jumbotron, Modal, Row } from 'react-bootstrap'
 import Pagination from 'react-js-pagination'
 import { useParams } from 'react-router'
 import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
@@ -15,7 +15,11 @@ import { useDispatch, useSelector } from 'react-redux'
 export default function ExamListsByCatShower() {
   const dispatch = useDispatch()
   const isAuthenticated = useSelector((state) => state.auth.token !== null)
+  const coursesEnrolledByStu = useSelector(
+    (state) => state.courses.coursesEnrolledByStu
+  )
   const { id } = useParams()
+  const [rootExams, setRootExams] = useState([]) //this store the initial exams to use later in FreeExamSwitch
   const [exams, setExams] = useState([])
   const [loading, setLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
@@ -24,7 +28,23 @@ export default function ExamListsByCatShower() {
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   const pageSize = 5
-  const paginatedExams = paginate(exams, currentPage, pageSize)
+  let paginatedExams = paginate(exams, currentPage, pageSize)
+
+  const isEnrolledStu =
+    coursesEnrolledByStu.map((course) => course.id).indexOf(+id) !== -1
+
+  function onFreeExamSwitcherHandler(e) {
+    const checked = e.target.checked
+    if (checked) {
+      setExams(
+        exams.filter(
+          (exam) =>
+            exam.categoryType.filter((cat) => cat.name === 'Free').length > 0
+        )
+      )
+    } else setExams(rootExams) // set the rootExams value to exams
+  }
+
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(fetchCourseEnrolledByStuLoader())
@@ -34,7 +54,8 @@ export default function ExamListsByCatShower() {
       .post(process.env.REACT_APP_SITE_URL + '/exams/course/' + id)
       .then((response) => {
         setLoading(false)
-        setExams(response.data)
+        setRootExams(response.data) // this to store the reponse on page load
+        setExams(response.data) // this will change due to FreeExamSwithcer
       })
       .catch((e) => {
         setLoading(false)
@@ -85,7 +106,29 @@ export default function ExamListsByCatShower() {
                 {exams.length < 1 && 'NO Exam is avaiable.'}
               </p>
             )}
-            <div className='d-flex justify-content-center flex-wrap'>
+            {isAuthenticated ? (
+              !isEnrolledStu ? (
+                <Form.Check
+                  className='ml-2'
+                  type='switch'
+                  id='custom-switch'
+                  label='Sort Free Exams'
+                  onChange={onFreeExamSwitcherHandler}
+                />
+              ) : (
+                <></>
+              )
+            ) : (
+              <Form.Check
+                className='ml-2'
+                type='switch'
+                id='custom-switch'
+                label='Sort Free Exams'
+                onChange={onFreeExamSwitcherHandler}
+              />
+            )}
+
+            <div className='d-flex justify-content-center flex-wrap mt-2'>
               {paginatedExams &&
                 paginatedExams.map((exam) => (
                   <ExamByCat key={exam.title} exam={exam} courseId={id} />

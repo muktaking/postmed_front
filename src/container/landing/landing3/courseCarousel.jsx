@@ -2,6 +2,7 @@ import Axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Carousel } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { LazyLoadComponent } from 'react-lazy-load-image-component'
 
 export default function CourseCarousel() {
   const [latestCourses, setLatestCourses] = useState([])
@@ -21,11 +22,13 @@ export default function CourseCarousel() {
       <Carousel>
         {latestCourses.map((course) => (
           <Carousel.Item>
-            <img
-              className='d-block mx-auto'
-              src={process.env.REACT_APP_SITE_URL + '/' + course.imageUrl}
-              alt={course.title}
-            />
+            <LazyLoadComponent>
+              <img
+                className='d-block mx-auto'
+                src={process.env.REACT_APP_SITE_URL + '/' + course.imageUrl}
+                alt={course.title}
+              />
+            </LazyLoadComponent>
             <Carousel.Caption>
               <Link to={'/courses/' + course.id}>
                 <h4 className='bg-light py-1'>{course.title}</h4>

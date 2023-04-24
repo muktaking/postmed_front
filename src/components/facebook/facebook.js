@@ -19,6 +19,7 @@ class Facebook extends Component {
     this.props.onAuthStart()
   }
   responseFacebook = (fbRes) => {
+    console.log(fbRes.status)
     if (fbRes.status === 'unknown') {
       this.props.onAuthFail(
         'Something wrong. To continue you have to approve our app'
@@ -64,6 +65,7 @@ class Facebook extends Component {
           fields='name,email,picture'
           onClick={this.componentClicked}
           callback={this.responseFacebook}
+          isMobile={false}
         />
       </div>
     )

@@ -18,7 +18,15 @@ function tabsAccordingToRole(role, users, updater) {
     <Tabs defaultActiveKey='1'>
       {roleArray.slice(0, role - 1).map((title, index) => {
         return (
-          <Tab eventKey={index + 1} title={title}>
+          <Tab
+            eventKey={index + 1}
+            title={
+              title +
+              '( ' +
+              users.filter((user) => user.role === index + 1).length +
+              ' )'
+            }
+          >
             <Users
               role={role}
               users={users.filter((user) => user.role === index + 1)}

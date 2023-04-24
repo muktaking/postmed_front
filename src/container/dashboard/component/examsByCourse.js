@@ -37,7 +37,14 @@ export default function ExamsByCourse({ exams, updater }) {
                 <Tab
                   tabClassName='border mb-1 mr-1'
                   eventKey={course.id}
-                  title={course.title}
+                  title={
+                    course.title +
+                    ' --( ' +
+                    exams.filter((exam) =>
+                      exam.courseIds.includes(course.id.toString())
+                    ).length +
+                    ' )--'
+                  }
                 >
                   <Exams
                     exams={exams.filter((exam) =>

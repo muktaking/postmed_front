@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Button, Form, ListGroup } from 'react-bootstrap'
+import { Badge, Button, Form, ListGroup } from 'react-bootstrap'
 
 export default function GetFeedbacks({ feedbacks, feedbackController }) {
   const [ids, setIds] = useState([])
@@ -28,7 +28,9 @@ export default function GetFeedbacks({ feedbacks, feedbackController }) {
   }
   return (
     <div>
-      <h3>Review</h3>
+      <h5>
+        <span>Review</span> <Badge variant='danger'>{feedbacks.length}</Badge>
+      </h5>
       <div style={{ maxHeight: '350px', overflowY: 'scroll' }}>
         {feedbacks && (
           <>

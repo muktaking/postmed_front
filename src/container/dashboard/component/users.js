@@ -113,7 +113,9 @@ export default function Users({ role, users, updater }) {
               }
             >
               <td>
-                <Link to={'/reports/user/' + user.id}>{ind + 1}</Link>{' '}
+                <Link to={'/reports/user/' + user.id} className='text-danger'>
+                  {ind + 1}
+                </Link>{' '}
               </td>
               <td className=''>
                 <Image

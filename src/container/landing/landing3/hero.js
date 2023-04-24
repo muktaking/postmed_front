@@ -4,6 +4,7 @@ import { Link, NavLink } from 'react-router-dom'
 import styles from './hero.module.scss'
 import { facultyToString, pgProgramme } from '../../../utils/faculty'
 import Promotional from '../promotional'
+import { LazyLoadComponent } from 'react-lazy-load-image-component'
 
 export default function Hero() {
   return (
@@ -24,12 +25,14 @@ export default function Hero() {
                 {program.name}
               </Card.Header>
               <Card.Body>
-                <img
-                  height='120'
-                  className='d-block w-100'
-                  src={'/assets/image/hero/' + program.imageName}
-                  alt='First slide'
-                />
+                <LazyLoadComponent>
+                  <img
+                    height='120'
+                    className='d-block w-100'
+                    src={'/assets/image/hero/' + program.imageName}
+                    alt='First slide'
+                  />
+                </LazyLoadComponent>
                 <div className='mt-3 text-center'>
                   {program.courseIds.map((key) => (
                     <NavLink

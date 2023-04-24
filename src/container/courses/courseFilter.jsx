@@ -5,20 +5,24 @@ import { Button, Form, Jumbotron } from 'react-bootstrap'
 import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 import {
   PgCourseType,
-  faculty,
+  faculty as Faculty,
   facultyToString,
   pgCourseTypeToString
 } from '../../utils/faculty'
 import { fetchCourseByFilterLoader } from '../../store/courses'
 
-export default function CourseFilter() {
+export default function CourseFilter({
+  search = '',
+  pgCourseType = null,
+  faculty = null
+}) {
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
   const [showFilter, setShowFilter] = useState(false)
   return (
     <div>
       <Formik
-        initialValues={{ search: '' }}
+        initialValues={{ search, pgCourseType, faculty }}
         onSubmit={(values, { setSubmitting }) => {
           setLoading(false)
           const { search, pgCourseType, faculty } = values
@@ -99,7 +103,7 @@ export default function CourseFilter() {
                       value={values.faculty}
                     >
                       <option value='-1'>All</option>
-                      {Object.values(faculty)
+                      {Object.values(Faculty)
                         .slice(1) // removing the first value (all: 0)
                         .map((value) => (
                           <option value={value}>
