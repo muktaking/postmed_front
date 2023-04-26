@@ -134,6 +134,7 @@ export default function ExamListsByCatShower() {
                   <ExamByCat key={exam.title} exam={exam} courseId={id} />
                 ))}
             </div>
+            <br />
             <div className='d-flex justify-content-center mt-3'>
               <Pagination
                 activePage={currentPage}

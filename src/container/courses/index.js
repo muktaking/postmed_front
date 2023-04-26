@@ -20,6 +20,7 @@ import CourseFilter from './courseFilter'
 import { paginate } from '../../utils/paginate'
 import Pagination from 'react-js-pagination'
 import { useQuery } from '../../utils/queryRouter'
+import PaymentCompletionForm from './paymentCompletionForm'
 const duration = require('dayjs/plugin/duration')
 const relativeTime = require('dayjs/plugin/relativeTime')
 moment.extend(relativeTime)
@@ -46,6 +47,8 @@ export default function Index() {
   const [enrollResLoader, setEnrollResLoader] = useState(false)
   const [res, setRes] = useState(null) // get server response after enrollment request by student
   const [currentPage, setCurrentPage] = useState(1)
+  const [modalCourse, setModalCourse] = useState(null)
+  const [showPaymentModalForm, setShowPayemntModalForm] = useState(false)
   const [showModalMsg, setShowModalMsg] = useState(null) // show modal
   const courses = coursesStore ? coursesStore.courses : []
   const enrolledCoursesId = coursesStore.coursesEnrolledByStu.map(
@@ -94,6 +97,16 @@ export default function Index() {
       {/* SEO section */}
       {<MetaInfo {...RoutesConfig.Course.metaInfo} />}
 
+      {/* Modal section --> shows paymentForm after clicking 'Enrollment' button */}
+      {showPaymentModalForm && (
+        <PaymentCompletionForm
+          showPaymentModalForm={showPaymentModalForm}
+          setShowPaymentModalForm={setShowPayemntModalForm}
+          course={modalCourse}
+          enrollmentHandler={enrollmentHandler}
+        />
+      )}
+
       {/* Modal section --> shows details of a course after clicking 'More' button */}
       <Modal show={showModalMsg} onHide={handleModalClose}>
         <Modal.Header closeButton>
@@ -136,108 +149,115 @@ export default function Index() {
           <Alert variant='danger'>No Courses Available</Alert>
         ) : (
           paginatedCourses.map((course) => (
-            <Card className='my-3' style={{ width: '350px' }}>
-              <Card.Body>
-                <Link to={`/courses/${course.id}`}>
-                  <Card.Title
-                    className='text-center'
-                    style={{ fontSize: '1.4rem', fontWeight: '900' }}
-                  >
-                    {course.title}
-                  </Card.Title>
-                </Link>
-                <Card.Text className=''>
-                  <div className='text-right mb-2'>
-                    <Badge pill variant='dark' className='mr-2'>
-                      {pgCourseTypeToString(course.pgCourseType)}
-                    </Badge>
-                    <Badge pill variant='dark'>
-                      {facultyToString(course.faculty)}
-                    </Badge>
-                  </div>
-                  <div>
-                    <span className='bg-light text-dark px-1'>
-                      Regular Price:{' '}
-                      {course.price ? course.price + ' Taka' : 'Free'}
-                    </span>
-                  </div>
-
-                  {course.price && course.discountPricePercentage ? (
-                    <div className='mt-1'>
-                      <span className='bg-secondary text-white px-1'>
-                        Special Price:{' '}
-                        {course.price -
-                          Math.ceil(
-                            (course.price * course.discountPricePercentage) /
-                              100
-                          ) +
-                          ' Taka'}{' '}
+            <>
+              <Card className='my-3' style={{ width: '350px' }}>
+                <Card.Body>
+                  <Link to={`/courses/${course.id}`}>
+                    <Card.Title
+                      className='text-center'
+                      style={{ fontSize: '1.4rem', fontWeight: '900' }}
+                    >
+                      {course.title}
+                    </Card.Title>
+                  </Link>
+                  <Card.Text className=''>
+                    <div className='text-right mb-2'>
+                      <Badge pill variant='dark' className='mr-2'>
+                        {pgCourseTypeToString(course.pgCourseType)}
+                      </Badge>
+                      <Badge pill variant='dark'>
+                        {facultyToString(course.faculty)}
+                      </Badge>
+                    </div>
+                    <div>
+                      <span className='bg-light text-dark px-1'>
+                        Regular Price:{' '}
+                        {course.price ? course.price + ' Taka' : 'Free'}
                       </span>
                     </div>
-                  ) : (
-                    <></>
-                  )}
 
-                  <div className='my-1'>
-                    <span className='bg-light text-dark px-1'>
-                      Duration:{' '}
-                      {moment
-                        .duration(moment(course.endDate).diff(course.startDate))
-                        .humanize() + ' long.'}
-                    </span>
-                  </div>
-                  <div>
-                    <span className='bg-light text-dark px-1'>
-                      Start: {moment(course.startDate).format('DD-MMM-YY')}
-                    </span>
-                  </div>
-                </Card.Text>
-                <Card.Text>
-                  <p className='text-center'>
-                    <Button
-                      variant='outline-primary'
-                      onClick={() => {
-                        setShowModalMsg(course.description)
-                      }}
-                    >
-                      Details
-                    </Button>
-                  </p>
-                </Card.Text>
-                <hr />
-                <Card.Text className='text-center mt-2'>
-                  <Link to={'/exams/courses/' + course.id}>
-                    <Button variant='primary'>Go to Exams</Button>
-                  </Link>
-                </Card.Text>
-                {isAuthenticated && (
-                  <>
-                    <hr />
-                    <div className='d-flex justify-content-center align-items-center'>
-                      {enrolledCoursesId.indexOf(course.id) > -1 ? (
-                        <p className='text-success text-center'>
-                          Already Enrolled
-                        </p>
-                      ) : (
-                        <Button
-                          variant='primary'
-                          style={{
-                            width: '300px',
-                            height: '55px',
-                            fontSize: '18px'
-                          }}
-                          onClick={() => {
-                            enrollmentHandler(course.id)
-                          }}
-                        >
-                          Enroll
-                        </Button>
-                      )}
+                    {course.price && course.discountPricePercentage ? (
+                      <div className='mt-1'>
+                        <span className='bg-secondary text-white px-1'>
+                          Special Price:{' '}
+                          {course.price -
+                            Math.ceil(
+                              (course.price * course.discountPricePercentage) /
+                                100
+                            ) +
+                            ' Taka'}{' '}
+                        </span>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+
+                    <div className='my-1'>
+                      <span className='bg-light text-dark px-1'>
+                        Duration:{' '}
+                        {moment
+                          .duration(
+                            moment(course.endDate).diff(course.startDate)
+                          )
+                          .humanize() + ' long.'}
+                      </span>
                     </div>
-                  </>
-                )}
-              </Card.Body>
-            </Card>
+                    <div>
+                      <span className='bg-light text-dark px-1'>
+                        Start: {moment(course.startDate).format('DD-MMM-YY')}
+                      </span>
+                    </div>
+                  </Card.Text>
+                  <Card.Text>
+                    <p className='text-center'>
+                      <Button
+                        variant='outline-primary'
+                        onClick={() => {
+                          setShowModalMsg(course.description)
+                        }}
+                      >
+                        Details
+                      </Button>
+                    </p>
+                  </Card.Text>
+                  <hr />
+                  <Card.Text className='text-center mt-2'>
+                    <Link to={'/exams/courses/' + course.id}>
+                      <Button variant='primary'>Go to Exams</Button>
+                    </Link>
+                  </Card.Text>
+                  {isAuthenticated && (
+                    <>
+                      <hr />
+                      <div className='d-flex justify-content-center align-items-center'>
+                        {enrolledCoursesId.indexOf(course.id) > -1 ? (
+                          <p className='text-success text-center'>
+                            Already Enrolled
+                          </p>
+                        ) : (
+                          <Button
+                            variant='primary'
+                            style={{
+                              width: '300px',
+                              height: '55px',
+                              fontSize: '18px'
+                            }}
+                            onClick={() => {
+                              if (course.price) {
+                                setShowPayemntModalForm(true)
+                                setModalCourse(course)
+                              } else enrollmentHandler(course.id)
+                            }}
+                          >
+                            Enroll
+                          </Button>
+                        )}
+                      </div>
+                    </>
+                  )}
+                </Card.Body>
+              </Card>
+            </>
           ))
         )}
       </div>

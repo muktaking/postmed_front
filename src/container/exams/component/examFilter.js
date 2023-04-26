@@ -3,19 +3,12 @@ import { Formik } from 'formik'
 import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import CircleLoader from '../../../components/customSpinner/circleLoader/circleLoader'
+import { examTypes } from '../../../utils/faculty'
 
 export default function ExamFilter({ setExams, id, setCurrentPage }) {
   const [loading, setLoading] = useState(false)
   const [showFilter, setShowFilter] = useState(false)
-  const examTypes = [
-    { name: 'Assignment', value: 0 },
-    { name: 'Weekly', value: 1 },
-    { name: 'Monthly', value: 2 },
-    { name: 'Assesment', value: 3 },
-    { name: 'Term', value: 4 },
-    { name: 'Test', value: 5 },
-    { name: 'Final', value: 6 }
-  ]
+
   return (
     <div>
       <Formik

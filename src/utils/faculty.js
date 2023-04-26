@@ -87,6 +87,16 @@ export function facultyToString(num) {
   }
 }
 
+export const examTypes = [
+  { name: 'Assignment', value: 0 },
+  { name: 'Weekly', value: 1 },
+  { name: 'Monthly', value: 2 },
+  { name: 'Assesment', value: 3 },
+  { name: 'Term', value: 4 },
+  { name: 'Test', value: 5 },
+  { name: 'Final', value: 6 }
+]
+
 export function examTypeToString(num) {
   switch (num) {
     case 0:

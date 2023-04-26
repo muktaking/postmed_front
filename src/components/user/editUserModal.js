@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useRef, useState } from 'react'
 import { Button, Form, Modal, Toast } from 'react-bootstrap'
+import { faculty } from '../../utils/faculty'
 
 export default function EditUserModal({ user, updater, show, handleClose }) {
   const [res, setRes] = useState(null)
@@ -124,11 +125,13 @@ export default function EditUserModal({ user, updater, show, handleClose }) {
                 name='faculty'
                 defaultValue={user.faculty}
               >
-                <option value='0'>Basic</option>
-                <option value='1'>Medicine</option>
-                <option value='2'>Surgery</option>
-                <option value='3'>Gynecology</option>
-                <option value='4'>Paediatrics</option>
+                {Object.keys(faculty)
+                  .slice(1)
+                  .map((key) => (
+                    <option key={key} value={faculty[key]}>
+                      {key}
+                    </option>
+                  ))}
               </Form.Control>
             </Form.Group>
             <Form.Group controlId='formBasicInstitution'>

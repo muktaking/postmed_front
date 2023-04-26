@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Alert, Badge, Button, ListGroup, Modal, Table } from 'react-bootstrap'
 import { useHistory } from 'react-router'
+import { examTypes } from '../../../utils/faculty'
 
 export default function PreExamNotification({
   examStartDialogueHandler,
@@ -49,16 +50,14 @@ export default function PreExamNotification({
                 Time Limit: <Badge>{exams.timeLimit && exams.timeLimit}</Badge>{' '}
                 Mins
               </ListGroup.Item>
-              {exams.penaltyMark && (
-                <ListGroup.Item>
-                  Penalty Mark:{' '}
-                  <Badge variant='danger'>{exams.penaltyMark}</Badge> (for each
-                  wrong stem)
-                  {/* or{' '}
+
+              <ListGroup.Item>
+                Penalty Mark: <Badge>{exams.penaltyMark}</Badge> (for each wrong
+                stem)
+                {/* or{' '}
                   <Badge variant='danger'>{exams.penaltyMark * 5}</Badge> (for 
                   wrong SBA ) */}
-                </ListGroup.Item>
-              )}
+              </ListGroup.Item>
             </ListGroup>
           )}
           <Table striped bordered className='mt-3'>
@@ -95,17 +94,28 @@ export default function PreExamNotification({
           {showRules && (
             <Alert variant='warning' className='mt-3'>
               <p>
-                1. First{' '}
+                * First{' '}
                 {exams.questions.filter((q) => q.qType === 'matrix').length}{' '}
                 questions are True/False type. Rest{' '}
                 {exams.questions.filter((q) => q.qType === 'sba').length}{' '}
                 questions are SBA type.
               </p>
-              <p>2. You can not modify your answer after clicking an option.</p>
+              {exams.isAnswerRestricted && (
+                <p className='text-danger'>
+                  * You can not modify your answer after clicking an option.
+                </p>
+              )}
               <p>
-                3. After timelimit you will push to result page or you can
-                submit your answer anytime.
+                * After timelimit you will push to result page or you can submit
+                your answer anytime.
               </p>
+              {exams.type >= examTypes[4].value ? (
+                <p className='text-danger'>
+                  * This Exam can be taken only one time.
+                </p>
+              ) : (
+                <></>
+              )}
             </Alert>
           )}
         </Modal.Body>

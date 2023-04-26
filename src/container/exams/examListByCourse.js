@@ -30,7 +30,7 @@ export default function ExamListsByCat() {
     <div>
       {courses.loading && <CircleLoader />}
       <h2 className='text-center'>Enrolled Courses</h2>
-      <div className='m-3 d-flex justify-content-around flex-wrap'>
+      <div className='m-3'>
         {courses.coursesEnrolledByStu.length < 1 ? (
           <div>
             <p className='text-center text-danger'>

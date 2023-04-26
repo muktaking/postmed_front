@@ -4,7 +4,6 @@
 import React, { Component } from "react";
 import {
   Alert,
-  Badge,
   Button,
   Col, Form,
   Modal,
@@ -33,49 +32,10 @@ import {
 } from "../../store/exams";
 import { paginate } from "../../utils/paginate";
 import PreExamNotification from "./component/preExamNotification";
+import ExamCountDownClock from "./component/examCountDownClock";
+//import Axios from "axios";
 
-// Random component
-const Completionist = () => (
-  <span className="text-danger">Your Time is Finished</span>
-);
 
-// Renderer callback with condition
-const renderer = ({ hours, minutes, seconds, completed }) => {
-  if (completed) {
-    // Render a completed state
-    return <Completionist />;
-  } else {
-    // Render a countdown
-    return (
-      <span>
-        <Badge
-          variant={(hours < 1) & (minutes < 5) ? "danger" : "success"}
-          style={{ fontSize: "2rem" }}
-        >
-          {hours + " H"}
-        </Badge>
-        <Badge variant="light" style={{ fontSize: "1.5rem" }}>
-          :
-        </Badge>
-        <Badge
-          variant={(hours < 1) & (minutes < 5) ? "danger" : "success"}
-          style={{ fontSize: "2rem" }}
-        >
-          {minutes + " M"}
-        </Badge>
-        <Badge variant="light" style={{ fontSize: "1.5rem" }}>
-          :
-        </Badge>
-        <Badge
-          variant={(hours < 1) & (minutes < 5) ? "danger" : "success"}
-          style={{ fontSize: "2rem" }}
-        >
-          {seconds + " S"}
-        </Badge>
-      </span>
-    );
-  }
-};
 
 class ExamTaker extends Component {
   state = {
@@ -90,7 +50,7 @@ class ExamTaker extends Component {
     modalShow: false,
     arrowState: true,
     showPagination: true,
-    examStartDialogue: true,
+    examStartDialogue: true
   };
 
   timeTakenToComplete = 0;
@@ -105,10 +65,18 @@ class ExamTaker extends Component {
   };
 
   examStartDialogueHandler = ()=>{
+    // const examId = this.props.match.params.id.split('_')[0];
+    // const courseId = this.props.match.params.id.split('_')[1]
+
     this.setState({ examStartDialogue: false });
+    this.setState({date: Date.now()});
+    
+    // if(!this.props.free){
+    //     Axios.get(process.env.REACT_APP_SITE_URL + '/postexams/preexamtasking?courseId=' + courseId + '&examId=' + examId)
+    //     .then(res=> console.log(res.data))
+    //     .catch(error=> console.log(error))
+    //   }
   }
-
-
 
   //For paination
   onPageHandler = (page) => {
@@ -320,9 +288,11 @@ class ExamTaker extends Component {
                     {this.props.intl.formatMessage({id: 'btn.sas', defaultMessage: "Submit Answer Sheet"})}
                   </Button>
                 </div>
-                <Countdown
+
+                {/* Exam Clock */}
+                 <Countdown
                   date={this.state.date + this.props.exams.timeLimit * 60 * 1000}
-                  renderer={renderer}
+                  renderer={ExamCountDownClock}
                   onTick={() => {
                     this.timeTakenToComplete++;
                   }}
@@ -355,8 +325,7 @@ class ExamTaker extends Component {
                   <FaRegArrowAltCircleDown size={"1.2rem"}/>
 
                 </LinkScroll>
-              </div> */}
-              
+              </div> */} 
             <Row id="et-top">  
               <Col lg={9}>
                 {questions.map((question, ind) => (

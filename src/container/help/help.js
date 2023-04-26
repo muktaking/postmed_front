@@ -1,18 +1,9 @@
 import React from 'react'
 import { Alert, Col, ListGroup, ListGroupItem, Row } from 'react-bootstrap'
 import { AiFillEdit } from 'react-icons/ai'
-import {
-  FaEnvelope,
-  FaFacebookSquare,
-  FaInstagramSquare,
-  FaMapMarkerAlt,
-  FaPhoneSquareAlt,
-  FaTwitterSquare
-} from 'react-icons/fa'
-import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 import { AccordionCard, AccordionStart } from '../../components/customAccordion'
-import { ContactConfig } from '../../config/contact.config'
+import ContactInfo from '../../components/contactInfo/contactInfo'
 
 export default function Help() {
   return (
@@ -238,40 +229,7 @@ export default function Help() {
       <Row className='my-3'>
         <Col></Col>
         <Col md={4} className='text-center'>
-          <h4>
-            <FormattedMessage id='btn.contact' defaultMessage='Contact Info' />
-          </h4>
-          <p>
-            <FaPhoneSquareAlt size='1.4rem' className='mr-2' />
-            <span>{ContactConfig.mobile}</span>
-            <br />
-            <FaEnvelope size='1.4rem' className='mr-2' />
-            <span>{ContactConfig.email}</span>
-            <br />
-            <FaMapMarkerAlt size='1.4rem' className='mr-2' />
-            <span>{ContactConfig.location}</span>
-          </p>
-          <a
-            href={ContactConfig.socials.facebook}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <FaFacebookSquare size='2.6rem' />
-          </a>
-          <a
-            href={ContactConfig.socials.twitter}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <FaTwitterSquare size='2.6rem' />
-          </a>
-          <a
-            href={ContactConfig.socials.instagram}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <FaInstagramSquare size='2.6rem' />
-          </a>
+          <ContactInfo />
         </Col>
         <Col></Col>
       </Row>

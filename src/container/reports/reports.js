@@ -203,12 +203,13 @@ export default function Reports() {
                       {examStat.examTitle}
                     </td>
                     <td>
-                      {(
-                        examStat.score.reduce(
-                          (previousValue, currentValue) =>
-                            Number(previousValue) + Number(currentValue)
-                        ) / examStat.score.length
-                      ).toFixed(2)}
+                      {examStat.score.length > 0 &&
+                        (
+                          examStat.score.reduce(
+                            (previousValue, currentValue) =>
+                              Number(previousValue) + Number(currentValue)
+                          ) / examStat.score.length
+                        ).toFixed(2)}
                     </td>
                     <td>{examStat.totalMark}</td>
                     <td>{examStat.attemptNumbers}</td>

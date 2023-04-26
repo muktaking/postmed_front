@@ -137,12 +137,12 @@ export default function CourseDetails() {
                 </Button>
               </div>
               <hr />
-              <Card.Text className='d-flex justify-content-between'>
-                <div>
+              <Card.Text className='d-flex justify-content-between flex-wrap'>
+                <div className='mb-3'>
                   <FaMoneyCheckAlt size='1.5rem' />{' '}
                   <span className='bg-info text-white px-3 py-1'>
                     {course.price ? (
-                      course.discountPricePercentage ? (
+                      course.discountPricePercentage ? ( //make strikethrough text if discount present
                         <s>{course.price + ' Taka'}</s>
                       ) : (
                         course.price + ' Taka'
@@ -170,7 +170,6 @@ export default function CourseDetails() {
                       .duration(moment(course.endDate).diff(course.startDate))
                       .humanize()}
                   </span>
-                  {/* <span>Duration</span> */}
                 </div>
               </Card.Text>
               <hr />
