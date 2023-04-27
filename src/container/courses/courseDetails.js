@@ -12,6 +12,7 @@ import remarkGfm from 'remark-gfm'
 import SocialShare from '../../components/socialShare/socialShare'
 import { facultyToString, pgCourseTypeToString } from '../../utils/faculty'
 import ShowRoutine from '../../components/routine/showRoutine'
+import PaymentCompletionForm from './paymentCompletionForm'
 const duration = require('dayjs/plugin/duration')
 const relativeTime = require('dayjs/plugin/relativeTime')
 moment.extend(relativeTime)
@@ -31,6 +32,8 @@ export default function CourseDetails() {
   let { id } = useParams()
   const isAuthenticated = useSelector((state) => state.auth.token !== null)
   const [showRoutine, setRoutineShow] = useState(false)
+  const [modalCourse, setModalCourse] = useState(null)
+  const [showPaymentModalForm, setShowPayemntModalForm] = useState(false)
 
   const handleRoutineClose = () => setRoutineShow(false)
   const handleRoutineShow = () => setRoutineShow(true)
@@ -93,6 +96,15 @@ export default function CourseDetails() {
         </Toast.Header>
         <Toast.Body>{res}</Toast.Body>
       </Toast>
+      {/* Modal section --> shows paymentForm after clicking 'Enrollment' button */}
+      {showPaymentModalForm && (
+        <PaymentCompletionForm
+          showPaymentModalForm={showPaymentModalForm}
+          setShowPaymentModalForm={setShowPayemntModalForm}
+          course={modalCourse}
+          enrollmentHandler={enrollmentHandler}
+        />
+      )}
       <div className='d-flex justify-content-around flex-wrap'>
         {course && (
           <Card className='my-3 pt-3' style={{ minWidth: '350px' }}>
@@ -193,7 +205,10 @@ export default function CourseDetails() {
                           fontSize: '18px'
                         }}
                         onClick={() => {
-                          enrollmentHandler(course.id)
+                          if (course.price) {
+                            setShowPayemntModalForm(true)
+                            setModalCourse(course)
+                          } else enrollmentHandler(course.id)
                         }}
                       >
                         Enroll
