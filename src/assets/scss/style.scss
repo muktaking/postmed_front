@@ -5,7 +5,7 @@
 @import './headers/media';
 
 //section file imported
-
+//only at landing page
 .__landing__upper {
   @import './headers/_fixed';
   @import './section/home';
@@ -14,7 +14,11 @@
   @import './section/demo';
   @import './section/clients';
   @import './section/contact';
+
 }
+@import './section/course.scss';
+
+
 .link-hover:hover{
   color: $primaryColor;
   text-decoration: none;

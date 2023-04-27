@@ -21,6 +21,7 @@ import { paginate } from '../../utils/paginate'
 import Pagination from 'react-js-pagination'
 import { useQuery } from '../../utils/queryRouter'
 import PaymentCompletionForm from './paymentCompletionForm'
+import { ProductType } from '../../utils/paymentClass'
 const duration = require('dayjs/plugin/duration')
 const relativeTime = require('dayjs/plugin/relativeTime')
 moment.extend(relativeTime)
@@ -73,22 +74,61 @@ export default function Index() {
   const handleModalClose = () => {
     setShowModalMsg(null)
   }
-  const enrollmentHandler = (courseId) => {
+  const enrollmentHandler = (course, paymentRecord) => {
     setEnrollResLoader(true)
+    const paymentAmount = course.price
+      ? course.discountPricePercentage
+        ? course.price -
+          Math.ceil((course.price * course.discountPricePercentage) / 100)
+        : course.price
+      : 0
+
     axios({
       baseURL: process.env.REACT_APP_SITE_URL,
-      url: '/courses/enroll/' + courseId,
-      method: 'patch'
+      url: '/payment/manual/',
+      method: 'post',
+      data: {
+        productId: course.id.toString(),
+        productType: ProductType.Course.toString(),
+        senderMobile: paymentRecord.senderMobile,
+        txId: paymentRecord.txId,
+        paymentAmount: paymentAmount.toString(),
+        paymentGateway: paymentRecord.paymentGateway,
+        ref: paymentRecord.ref
+      }
     })
-      .then((response) => {
+      .then((res) => {
         setEnrollResLoader(false)
-        setRes(response.data.message)
+        // setRes(res.data.message)
+        // setTimeout(() => {
+        //   setRes(null)
+        // }, 3000)
+        console.log(res)
+        if (res.status === 201) {
+          setEnrollResLoader(true)
+          axios({
+            baseURL: process.env.REACT_APP_SITE_URL,
+            url: '/courses/enroll/' + course.id,
+            method: 'patch'
+          })
+            .then((response) => {
+              setEnrollResLoader(false)
+              setRes(response.data.message)
+            })
+            .catch((error) => {
+              setEnrollResLoader(false)
+              setRes(
+                'Sorry. Enrollment to this course is not possible due to server error. Please contact with admin.'
+              )
+            })
+        }
       })
-      .catch((error) => {
+      .catch((err) => {
+        setRes(err.response.data.message)
+        setTimeout(() => {
+          setRes(null)
+        }, 3000)
         setEnrollResLoader(false)
-        setRes(
-          'Sorry. Enrollment to this course is not possible due to server error. Please contact with admin.'
-        )
       })
   }
   const paginatedCourses = paginate(courses, currentPage, pageSize)
