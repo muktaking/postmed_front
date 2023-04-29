@@ -10,6 +10,7 @@ import {
 } from '../../store/question'
 import { paginate } from '../../utils/paginate'
 import MiniQues from './component/miniques'
+import PdfRenderer from '../../components/pdf/pdfRenderer'
 
 export default function SelectQuestions({ viewHandler }) {
   const [currentPage, setCurrentPage] = useState(1)
@@ -55,6 +56,7 @@ export default function SelectQuestions({ viewHandler }) {
       }
 
       <div className='d-flex'>
+        <PdfRenderer questions={questions} />
         <div>
           <Form.Group controlId='categoryType' className='mr-5'>
             <Form.Label>Category Type</Form.Label>

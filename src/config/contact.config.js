@@ -1,5 +1,5 @@
 export const ContactConfig = {
-  mobile: '+8801521500642, +8801641622541',
+  mobile: '+8801521500642',
   email: 'contact@medionexam.com',
   location: 'Sopura, Rajshahi',
   socials: {
