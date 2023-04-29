@@ -3,11 +3,15 @@ import * as moment from 'dayjs'
 import React from 'react'
 import { Table } from 'react-bootstrap'
 import { getStatus } from './showRoutine'
+import RoutineTablePdf from './routineTablePdf'
 
 export default function RoutineTable({ routine, title }) {
   const headings = ['#', 'Topics', 'Status', 'Start Date']
   return (
     <div>
+      <p>
+        <RoutineTablePdf routine={routine} title={title} />
+      </p>
       <h3 className='text-primary text-center'>Routine For: {title}</h3>
       <Table striped bordered hover responsive>
         <thead>
