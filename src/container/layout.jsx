@@ -2,11 +2,10 @@ import React, { lazy, Suspense } from 'react'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
-import { slide as Menu } from 'react-burger-menu'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 
-import '../assets/scss/section/dashboard.scss'
+// import '../assets/scss/section/dashboard.scss'
 import CircleLoader from '../components/customSpinner/circleLoader/circleLoader'
 import DomHistory from '../components/domHistory/domHistory'
 import Sidebar from '../components/sidebar/sidebar'
@@ -72,9 +71,8 @@ const InnerContent = (props) => {
   const pageName = props.match.url.split('/', 2)[1]
   return (
     <>
-      <Menu styles={styles}>
-        <SidebarMini />
-      </Menu>
+      <SidebarMini />
+
       <Container fluid='true'>
         <Row className='no-gutters'>
           <Col xl={2} lg={3} md={4} className='sidebar'>
@@ -179,51 +177,3 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(InnerContent)
-
-var styles = {
-  bmBurgerButton: {
-    position: 'fixed',
-    width: '30px',
-    height: '25px',
-    right: '28px',
-    top: '10px'
-    // @media (min-width: 767.98px) {
-    //   display: none;
-    // }
-  },
-  bmBurgerBars: {
-    background: '#67aaaa'
-  },
-  bmBurgerBarsHover: {
-    background: '#a90000'
-  },
-  bmCrossButton: {
-    height: '24px',
-    width: '24px'
-  },
-  bmCross: {
-    background: '#bdc3c7'
-  },
-  bmMenuWrap: {
-    position: 'fixed',
-    height: '100%'
-  },
-  bmMenu: {
-    background: '#373a47',
-    padding: '2.5em 1.5em 0',
-    fontSize: '1.15em'
-  },
-  bmMorphShape: {
-    fill: '#373a47'
-  },
-  bmItemList: {
-    color: '#b8b7ad',
-    padding: '0.8em'
-  },
-  bmItem: {
-    display: 'inline-block'
-  },
-  bmOverlay: {
-    background: 'rgba(0, 0, 0, 0.3)'
-  }
-}

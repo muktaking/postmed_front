@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Carousel } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { LazyLoadComponent } from 'react-lazy-load-image-component'
+import { Image } from 'react-bootstrap'
 
 export default function CourseCarousel() {
   const [latestCourses, setLatestCourses] = useState([])
@@ -19,21 +20,22 @@ export default function CourseCarousel() {
     <div className='my-5'>
       <h3 className='heading text-center'>Latest Courses</h3>
       <div className='heading-underline'></div>
-      <Carousel>
+      <Carousel interval={null}>
         {latestCourses.map((course) => (
           <Carousel.Item>
             <LazyLoadComponent>
-              <img
+              <Image
+                fluid
                 className='d-block mx-auto'
                 src={process.env.REACT_APP_SITE_URL + '/' + course.imageUrl}
                 alt={course.title}
               />
             </LazyLoadComponent>
-            <Carousel.Caption>
-              <Link to={'/courses/' + course.id}>
-                <h4 className='bg-light py-1'>{course.title}</h4>
-              </Link>
-            </Carousel.Caption>
+            <Link to={'/courses/' + course.id}>
+              <p className='lead bg-danger text-white text-center py-1'>
+                {course.title}
+              </p>
+            </Link>
           </Carousel.Item>
         ))}
       </Carousel>

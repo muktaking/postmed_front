@@ -88,7 +88,7 @@ const RoutePages = (props) => {
           <Route path='/terms' component={InnerContent} />
           {/* change to display on langing page */}
           <Route path='/' exact component={Landing} />
-          <Redirect to='/dashboard' />
+          <Redirect to='/' />
         </Switch>
       </Suspense>
     )

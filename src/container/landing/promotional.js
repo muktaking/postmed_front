@@ -1,19 +1,26 @@
 import React from 'react'
-import { Image } from 'react-bootstrap'
+import { Carousel, Image } from 'react-bootstrap'
 
 export default function Promotional() {
   return (
-    <div className='bg-warning text-white mb-3'>
+    <div className='shadow bg-white px-2 pt-2 pb-3 mb-3'>
       {/* <Container className='bg-secondary'> */}
-      <div className='d-flex justify-content-center'>
-        <Image
-          src={
-            // process.env.REACT_APP_SITE_URL + '/images/bootstrap/promotional.png'
-            '/assets/image/promotional/1.png'
-          }
-          height='100'
-        />
-      </div>
+      <Carousel>
+        {[1, 2, 3].map((img) => (
+          <Carousel.Item>
+            <div className='d-flex justify-content-center'>
+              <Image
+                src={
+                  // process.env.REACT_APP_SITE_URL + '/images/bootstrap/promotional.png'
+                  '/assets/image/promotional/' + img + '.png'
+                }
+                height='100'
+                className='w-100'
+              />
+            </div>
+          </Carousel.Item>
+        ))}
+      </Carousel>
       {/* </Container> */}
     </div>
   )

@@ -3,7 +3,8 @@ import { FaArrowLeft } from 'react-icons/fa'
 import { useHistory } from 'react-router'
 import styles from './domHistory.module.scss'
 
-const exLink = /(\/exams\/\d+_\d+)|(\/dashboard)/g
+const exLink = /(\/exams\/\d+_\d+)/g
+//const exLink = /(\/exams\/\d+_\d+)|(\/dashboard)/g
 
 export default function DomHistory() {
   const [counter, setCounter] = useState(0)

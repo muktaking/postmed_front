@@ -4,18 +4,20 @@ import {
   FaBell,
   FaBookOpen,
   FaCalendarAlt,
-  FaChartLine,
+  FaChartBar,
   FaCog,
-  FaDiceD20,
+  FaStackOverflow,
   FaEdit,
   FaHome,
+  FaTh,
   FaPen,
-  FaQuestion,
+  FaQuestionCircle,
   FaQuora,
   FaSignOutAlt,
   FaTools,
-  FaUser
+  FaUserGraduate
 } from 'react-icons/fa'
+import { slide as Menu } from 'react-burger-menu'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
@@ -46,11 +48,11 @@ class Sidebar extends Component {
   render() {
     this.faIcons = [
       <FaHome size='1.6em' className='mr-2' />,
-      <FaDiceD20 size='1.6em' className='mr-2' />,
+      <FaStackOverflow size='1.6em' className='mr-2' />,
       <FaPen size='1.6em' className='mr-2' />,
-      <FaUser size='1.6em' className='mr-2' />,
-      <FaUser size='1.6em' className='mr-2' />,
-      <FaQuestion size='1.6em' className='mr-2' />
+      <FaUserGraduate size='1.6em' className='mr-2' />,
+      <FaUserGraduate size='1.6em' className='mr-2' />,
+      <FaQuestionCircle size='1.6em' className='mr-2' />
     ]
     this.menuName = ['Home', 'Courses', 'Exams', 'Signup', 'Login', 'Help']
     this.menuIntlId = [
@@ -67,18 +69,20 @@ class Sidebar extends Component {
     if (canActivate(rolePermitted.student, this.props.token)) {
       this.faIcons = [
         <FaHome size='1.6em' className='mr-2' />,
-        <FaDiceD20 size='1.6em' className='mr-2' />,
+        <FaTh size='1.6rem' className='mr-2' />,
+        <FaStackOverflow size='1.6em' className='mr-2' />,
         <FaBookOpen size='1.6em' className='mr-2' />,
-        <FaChartLine size='1.6em' className='mr-2' />,
+        <FaChartBar size='1.6em' className='mr-2' />,
         <span className='mr-2'>
           <FaBell size='1.6em' />
           <NotiBadge />
         </span>,
-        <FaUser size='1.6em' className='mr-2' />,
-        <FaQuestion size='1.6em' className='mr-2' />,
+        <FaUserGraduate size='1.6em' className='mr-2' />,
+        <FaQuestionCircle size='1.6em' className='mr-2' />,
         <FaTools size='1.6em' className='mr-2' />
       ]
       this.menuName = [
+        'Home',
         'Dashboard',
         'Courses',
         'Exams',
@@ -89,6 +93,7 @@ class Sidebar extends Component {
         'Settings'
       ]
       this.menuIntlId = [
+        'btn.home',
         'btn.db',
         'btn.courses',
         'btn.exams',
@@ -99,6 +104,7 @@ class Sidebar extends Component {
         'settings'
       ]
       this.navLinks = [
+        '/',
         '/dashboard',
         '/courses',
         '/exams',
@@ -113,13 +119,15 @@ class Sidebar extends Component {
     if (canActivate(rolePermitted.mentor, this.props.token)) {
       this.faIcons = [
         <FaHome size='1.6em' className='mr-2' />,
+        <FaTh size='1.6rem' className='mr-2' />,
         <FaQuora size='1.6em' className='mr-2' />,
         <FaPen size='1.6em' className='mr-2' />,
-        <FaUser size='1.6em' className='mr-2' />,
-        <FaQuestion size='1.6em' className='mr-2' />,
+        <FaUserGraduate size='1.6em' className='mr-2' />,
+        <FaQuestionCircle size='1.6em' className='mr-2' />,
         <FaTools size='1.6em' className='mr-2' />
       ]
       this.menuName = [
+        'Home',
         'Dashboard',
         'Question',
         'Exam Builder',
@@ -128,6 +136,7 @@ class Sidebar extends Component {
       ]
       this.menuIntlId = []
       this.navLinks = [
+        '/',
         '/dashboard',
         '/question',
         '/exambuilder',
@@ -139,15 +148,17 @@ class Sidebar extends Component {
     if (canActivate(rolePermitted.moderator, this.props.token)) {
       this.faIcons = [
         <FaHome size='1.6em' className='mr-2' />,
+        <FaTh size='1.6rem' className='mr-2' />,
         <FaCog size='1.6em' className='mr-2' />,
         <FaCalendarAlt size='1.6em' className='mr-2' />,
         <FaQuora size='1.6em' className='mr-2' />,
         <FaEdit size='1.6em' className='mr-2' />,
-        <FaUser size='1.6em' className='mr-2' />,
-        <FaQuestion size='1.6em' className='mr-2' />,
+        <FaUserGraduate size='1.6em' className='mr-2' />,
+        <FaQuestionCircle size='1.6em' className='mr-2' />,
         <FaTools size='1.6em' className='mr-2' />
       ]
       this.menuName = [
+        'Home',
         'Dashboard',
         'Category Builder',
         'Routine Builder',
@@ -159,6 +170,7 @@ class Sidebar extends Component {
       ]
       this.menuIntlId = []
       this.navLinks = [
+        '/',
         '/dashboard',
         '/category',
         '/routine',
@@ -172,18 +184,20 @@ class Sidebar extends Component {
 
     if (canActivate(rolePermitted.coordinator, this.props.token)) {
       this.faIcons = [
+        <FaTh size='1.6rem' className='mr-2' />,
         <FaHome size='1.6em' className='mr-2' />,
         <FaCog size='1.6em' className='mr-2' />,
-        <FaDiceD20 size='1.6em' className='mr-2' />,
+        <FaStackOverflow size='1.6em' className='mr-2' />,
         <FaCalendarAlt size='1.6em' className='mr-2' />,
         <FaQuora size='1.6em' className='mr-2' />,
         <FaEdit size='1.6em' className='mr-2' />,
         <FaCog size='1.6em' className='mr-2' />,
-        <FaUser size='1.6em' className='mr-2' />,
-        <FaQuestion size='1.6em' className='mr-2' />,
+        <FaUserGraduate size='1.6em' className='mr-2' />,
+        <FaQuestionCircle size='1.6em' className='mr-2' />,
         <FaTools size='1.6em' className='mr-2' />
       ]
       this.menuName = [
+        'Home',
         'Dashboard',
         'Category Builder',
         'Course Builder',
@@ -197,6 +211,7 @@ class Sidebar extends Component {
       ]
       this.menuIntlId = []
       this.navLinks = [
+        '/',
         '/dashboard',
         '/category',
         'coursebuilder',
@@ -211,53 +226,55 @@ class Sidebar extends Component {
     }
 
     return (
-      <div style={styles}>
-        <Profile />
+      <Menu styles={styles.menu}>
+        <div style={styles.container}>
+          <Profile />
 
-        <Nav className={this.classes.sideNav}>
-          {this.faIcons.map((value, index) => (
-            <Nav.Item key={index}>
-              <NavLink
-                exact
-                to={this.navLinks[index]}
-                className={
-                  'nav-link ' + this.classes.sideNavLink + ' sidebar-link'
-                }
-                activeClassName='current'
-              >
-                {value}
-                {this.menuIntlId.length > 1 ? (
-                  <FormattedMessage
-                    id={this.menuIntlId[index]}
-                    defaultMessage={this.menuName[index]}
-                  />
-                ) : (
-                  this.menuName[index]
-                )}
-              </NavLink>
-            </Nav.Item>
-          ))}
-          <div className='hideInMd'>
-            {/* <SearchForm
+          <Nav className={this.classes.sideNav}>
+            {this.faIcons.map((value, index) => (
+              <Nav.Item key={index}>
+                <NavLink
+                  exact
+                  to={this.navLinks[index]}
+                  className={
+                    'nav-link ' + this.classes.sideNavLink + ' sidebar-link'
+                  }
+                  activeClassName='current'
+                >
+                  {value}
+                  {this.menuIntlId.length > 1 ? (
+                    <FormattedMessage
+                      id={this.menuIntlId[index]}
+                      defaultMessage={this.menuName[index]}
+                    />
+                  ) : (
+                    this.menuName[index]
+                  )}
+                </NavLink>
+              </Nav.Item>
+            ))}
+            <div className='hideInMd'>
+              {/* <SearchForm
               formControl={classes.formControl}
               searchBtn={classes.searchBtn}
             /> */}
-            {this.props.token ? (
-              <Nav.Item className='ml-md-auto'>
-                <NavLink
-                  // href={"/" + value}
-                  to={{ pathname: '/logout' }}
-                  className='nav-link'
-                >
-                  <FaSignOutAlt className='text-danger' />
-                </NavLink>
-              </Nav.Item>
-            ) : (
-              <></>
-            )}
-          </div>
-        </Nav>
-      </div>
+              {this.props.token ? (
+                <Nav.Item className='ml-md-auto'>
+                  <NavLink
+                    // href={"/" + value}
+                    to={{ pathname: '/logout' }}
+                    className='nav-link'
+                  >
+                    <FaSignOutAlt className='text-danger' size='1.6rem' />
+                  </NavLink>
+                </Nav.Item>
+              ) : (
+                <></>
+              )}
+            </div>
+          </Nav>
+        </div>
+      </Menu>
     )
   }
 }
@@ -285,6 +302,55 @@ export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)
 //   searchBtn: 'search-button'
 // }
 
-const styles = {
-  fontSize: '14px'
+var styles = {
+  menu: {
+    bmBurgerButton: {
+      position: 'fixed',
+      width: '30px',
+      height: '25px',
+      right: '28px',
+      top: '10px'
+      // @media (min-width: 767.98px) {
+      //   display: none;
+      // }
+    },
+    bmBurgerBars: {
+      background: '#FFC107'
+    },
+    bmBurgerBarsHover: {
+      background: '#a90000'
+    },
+    bmCrossButton: {
+      height: '24px',
+      width: '24px'
+    },
+    bmCross: {
+      background: '#bdc3c7'
+    },
+    bmMenuWrap: {
+      position: 'fixed',
+      height: '100%'
+    },
+    bmMenu: {
+      background: '#373a47',
+      padding: '2.5em 1.5em 0',
+      fontSize: '1.15em'
+    },
+    bmMorphShape: {
+      fill: '#373a47'
+    },
+    bmItemList: {
+      color: '#b8b7ad',
+      padding: '0.8em'
+    },
+    bmItem: {
+      display: 'inline-block'
+    },
+    bmOverlay: {
+      background: 'rgba(0, 0, 0, 0.3)'
+    }
+  },
+  container: {
+    fontSize: '14px'
+  }
 }

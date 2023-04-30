@@ -34,7 +34,12 @@ const Topbar = (props) => {
         <Col md={8} className='hideInSm pr-5'>
           <Nav style={{ fontSize: '1.2rem' }}>
             <Nav.Item className=''>
-              <NavLink exact to={{ pathname: '/' }} className='nav-link'>
+              <NavLink
+                exact
+                to={{ pathname: '/' }}
+                activeClassName='activeLink'
+                className='nav-link'
+              >
                 <FormattedMessage id='btn.home' defaultMessage='Home' />
               </NavLink>
             </Nav.Item>
@@ -58,7 +63,11 @@ const Topbar = (props) => {
               </NavLink>
             </Nav.Item>
             <Nav.Item className=''>
-              <NavLink to={{ pathname: '/help' }} className='nav-link'>
+              <NavLink
+                to={{ pathname: '/help' }}
+                activeClassName='activeLink'
+                className='nav-link'
+              >
                 <FormattedMessage id='btn.help' defaultMessage='Help' />
               </NavLink>
             </Nav.Item>
@@ -89,12 +98,20 @@ const Topbar = (props) => {
             ) : (
               <>
                 <Nav.Item className=''>
-                  <NavLink to={{ pathname: '/signup' }} className='nav-link'>
+                  <NavLink
+                    to={{ pathname: '/signup' }}
+                    activeClassName='activeLink'
+                    className='nav-link'
+                  >
                     <FormattedMessage id='btn.signup' defaultMessage='Signup' />
                   </NavLink>
                 </Nav.Item>
                 <Nav.Item className=''>
-                  <NavLink to={{ pathname: '/login' }} className='nav-link'>
+                  <NavLink
+                    to={{ pathname: '/login' }}
+                    activeClassName='activeLink'
+                    className='nav-link'
+                  >
                     <FormattedMessage id='btn.login' defaultMessage='Login' />
                   </NavLink>
                 </Nav.Item>

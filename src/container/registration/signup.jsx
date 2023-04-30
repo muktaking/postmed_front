@@ -12,10 +12,11 @@ import '../../assets/scss/section/registration.scss'
 import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 import Facebook from '../../components/facebook/facebook'
 import Google from '../../components/google/google'
-import NavbarHome from '../../components/navbar/navbarHome'
 import MetaInfo from '../../components/seo/metainfo'
 import { RoutesConfig } from '../../config/routes.config'
 import { authEnd, authFail, authReset, authStart } from '../../store/auth'
+import Topbar from '../../components/topbar/topbar'
+import SidebarMini from '../../components/sidebar/sidebarMini'
 
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true
@@ -208,177 +209,180 @@ class SignUp extends Component {
   render() {
     const { formErrors } = this.state
     return (
-      <div className='registration'>
-        <MetaInfo {...RoutesConfig.Signup.metaInfo} />
-        {this.props.auth.loading && <CircleLoader />}
-        <NavbarHome isLanding={false} />
-        {/* Landing */}
-        <div className='landing'>
-          {/* <div className="home-wrap"> */}
-          <div className='home-inner'></div>
-          {/* </div> */}
-        </div>
-        <div className='caption text-center'>
-          <h1>Signup Form</h1>
-          <div className='heading-underline'></div>
-          <p className='mt-3'>Easily Signup with your Facebook or Google</p>
-          <Row>
-            <Col lg='6'>
-              <Facebook />
-            </Col>
-            <Col lg='6'>
-              <Google />
-            </Col>
-          </Row>
-          <p className='mt-3'>Or, Create One</p>
-          <Form onSubmit={this.submitHandler} novalidate>
-            <div className='text-white mb-2 bg-danger'>
-              {/* {this.state.errorMessage} */}
-              {this.props.auth.error && this.props.auth.error}
-            </div>
-            <Form.Row>
-              <Form.Group as={Col} controlId='formGridFirstName'>
-                <Form.Label>First Name: </Form.Label>
-                <Form.Control
-                  name='firstName'
-                  type='text'
-                  placeholder='Type firstname'
-                  onChange={this.handleChange}
-                  className={formErrors.firstName.length > 0 && 'is-invalid'}
-                />
-                {formErrors.firstName.length > 0 && (
-                  <span className='errorMessage'>{formErrors.firstName}</span>
-                )}
-              </Form.Group>
-
-              <Form.Group as={Col} controlId='formGridLastName'>
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control
-                  name='lastName'
-                  type='text'
-                  placeholder='Type lastname'
-                  onChange={this.handleChange}
-                  className={formErrors.lastName.length > 0 && 'is-invalid'}
-                />
-                {formErrors.lastName.length > 0 && (
-                  <span className='errorMessage'>{formErrors.lastName}</span>
-                )}
-              </Form.Group>
-            </Form.Row>
-            <Form.Row>
-              <Form.Group as={Col} controlId='formGridUserName'>
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  name='userName'
-                  type='text'
-                  placeholder='Type username'
-                  onChange={this.handleChange}
-                  className={formErrors.userName.length > 0 && 'is-invalid'}
-                />
-                {formErrors.userName.length > 0 && (
-                  <span className='errorMessage'>{formErrors.userName}</span>
-                )}
-              </Form.Group>
-
-              <Form.Group as={Col} controlId='formGridEmail'>
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  name='email'
-                  type='email'
-                  placeholder='Type email'
-                  onChange={this.handleChange}
-                  className={formErrors.email.length > 0 && 'is-invalid'}
-                />
-                {formErrors.email.length > 0 && (
-                  <span className='errorMessage'>{formErrors.email}</span>
-                )}
-              </Form.Group>
-            </Form.Row>
-            <Form.Row>
-              <Form.Group as={Col} controlId='formGridPassword'>
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  ref={this.passwordRef}
-                  name='password'
-                  type='password'
-                  placeholder='Type password'
-                  onChange={this.handleChange}
-                  className={formErrors.password.length > 0 && 'is-invalid'}
-                />
-                <Form.Text className=''>e.g. 123abcDEF</Form.Text>
-                {formErrors.password.length > 0 && (
-                  <span className='errorMessage'>{formErrors.password}</span>
-                )}
-              </Form.Group>
-
-              <Form.Group as={Col} controlId='formGridRepeatPassword'>
-                <Form.Label>Repeat Password</Form.Label>
-                <Form.Control
-                  name='repeatPassword'
-                  type='password'
-                  placeholder='Type password again'
-                  onChange={this.handleChange}
-                  className={
-                    formErrors.repeatPassword.length > 0 && 'is-invalid'
-                  }
-                />
-                {formErrors.repeatPassword.length > 0 && (
-                  <span className='errorMessage'>
-                    {formErrors.repeatPassword}
-                  </span>
-                )}
-              </Form.Group>
-            </Form.Row>
-
-            <Form.Row>
-              <Form.Group as={Col} controlId='formGridState'>
-                <Form.Label>Gender</Form.Label>
-                <Form.Control
-                  name='gender'
-                  as='select'
-                  onChange={this.handleChange}
-                >
-                  <option value='male'>Male</option>
-                  <option value='female'>Female</option>
-                </Form.Control>
-              </Form.Group>
-            </Form.Row>
-
-            <Form.Group id='formGridCheckbox'>
-              <Form.Check
-                name='checked'
-                type='checkbox'
-                label={
-                  <>
-                    <span>By checking the box, You will agree our</span>{' '}
-                    <Link to='/terms'>'terms and conditions.'</Link>
-                  </>
-                }
-                //checked={true}
-                onChange={this.handleChange}
-                defaultChecked
-                className={formErrors.checked.length > 0 && 'is-invalid'}
-              />
-              {formErrors.checked.length > 0 && (
-                <span className='errorMessage'>{formErrors.checked}</span>
-              )}
-            </Form.Group>
-
-            <Button type='submit' className='btn-submit'>
-              Submit
-            </Button>
-          </Form>
-          <div className='mt-3'>
-            <p>
-              Already have an account?
-              <Link to='/login' className='btn btn-primary ml-2'>
-                Log In
-              </Link>
-            </p>
+      <>
+        <Topbar pageName='Signup' />
+        <SidebarMini />
+        <div className='registration'>
+          <MetaInfo {...RoutesConfig.Signup.metaInfo} />
+          {this.props.auth.loading && <CircleLoader />}
+          {/* Landing */}
+          <div className='landing'>
+            {/* <div className="home-wrap"> */}
+            <div className='home-inner'></div>
+            {/* </div> */}
           </div>
+          <div className='caption text-center'>
+            <h1>Signup Form</h1>
+            <div className='heading-underline'></div>
+            <p className='mt-3'>Easily Signup with your Facebook or Google</p>
+            <Row>
+              <Col lg='6'>
+                <Facebook />
+              </Col>
+              <Col lg='6'>
+                <Google />
+              </Col>
+            </Row>
+            <p className='mt-3'>Or, Create One</p>
+            <Form onSubmit={this.submitHandler} novalidate>
+              <div className='text-white mb-2 bg-danger'>
+                {/* {this.state.errorMessage} */}
+                {this.props.auth.error && this.props.auth.error}
+              </div>
+              <Form.Row>
+                <Form.Group as={Col} controlId='formGridFirstName'>
+                  <Form.Label>First Name: </Form.Label>
+                  <Form.Control
+                    name='firstName'
+                    type='text'
+                    placeholder='Type firstname'
+                    onChange={this.handleChange}
+                    className={formErrors.firstName.length > 0 && 'is-invalid'}
+                  />
+                  {formErrors.firstName.length > 0 && (
+                    <span className='errorMessage'>{formErrors.firstName}</span>
+                  )}
+                </Form.Group>
+
+                <Form.Group as={Col} controlId='formGridLastName'>
+                  <Form.Label>Last Name</Form.Label>
+                  <Form.Control
+                    name='lastName'
+                    type='text'
+                    placeholder='Type lastname'
+                    onChange={this.handleChange}
+                    className={formErrors.lastName.length > 0 && 'is-invalid'}
+                  />
+                  {formErrors.lastName.length > 0 && (
+                    <span className='errorMessage'>{formErrors.lastName}</span>
+                  )}
+                </Form.Group>
+              </Form.Row>
+              <Form.Row>
+                <Form.Group as={Col} controlId='formGridUserName'>
+                  <Form.Label>Username</Form.Label>
+                  <Form.Control
+                    name='userName'
+                    type='text'
+                    placeholder='Type username'
+                    onChange={this.handleChange}
+                    className={formErrors.userName.length > 0 && 'is-invalid'}
+                  />
+                  {formErrors.userName.length > 0 && (
+                    <span className='errorMessage'>{formErrors.userName}</span>
+                  )}
+                </Form.Group>
+
+                <Form.Group as={Col} controlId='formGridEmail'>
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    name='email'
+                    type='email'
+                    placeholder='Type email'
+                    onChange={this.handleChange}
+                    className={formErrors.email.length > 0 && 'is-invalid'}
+                  />
+                  {formErrors.email.length > 0 && (
+                    <span className='errorMessage'>{formErrors.email}</span>
+                  )}
+                </Form.Group>
+              </Form.Row>
+              <Form.Row>
+                <Form.Group as={Col} controlId='formGridPassword'>
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    ref={this.passwordRef}
+                    name='password'
+                    type='password'
+                    placeholder='Type password'
+                    onChange={this.handleChange}
+                    className={formErrors.password.length > 0 && 'is-invalid'}
+                  />
+                  <Form.Text className=''>e.g. 123abcDEF</Form.Text>
+                  {formErrors.password.length > 0 && (
+                    <span className='errorMessage'>{formErrors.password}</span>
+                  )}
+                </Form.Group>
+
+                <Form.Group as={Col} controlId='formGridRepeatPassword'>
+                  <Form.Label>Repeat Password</Form.Label>
+                  <Form.Control
+                    name='repeatPassword'
+                    type='password'
+                    placeholder='Type password again'
+                    onChange={this.handleChange}
+                    className={
+                      formErrors.repeatPassword.length > 0 && 'is-invalid'
+                    }
+                  />
+                  {formErrors.repeatPassword.length > 0 && (
+                    <span className='errorMessage'>
+                      {formErrors.repeatPassword}
+                    </span>
+                  )}
+                </Form.Group>
+              </Form.Row>
+
+              <Form.Row>
+                <Form.Group as={Col} controlId='formGridState'>
+                  <Form.Label>Gender</Form.Label>
+                  <Form.Control
+                    name='gender'
+                    as='select'
+                    onChange={this.handleChange}
+                  >
+                    <option value='male'>Male</option>
+                    <option value='female'>Female</option>
+                  </Form.Control>
+                </Form.Group>
+              </Form.Row>
+
+              <Form.Group id='formGridCheckbox'>
+                <Form.Check
+                  name='checked'
+                  type='checkbox'
+                  label={
+                    <>
+                      <span>By checking the box, You will agree our</span>{' '}
+                      <Link to='/terms'>'terms and conditions.'</Link>
+                    </>
+                  }
+                  //checked={true}
+                  onChange={this.handleChange}
+                  defaultChecked
+                  className={formErrors.checked.length > 0 && 'is-invalid'}
+                />
+                {formErrors.checked.length > 0 && (
+                  <span className='errorMessage'>{formErrors.checked}</span>
+                )}
+              </Form.Group>
+
+              <Button type='submit' className='btn-submit'>
+                Submit
+              </Button>
+            </Form>
+            <div className='mt-3'>
+              <p>
+                Already have an account?
+                <Link to='/login' className='btn btn-primary ml-2'>
+                  Log In
+                </Link>
+              </p>
+            </div>
+          </div>
+          {/* End of Landing */}
         </div>
-        {/* End of Landing */}
-      </div>
+      </>
     )
   }
 }

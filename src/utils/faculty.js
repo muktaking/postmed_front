@@ -86,7 +86,6 @@ export function facultyToString(num) {
       return 'Null'
   }
 }
-
 export const examTypes = [
   { name: 'Assignment', value: 0 },
   { name: 'Weekly', value: 1 },

@@ -51,12 +51,6 @@ const NavbarHome = (props) => {
         <Navbar.Toggle aria-controls='navbarResponsive' />
         <Navbar.Collapse id='navbarResponsive'>
           <Nav className='ml-auto'>
-            {/* <Scrollspy
-          items={items}
-          currentClassName={"active"}
-          className="navbar-nav ml-auto"
-          offset={-80}
-        > */}
             {items.map((value, index) => (
               <Nav.Item key={value} as='li' className='mr-3'>
                 {props.isLanding ? (
@@ -67,10 +61,8 @@ const NavbarHome = (props) => {
                     smooth={true}
                     offset={-100}
                     duration={500}
-                    // //onSetActive={this.handleSetActive}
                     href={value === 'home' ? '/' : `/#${value}`}
                     className='nav-link'
-                    //to={{ pathname: "/" }}
                   >
                     {itemsName[index]}
                   </LinkScroll>
@@ -87,25 +79,13 @@ const NavbarHome = (props) => {
             ))}
             {pages.map((value, index) => (
               <Nav.Item key={value} as='li' className='mr-3'>
-                <NavLink
-                  // href={"/" + value}
-                  to={{ pathname: '/' + value }}
-                  className='nav-link'
-                >
+                <NavLink to={{ pathname: '/' + value }} className='nav-link'>
                   {pagesName[index]}
                 </NavLink>
               </Nav.Item>
             ))}
-            {/* </Scrollspy> */}
           </Nav>
         </Navbar.Collapse>
-        {/* {props.isLanding ? (
-        <ScrollToTop showUnder={160}>
-          <span className='bg-warning text-white pt-4 px-2'>
-            <FaArrowUp  size='1.6rem'  />
-          </span>
-        </ScrollToTop>
-      ) : null} */}
       </Navbar>
     </div>
   )
