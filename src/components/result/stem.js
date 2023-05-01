@@ -41,7 +41,7 @@ export default function stem({qIndex, index, qType, answer, qStem, aStem,isUntou
             )}
           </div>
           <div className="mr-2">{qStem}</div>
-          {!isUntouched && <div>
+          {!isUntouched ? <div>
             <Form.Check
               inline
               disabled
@@ -63,6 +63,20 @@ export default function stem({qIndex, index, qType, answer, qStem, aStem,isUntou
                 answer === answerStatus.True ? aStem === "0" : aStem !== "0"
                 : false
               }
+            />
+
+          </div> : <div>
+            <Form.Check
+              inline
+              disabled
+              label="true"
+              type="radio"
+            />
+            <Form.Check
+              inline
+              disabled
+              label="False"
+              type="radio"
             />
 
           </div>}

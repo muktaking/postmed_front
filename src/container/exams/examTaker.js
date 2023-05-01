@@ -9,6 +9,7 @@ import {
   Modal,
   Row
 } from "react-bootstrap";
+import { animateScroll as scroll } from 'react-scroll'
 import Countdown from "react-countdown";
 import { Helmet } from "react-helmet";
 //import { FaRegArrowAltCircleDown, FaRegArrowAltCircleUp} from 'react-icons/fa';
@@ -80,6 +81,7 @@ class ExamTaker extends Component {
 
   //For paination
   onPageHandler = (page) => {
+    scroll.scrollTo(100, {duration: 500});
     this.setState({ currentPage: page });
   };
 
@@ -285,7 +287,7 @@ class ExamTaker extends Component {
 
                   </Form.Switch>
                   <Button onClick={this.modalShow} className="btn-md">
-                    {this.props.intl.formatMessage({id: 'btn.sas', defaultMessage: "Submit Answer Sheet"})}
+                    {this.props.intl.formatMessage({id: 'btn.sas', defaultMessage: "Submit Answer"})}
                   </Button>
                 </div>
 

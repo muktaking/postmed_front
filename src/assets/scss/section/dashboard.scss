@@ -234,3 +234,15 @@
 .carousel-indicators .active {
   background-color: #ec2d2d;
 }
+
+// custom radio button size for examTaker stem
+.exam-taker-stem{
+  input[type=radio] {
+    width: 1.2rem;
+    height: 1.2rem;
+    
+  }
+  input[type=radio] + label {
+    font-size: 1rem;
+  }
+}

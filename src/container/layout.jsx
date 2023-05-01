@@ -3,7 +3,7 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
+import { Route, useHistory } from 'react-router-dom'
 
 // import '../assets/scss/section/dashboard.scss'
 import CircleLoader from '../components/customSpinner/circleLoader/circleLoader'
@@ -14,6 +14,7 @@ import Topbar from '../components/topbar/topbar'
 import { canActivate, rolePermitted } from '../utils/canActivate'
 import ScrollToTop from '../components/customScroller/scrollToTop'
 import ExamListsByCatGuest from './exams/examListByCourse.guest'
+import StickyBottom from './landing/landing4/stickyBottom'
 //import Profile from './profile/profile'
 
 const Profile = lazy(() => import('./profile/profile'))
@@ -67,8 +68,14 @@ const NotificationBuilder = lazy(() =>
 )
 const Notification = lazy(() => import('./notification/notification'))
 
+//defining regex to exclude exam url for DomHistory, StickyBottom
+const exLink = /(\/exams\/\d+_\d+)/g
+
 const InnerContent = (props) => {
   const pageName = props.match.url.split('/', 2)[1]
+  const history = useHistory()
+  const pathname = history.location.pathname
+
   return (
     <>
       <SidebarMini />
@@ -80,7 +87,7 @@ const InnerContent = (props) => {
           </Col>
 
           <Col xl={10} lg={9} md={8} sm={12}>
-            <div>
+            <div className='mb-5'>
               <Topbar pageName={pageName} />
 
               <div className='px-1 ml-md-4' style={{ marginTop: '70px' }}>
@@ -92,7 +99,13 @@ const InnerContent = (props) => {
                     // </div>
                   }
                 >
-                  <DomHistory />
+                  {pathname.search(exLink) === -1 && (
+                    <>
+                      <DomHistory />
+                      <StickyBottom />
+                    </>
+                  )}
+
                   <Route path='/dashboard' exact component={Dashboard} />
                   <Route path='/courses' exact component={CourseLists} />
                   <Route path='/courses/:id' exact component={CourseDetails} />

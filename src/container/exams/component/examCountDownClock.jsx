@@ -18,12 +18,12 @@ export default function ExamCountDownClock({
           <>
             <Badge
               variant={(hours < 1) & (minutes < 5) ? 'danger' : 'success'}
-              style={{ fontSize: '2rem' }}
+              style={{ fontSize: '1rem' }}
             >
               {val}
             </Badge>
             {ind < 2 && (
-              <Badge variant='light' style={{ fontSize: '1.5rem' }}>
+              <Badge variant='light' style={{ fontSize: '.8rem' }}>
                 :
               </Badge>
             )}

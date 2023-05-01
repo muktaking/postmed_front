@@ -17,11 +17,11 @@ const Feature = lazy(() => import('./feature/feature'))
 const landing = (props) => {
   return (
     <>
-      <Suspense fallback={<div />}>
-        {/* <NavbarHome isLanding={true} /> */}
-        <Topbar pageName='Home' />
-        <SidebarMini />
-      </Suspense>
+      {/* <Suspense fallback={<div />}> */}
+      {/* <NavbarHome isLanding={true} /> */}
+      <SidebarMini />
+      <Topbar pageName='Home' />
+      {/* </Suspense> */}
       <div className={'__landing__upper'}>
         <MetaInfo {...RoutesConfig.Home.metaInfo} />
         {/* <Home /> */}

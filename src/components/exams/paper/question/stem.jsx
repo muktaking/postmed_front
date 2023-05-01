@@ -21,12 +21,16 @@ const QuestionStemView = ({
    *  retrive a feild as isRestrictedToOneTimeTry from backend
    */
   return (
-    <Row className='px-md-4 px-xs-2'>
+    <Row className='px-md-4 px-xs-2 exam-taker-stem'>
       <Col xs='9'>{index + '. ' + stem}</Col>
-      <Form.Group as={Col} controlId='formGroupQuestionStemAnswer'>
+      <Form.Group
+        as={Col}
+        controlId='formGroupQuestionStemAnswer'
+        className='d-flex flex-nowarp mb-0'
+      >
         {qType === 'matrix' ? (
           <>
-            <Form.Check type='radio'>
+            <Form.Check type='radio' className='mr-4'>
               <Form.Check.Input
                 //inline
                 disabled={
@@ -45,9 +49,8 @@ const QuestionStemView = ({
                 // onClick={(e)=>{
                 //   disableQuestionsAddLoader(id + "_" + index);
                 // }}
-                className='mb-0'
               />
-              <Form.Check.Label>True</Form.Check.Label>
+              <Form.Check.Label className='mt-1 ml-1'>True</Form.Check.Label>
             </Form.Check>
             <Form.Check type='radio'>
               <Form.Check.Input
@@ -70,7 +73,7 @@ const QuestionStemView = ({
                 // }}
                 className='mb-0'
               />
-              <Form.Check.Label>False</Form.Check.Label>
+              <Form.Check.Label className='mt-1 ml-1'>False</Form.Check.Label>
             </Form.Check>
           </>
         ) : (
