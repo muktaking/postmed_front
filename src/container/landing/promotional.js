@@ -19,7 +19,7 @@ export default function Promotional() {
         {images.map((img) => (
           <Carousel.Item key={img.title}>
             <div className='d-flex justify-content-center'>
-              <Link to={process.env.REACT_APP_SITE_URL + img.link}>
+              <Link to={img.link}>
                 <Image
                   src={process.env.REACT_APP_SITE_URL + img.imageUrl}
                   fluid
