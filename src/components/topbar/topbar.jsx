@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row'
 import { FaBell, FaSignOutAlt } from 'react-icons/fa'
 import { FormattedMessage } from 'react-intl'
 import { useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import NotiBadge from '../../container/notification/notiBadge'
 
 const Topbar = (props) => {
@@ -15,15 +15,24 @@ const Topbar = (props) => {
   return (
     <div className='bg-dark py-2 top-navbar mb-3 w-100'>
       <Row className='align-items-center'>
-        <Col md={4} style={{ paddingLeft: '3rem' }}>
+        <Col md={4} className='pl-4'>
           <div className='d-flex'>
-            <h4 className='text-light text-uppercase mb-0 mr-2'>
+            <Link to='/' className='pt-0'>
+              <img
+                alt=''
+                src='/logo.jpeg'
+                width='30'
+                height='30'
+                className='d-inline-block align-top rounded-circle mr-2'
+              />
+            </Link>
+            <p className='text-light text-uppercase mb-0 mr-2'>
               <FormattedMessage
                 id={props.pageName}
                 defaultMessage={props.pageName}
               />
-            </h4>
-            <p className='text-white'>
+            </p>
+            <p className='text-white' style={{ fontSize: '.8rem' }}>
               <span className='ml-2 text-warning'>
                 {user.id && `User ID. ${user.id}`}
               </span>

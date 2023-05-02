@@ -9,7 +9,16 @@ const TopNavBar = (props) => {
   return (
     <Navbar bg='dark' expand='lg' variant='dark'>
       <Button className='mr-2'>Toggle</Button>
-      <Navbar.Brand href='#home'>{props.pageName}</Navbar.Brand>
+      <Navbar.Brand href='#home'>
+        <img
+          alt=''
+          src='/logo.svg'
+          width='30'
+          height='30'
+          className='d-inline-block align-top'
+        />{' '}
+        {props.pageName}
+      </Navbar.Brand>
       {/* <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">

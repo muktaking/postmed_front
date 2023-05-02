@@ -5,15 +5,16 @@ import {
   FaBell,
   FaBookOpen,
   FaCalendarAlt,
-  FaChartLine,
+  FaChartBar,
   FaCog,
-  FaDiceD20,
+  FaStackOverflow,
   FaEdit,
   FaHome,
-  FaQuestion,
+  FaQuestionCircle,
   FaQuora,
   FaTools,
-  FaUser
+  FaUserGraduate,
+  FaTh
 } from 'react-icons/fa'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
@@ -37,14 +38,16 @@ class Sidebar extends Component {
     if (canActivate(rolePermitted.student, this.props.token)) {
       this.faIcons = [
         <FaHome size='1.6em' className='mr-2' />,
-        <FaDiceD20 size='1.6em' className='mr-2' />,
+        <FaTh size='1.6em' className='mr-2' />,
+        <FaStackOverflow size='1.6em' className='mr-2' />,
         <FaBookOpen size='1.6em' className='mr-2' />,
-        <FaChartLine size='1.6em' className='mr-2' />,
-        <FaUser size='1.6em' className='mr-2' />,
-        <FaQuestion size='1.6em' className='mr-2' />,
+        <FaChartBar size='1.6em' className='mr-2' />,
+        <FaUserGraduate size='1.6em' className='mr-2' />,
+        <FaQuestionCircle size='1.6em' className='mr-2' />,
         <FaTools size='1.6em' className='mr-2' />
       ]
       this.menuName = [
+        'Home',
         'Dashboard',
         'Courses',
         'Exams',
@@ -54,6 +57,7 @@ class Sidebar extends Component {
         'Settings'
       ]
       this.menuIntlId = [
+        'db.home',
         'btn.db',
         'btn.courses',
         'btn.exams',
@@ -63,6 +67,7 @@ class Sidebar extends Component {
         'settings'
       ]
       this.navLinks = [
+        '/',
         '/dashboard',
         '/courses',
         '/exams',
@@ -76,12 +81,14 @@ class Sidebar extends Component {
     if (canActivate(rolePermitted.mentor, this.props.token)) {
       this.faIcons = [
         <FaHome size='1.6em' className='mr-2' />,
+        <FaTh size='1.6em' className='mr-2' />,
         <FaQuora size='1.6em' className='mr-2' />,
-        <FaUser size='1.6em' className='mr-2' />,
-        <FaQuestion size='1.6em' className='mr-2' />,
+        <FaUserGraduate size='1.6em' className='mr-2' />,
+        <FaQuestionCircle size='1.6em' className='mr-2' />,
         <FaTools size='1.6em' className='mr-2' />
       ]
       this.menuName = [
+        'Home',
         'Dashboard',
         'Question Builder',
         'Profile',
@@ -90,6 +97,7 @@ class Sidebar extends Component {
       ]
       this.menuIntlId = []
       this.navLinks = [
+        '/',
         '/dashboard',
         '/question',
         '/profile',
@@ -101,15 +109,17 @@ class Sidebar extends Component {
     if (canActivate(rolePermitted.moderator, this.props.token)) {
       this.faIcons = [
         <FaHome size='1.6em' className='mr-2' />,
+        <FaTh size='1.6em' className='mr-2' />,
         <FaCog size='1.6em' className='mr-2' />,
         <FaCalendarAlt size='1.6em' className='mr-2' />,
         <FaQuora size='1.6em' className='mr-2' />,
         <FaEdit size='1.6em' className='mr-2' />,
-        <FaUser size='1.6em' className='mr-2' />,
-        <FaQuestion size='1.6em' className='mr-2' />,
+        <FaUserGraduate size='1.6em' className='mr-2' />,
+        <FaQuestionCircle size='1.6em' className='mr-2' />,
         <FaTools size='1.6em' className='mr-2' />
       ]
       this.menuName = [
+        'Home',
         'Dashboard',
         'Category Builder',
         'Routine Builder',
@@ -121,6 +131,7 @@ class Sidebar extends Component {
       ]
       this.menuIntlId = []
       this.navLinks = [
+        '/',
         '/dashboard',
         '/category',
         '/routine',
@@ -135,18 +146,20 @@ class Sidebar extends Component {
     if (canActivate(rolePermitted.coordinator, this.props.token)) {
       this.faIcons = [
         <FaHome size='1.6em' className='mr-2' />,
+        <FaTh size='1.6em' className='mr-2' />,
         <FaCog size='1.6em' className='mr-2' />,
-        <FaDiceD20 size='1.6em' className='mr-2' />,
+        <FaStackOverflow size='1.6em' className='mr-2' />,
         <FaCalendarAlt size='1.6em' className='mr-2' />,
         <FaQuora size='1.6em' className='mr-2' />,
         <FaEdit size='1.6em' className='mr-2' />,
         //<FaCog size='1.6em' className='mr-2' />,
         <FaBell size='1.6em' className='mr-2' />,
-        <FaUser size='1.6em' className='mr-2' />,
-        <FaQuestion size='1.6em' className='mr-2' />,
+        <FaUserGraduate size='1.6em' className='mr-2' />,
+        <FaQuestionCircle size='1.6em' className='mr-2' />,
         <FaTools size='1.6em' className='mr-2' />
       ]
       this.menuName = [
+        'Home',
         'Dashboard',
         'Category Builder',
         'Course Builder',
@@ -161,6 +174,7 @@ class Sidebar extends Component {
       ]
       this.menuIntlId = []
       this.navLinks = [
+        '/',
         '/dashboard',
         '/category',
         'coursebuilder',
@@ -195,6 +209,16 @@ class Sidebar extends Component {
                   'nav-link ' + this.classes.sideNavLink + ' sidebar-link'
                 }
                 activeClassName='current'
+                isActive={(match) => {
+                  // matches exact and matching pathways
+                  if (match) {
+                    // excluded the home pathway
+                    if (match.url === '') {
+                      return false
+                    }
+                    return true
+                  }
+                }}
               >
                 {value}
                 {this.menuIntlId.length > 1 ? (

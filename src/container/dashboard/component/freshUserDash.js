@@ -8,8 +8,17 @@ export default function FreshUserDash() {
       <Jumbotron>
         <h1>Welcome!</h1>
         <p>
-          We are warmly welcome you. Please enroll for a course and then take
-          exam regularly.
+          We warmly welcome you to our MediOnExam Dashboard. It seems you are
+          newbee. Do not worry, i will guide you. It is very simple. At first
+          step, Please enroll for a course. Then start taking part in exams
+          under the courses. You can also take part in free exams of other
+          courses. Please click the below button to go to course's page.
+        </p>
+        <Link to='/courses'>
+          <Button>Courses</Button>
+        </Link>
+        <p>
+          That's all. Hope you will be benefited from this learning platform.
         </p>
         <p>
           For help, please go to{' '}
@@ -17,10 +26,6 @@ export default function FreshUserDash() {
             Help section
           </Link>
         </p>
-        <hr />
-        <Link to='/courses'>
-          <Button>Courses</Button>
-        </Link>
       </Jumbotron>
     </div>
   )

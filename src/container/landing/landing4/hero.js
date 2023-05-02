@@ -10,6 +10,7 @@ import PropularPrograms from './propularPrograms'
 import FindCourseByCategories from './findCourseByCategories'
 import CourseCarousel from '../landing3/courseCarousel'
 import { useSelector } from 'react-redux'
+import NoEnrollmentInfo from './noEnrollmentInfo'
 
 export default function Hero() {
   const isAuthenticated = useSelector((state) => state.auth.token !== null)
@@ -22,10 +23,12 @@ export default function Hero() {
       <div className='heading-underline'></div> */}
 
       <div className={styles.dashBack + ' py-3'}>
+        <NoEnrollmentInfo />
         <Promotional />
         <CourseSearch />
         {isAuthenticated && <EnrolledMaterials />}
       </div>
+
       <PropularPrograms />
       <hr />
       <FindCourseByCategories />

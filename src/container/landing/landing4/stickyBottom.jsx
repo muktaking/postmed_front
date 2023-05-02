@@ -16,6 +16,7 @@ const greetings = 'Hello, MediOnExam'
 
 export default function StickyBottom() {
   const IsAuthenticated = useSelector((state) => state.auth.token !== null)
+
   const bootomNavItems = [
     {
       title: 'Home',
@@ -55,55 +56,59 @@ export default function StickyBottom() {
       }}
     >
       {!IsAuthenticated && (
-        <>
-          <div className='text-center pt-2'>
+        <div>
+          <div className='text-center pt-1'>
             You are not logged in. Please{' '}
             <Link to='/login'>
-              <Button variant='outline-warning'>Login</Button>
+              <Button variant='outline-warning' className='mt-2'>
+                Login
+              </Button>
             </Link>
           </div>
           <hr />
-        </>
+        </div>
       )}
 
-      <div className='p-1 d-flex flex-wrap justify-content-center align-items-center'>
-        {bootomNavItems.map((item, ind) => (
-          <Link key={item + ind} to={item.link} className='text-white'>
-            <div
-              className={
-                'mr-2 mb-2 d-flex justify-content-center align-items-center pr-2 border-right'
-              }
-            >
-              {item.icon}
-              <span className='' style={{ fontSize: '1rem' }}>
-                {item.title}
-              </span>
-            </div>
-          </Link>
-        ))}
-        <div
-          className={
-            'mr-2 mb-2 d-flex justify-content-center align-items-center'
-          }
-        >
-          <a
-            href={`https://api.whatsapp.com/send?phone=${phoneNumber}&text=${greetings}`}
-            target='_blank'
-            rel='noreferrer'
-            className='text-white d-flex justify-content-center align-items-center'
-            style={{
-              backgroundColor: '#25d366',
-              width: '20px',
-              height: '20px',
-              borderRadius: '20px',
-              boxShadow: '2px 2px 3px #999'
-            }}
+      <div className='hideInMd'>
+        <div className='p-1 d-flex flex-wrap justify-content-center align-items-center'>
+          {bootomNavItems.map((item, ind) => (
+            <Link key={item + ind} to={item.link} className='text-white'>
+              <div
+                className={
+                  'mr-2 mb-2 d-flex justify-content-center align-items-center pr-2 border-right'
+                }
+              >
+                {item.icon}
+                <span className='' style={{ fontSize: '1rem' }}>
+                  {item.title}
+                </span>
+              </div>
+            </Link>
+          ))}
+          <div
+            className={
+              'mr-2 mb-2 d-flex justify-content-center align-items-center'
+            }
           >
-            <FaWhatsapp size={'1.4rem'} />
-          </a>
-          {/* <span className='' style={{ fontSize: '1.3rem' }}>
+            <a
+              href={`https://api.whatsapp.com/send?phone=${phoneNumber}&text=${greetings}`}
+              target='_blank'
+              rel='noreferrer'
+              className='text-white d-flex justify-content-center align-items-center'
+              style={{
+                backgroundColor: '#25d366',
+                width: '20px',
+                height: '20px',
+                borderRadius: '20px',
+                boxShadow: '2px 2px 3px #999'
+              }}
+            >
+              <FaWhatsapp size={'1.4rem'} />
+            </a>
+            {/* <span className='' style={{ fontSize: '1.3rem' }}>
             Whatsapp
           </span> */}
+          </div>
         </div>
       </div>
     </div>

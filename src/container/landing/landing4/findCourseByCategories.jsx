@@ -31,11 +31,15 @@ export default function FindCourseByCategories() {
     <div className='mt-4'>
       <h3 className='heading text-center'>Find Courses By Subjects</h3>
       <div className='heading-underline'></div>
-      <div className='d-flex text-white mt-2 flex-wrap justify-content-center'>
+      <div className='d-flex text-white mt-3 flex-wrap justify-content-center'>
         {Object.keys(faculty)
           .slice(1)
           .map((key, ind) => (
-            <Link to={'/courses?faculty=' + (ind + 1)} className='text-white'>
+            <Link
+              key={key + ind}
+              to={'/courses?faculty=' + (ind + 1)}
+              className='text-white'
+            >
               <div className='bg-dark p-2 mr-2 mb-2 d-flex justify-content-center align-items-center'>
                 <span className='mr-2'>{facultyToIcon(ind + 1)}</span>
                 <span>{key.toUpperCase()}</span>
