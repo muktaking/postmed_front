@@ -15,7 +15,8 @@ export default function Promotional() {
                   '/assets/image/promotional/' + img + '.png'
                 }
                 height='100'
-                className='w-100'
+                fluid
+                className=''
               />
             </div>
           </Carousel.Item>

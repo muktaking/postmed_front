@@ -1,30 +1,40 @@
 import React, { Component } from 'react'
 import '../assets/scss/section/registration.scss'
-import NavbarHome from '../components/navbar/navbarHome'
 import SubNavBar from '../components/navbar/subNavBar'
+import SidebarMini from '../components/sidebar/sidebarMini'
+import Topbar from '../components/topbar/topbar'
+import { Image } from 'react-bootstrap'
 
 class NotFound extends Component {
   render() {
     return (
-      <div className='registration'>
-        {/* {authRedirect} */}
-        <NavbarHome isLanding={false} />
-        {/* Landing */}
-        <div className='landing'>
-          <div className='home-wrap'>
-            <div className='home-inner'></div>
+      <>
+        <SidebarMini />
+        <Topbar pageName='Not Found' />
+        <div className='registration'>
+          <div className='landing'>
+            <div className='home-wrap'>
+              <div className='home-inner'></div>
+            </div>
+          </div>
+          <div className='caption text-center'>
+            <p className='lead text-danger'>
+              {this.props.location.state
+                ? this.props.location.state.message
+                : 'Opps! Sorry.'}
+            </p>
+            <Image
+              src='/assets/image/404.jpg'
+              alt='404_No_Data_Found'
+              fluid
+              style={{ height: 350 }}
+              className='mb-4'
+            />
+
+            <SubNavBar />
           </div>
         </div>
-        <div className='caption text-center' style={{ top: '15%' }}>
-          <h1>404-Page</h1>
-          <p className='lead'>
-            {this.props.location.state
-              ? this.props.location.state.message
-              : 'Your Desired Content -> Not Found'}
-          </p>
-          <SubNavBar />
-        </div>
-      </div>
+      </>
     )
   }
 }

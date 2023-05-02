@@ -1,12 +1,15 @@
 // importing headers file;
 
-@import './headers/variables';
+// add any variables
+@import './headers/variables';  
 
+//// add any media quaries
 @import './headers/media';
 
 //section file imported
 //only at landing page
 .__landing__upper {
+  padding-top: 56px;
   @import './headers/_fixed';
   @import './section/home';
   @import './section/exam';
@@ -16,6 +19,7 @@
   @import './section/contact';
 
 }
+//impact all pages
 @import './section/course.scss';
 @import './section/dashboard.scss';
 
@@ -29,6 +33,21 @@
   top: 45vh;
   left: 50%;
   z-index: 10000000000;
+}
+
+// heading
+h3.heading {
+  font-size: 1.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: .3rem;
+}
+
+.heading-underline {
+  width: 3rem;
+  height: 0.2rem;
+  background-color: $primaryColor;
+  margin: 0 auto .5rem;
 }
 
 nav.nav-tabs {

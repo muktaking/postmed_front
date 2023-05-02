@@ -4,6 +4,7 @@ import {
   FaBookOpen,
   FaHome,
   FaQuestionCircle,
+  FaStackOverflow,
   FaTh,
   FaWhatsapp
 } from 'react-icons/fa'
@@ -13,31 +14,35 @@ import { Link } from 'react-router-dom'
 const phoneNumber = 8801521500642
 const greetings = 'Hello, MediOnExam'
 
-const bootomNavItems = [
-  {
-    title: 'Home',
-    icon: <FaHome className='mr-1' size={'.8rem'} />,
-    link: '/'
-  },
-  {
-    title: 'Dashboard',
-    icon: <FaTh className='mr-1' size={'.8rem'} />,
-    link: '/dashboard'
-  },
-  {
-    title: 'Exams',
-    icon: <FaBookOpen className='mr-1' size={'.8rem'} />,
-    link: '/exams'
-  },
-  {
-    title: 'Help',
-    icon: <FaQuestionCircle className='mr-1' size={'.8rem'} />,
-    link: '/help'
-  }
-]
-
 export default function StickyBottom() {
   const IsAuthenticated = useSelector((state) => state.auth.token !== null)
+  const bootomNavItems = [
+    {
+      title: 'Home',
+      icon: <FaHome className='mr-1' size={'.8rem'} />,
+      link: '/'
+    },
+    {
+      title: IsAuthenticated ? 'Dashboard' : 'Courses',
+      icon: IsAuthenticated ? (
+        <FaTh className='mr-1' size={'.8rem'} />
+      ) : (
+        <FaStackOverflow className='mr-1' size={'.8rem'} />
+      ),
+      link: IsAuthenticated ? '/dashboard' : '/courses'
+    },
+    {
+      title: 'Exams',
+      icon: <FaBookOpen className='mr-1' size={'.8rem'} />,
+      link: '/exams'
+    },
+    {
+      title: 'Help',
+      icon: <FaQuestionCircle className='mr-1' size={'.8rem'} />,
+      link: '/help'
+    }
+  ]
+
   return (
     <div
       className={'bg-dark text-white'}
@@ -63,7 +68,7 @@ export default function StickyBottom() {
 
       <div className='p-1 d-flex flex-wrap justify-content-center align-items-center'>
         {bootomNavItems.map((item, ind) => (
-          <Link to={item.link} className='text-white'>
+          <Link key={item + ind} to={item.link} className='text-white'>
             <div
               className={
                 'mr-2 mb-2 d-flex justify-content-center align-items-center pr-2 border-right'

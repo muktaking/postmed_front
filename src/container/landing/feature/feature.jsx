@@ -43,7 +43,7 @@ const Feature = (props) => {
   }
   return (
     <div id='feature' className='offset'>
-      <Jumbotron className='feature-lg'>
+      <Jumbotron className='hideInSm'>
         <div className='narrow text-center'>
           <Col xs={12}>
             <h3 className='heading'>
@@ -63,7 +63,7 @@ const Feature = (props) => {
           </Row>
         </div>
       </Jumbotron>
-      <Jumbotron className='feature-md'>
+      <Jumbotron className='hideInMd'>
         <CarouselComponent items={features} />
       </Jumbotron>
     </div>

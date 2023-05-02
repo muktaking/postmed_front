@@ -1,0 +1,13 @@
+.container{
+    width:80%;
+    margin: 0px auto; 
+}
+
+.searchBox{
+    @media (max-width: 768px) {
+        height: 40px;
+    }
+    @media (min-width: 768px) {
+        height: 60px;
+      }
+} 

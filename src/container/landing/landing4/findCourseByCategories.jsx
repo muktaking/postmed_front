@@ -29,7 +29,8 @@ export function facultyToIcon(num) {
 export default function FindCourseByCategories() {
   return (
     <div className='mt-4'>
-      <h4 className='text-center'>Find Courses By Subjects</h4>
+      <h3 className='heading text-center'>Find Courses By Subjects</h3>
+      <div className='heading-underline'></div>
       <div className='d-flex text-white mt-2 flex-wrap justify-content-center'>
         {Object.keys(faculty)
           .slice(1)

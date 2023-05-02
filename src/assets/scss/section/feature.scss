@@ -3,21 +3,6 @@
     padding: 2rem 0 3.5rem;
     border-radius: 0;
 }
-
-h3.heading {
-    font-size: 1.9rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: .3rem;
-}
-
-.heading-underline {
-    width: 3rem;
-    height: 0.2rem;
-    background-color: $primaryColor;
-    margin: 0 auto .5rem;
-}
-
 .feature svg.svg-inline--fa {
     color: $primaryColor;
 }
@@ -30,22 +15,6 @@ h3.heading {
 
 .feature p {
     font-size: 1.1rem;
-}
-@media (min-width: 768px) {
-    .feature-lg{
-        display: block;
-    }
-    .feature-md{
-        display:none;
-    }
-}
-@media (max-width: 767.98px) {
-    .feature-lg{
-        display: none;
-    }
-    .feature-md{
-        display: block;
-    }
 }
 
 .carousel-control-next-icon {

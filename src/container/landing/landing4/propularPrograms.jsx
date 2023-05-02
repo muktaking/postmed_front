@@ -7,7 +7,8 @@ import { NavLink } from 'react-router-dom'
 export default function PropularPrograms() {
   return (
     <div className={' py-2'}>
-      <h4 className='text-center'>Popular Programs</h4>
+      <h3 className='heading text-center'>Popular Programs</h3>
+      <div className='heading-underline'></div>
       <Carousel className='mx-2'>
         {pgProgramme.map((program, ind) => (
           <Carousel.Item>
