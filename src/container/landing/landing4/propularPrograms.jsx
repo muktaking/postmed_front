@@ -6,11 +6,11 @@ import { NavLink } from 'react-router-dom'
 
 export default function PropularPrograms() {
   return (
-    <div className={' py-2'}>
+    <div className={' py-2 mox-custom-carousel'}>
       <h3 className='heading text-center'>Popular Programs</h3>
       <div className='heading-underline'></div>
       {/* only for sm size screen */}
-      <Carousel className='mx-2 hideInMd'>
+      <Carousel interval={6000} className='mx-2 hideInMd'>
         {pgProgramme.map((program, ind) => (
           <Carousel.Item>
             <Card className='bg-light' text='white' style={{ height: '16rem' }}>

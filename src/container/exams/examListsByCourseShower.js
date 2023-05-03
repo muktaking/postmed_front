@@ -30,8 +30,9 @@ export default function ExamListsByCatShower() {
   const pageSize = 5
   let paginatedExams = paginate(exams, currentPage, pageSize)
 
-  const isEnrolledStu =
-    coursesEnrolledByStu.map((course) => course.id).indexOf(+id) !== -1
+  const isEnrolledStu = coursesEnrolledByStu
+    ? coursesEnrolledByStu.map((course) => course.id).indexOf(+id) !== -1
+    : null
 
   function onFreeExamSwitcherHandler(e) {
     const checked = e.target.checked

@@ -13,7 +13,7 @@ export default function Promotional() {
       .catch((e) => console.log(e))
   }, [])
   return (
-    <div className={images.length > 0 && 'shadow bg-white px-2 pt-2 pb-3 mb-3'}>
+    <div className={images.length > 0 && 'mox-custom-carousel-2 mb-2'}>
       {/* <Container className='bg-secondary'> */}
       <Carousel>
         {images.map((img) => (
@@ -22,8 +22,8 @@ export default function Promotional() {
               <Link to={img.link}>
                 <Image
                   src={process.env.REACT_APP_SITE_URL + img.imageUrl}
-                  fluid
                   alt={img.title}
+                  className='w-100'
                 />
               </Link>
             </div>

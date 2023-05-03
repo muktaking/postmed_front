@@ -42,7 +42,12 @@ export default function Index() {
   let query = useQuery()
   const pgCourseType = query.get('pgCourseType')
   const faculty = query.get('faculty')
-  const coursesStore = useSelector((state) => state.courses)
+  const loading = useSelector((state) => state.courses.loading)
+  const courses = useSelector((state) => state.courses.courses)
+  const coursesEnrolledByStu = useSelector(
+    (state) => state.courses.coursesEnrolledByStu
+  )
+  const coursesError = useSelector((state) => state.courses.error)
   const isAuthenticated = useSelector((state) => state.auth.token !== null)
   const [enrollResLoader, setEnrollResLoader] = useState(false)
   const [res, setRes] = useState(null) // get server response after enrollment request by student
@@ -50,10 +55,9 @@ export default function Index() {
   const [modalCourse, setModalCourse] = useState(null)
   const [showPaymentModalForm, setShowPayemntModalForm] = useState(false)
   const [showModalMsg, setShowModalMsg] = useState(null) // show modal
-  const courses = coursesStore ? coursesStore.courses : []
-  const enrolledCoursesId = coursesStore.coursesEnrolledByStu.map(
-    (course) => course.id
-  )
+  const enrolledCoursesId = coursesEnrolledByStu
+    ? coursesEnrolledByStu.map((course) => course.id)
+    : null
   const pageSize = 5
 
   useEffect(() => {
@@ -137,16 +141,16 @@ export default function Index() {
       {/* Main Section */}
       <h3 className='text-center heading'>Available Courses</h3>
       {enrollResLoader && <CircleLoader />}
-      {coursesStore.loading && <CircleLoader />}
+      {loading && <CircleLoader />}
       <CourseFilter pgCourseType={pgCourseType} faculty={faculty} />
       <div className='d-flex justify-content-around flex-wrap mt-3'>
-        {coursesStore.error ? ( // show courses error messsage
+        {coursesError ? ( // show courses error messsage
           <p className='text-danger'>
             <span>Courses can not be retrived.</span>
             <hr />
-            <span>Possible Reason: {coursesStore.error}</span>
+            <span>Possible Reason: {coursesError}</span>
           </p>
-        ) : courses.length < 1 ? (
+        ) : courses && courses.length < 1 ? (
           <Alert variant='danger'>No Courses Available</Alert>
         ) : (
           paginatedCourses.map((course) => (
@@ -231,7 +235,8 @@ export default function Index() {
                     <>
                       <hr />
                       <div className='d-flex justify-content-center align-items-center'>
-                        {enrolledCoursesId.indexOf(course.id) > -1 ? (
+                        {enrolledCoursesId &&
+                        enrolledCoursesId.indexOf(course.id) > -1 ? (
                           <p className='text-success text-center'>
                             Already Enrolled
                           </p>
@@ -266,7 +271,7 @@ export default function Index() {
         <Pagination
           activePage={currentPage}
           itemsCountPerPage={pageSize}
-          totalItemsCount={courses.length}
+          totalItemsCount={courses ? courses.length : null}
           pageRangeDisplayed={2}
           onChange={(page) => {
             setCurrentPage(page)

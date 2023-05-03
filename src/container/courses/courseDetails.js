@@ -226,7 +226,7 @@ export default function CourseDetails() {
               <SocialShare
                 title={course.title}
                 description={course.description}
-                url=''
+                url={'/courses/' + course.id}
               />
             </Card.Footer>
           </Card>

@@ -16,27 +16,32 @@ const Topbar = (props) => {
     <div className='bg-dark py-2 top-navbar mb-3 w-100'>
       <Row className='align-items-center'>
         <Col md={4} className='pl-4'>
-          <div className='d-flex'>
-            <Link to='/' className='pt-0'>
+          <div className='d-flex align-items-center'>
+            <Link to='/' className=''>
               <img
                 alt=''
                 src='/logo.jpeg'
                 width='30'
                 height='30'
-                className='d-inline-block align-top rounded-circle mr-2'
+                className='rounded-circle'
               />
             </Link>
-            <p className='text-light text-uppercase mb-0 mr-2'>
+            <p className='text-light text-uppercase ml-2 my-auto'>
               <FormattedMessage
                 id={props.pageName}
                 defaultMessage={props.pageName}
               />
             </p>
-            <p className='text-white' style={{ fontSize: '.8rem' }}>
-              <span className='ml-2 text-warning'>
-                {user.id && `User ID. ${user.id}`}
-              </span>
-            </p>
+            {user.id && (
+              <p
+                className='text-white ml-2 my-auto'
+                style={{ fontSize: '.8rem' }}
+              >
+                <span className='ml-2 text-warning'>
+                  {`User ID. ${user.id}`}
+                </span>
+              </p>
+            )}
           </div>
         </Col>
 

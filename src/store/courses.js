@@ -5,9 +5,9 @@ const slice = createSlice({
   name: 'Courses',
   initialState: {
     loading: false,
-    courses: [],
-    coursesEnrolledByStu: [],
-    expectedEnrolledStuIds: [],
+    courses: null,
+    coursesEnrolledByStu: null,
+    expectedEnrolledStuIds: null,
     error: null
   },
   reducers: {

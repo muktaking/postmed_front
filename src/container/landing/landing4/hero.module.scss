@@ -1,33 +1,14 @@
-
-    .container {
-      //margin-top: 56px;
-      // //height: '100vh'
-      // background-position: center; /* Center the image */
-      // background-image: url('../../../assets/image/bg.svg');
-      // background-repeat: no-repeat; /* Do not repeat the image */
-      .carousel-control-next-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
-      }
-      
-      .carousel-control-prev-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
-      }
-      .carousel-indicators li {
-        background-color: #000000;   
-      }
-      .carousel-indicators .active {
-        background-color: #E74646;
-      }
-      
-    }
-    .dashBack{
-      background-image: url('/assets/image/background/dash.jpg');
-      background-size: cover; /* Resize the background image to cover the entire container */
-      color: white;
-      margin-bottom: 10px;
-    }
-    .dashBack2{
-      background-image: url('/assets/image/background/dash2.jpg');
-      background-size: cover; /* Resize the background image to cover the entire container */
-      color: white;
-    }
+.container{
+  padding-top: 56px;
+}
+.dashBack{
+  background-image: url('/assets/image/background/dash.jpg');
+  background-size: cover; /* Resize the background image to cover the entire container */
+  color: white;
+  margin-bottom: 10px;
+}
+.dashBack2{
+  background-image: url('/assets/image/background/dash2.jpg');
+  background-size: cover; /* Resize the background image to cover the entire container */
+  color: white;
+}

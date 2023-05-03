@@ -21,8 +21,9 @@ moment.extend(duration)
 export default function ExamListsByCatGuest({ landing = null }) {
   const dispatch = useDispatch()
   const [currentPage, setCurrentPage] = useState(1)
-  const coursesStore = useSelector((state) => state.courses)
-  let courses = coursesStore ? coursesStore.courses : []
+  const courses = useSelector((state) => state.courses.courses)
+  const loading = useSelector((state) => state.courses.loading)
+  const coursesError = useSelector((state) => state.courses.error)
   const pageSize = 5
 
   useEffect(() => {
@@ -35,9 +36,9 @@ export default function ExamListsByCatGuest({ landing = null }) {
     <div>
       {/* Main Section */}
       <h3 className='text-center heading'>Exams Under Courses</h3>
-      {coursesStore.loading && <CircleLoader />}
+      {loading && <CircleLoader />}
       <div className='d-flex justify-content-around flex-wrap'>
-        {coursesStore.error ? ( // show courses error messsage
+        {coursesError ? ( // show courses error messsage
           <p className='text-danger'>
             <span>Courses can not be retrived.</span>
           </p>
@@ -65,7 +66,7 @@ export default function ExamListsByCatGuest({ landing = null }) {
         <Pagination
           activePage={currentPage}
           itemsCountPerPage={pageSize}
-          totalItemsCount={courses.length}
+          totalItemsCount={courses && courses.length}
           pageRangeDisplayed={2}
           onChange={(page) => {
             setCurrentPage(page)

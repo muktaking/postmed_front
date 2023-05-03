@@ -17,12 +17,12 @@ export default function CourseCarousel() {
       })
   }, [])
   return (
-    <div className='my-5'>
+    <div className='my-5 mox-custom-carousel'>
       <h3 className='heading text-center'>Latest Courses</h3>
       <div className='heading-underline'></div>
 
       {/* only for sm size screen */}
-      <Carousel interval={null} className='hideInMd'>
+      <Carousel className='hideInMd'>
         {latestCourses.map((course) => (
           <Carousel.Item>
             <LazyLoadComponent>

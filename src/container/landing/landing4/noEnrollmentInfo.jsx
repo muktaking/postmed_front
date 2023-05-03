@@ -7,10 +7,13 @@ import { Button } from 'react-bootstrap'
 export default function NoEnrollmentInfo() {
   const dispatch = useDispatch()
   const IsAuthenticated = useSelector((state) => state.auth.token !== null)
-  const coursesStore = useSelector((state) => state.courses)
-  const enrolledCoursesId = coursesStore.coursesEnrolledByStu.map(
-    (course) => course.id
+  const coursesEnrolledByStu = useSelector(
+    (state) => state.courses.coursesEnrolledByStu
   )
+  const enrolledCoursesId = coursesEnrolledByStu
+    ? coursesEnrolledByStu.map((course) => course.id)
+    : null
+
   useEffect(() => {
     if (IsAuthenticated) {
       dispatch(fetchCourseEnrolledByStuLoader())
@@ -19,7 +22,8 @@ export default function NoEnrollmentInfo() {
 
   return (
     IsAuthenticated &&
-    enrolledCoursesId.length < 1 && (
+    enrolledCoursesId &&
+    enrolledCoursesId.length < 0 && (
       <div className='mb-3'>
         <p className='text-center bg-warning text-dark mx-auto'>
           <span>You have not enrolled any course yet. Please </span>

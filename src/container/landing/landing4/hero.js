@@ -16,15 +16,9 @@ export default function Hero() {
   const isAuthenticated = useSelector((state) => state.auth.token !== null)
   return (
     <Container id='home' className={`${styles.container} px-0`} fluid>
-      {/* <Promotional />
-      <h3 className='heading text-center'>
-        Welcome To Our Postgraduation Programs
-      </h3>
-      <div className='heading-underline'></div> */}
-
+      <Promotional />
       <div className={styles.dashBack + ' py-3'}>
         <NoEnrollmentInfo />
-        <Promotional />
         <CourseSearch />
         {isAuthenticated && <EnrolledMaterials />}
       </div>

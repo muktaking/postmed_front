@@ -69,7 +69,7 @@ const NotificationBuilder = lazy(() =>
 const Notification = lazy(() => import('./notification/notification'))
 
 //defining regex to exclude exam url for DomHistory, StickyBottom
-const exLink = /(\/exams\/\d+_\d+)/g
+const exLink = /(\/exams\/(free\/)?\d+(_\d+)?)/g
 
 const InnerContent = (props) => {
   const pageName = props.match.url.split('/', 2)[1]

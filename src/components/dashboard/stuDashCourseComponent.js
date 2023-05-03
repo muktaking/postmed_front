@@ -45,7 +45,7 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
           </Nav>
         </Col>
         <Col sm={10}>
-          <Jumbotron className='py-4 px-3'>
+          <Jumbotron className='py-4 px-3 mox-custom-carousel'>
             <Tab.Content>
               {userDashExamInfo.map((examInfo, ind) => {
                 const { id, userExamInfo, userExamStat, featuredExams } =

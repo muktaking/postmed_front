@@ -15,23 +15,26 @@ import { paginate } from '../../utils/paginate'
 export default function ExamListsByCat() {
   const dispatch = useDispatch()
   const [currentPage, setCurrentPage] = useState(1)
-  const courses = useSelector((state) => state.courses)
+  const coursesEnrolledByStu = useSelector(
+    (state) => state.courses.coursesEnrolledByStu
+  )
+  const loading = useSelector((state) => state.courses.loading)
   const pageSize = 5
 
   useEffect(() => {
     dispatch(fetchCourseEnrolledByStuLoader())
   }, [dispatch])
   const paginatedCoursesEnrolledByStu = paginate(
-    courses.coursesEnrolledByStu,
+    coursesEnrolledByStu,
     currentPage,
     pageSize
   )
   return (
     <div>
-      {courses.loading && <CircleLoader />}
+      {loading && <CircleLoader />}
       <h2 className='text-center'>Enrolled Courses</h2>
       <div className='m-3'>
-        {courses.coursesEnrolledByStu.length < 1 ? (
+        {coursesEnrolledByStu && coursesEnrolledByStu.length < 1 ? (
           <div>
             <p className='text-center text-danger'>
               You have not enrolled for any course yet. Please enroll any course
@@ -68,7 +71,9 @@ export default function ExamListsByCat() {
               <Pagination
                 activePage={currentPage}
                 itemsCountPerPage={pageSize}
-                totalItemsCount={courses.length}
+                totalItemsCount={
+                  coursesEnrolledByStu && coursesEnrolledByStu.length
+                }
                 pageRangeDisplayed={2}
                 onChange={(page) => {
                   setCurrentPage(page)

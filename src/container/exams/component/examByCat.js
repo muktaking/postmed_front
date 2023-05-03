@@ -25,8 +25,9 @@ export default function ExamByCat({ exam, courseId = null }) {
 
   const isFree =
     exam.categoryType.filter((cat) => cat.name === 'Free').length > 0
-  const isEnrolledStu =
-    coursesEnrolledByStu.map((course) => course.id).indexOf(+courseId) !== -1
+  const isEnrolledStu = coursesEnrolledByStu
+    ? coursesEnrolledByStu.map((course) => course.id).indexOf(+courseId) !== -1
+    : null
 
   const handleCloseModal = () => setShowModal(false)
 

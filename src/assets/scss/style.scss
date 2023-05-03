@@ -9,7 +9,7 @@
 //section file imported
 //only at landing page
 .__landing__upper {
-  padding-top: 56px;
+ 
   @import './headers/_fixed';
   @import './section/home';
   @import './section/exam';
@@ -63,4 +63,49 @@ nav.nav-tabs {
 
 .activeLink {
   color: $primaryColor !important;
+}
+
+.mox-custom-carousel {
+  .carousel-indicators{
+    bottom: -40px;
+  }
+
+  .carousel-indicators > li {
+  border-radius: 12px;
+  width: 12px;
+  height: 12px;
+  background-color: #404040;
+  }
+
+  .carousel-control-prev{
+  display: none;
+  } 
+
+  .carousel-control-next{
+  display: none;
+  } 
+      
+}
+
+.mox-custom-carousel-2 {
+  .carousel-indicators{
+    bottom: -20px;
+  }
+
+  .carousel-indicators > li {
+    border-radius: 12px;
+    width: 12px;
+    height: 12px;
+    background-color: #404040;
+  }
+
+  .carousel-control-prev{
+    display: none;
+
+  } 
+
+  .carousel-control-next{
+    display: none;
+  } 
+      
 }

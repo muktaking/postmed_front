@@ -31,8 +31,10 @@ export default function SocialShare({ title, description, url, ...props }) {
 
       <FacebookShareButton
         url={url}
+        description={description}
+        title={title}
         quote={description}
-        hashtag={title}
+        hashtag={title.split(' ').join('#')}
         className='mr-1'
       >
         <FacebookIcon size={iconStyle.size} round={iconStyle.round} />

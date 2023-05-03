@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl'
 
 export default function CarouselComponent({ items }) {
   return (
-    <div>
+    <div className='mox-custom-carousel'>
       <h3 className='heading text-center'>
         <FormattedMessage id='features' defaultMessage='Features' />
       </h3>
