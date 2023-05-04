@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Alert, Button, Form, Spinner } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { FaRegCalendarAlt } from 'react-icons/fa'
+import { FaEdit, FaRegCalendarAlt } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 //import { useFormik } from "formik";
 import validator from 'validator'
@@ -29,6 +29,7 @@ const ExamSpec = ({
   const [hideMsg, setHideMsg] = useState(true)
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
+  const [forceEditTime, setForceEditTime] = useState(false) // for forcely set exam time to old days
   const dispatch = useDispatch()
   const loading = useSelector((state) => state.examPaper.loading)
   const successMsg = useSelector((state) => state.examPaper.success)
@@ -157,6 +158,7 @@ const ExamSpec = ({
                     let categorySlug = value.slug.replace(/_/g, ' / ')
                     if (value.name !== 'Uncategorized')
                       return <option value={value.id}>{categorySlug}</option>
+                    else return <></>
                   })}
                 </Form.Control>
               </Form.Group>
@@ -174,9 +176,10 @@ const ExamSpec = ({
                 >
                   // eslint-disable-next-line react/prop-types //
                   eslint-disable-next-line react/prop-types
-                  {courses.map((value) => (
-                    <option value={value.id}>{value.title}</option>
-                  ))}
+                  {courses &&
+                    courses.map((value) => (
+                      <option value={value.id}>{value.title}</option>
+                    ))}
                 </Form.Control>
               </Form.Group>
 
@@ -200,7 +203,9 @@ const ExamSpec = ({
                     selected={startDate}
                     onChange={(date) => setStartDate(date)}
                     showTimeSelect
-                    minDate={!editExamSpec && new Date()}
+                    minDate={
+                      editExamSpec ? null : forceEditTime ? null : new Date()
+                    }
                     dateFormat='Pp'
                   />
                   <FaRegCalendarAlt size='1.7rem' />
@@ -211,11 +216,21 @@ const ExamSpec = ({
                     selected={endDate}
                     onChange={(date) => setEndDate(date)}
                     showTimeSelect
-                    minDate={new Date()}
+                    minDate={
+                      editExamSpec ? null : forceEditTime ? null : new Date()
+                    }
                     dateFormat='Pp'
                   />
                   <FaRegCalendarAlt size='1.7rem' />
                 </div>
+                <p>
+                  <FaEdit
+                    color='red'
+                    onClick={() => {
+                      setForceEditTime(!forceEditTime)
+                    }}
+                  />
+                </p>
               </div>
               <Form.Group controlId='singleQuestionMark'>
                 <Form.Label>Single Question Mark</Form.Label>
