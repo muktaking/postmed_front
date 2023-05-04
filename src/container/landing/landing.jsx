@@ -7,9 +7,14 @@ import FeatureWhyChoseUs from './feature/featureWhyChoseUs'
 //import Contact from "./contact/contact";
 import Hero from './landing4/hero'
 import ScrollToTop from '../../components/customScroller/scrollToTop'
-import StickyBottom from './landing4/stickyBottom'
 import SidebarMini from '../../components/sidebar/sidebarMini'
 import Topbar from '../../components/topbar/topbar'
+import PropularPrograms from './component/propularPrograms'
+import FindCourseByCategories from './component/findCourseByCategories'
+import CourseCarousel from './component/courseCarousel'
+import { Link } from 'react-router-dom'
+import { Button } from 'react-bootstrap'
+import StickyBottom from './component/stickyBottom'
 const Contact = lazy(() => import('./contact/contact'))
 const SignupSection = lazy(() => import('./signupSection/signupSection'))
 const Feature = lazy(() => import('./feature/feature'))
@@ -17,20 +22,33 @@ const Feature = lazy(() => import('./feature/feature'))
 const landing = (props) => {
   return (
     <>
-      {/* <Suspense fallback={<div />}> */}
-      {/* <NavbarHome isLanding={true} /> */}
-      <SidebarMini />
-      <Topbar pageName='Home' />
-      {/* </Suspense> */}
-      <div className={'__landing__upper'}>
+      <div className={'landing-upper'}>
         <MetaInfo {...RoutesConfig.Home.metaInfo} />
-        {/* <Home /> */}
+        <section>
+          <SidebarMini />
+          <Topbar pageName='Home' />
+          <Hero />
+        </section>
 
-        <Hero />
         <Suspense fallback={<div />}>
-          <Feature />
-          <SignupSection />
-          <FeatureWhyChoseUs />
+          <section>
+            <PropularPrograms />
+            <hr />
+            <FindCourseByCategories />
+            <hr />
+            <CourseCarousel />
+
+            <div className='d-flex justify-content-center mt-3'>
+              <Link to='/exams/category/Free-1'>
+                <Button variant='dark' size='lg'>
+                  Try Demo Exam
+                </Button>
+              </Link>
+            </div>
+            <Feature />
+            <SignupSection />
+            <FeatureWhyChoseUs />
+          </section>
           <Contact />
         </Suspense>
         <StickyBottom />

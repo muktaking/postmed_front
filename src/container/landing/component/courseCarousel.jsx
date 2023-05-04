@@ -22,7 +22,7 @@ export default function CourseCarousel() {
       <div className='heading-underline'></div>
 
       {/* only for sm size screen */}
-      <Carousel className='hideInMd'>
+      <Carousel className='hideInMd' fade>
         {latestCourses.map((course) => (
           <Carousel.Item>
             <LazyLoadComponent>
@@ -34,7 +34,7 @@ export default function CourseCarousel() {
               />
             </LazyLoadComponent>
             <Link to={'/courses/' + course.id}>
-              <p className='lead bg-danger text-white text-center py-1'>
+              <p className='lead bg-dark text-white text-center py-1'>
                 {course.title}
               </p>
             </Link>
@@ -46,7 +46,7 @@ export default function CourseCarousel() {
       <Row className='hideInSm justify-content-center'>
         {latestCourses.map((course) => (
           <Col key={course.id} md={4}>
-            <Card bg='dark' text='white' style={{ height: '17.5rem' }}>
+            <Card bg='light' text='dark' style={{ height: '17.5rem' }}>
               <Card.Body>
                 <LazyLoadComponent>
                   <Image
@@ -57,7 +57,7 @@ export default function CourseCarousel() {
                   />
                 </LazyLoadComponent>
                 <Link to={'/courses/' + course.id}>
-                  <p className='lead bg-danger text-white text-center py-1'>
+                  <p className='lead bg-dark text-white text-center py-1'>
                     {course.title}
                   </p>
                 </Link>

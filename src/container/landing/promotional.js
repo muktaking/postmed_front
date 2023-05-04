@@ -13,9 +13,9 @@ export default function Promotional() {
       .catch((e) => console.log(e))
   }, [])
   return (
-    <div className={images.length > 0 && 'mox-custom-carousel-2 mb-2'}>
+    <div className={images.length > 0 && 'mox-custom-carousel-2 my-2'}>
       {/* <Container className='bg-secondary'> */}
-      <Carousel>
+      <Carousel fade>
         {images.map((img) => (
           <Carousel.Item key={img.title}>
             <div className='d-flex justify-content-center'>
@@ -24,6 +24,7 @@ export default function Promotional() {
                   src={process.env.REACT_APP_SITE_URL + img.imageUrl}
                   alt={img.title}
                   className='w-100'
+                  height={100}
                 />
               </Link>
             </div>

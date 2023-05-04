@@ -50,13 +50,7 @@ export default function PropularPrograms() {
       <Row className='hideInSm'>
         {pgProgramme.map((program, ind) => (
           <Col key={ind} md={4}>
-            <Card bg='dark' text='white' style={{ height: '20rem' }}>
-              <Card.Header
-                className='text-center'
-                style={{ fontSize: '1.7rem' }}
-              >
-                {program.name}
-              </Card.Header>
+            <Card bg='light' text='white' style={{ height: '20rem' }}>
               <Card.Body>
                 <LazyLoadComponent>
                   <img

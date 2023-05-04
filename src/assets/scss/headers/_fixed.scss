@@ -1,9 +1,9 @@
 /* Fixed css start from here */
 
 /*--- Extra Bootstrap Column Padding --*/
-[class*="col-"] {
-    padding: 1rem;
-}
+// [class*="col-"] {
+//     padding: 1rem;
+// }
 
 /*--- Bootstrap Mobile Gutter Fix --*/
 .row,
@@ -15,6 +15,7 @@
 /*--- Fix for Fixed Navbar jumping on scroll --*/
 .fixed-top {
     -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 // offset for maintain scrollspy scroll content

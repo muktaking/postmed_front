@@ -14,7 +14,7 @@ import Topbar from '../components/topbar/topbar'
 import { canActivate, rolePermitted } from '../utils/canActivate'
 import ScrollToTop from '../components/customScroller/scrollToTop'
 import ExamListsByCatGuest from './exams/examListByCourse.guest'
-import StickyBottom from './landing/landing4/stickyBottom'
+import StickyBottom from './landing/component/stickyBottom'
 //import Profile from './profile/profile'
 
 const Profile = lazy(() => import('./profile/profile'))
