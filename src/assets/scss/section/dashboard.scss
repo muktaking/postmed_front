@@ -22,7 +22,8 @@
 
 .top-navbar {
   height: 60px;
-  position: fixed;
+  width: 100%;
+  position: absolute;
   top: 0px;
   overflow: hidden;
   z-index: 99;
@@ -30,7 +31,25 @@
   @media (max-width: 767.98px) {
     left: 0px;
   }
+
+  .top-navbar-searchicon-wrapper {
+    cursor: pointer;
+  }
+  div.top-navbar-searchicon-wrapper:hover {
+    background-color: #efefef !important;
+    // width: 40px !important;
+    // height: 40px !important;
+  }
+
+  div.top-navbar-searchbar {
+    position: fixed; 
+    top: 50px;
+    right: 0;
+    width: 100%; 
+  }
+
 }
+
 
 .sidebar {
   min-height: 100vh;

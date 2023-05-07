@@ -42,6 +42,7 @@ export default function Index() {
   let query = useQuery()
   const pgCourseType = query.get('pgCourseType')
   const faculty = query.get('faculty')
+  const search = query.get('search')
   const loading = useSelector((state) => state.courses.loading)
   const courses = useSelector((state) => state.courses.courses)
   const coursesEnrolledByStu = useSelector(
@@ -63,12 +64,12 @@ export default function Index() {
   useEffect(() => {
     dispatch(courseResetLoader()) // reset course error msg
     dispatch(fetchCourseEnrolledByStuLoader())
-    if (pgCourseType || faculty) {
-      return dispatch(fetchCourseByFilterLoader(pgCourseType, faculty))
+    if (pgCourseType || faculty || search) {
+      return dispatch(fetchCourseByFilterLoader(pgCourseType, faculty, search))
     }
 
     dispatch(fetchCourseLoader()) // fetch courses
-  }, [dispatch, faculty, pgCourseType])
+  }, [dispatch, faculty, pgCourseType, search])
 
   const handleClose = () => {
     setRes(null)

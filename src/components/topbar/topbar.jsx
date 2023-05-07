@@ -1,22 +1,22 @@
-import React from 'react'
-import Col from 'react-bootstrap/Col'
+import React, { useState } from 'react'
 import Nav from 'react-bootstrap/Nav'
-import Row from 'react-bootstrap/Row'
-import { FaBell, FaSignOutAlt } from 'react-icons/fa'
+import { FaBell, FaSearch, FaSignOutAlt } from 'react-icons/fa'
 import { FormattedMessage } from 'react-intl'
 import { useSelector } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 import NotiBadge from '../../container/notification/notiBadge'
+import CourseSearch from '../serach/courseSearch'
 
 const Topbar = (props) => {
+  const [showSearchBar, setShowSearchBar] = useState(false)
   const isLoggedIn = useSelector((state) => state.auth.token)
   const user = useSelector((state) => state.user)
 
   return (
-    <div className='bg-dark py-2 top-navbar mb-3 w-100'>
-      <Row className='align-items-center'>
-        <Col md={4} className='pl-4'>
-          <div className='d-flex align-items-center'>
+    <div className='bg-dark p-2 top-navbar mb-3'>
+      <div className='d-flex justify-content-between'>
+        <div className=''>
+          <div className='d-flex py-2'>
             <Link to='/' className=''>
               <img
                 alt=''
@@ -43,10 +43,10 @@ const Topbar = (props) => {
               </p>
             )}
           </div>
-        </Col>
+        </div>
 
-        <Col md={8} className='hideInSm pr-5'>
-          <Nav style={{ fontSize: '1.2rem' }}>
+        <div className='hideInSm'>
+          <Nav className='' style={{ fontSize: '1.2rem' }}>
             <Nav.Item className=''>
               <NavLink
                 exact
@@ -132,8 +132,25 @@ const Topbar = (props) => {
               </>
             )}
           </Nav>
-        </Col>
-      </Row>
+        </div>
+
+        <div className='py-2 mr-5 pr-2'>
+          <div
+            className='bg-light p-2 border rounded-circle text-center d-flex align-items-center top-navbar-searchicon-wrapper'
+            style={{ width: 30, height: 30 }}
+            onClick={() => {
+              setShowSearchBar(!showSearchBar)
+            }}
+          >
+            <FaSearch />
+          </div>
+          {showSearchBar && (
+            <div className='top-navbar-searchbar'>
+              <CourseSearch />
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   )
 }

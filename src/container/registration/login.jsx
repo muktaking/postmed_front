@@ -121,8 +121,8 @@ class Home extends Component {
             <h1>Login Form</h1>
             <div className='heading-underline'></div>
             <p>Easily Login with your Facebook or Google</p>
-            <Row>
-              <Col lg='6'>
+            <Row className='mb-3'>
+              <Col lg='6' className='mb-3'>
                 <FacebookLogin />
               </Col>
               <Col lg='6'>

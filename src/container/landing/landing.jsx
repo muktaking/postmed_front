@@ -11,7 +11,6 @@ import SidebarMini from '../../components/sidebar/sidebarMini'
 import Topbar from '../../components/topbar/topbar'
 import PropularPrograms from './component/propularPrograms'
 import FindCourseByCategories from './component/findCourseByCategories'
-import CourseCarousel from './component/courseCarousel'
 import { Link } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
 import StickyBottom from './component/stickyBottom'
@@ -24,27 +23,25 @@ const landing = (props) => {
     <>
       <div className={'landing-upper'}>
         <MetaInfo {...RoutesConfig.Home.metaInfo} />
-        <section>
-          <SidebarMini />
-          <Topbar pageName='Home' />
+        <SidebarMini />
+        <Topbar pageName='Home' />
+        <section style={{ backgroundColor: '#FFF8D6' }}>
           <Hero />
+          <div className='d-flex justify-content-center mt-3'>
+            <Link to='/exams/category/Free-1'>
+              <Button variant='dark' size='lg' className='shadow rounded'>
+                Try Demo Exam
+              </Button>
+            </Link>
+          </div>
+          <FindCourseByCategories />
         </section>
 
         <Suspense fallback={<div />}>
           <section>
             <PropularPrograms />
-            <hr />
-            <FindCourseByCategories />
-            <hr />
-            <CourseCarousel />
+            {/* <CourseCarousel /> */}
 
-            <div className='d-flex justify-content-center mt-3'>
-              <Link to='/exams/category/Free-1'>
-                <Button variant='dark' size='lg'>
-                  Try Demo Exam
-                </Button>
-              </Link>
-            </div>
             <Feature />
             <SignupSection />
             <FeatureWhyChoseUs />

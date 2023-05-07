@@ -35,7 +35,8 @@ const FeatureWhyChoseUs = (props) => {
           'Our academic team tries hard to make all questions and answers almost 100% accurate'
       })
     ],
-    faIcons: ['bar', 'hubspot', 'thumbs-up']
+    faIcons: ['bar', 'hubspot', 'thumbs-up'],
+    color: ['tomato', '#23272B', 'green']
   }
   return (
     <div id='feature' className='offset'>
@@ -45,7 +46,7 @@ const FeatureWhyChoseUs = (props) => {
             <h3 className='heading'>
               <FormattedMessage
                 id='featureWhychoseUs'
-                defaultMessage='How We Help You'
+                defaultMessage='What will you get'
               />
             </h3>
             <div className='heading-underline'></div>
@@ -57,6 +58,7 @@ const FeatureWhyChoseUs = (props) => {
                 icon={value}
                 heading={features.heading[index]}
                 para={features.para[index]}
+                color={features.color[index]}
               />
             ))}
           </Row>

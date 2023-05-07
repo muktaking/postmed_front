@@ -1,6 +1,5 @@
 import React, { lazy, Suspense } from 'react'
 import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import { connect } from 'react-redux'
 import { Route, useHistory } from 'react-router-dom'
@@ -80,7 +79,7 @@ const InnerContent = (props) => {
     <>
       <SidebarMini />
 
-      <Container fluid='true'>
+      <div>
         <Row className='no-gutters'>
           <Col xl={2} lg={3} md={4} className='sidebar'>
             <Sidebar />
@@ -90,7 +89,7 @@ const InnerContent = (props) => {
             <div className='mb-5'>
               <Topbar pageName={pageName} />
 
-              <div className='px-1 ml-md-4' style={{ marginTop: '70px' }}>
+              <div className='px-3 ml-md-4' style={{ marginTop: '70px' }}>
                 <Suspense
                   fallback={
                     <CircleLoader />
@@ -177,7 +176,7 @@ const InnerContent = (props) => {
             </div>
           </Col>
         </Row>
-      </Container>
+      </div>
     </>
   )
 }

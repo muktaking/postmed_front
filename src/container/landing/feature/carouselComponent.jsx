@@ -18,6 +18,7 @@ export default function CarouselComponent({ items }) {
               icon={value}
               heading={items.heading[index]}
               para={items.para[index]}
+              color={items.color[index]}
             />
           </Carousel.Item>
         ))}

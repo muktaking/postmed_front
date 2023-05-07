@@ -1,6 +1,6 @@
 export const pgProgramme = [
   {
-    name: 'Residency (MD/MS)',
+    name: 'Residency',
     id: 2,
     courseIds: [1, 2, 3, 5],
     imageName: 'residency.jpg'
@@ -39,7 +39,7 @@ export const PgCourseType = {
 
 export const PgCourseTypeHumanName = {
   FCPS: 1,
-  'Residency (MD/MS)': 2,
+  Residency: 2,
   Diploma: 3,
   'MRCP / MRCS': 4,
   USMLE: 5,
@@ -51,7 +51,7 @@ export function pgCourseTypeToString(num) {
     case 1:
       return 'FCPS'
     case 2:
-      return 'Residency (MD/MS)'
+      return 'Residency'
     case 3:
       return 'Diploma'
     case 4:
@@ -70,7 +70,7 @@ export function pgCourseTypeToString(num) {
 export function facultyToString(num) {
   switch (num) {
     case 1:
-      return 'Basic Science & Paraclinical Science'
+      return 'Basic Science'
     case 2:
       return 'Medicine'
     case 3:

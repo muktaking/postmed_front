@@ -1,87 +1,57 @@
 import React from 'react'
 import { facultyToString, pgProgramme } from '../../../utils/faculty'
-import { Button, Card, Carousel, Col, Row } from 'react-bootstrap'
-import { LazyLoadComponent } from 'react-lazy-load-image-component'
 import { NavLink } from 'react-router-dom'
 
 export default function PropularPrograms() {
   return (
-    <div className={' py-2 mox-custom-carousel'}>
+    <div className={' popular-programs-wrapper py-4'}>
       <h3 className='heading text-center'>Popular Programs</h3>
       <div className='heading-underline'></div>
       {/* only for sm size screen */}
-      <Carousel interval={6000} className='mx-2 hideInMd'>
-        {pgProgramme.map((program, ind) => (
-          <Carousel.Item>
-            <Card className='bg-light' text='white' style={{ height: '16rem' }}>
-              <Card.Body>
-                <LazyLoadComponent>
-                  <img
-                    height='120'
-                    className='d-block w-100'
-                    src={'/assets/image/hero/' + program.imageName}
-                    alt='First slide'
-                  />
-                </LazyLoadComponent>
-                <div className='mt-3 text-center'>
-                  {program.courseIds.map((key) => (
-                    <NavLink
-                      key={program.name + key}
-                      to={
-                        '/courses?pgCourseType=' +
-                        program.id +
-                        '&faculty=' +
-                        key
-                      }
-                    >
-                      <Button variant='primary' className='mb-2 mr-2'>
-                        {facultyToString(key)}
-                      </Button>
-                    </NavLink>
-                  ))}
-                </div>
-              </Card.Body>
-            </Card>
-          </Carousel.Item>
-        ))}
-      </Carousel>
+      {/* <Carousel interval={6000} className='mx-2 hideInMd'> */}
+      <div className='d-flex justify-content-center flex-wrap'>
+        {pgProgramme.map(
+          (program, ind) =>
+            // <Carousel.Item>
+            //   <Card className='bg-light' text='white' style={{ height: '16rem' }}>
+            //     <Card.Body>
+            //       <LazyLoadComponent>
+            //         <img
+            //           height='120'
+            //           className='d-block w-100'
+            //           src={'/assets/image/hero/' + program.imageName}
+            //           alt='First slide'
+            //         />
+            //       </LazyLoadComponent>
 
-      {/* only for md & lg size screen */}
-      <Row className='hideInSm'>
-        {pgProgramme.map((program, ind) => (
-          <Col key={ind} md={4}>
-            <Card bg='light' text='white' style={{ height: '20rem' }}>
-              <Card.Body>
-                <LazyLoadComponent>
-                  <img
-                    height='120'
-                    className='d-block w-100'
-                    src={'/assets/image/hero/' + program.imageName}
-                    alt='First slide'
-                  />
-                </LazyLoadComponent>
-                <div className='mt-3 text-center'>
-                  {program.courseIds.map((key) => (
-                    <NavLink
-                      key={program.name + key}
-                      to={
-                        '/courses?pgCourseType=' +
-                        program.id +
-                        '&faculty=' +
-                        key
-                      }
-                    >
-                      <Button variant='primary' className='mb-2 mr-2'>
-                        {facultyToString(key)}
-                      </Button>
-                    </NavLink>
-                  ))}
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+            program.courseIds.map((key) => (
+              <NavLink
+                key={program.name + key}
+                to={'/courses?pgCourseType=' + program.id + '&faculty=' + key}
+                className='popular-programs-link'
+              >
+                <p
+                  className='shadow text-white mx-2 px-1 text-center justify-content-center d-flex align-items-center rounded-circle'
+                  style={{
+                    width: '110px',
+                    height: '110px',
+                    backgroundColor: '#3C486B'
+                  }}
+                >
+                  {program.name + ' ' + facultyToString(key)}
+                </p>
+
+                {/* <Button variant='primary' className='mb-2 mr-2'>
+               
+              </Button> */}
+              </NavLink>
+            ))
+
+          //     </Card.Body>
+          //   </Card>
+          // </Carousel.Item>
+        )}
+      </div>
     </div>
   )
 }

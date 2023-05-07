@@ -12,10 +12,10 @@ const Feature = (props) => {
   const intl = useIntl()
   const features = {
     heading: [
-      intl.formatMessage({ id: 'feature.cb', defaultMessage: 'Cloud Based' }),
+      intl.formatMessage({ id: 'feature.cb', defaultMessage: 'Low Cost' }),
       intl.formatMessage({
         id: 'feature.gf',
-        defaultMessage: 'No More Google Form'
+        defaultMessage: 'Exam Ninja'
       }),
       intl.formatMessage({
         id: 'feature.an',
@@ -26,12 +26,12 @@ const Feature = (props) => {
       intl.formatMessage({
         id: 'feature.cb.details',
         defaultMessage:
-          'All System is based on cloud. Test the digitalization in exam management system'
+          'Prepare yourself for the exam at the lowest cost, ever without compromising quality.'
       }),
       intl.formatMessage({
         id: 'feature.ac.details',
         defaultMessage:
-          'Stop using google form based online exam. Get customized web application for exam'
+          'Become exam ninja master by practising exam as much as your wish from neverending exam bank.'
       }),
       intl.formatMessage({
         id: 'feature.an.details',
@@ -39,7 +39,8 @@ const Feature = (props) => {
           'You can give exam at anytime from anywhere. Home, sweet home!! '
       })
     ],
-    faIcons: ['cloud', 'stop', 'hourglass']
+    faIcons: ['dollarSign', 'userNinja', 'mapMarkedAlt'],
+    color: ['green', '#23272B', 'tomato']
   }
   return (
     <div id='feature' className='offset'>
@@ -58,6 +59,7 @@ const Feature = (props) => {
                 icon={value}
                 heading={features.heading[index]}
                 para={features.para[index]}
+                color={features.color[index]}
               />
             ))}
           </Row>

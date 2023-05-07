@@ -308,8 +308,8 @@ var styles = {
       position: 'fixed',
       width: '30px',
       height: '25px',
-      right: '28px',
-      top: '10px'
+      right: '20px',
+      top: '18px'
       // @media (min-width: 767.98px) {
       //   display: none;
       // }

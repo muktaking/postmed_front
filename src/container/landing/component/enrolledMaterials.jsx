@@ -27,12 +27,12 @@ export const enrolledNavItems = [
 
 export default function EnrolledMaterials() {
   return (
-    <div className='mt-3'>
-      <h4 className='text-center border-bottom '>Enrolled Materials</h4>
+    <div className='text-dark'>
+      <h4 className='text-center border-bottom'>Enrolled Materials</h4>
       <div className='p-1 d-flex flex-wrap justify-content-center'>
         {enrolledNavItems.map((item) => (
-          <Link to={item.link} className='text-white'>
-            <div className='mr-2 mb-2 d-flex justify-content-center align-items-center border-right pr-2'>
+          <Link to={item.link} className='text-dark'>
+            <div className='mr-2 d-flex justify-content-center align-items-center border-right pr-2'>
               {item.icon}
               <span className='' style={{ fontSize: '1.3rem' }}>
                 {item.title}

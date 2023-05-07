@@ -225,8 +225,8 @@ class SignUp extends Component {
             <h1>Signup Form</h1>
             <div className='heading-underline'></div>
             <p className='mt-3'>Easily Signup with your Facebook or Google</p>
-            <Row>
-              <Col lg='6'>
+            <Row className='mb-3'>
+              <Col lg='6' className='mb-3'>
                 <Facebook />
               </Col>
               <Col lg='6'>

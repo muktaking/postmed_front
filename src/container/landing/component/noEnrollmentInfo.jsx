@@ -25,7 +25,7 @@ export default function NoEnrollmentInfo() {
     enrolledCoursesId &&
     enrolledCoursesId.length < 0 && (
       <div className='mb-3'>
-        <p className='text-center bg-warning text-dark mx-auto'>
+        <p className='text-center text-danger mx-auto'>
           <span>You have not enrolled any course yet. Please </span>
           <Link to='/courses'>
             <Button variant='outline-dark' className='my-2'>

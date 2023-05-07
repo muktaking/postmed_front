@@ -3,42 +3,54 @@ import Col from 'react-bootstrap/Col'
 import {
   FaChartBar,
   FaCloud,
-  FaHourglass,
+  FaDollarSign,
   FaHubspot,
-  FaStopCircle,
-  FaThumbsUp
+  FaMapMarkedAlt,
+  FaThumbsUp,
+  FaUserNinja
 } from 'react-icons/fa'
 
 const miniBlock = (props) => {
   let icon = null
   switch (props.icon) {
-    case 'cloud':
-      icon = <FaCloud size='4rem' />
+    case 'dollarSign':
+      icon = <FaDollarSign size='2.6rem' />
       break
-    case 'hourglass':
-      icon = <FaHourglass size='4rem' />
+    case 'mapMarkedAlt':
+      icon = <FaMapMarkedAlt size='2.6rem' />
       break
     case 'thumbs-up':
-      icon = <FaThumbsUp color='rgb(255, 193, 7)' size='4rem' />
+      icon = <FaThumbsUp size='2.6rem' />
       break
     case 'bar':
-      icon = <FaChartBar color='rgb(255, 193, 7)' size='4rem' />
+      icon = <FaChartBar size='2.6rem' />
       break
     case 'hubspot':
-      icon = <FaHubspot size='4rem' />
+      icon = <FaHubspot size='2.6rem' />
       break
-    case 'stop':
-      icon = <FaStopCircle color='tomato' size='4rem' />
+    case 'userNinja':
+      icon = <FaUserNinja size='2.6rem' />
       break
 
     default:
-      icon = <FaCloud size='4rem' />
+      icon = <FaCloud size='2.6rem' />
       break
   }
   return (
     <Col md={4}>
       <div className='feature'>
-        <span>{icon}</span>
+        <span
+          className='shadow rounded-circle p-1 d-flex align-items-center justify-content-center mx-auto'
+          style={{
+            display: 'block',
+            width: '4rem',
+            height: '4rem',
+            backgroundColor: props.color,
+            color: 'white'
+          }}
+        >
+          {icon}
+        </span>
         <h3 className='mt-2'>{props.heading}</h3>
         <p>{props.para}</p>
       </div>

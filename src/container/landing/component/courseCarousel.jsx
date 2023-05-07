@@ -1,9 +1,10 @@
 import Axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Card, Carousel, Col, Row } from 'react-bootstrap'
+import { Carousel, Col, Row, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { LazyLoadComponent } from 'react-lazy-load-image-component'
+import * as removeMd from 'remove-markdown'
 import { Image } from 'react-bootstrap'
+import CourseSearch from '../../../components/serach/courseSearch'
 
 export default function CourseCarousel() {
   const [latestCourses, setLatestCourses] = useState([])
@@ -17,55 +18,49 @@ export default function CourseCarousel() {
       })
   }, [])
   return (
-    <div className='my-5 mox-custom-carousel'>
-      <h3 className='heading text-center'>Latest Courses</h3>
-      <div className='heading-underline'></div>
+    <Row className='mt-3 text-dark mox-custom-carousel align-items-center'>
+      <Col lg='2'></Col>
 
-      {/* only for sm size screen */}
-      <Carousel className='hideInMd' fade>
-        {latestCourses.map((course) => (
-          <Carousel.Item>
-            <LazyLoadComponent>
-              <Image
-                fluid
-                className='d-block mx-auto'
-                src={process.env.REACT_APP_SITE_URL + '/' + course.imageUrl}
-                alt={course.title}
-              />
-            </LazyLoadComponent>
-            <Link to={'/courses/' + course.id}>
-              <p className='lead bg-dark text-white text-center py-1'>
-                {course.title}
+      <Col lg='4' className='text-center'>
+        <Carousel interval={6000}>
+          {latestCourses.map((course) => (
+            <Carousel.Item className='mb-3'>
+              <p
+                style={{
+                  height: '3.6rem',
+                  fontSize: '1.6rem',
+                  fontWeight: 800
+                }}
+              >
+                {'New! ' + course.title}
               </p>
-            </Link>
-          </Carousel.Item>
-        ))}
-      </Carousel>
 
-      {/* only for md & lg size screen */}
-      <Row className='hideInSm justify-content-center'>
-        {latestCourses.map((course) => (
-          <Col key={course.id} md={4}>
-            <Card bg='light' text='dark' style={{ height: '17.5rem' }}>
-              <Card.Body>
-                <LazyLoadComponent>
-                  <Image
-                    fluid
-                    className='d-block mx-auto'
-                    src={process.env.REACT_APP_SITE_URL + '/' + course.imageUrl}
-                    alt={course.title}
-                  />
-                </LazyLoadComponent>
-                <Link to={'/courses/' + course.id}>
-                  <p className='lead bg-dark text-white text-center py-1'>
-                    {course.title}
-                  </p>
-                </Link>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </div>
+              <p style={{ height: '4rem' }}>
+                {removeMd(course.description.slice(0, 120) + '...', {
+                  gfm: true,
+                  stripListLeaders: true
+                })}
+              </p>
+
+              <Link to={'/courses/' + course.id}>
+                <Button variant='dark' className=''>
+                  Learn More
+                </Button>
+              </Link>
+            </Carousel.Item>
+          ))}
+        </Carousel>
+        <Link to='/courses'>
+          <Button variant='dark' className='mt-5'>
+            All Courses
+          </Button>
+        </Link>
+        <hr />
+        <CourseSearch />
+      </Col>
+      <Col lg={6} className='hideInSm'>
+        <Image src='/assets/image/hero/hero_course_snippet.png' fluid />
+      </Col>
+    </Row>
   )
 }

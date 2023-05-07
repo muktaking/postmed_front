@@ -109,3 +109,24 @@ nav.nav-tabs {
   } 
       
 }
+
+//findbycategories
+a.find-course-categories-link{ 
+  text-decoration: none; 
+  :link{
+    text-decoration: none;
+  }
+  :hover{
+    text-decoration: none;
+    background-color: #d7d7d7 !important;   
+  }
+}
+
+a.popular-programs-link{
+  text-decoration: none;
+  ; 
+  :hover{
+    
+    background-color: #516192 !important
+  }
+}
