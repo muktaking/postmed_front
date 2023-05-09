@@ -1,8 +1,15 @@
 import React from 'react'
 import { Form } from 'react-bootstrap'
 import ExamCard from './card/card'
+import FilterQuestionsBySearch from './filterQuestionsBySearch'
 
-const filter = ({ handleChange, handleSwitch, categories, qTypeState }) => {
+const filter = ({
+  handleChange,
+  handleSwitch,
+  categories,
+  qTypeState,
+  handleSearch
+}) => {
   return (
     <ExamCard header='Filter' showHeader={true}>
       <Form.Group controlId='formGridParent'>
@@ -38,6 +45,7 @@ const filter = ({ handleChange, handleSwitch, categories, qTypeState }) => {
         onChange={handleSwitch}
         disabled={qTypeState === 'sba'}
       />
+      <FilterQuestionsBySearch handleSearch={handleSearch} />
     </ExamCard>
   )
 }

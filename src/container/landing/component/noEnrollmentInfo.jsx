@@ -28,7 +28,7 @@ export default function NoEnrollmentInfo() {
         <p className='text-center text-danger mx-auto'>
           <span>You have not enrolled any course yet. Please </span>
           <Link to='/courses'>
-            <Button variant='outline-dark' className='my-2'>
+            <Button variant='dark' className='my-2'>
               Enroll Course
             </Button>
           </Link>

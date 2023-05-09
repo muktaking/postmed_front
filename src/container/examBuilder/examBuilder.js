@@ -34,7 +34,8 @@ class ExamPaper extends Component {
     massQIds: [],
     pageSize: 10,
     currentPage: 1,
-    qTypeState: 'all'
+    qTypeState: 'all',
+    search: null
   }
   componentDidMount() {
     this.props.onFetchCategoryLoader()
@@ -151,7 +152,7 @@ class ExamPaper extends Component {
   selectedQuestionsHandler = (id) => {
     this.setState({
       selectedQuestions: this.state.selectedQuestions.filter(
-        (question) => question.id != id
+        (question) => question.id !== +id
       ),
       [id]: { checked: false }
     })
@@ -183,12 +184,18 @@ class ExamPaper extends Component {
     }
   }
 
-  onPageHandler = (page) => {
-    // for pagination
-    this.setState({ currentPage: page })
+  handleSearch = (text) => {
+    this.setState({ search: text })
+  }
+  matchSearch = (questions) => {
+    if (this.state.search) {
+      const rs = new RegExp(this.state.search, 'i')
+      return questions.filter((ques) => rs.test(ques.qText))
+    }
+    return null
   }
 
-  render() {
+  questionsFilterMethod = () => {
     const quesByQType =
       this.state.qTypeState === 'sba'
         ? this.props.question.questions.filter((ques) => ques.qType === 'sba')
@@ -197,9 +204,35 @@ class ExamPaper extends Component {
             (ques) => ques.qType === 'matrix'
           )
         : this.props.question.questions
+    const quesBySearch = this.state.search
+      ? this.matchSearch(quesByQType, this.state.search)
+      : quesByQType
+    return [quesBySearch, quesBySearch.length]
+  }
+
+  onPageHandler = (page) => {
+    // for pagination
+    this.setState({ currentPage: page })
+  }
+
+  render() {
+    // const quesByQType =
+    //   this.state.qTypeState === 'sba'
+    //     ? this.props.question.questions.filter((ques) => ques.qType === 'sba')
+    //     : this.state.qTypeState === 'matrix'
+    //     ? this.props.question.questions.filter(
+    //         (ques) => ques.qType === 'matrix'
+    //       )
+    //     : this.props.question.questions
+
+    // const quesBySearch = this.state.search
+    //   ? this.matchSearch(quesByQType, this.state.search)
+    //   : quesByQType
+    const [questionsFiltered, questionsFilteredLength] =
+      this.questionsFilterMethod()
 
     const questions = paginate(
-      quesByQType,
+      questionsFiltered,
       this.state.currentPage,
       this.state.pageSize
     )
@@ -255,7 +288,7 @@ class ExamPaper extends Component {
         <Row>
           <Col lg={4}>
             <Alert variant={'primary'} className='text-center mt-3'>
-              Total number of Question is :{quesByQType.length}
+              Total number of Question is :{questionsFilteredLength}
             </Alert>
 
             <Filter
@@ -263,6 +296,7 @@ class ExamPaper extends Component {
               categories={this.props.category.categories}
               handleSwitch={this.handleSwitch}
               qTypeState={this.qTypeState}
+              handleSearch={this.handleSearch}
             />
             <ExamSpec
               categories={this.props.category.categories}
@@ -330,7 +364,7 @@ class ExamPaper extends Component {
               will be avaiable in exam.
             </p>
             <Pagination
-              itemsCount={quesByQType.length}
+              itemsCount={questionsFilteredLength}
               pageSize={this.state.pageSize}
               currentPage={this.state.currentPage}
               onPageHandler={this.onPageHandler}
