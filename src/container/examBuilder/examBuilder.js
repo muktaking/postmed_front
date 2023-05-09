@@ -105,26 +105,26 @@ class ExamPaper extends Component {
     }
   }
 
-  actionHandleChange = (e) => {
+  actionHandleChange = (e, questions) => {
     e = e.target
     const v = e.value
 
     switch (v) {
       case 'mAll':
-        this.props.question.questions.forEach((e) => {
+        questions.forEach((e) => {
           this.setState({
             [e.id]: { checked: true, id: e.id, title: e.title, qText: e.qText }
           })
         })
         break
       case 'uAll':
-        this.props.question.questions.forEach((e) => {
+        questions.forEach((e) => {
           this.setState({ [e.id]: { checked: false } })
         })
         break
       case 'mPQ':
         paginate(
-          this.props.question.questions,
+          questions,
           this.state.currentPage,
           this.state.pageSize
         ).forEach((e) => {
@@ -135,7 +135,7 @@ class ExamPaper extends Component {
         break
       case 'uPQ':
         paginate(
-          this.props.question.questions,
+          questions,
           this.state.currentPage,
           this.state.pageSize
         ).forEach((e) => {
@@ -410,7 +410,9 @@ class ExamPaper extends Component {
                 <Form.Control
                   as='select'
                   name='action'
-                  onChange={this.actionHandleChange}
+                  onChange={(e) => {
+                    this.actionHandleChange(e, questionsFiltered)
+                  }}
                 >
                   <option>Select...</option>
                   <option value='mAll'>Mark All</option>
