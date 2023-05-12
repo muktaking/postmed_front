@@ -213,7 +213,7 @@ class Result extends Component {
                               <Table
                                 bordered
                                 responsive
-                                className='text-white w-50'
+                                className='w-50'
                                 children={children}
                               />
                             ),
