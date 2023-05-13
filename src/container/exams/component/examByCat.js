@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { resetExamResultLoader } from '../../../store/exams'
-import { examTypeToString } from '../../../utils/faculty'
+
 import { FaLock, FaUnlock } from 'react-icons/fa'
 const duration = require('dayjs/plugin/duration')
 const relativeTime = require('dayjs/plugin/relativeTime')

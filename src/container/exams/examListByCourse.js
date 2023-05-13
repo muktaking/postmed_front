@@ -1,6 +1,6 @@
 import * as moment from 'dayjs'
 import React, { useEffect } from 'react'
-import { TabContainer, Tab, Nav } from 'react-bootstrap'
+import { TabContainer, Tab, Nav, Badge } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 import {
@@ -38,6 +38,13 @@ export default function ExamListsByCatGuest({ landing = null }) {
     }
   }, [dispatch, isAuthenticated])
 
+  const freeCourses = courses
+    ? courses.filter((course) => course.price === null)
+    : null
+  const paidCourses = courses
+    ? courses.filter((course) => course.price !== null)
+    : null
+
   return (
     <div>
       <h3 className='text-center heading'>Exams Under Courses</h3>
@@ -52,16 +59,36 @@ export default function ExamListsByCatGuest({ landing = null }) {
             <Nav className='d-flex justify-content-center'>
               <Nav.Item>
                 {isAuthenticated ? (
-                  <Nav.Link eventKey='enrolled'>Enrolled Courses</Nav.Link>
+                  <Nav.Link eventKey='enrolled'>
+                    <span>Enrolled Courses</span>{' '}
+                    {coursesEnrolledByStu && (
+                      <Badge variant='light'>
+                        {coursesEnrolledByStu.length}
+                      </Badge>
+                    )}
+                  </Nav.Link>
                 ) : (
-                  <Nav.Link eventKey='all'>All Courses</Nav.Link>
+                  <Nav.Link eventKey='all'>
+                    <span>All Courses</span>
+                    {courses && <Badge variant='light'>{courses.length}</Badge>}
+                  </Nav.Link>
                 )}
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey='free'>Free Courses</Nav.Link>
+                <Nav.Link eventKey='free'>
+                  <span>Free Courses</span>
+                  {courses && (
+                    <Badge variant='light'>{freeCourses.length}</Badge>
+                  )}
+                </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey='paid'>Premium Courses</Nav.Link>
+                <Nav.Link eventKey='paid'>
+                  <span>Premium Courses</span>
+                  {courses && (
+                    <Badge variant='light'>{paidCourses.length}</Badge>
+                  )}
+                </Nav.Link>
               </Nav.Item>
             </Nav>
             <Tab.Content>

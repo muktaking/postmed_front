@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button } from 'react-bootstrap'
 import {
   FaBookOpen,
@@ -6,15 +6,18 @@ import {
   FaQuestionCircle,
   FaStackOverflow,
   FaTh,
+  FaTimesCircle,
   FaWhatsapp
 } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { StickyBottomContext } from '../../routePages'
 
 const phoneNumber = 8801521500642
 const greetings = 'Hello, MediOnExam'
 
 export default function StickyBottom() {
+  const { stickyState, setStickyState } = useContext(StickyBottomContext)
   const IsAuthenticated = useSelector((state) => state.auth.token !== null)
 
   const bootomNavItems = [
@@ -55,15 +58,24 @@ export default function StickyBottom() {
         width: '100%'
       }}
     >
-      {!IsAuthenticated && (
+      {stickyState && !IsAuthenticated && (
         <div>
-          <div className='text-center pt-1'>
-            You are not logged in. Please{' '}
+          <div className='text-center pt-2'>
+            <span className='mb-2 mr-2'>You are not logged in. Please</span>
             <Link to='/login'>
-              <Button variant='outline-warning' className='mt-2'>
-                Login
-              </Button>
+              <Button variant='outline-warning'>Login</Button>
             </Link>
+            <div>
+              <FaTimesCircle
+                onClick={() => {
+                  setStickyState(!stickyState)
+                }}
+                color='red'
+                size={'1.4rem'}
+                className='shadow'
+                style={{ cursor: 'pointer' }}
+              />
+            </div>
           </div>
           <hr />
         </div>

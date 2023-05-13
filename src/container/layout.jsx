@@ -69,8 +69,8 @@ const Notification = lazy(() => import('./notification/notification'))
 const exLink = /(\/exams\/(free\/)?\d+(_\d+)?)/g
 
 const InnerContent = (props) => {
-  const pageName = props.match.url.split('/', 2)[1]
   const history = useHistory()
+  const pageName = props.match.url.split('/', 2)[1]
   const pathname = history.location.pathname
 
   return (
