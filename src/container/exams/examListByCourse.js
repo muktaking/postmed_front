@@ -1,93 +1,97 @@
-//import moment from 'moment'
 import * as moment from 'dayjs'
-import React, { useEffect, useState } from 'react'
-import { Badge } from 'react-bootstrap'
+import React, { useEffect } from 'react'
+import { TabContainer, Tab, Nav } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
-import MetaInfo from '../../components/seo/metainfo'
-import { RoutesConfig } from '../../config/routes.config'
-import { fetchCourseEnrolledByStuLoader } from '../../store/courses'
-import CoursesComponent from '../courses/'
-import Pagination from 'react-js-pagination'
-import { paginate } from '../../utils/paginate'
+import {
+  courseResetLoader,
+  fetchCourseEnrolledByStuLoader,
+  fetchCourseLoader
+} from '../../store/courses'
+import ExamTabContent from './component/examTabContent'
 
-export default function ExamListsByCat() {
+const duration = require('dayjs/plugin/duration')
+const relativeTime = require('dayjs/plugin/relativeTime')
+moment.extend(relativeTime)
+moment.extend(duration)
+
+/**
+ *
+ * @param {landing} dentotes landing page is or not; boolean
+ * @returns nothing
+ */
+export default function ExamListsByCatGuest({ landing = null }) {
   const dispatch = useDispatch()
-  const [currentPage, setCurrentPage] = useState(1)
+  const isAuthenticated = useSelector((state) => state.auth.token !== null)
+  const loading = useSelector((state) => state.courses.loading)
+  const courses = useSelector((state) => state.courses.courses)
   const coursesEnrolledByStu = useSelector(
     (state) => state.courses.coursesEnrolledByStu
   )
-  const loading = useSelector((state) => state.courses.loading)
-  const pageSize = 5
+  const coursesError = useSelector((state) => state.courses.error)
 
   useEffect(() => {
-    dispatch(fetchCourseEnrolledByStuLoader())
-  }, [dispatch])
-  const paginatedCoursesEnrolledByStu = paginate(
-    coursesEnrolledByStu,
-    currentPage,
-    pageSize
-  )
+    dispatch(courseResetLoader()) // reset course error msg
+    dispatch(fetchCourseLoader()) // fetch courses
+    if (isAuthenticated) {
+      dispatch(fetchCourseEnrolledByStuLoader())
+    }
+  }, [dispatch, isAuthenticated])
+
   return (
     <div>
+      <h3 className='text-center heading'>Exams Under Courses</h3>
       {loading && <CircleLoader />}
-      <h2 className='text-center'>Enrolled Courses</h2>
-      <div className='m-3'>
-        {coursesEnrolledByStu && coursesEnrolledByStu.length < 1 ? (
-          <div>
-            <p className='text-center text-danger'>
-              You have not enrolled for any course yet. Please enroll any course
-              first.
-            </p>
-            <CoursesComponent />
-          </div>
-        ) : (
-          <>
-            <div className='d-flex justify-content-center flex-wrap'>
-              {paginatedCoursesEnrolledByStu.map((course) => (
-                <div
-                  className='mt-3 mr-3 p-3 bg-dark text-white'
-                  style={{ width: '250px' }}
-                >
-                  <p className='lead text-center'>{course.title}</p>
-                  <p className='mt-2 text-center'>
-                    {moment().isAfter(course.endDate) ? (
-                      <Badge variant='danger' className='p-2'>
-                        This Course is ended
-                      </Badge>
-                    ) : (
-                      <Link to={'/exams/courses/' + course.id}>
-                        <Badge variant='light' className='p-2'>
-                          Go to Exams
-                        </Badge>
-                      </Link>
-                    )}
-                  </p>
-                </div>
-              ))}
-            </div>
-            <div className='d-flex justify-content-center mt-3'>
-              <Pagination
-                activePage={currentPage}
-                itemsCountPerPage={pageSize}
-                totalItemsCount={
-                  coursesEnrolledByStu && coursesEnrolledByStu.length
-                }
-                pageRangeDisplayed={2}
-                onChange={(page) => {
-                  setCurrentPage(page)
-                }}
-                itemClass='page-item'
-                linkClass='page-link'
-                prevPageText='Previous'
-                nextPageText='Next'
-              />
-            </div>
-          </>
-        )}
-      </div>
-      <MetaInfo {...RoutesConfig.Exams.metaInfo} />
+      {coursesError ? (
+        <p className='text-danger'>
+          <span>Courses can not be retrived.</span>
+        </p>
+      ) : (
+        <div className='my-3 mox-custom-tabs'>
+          <TabContainer defaultActiveKey={isAuthenticated ? 'enrolled' : 'all'}>
+            <Nav className='d-flex justify-content-center'>
+              <Nav.Item>
+                {isAuthenticated ? (
+                  <Nav.Link eventKey='enrolled'>Enrolled Courses</Nav.Link>
+                ) : (
+                  <Nav.Link eventKey='all'>All Courses</Nav.Link>
+                )}
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey='free'>Free Courses</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey='paid'>Premium Courses</Nav.Link>
+              </Nav.Item>
+            </Nav>
+            <Tab.Content>
+              {isAuthenticated ? (
+                <Tab.Pane eventKey='enrolled'>
+                  <ExamTabContent courses={coursesEnrolledByStu} />
+                </Tab.Pane>
+              ) : (
+                <Tab.Pane eventKey='all'>
+                  <ExamTabContent courses={courses} />
+                </Tab.Pane>
+              )}
+              <Tab.Pane eventKey='free'>
+                <ExamTabContent
+                  courses={
+                    courses && courses.filter((course) => course.price === null)
+                  }
+                />
+              </Tab.Pane>
+              <Tab.Pane eventKey='paid'>
+                <ExamTabContent
+                  courses={
+                    courses && courses.filter((course) => course.price !== null)
+                  }
+                />
+              </Tab.Pane>
+            </Tab.Content>
+          </TabContainer>
+        </div>
+      )}
     </div>
   )
 }

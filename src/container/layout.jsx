@@ -12,7 +12,7 @@ import SidebarMini from '../components/sidebar/sidebarMini'
 import Topbar from '../components/topbar/topbar'
 import { canActivate, rolePermitted } from '../utils/canActivate'
 import ScrollToTop from '../components/customScroller/scrollToTop'
-import ExamListsByCatGuest from './exams/examListByCourse.guest'
+import ExamListsByCourse from './exams/examListByCourse'
 import StickyBottom from './landing/component/stickyBottom'
 //import Profile from './profile/profile'
 
@@ -38,8 +38,6 @@ const ExamEdit = lazy(() => import('./examBuilder/editExam'))
 
 //import ExamLists from "./exams/examLists";
 const ExamLists = lazy(() => import('./exams/examLists'))
-
-const ExamListsByCourse = lazy(() => import('./exams/examListByCourse'))
 
 const ExamListsByCatShower = lazy(() => import('./exams/examListsByCatShower'))
 
@@ -132,7 +130,7 @@ const InnerContent = (props) => {
                       canActivate(rolePermitted.student, props.token)
                         ? ExamListsByCourse
                         : process.env.REACT_APP_APP_TYPE === 'public'
-                        ? ExamListsByCatGuest
+                        ? ExamListsByCourse
                         : ExamLists
                     }
                   />

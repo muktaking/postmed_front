@@ -130,3 +130,28 @@ a.popular-programs-link{
     background-color: #516192 !important
   }
 }
+
+.mox-custom-tabs{
+  .nav .nav-item{
+    background-color: rgb(60, 72, 107);
+    border-right: 1px solid rgb(46, 55, 82);
+    a{
+      color: #f6f2f2 !important;
+    }
+    :hover{
+      background-color: rgb(91, 109, 162);
+      
+    }
+    .active{
+      background-color: #E0A800;
+    }
+    
+  }
+  .nav .nav-item:first-child{
+    border-radius: 10px 0 0 0;
+  }
+  .nav .nav-item:last-child{
+    border-right: 0;
+    border-radius: 0 0 10px 0;
+  }
+}
