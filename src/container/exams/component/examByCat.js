@@ -6,10 +6,9 @@ import { BsFileText } from 'react-icons/bs'
 import { FormattedMessage } from 'react-intl'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import ExamCatBadges from '../../../components/exams/gallary/examCatBadges'
 import { resetExamResultLoader } from '../../../store/exams'
 import { examTypeToString } from '../../../utils/faculty'
-import { FaLock } from 'react-icons/fa'
+import { FaLock, FaUnlock } from 'react-icons/fa'
 const duration = require('dayjs/plugin/duration')
 const relativeTime = require('dayjs/plugin/relativeTime')
 moment.extend(relativeTime)
@@ -67,13 +66,26 @@ export default function ExamByCat({ exam, courseId = null }) {
         </h4>
         <div className='d-flex justify-content-between'>
           <div>
-            <ExamCatBadges categoryType={exam.categoryType} />
-            <span>{!isEnrolledStu && !isFree && <FaLock />}</span>
-          </div>
-          <div>
-            <Badge variant='dark' className='px-2 py-1'>
-              {examTypeToString(exam.type)}
-            </Badge>
+            <span>
+              {!isEnrolledStu && isFree && (
+                <>
+                  <Badge variant='success' className='px-2 py-1'>
+                    Free
+                  </Badge>{' '}
+                  <FaUnlock />
+                </>
+              )}
+            </span>
+            <span>
+              {!isEnrolledStu && !isFree && (
+                <>
+                  <Badge variant='dark' className='px-2 py-1'>
+                    Paid
+                  </Badge>{' '}
+                  <FaLock />
+                </>
+              )}
+            </span>
           </div>
         </div>
       </div>
