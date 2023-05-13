@@ -36,36 +36,31 @@ const RoutePages = (props) => {
   const [stickyState, setStickyState] = useState(true)
 
   let routes = (
-    <StickyBottomContext.Provider value={{ stickyState, setStickyState }}>
-      <Suspense fallback={<ClimbingBoxLoader css={override} />}>
-        <Switch>
-          <Route path='/login' component={Login} />
-          <Route path='/signup' component={Signup} />
-          <Route path='/reset/:id' component={Reset} />
-          <Route path='/exams' exact component={InnerContent} />
-          <Route path='/exams/courses/:id' component={InnerContent} />
-          <Route path='/exams/:id' component={InnerContent} />
-          {/* <Route path='/exams/:id' exact component={InnerContent} /> */}
-          <Route path='/courses' exact component={InnerContent} />
-          <Route path='/courses/:id' exact component={InnerContent} />
-          <Route path='/exams/category/:id' exact component={InnerContent} />
-          <Route path='/exams/free/:id' component={InnerContent} />
-          <Route path='/result' component={InnerContent} />
-          <Route path='/result/rank/:id' component={InnerContent} />
-          <Route path='/print' component={InnerContent} />
-          <Route path='/help' component={InnerContent} />
-          <Route path='/payment' component={InnerContent} />
-          <Route path='/terms' component={InnerContent} />
-          <Route
-            path='/error'
-            render={(props) => <NotFoundPage {...props} />}
-          />
-          {/* change to display on langing page */}
-          <Route path='/' exact component={Landing} />
-          <Route render={(props) => <NotFoundPage {...props} />} />
-        </Switch>
-      </Suspense>
-    </StickyBottomContext.Provider>
+    <Suspense fallback={<ClimbingBoxLoader css={override} />}>
+      <Switch>
+        <Route path='/login' component={Login} />
+        <Route path='/signup' component={Signup} />
+        <Route path='/reset/:id' component={Reset} />
+        <Route path='/exams' exact component={InnerContent} />
+        <Route path='/exams/courses/:id' component={InnerContent} />
+        <Route path='/exams/:id' component={InnerContent} />
+        {/* <Route path='/exams/:id' exact component={InnerContent} /> */}
+        <Route path='/courses' exact component={InnerContent} />
+        <Route path='/courses/:id' exact component={InnerContent} />
+        <Route path='/exams/category/:id' exact component={InnerContent} />
+        <Route path='/exams/free/:id' component={InnerContent} />
+        <Route path='/result' component={InnerContent} />
+        <Route path='/result/rank/:id' component={InnerContent} />
+        <Route path='/print' component={InnerContent} />
+        <Route path='/help' component={InnerContent} />
+        <Route path='/payment' component={InnerContent} />
+        <Route path='/terms' component={InnerContent} />
+        <Route path='/error' render={(props) => <NotFoundPage {...props} />} />
+        {/* change to display on langing page */}
+        <Route path='/' exact component={Landing} />
+        <Route render={(props) => <NotFoundPage {...props} />} />
+      </Switch>
+    </Suspense>
   )
   if (
     props.isAuthenticated &&
@@ -179,7 +174,11 @@ const RoutePages = (props) => {
     )
   }
 
-  return routes
+  return (
+    <StickyBottomContext.Provider value={{ stickyState, setStickyState }}>
+      {routes}
+    </StickyBottomContext.Provider>
+  )
 }
 
 const mapStateToProps = (state) => {

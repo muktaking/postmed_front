@@ -17,8 +17,8 @@ const phoneNumber = 8801521500642
 const greetings = 'Hello, MediOnExam'
 
 export default function StickyBottom() {
-  const { stickyState, setStickyState } = useContext(StickyBottomContext)
   const IsAuthenticated = useSelector((state) => state.auth.token !== null)
+  const { stickyState, setStickyState } = useContext(StickyBottomContext)
 
   const bootomNavItems = [
     {
