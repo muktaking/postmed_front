@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaTh, FaBookOpen, FaUserGraduate, FaChartBar } from 'react-icons/fa'
+import { FaTh, FaBookOpen, FaChartBar } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
 export const enrolledNavItems = [
@@ -17,24 +17,23 @@ export const enrolledNavItems = [
     title: 'Reports',
     icon: <FaChartBar className='mr-1' size={'1rem'} />,
     link: '/reports'
-  },
-  {
-    title: 'Profile',
-    icon: <FaUserGraduate className='mr-1' size={'1rem'} />,
-    link: '/profile'
   }
 ]
 
 export default function EnrolledMaterials() {
   return (
-    <div className='text-dark'>
-      <h4 className='text-center border-bottom'>Enrolled Materials</h4>
-      <div className='p-1 d-flex flex-wrap justify-content-center'>
-        {enrolledNavItems.map((item) => (
+    <div className='text-dark bg-light hideInMd'>
+      <div className='py-2 d-flex flex-wrap justify-content-center'>
+        {enrolledNavItems.map((item, ind) => (
           <Link to={item.link} className='text-dark'>
-            <div className='mr-2 d-flex justify-content-center align-items-center border-right pr-2'>
+            <div
+              className={
+                'mr-2 d-flex justify-content-center align-items-center ' +
+                (ind !== 2 ? 'border-right pr-2' : '')
+              }
+            >
               {item.icon}
-              <span className='' style={{ fontSize: '1.3rem' }}>
+              <span className='' style={{ fontSize: '1.1rem' }}>
                 {item.title}
               </span>
             </div>

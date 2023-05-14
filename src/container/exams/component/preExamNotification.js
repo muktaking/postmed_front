@@ -88,7 +88,7 @@ export default function PreExamNotification({
             }}
             variant='dark'
           >
-            Exam's Ruless
+            Exam's Rules
           </Button>
 
           {showRules && (

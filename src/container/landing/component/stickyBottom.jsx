@@ -23,26 +23,26 @@ export default function StickyBottom() {
   const bootomNavItems = [
     {
       title: 'Home',
-      icon: <FaHome className='mr-1' size={'.8rem'} />,
+      icon: <FaHome className='mr-1' size={'1.6rem'} />,
       link: '/'
     },
     {
       title: IsAuthenticated ? 'Dashboard' : 'Courses',
       icon: IsAuthenticated ? (
-        <FaTh className='mr-1' size={'.8rem'} />
+        <FaTh className='mr-1' size={'1.6rem'} />
       ) : (
-        <FaStackOverflow className='mr-1' size={'.8rem'} />
+        <FaStackOverflow className='mr-1' size={'1.6rem'} />
       ),
       link: IsAuthenticated ? '/dashboard' : '/courses'
     },
     {
       title: 'Exams',
-      icon: <FaBookOpen className='mr-1' size={'.8rem'} />,
+      icon: <FaBookOpen className='mr-1' size={'1.6rem'} />,
       link: '/exams'
     },
     {
       title: 'Help',
-      icon: <FaQuestionCircle className='mr-1' size={'.8rem'} />,
+      icon: <FaQuestionCircle className='mr-1' size={'1.6rem'} />,
       link: '/help'
     }
   ]
@@ -82,25 +82,24 @@ export default function StickyBottom() {
       )}
 
       <div className='hideInMd'>
-        <div className='p-1 d-flex flex-wrap justify-content-center align-items-center'>
+        <div className='py-2 d-flex flex-wrap justify-content-around align-items-center'>
           {bootomNavItems.map((item, ind) => (
             <Link key={item + ind} to={item.link} className='text-white'>
               <div
                 className={
-                  'mr-2 mb-2 d-flex justify-content-center align-items-center pr-2 border-right'
+                  'mr-2 d-flex justify-content-center align-items-center'
                 }
               >
                 {item.icon}
-                <span className='' style={{ fontSize: '1rem' }}>
+                {/* <span className='' style={{ fontSize: '1.2rem' }}>
                   {item.title}
-                </span>
+                </span> */}
               </div>
             </Link>
           ))}
+
           <div
-            className={
-              'mr-2 mb-2 d-flex justify-content-center align-items-center'
-            }
+            className={'mr-2 d-flex justify-content-center align-items-center'}
           >
             <a
               href={`https://api.whatsapp.com/send?phone=${phoneNumber}&text=${greetings}`}
@@ -109,9 +108,9 @@ export default function StickyBottom() {
               className='text-white d-flex justify-content-center align-items-center'
               style={{
                 backgroundColor: '#25d366',
-                width: '20px',
-                height: '20px',
-                borderRadius: '20px',
+                width: '30px',
+                height: '30px',
+                borderRadius: '30px',
                 boxShadow: '2px 2px 3px #999'
               }}
             >

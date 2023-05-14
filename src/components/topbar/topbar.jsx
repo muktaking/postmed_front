@@ -60,6 +60,16 @@ const Topbar = (props) => {
             <Nav.Item className=''>
               <NavLink
                 exact
+                to={{ pathname: '/dashboard' }}
+                activeClassName='activeLink'
+                className='nav-link'
+              >
+                <FormattedMessage id='btn.db' defaultMessage='Dashboard' />
+              </NavLink>
+            </Nav.Item>
+            <Nav.Item className=''>
+              <NavLink
+                exact
                 to={{ pathname: '/courses' }}
                 activeClassName='activeLink'
                 className='nav-link'
