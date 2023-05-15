@@ -57,16 +57,18 @@ const Topbar = (props) => {
                 <FormattedMessage id='btn.home' defaultMessage='Home' />
               </NavLink>
             </Nav.Item>
-            <Nav.Item className=''>
-              <NavLink
-                exact
-                to={{ pathname: '/dashboard' }}
-                activeClassName='activeLink'
-                className='nav-link'
-              >
-                <FormattedMessage id='btn.db' defaultMessage='Dashboard' />
-              </NavLink>
-            </Nav.Item>
+            {isLoggedIn && (
+              <Nav.Item className=''>
+                <NavLink
+                  exact
+                  to={{ pathname: '/dashboard' }}
+                  activeClassName='activeLink'
+                  className='nav-link'
+                >
+                  <FormattedMessage id='btn.db' defaultMessage='Dashboard' />
+                </NavLink>
+              </Nav.Item>
+            )}
             <Nav.Item className=''>
               <NavLink
                 exact
