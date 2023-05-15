@@ -48,8 +48,13 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
           <Jumbotron className='py-4 px-3 mox-custom-carousel'>
             <Tab.Content>
               {userDashExamInfo.map((examInfo, ind) => {
-                const { id, userExamInfo, userExamStat, featuredExams } =
-                  examInfo
+                const {
+                  id,
+                  userExamInfo,
+                  userExamStat,
+                  featuredExams,
+                  endDate
+                } = examInfo
                 return (
                   <Tab.Pane key={id} eventKey={ind}>
                     {/* <div className='d-flex justify-content-between flex-wrap'> */}
@@ -90,6 +95,7 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
                               userExamInfo.upcomingExam[1]
                             ).fromNow()}
                             courseId={id}
+                            isCourseExpired={moment().isAfter(endDate)}
                           />
                         ) : (
                           <UpcomingExam />

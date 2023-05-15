@@ -13,7 +13,8 @@ const miniBlock = ({
   faIcon,
   footerHeading,
   footerValue,
-  faFooterIcon
+  faFooterIcon,
+  isCourseExpired
 }) => {
   return (
     <Card className='card-common mt-2 mx-auto'>
@@ -29,7 +30,11 @@ const miniBlock = ({
               <td>{heading}</td>
               <td>
                 {courseId ? (
-                  <Link to={'exams/' + id + '_' + courseId}>{value}</Link>
+                  isCourseExpired ? (
+                    value
+                  ) : (
+                    <Link to={'exams/' + id + '_' + courseId}>{value}</Link>
+                  )
                 ) : (
                   value
                 )}

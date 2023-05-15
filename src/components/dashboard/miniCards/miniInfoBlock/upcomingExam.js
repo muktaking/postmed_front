@@ -2,7 +2,13 @@ import React from 'react'
 import { useIntl } from 'react-intl'
 import MiniBlock from './miniBlock'
 
-const UpcomingExam = ({ value, footerValue, id, courseId }) => {
+const UpcomingExam = ({
+  value,
+  footerValue,
+  id,
+  courseId,
+  isCourseExpired
+}) => {
   const intl = useIntl()
   if (value) {
     return (
@@ -24,6 +30,7 @@ const UpcomingExam = ({ value, footerValue, id, courseId }) => {
         footerValue={footerValue}
         color={'success'}
         faFooterIcon={'clock'}
+        isCourseExpired={isCourseExpired}
       />
     )
   }

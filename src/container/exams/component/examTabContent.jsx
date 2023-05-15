@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import Pagination from 'react-js-pagination'
-
+import * as moment from 'dayjs'
 import { paginate } from '../../../utils/paginate'
-import { Button, Card } from 'react-bootstrap'
+import { Badge, Button, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 export default function ExamTabContent({ courses }) {
@@ -12,10 +12,13 @@ export default function ExamTabContent({ courses }) {
   const paginatedCourses = paginate(courses, currentPage, pageSize)
 
   return (
-    <div>
+    <div className='mt-3'>
       <div className='d-flex justify-content-around flex-wrap'>
         {paginatedCourses.map((course) => (
-          <Card className='my-3' style={{ width: '350px' }}>
+          <Card
+            className='mb-3 mr-3 bg-dark text-white'
+            style={{ width: '350px' }}
+          >
             <Card.Body>
               <Card.Title
                 className='text-center'
@@ -24,9 +27,15 @@ export default function ExamTabContent({ courses }) {
                 {course.title}
               </Card.Title>
               <Card.Text className='text-center mt-2'>
-                <Link to={'/exams/courses/' + course.id}>
-                  <Button variant='primary'>Go to Exams</Button>
-                </Link>
+                {moment().isAfter(course.endDate) ? (
+                  <Badge variant='danger' className='p-2'>
+                    This Course is ended
+                  </Badge>
+                ) : (
+                  <Link to={'/exams/courses/' + course.id}>
+                    <Button variant='primary'>Go to Exams</Button>
+                  </Link>
+                )}
               </Card.Text>
             </Card.Body>
           </Card>
