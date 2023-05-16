@@ -42,8 +42,10 @@ class Sidebar extends Component {
   //   userName: [null]
   // };
   componentDidMount() {
-    this.props.onGetUserLoader()
-    this.props.onUserExamStatLoader()
+    if (this.props.token !== null) {
+      this.props.onGetUserLoader()
+      this.props.onUserExamStatLoader()
+    }
   }
   render() {
     this.faIcons = [
