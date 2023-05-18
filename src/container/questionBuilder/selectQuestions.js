@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Form, ListGroup, Toast } from 'react-bootstrap'
 import Pagination from 'react-js-pagination'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,8 +11,13 @@ import {
 import { paginate } from '../../utils/paginate'
 import MiniQues from './component/miniques'
 import PdfRenderer from '../../components/pdf/pdfRenderer'
+import { Modal, Button } from 'react-bootstrap'
+import Axios from 'axios'
 
 export default function SelectQuestions({ viewHandler }) {
+  const [showModal, setShowModal] = useState(false)
+  const [showDelRes, setshowDelRes] = useState(null)
+  const [showPdfButton, setShowPdfButton] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [currentCategory, setCurrentCategory] = useState(null)
   const dispatch = useDispatch()
@@ -20,6 +25,8 @@ export default function SelectQuestions({ viewHandler }) {
   const questions = useSelector((state) => state.question.questions)
   const loading = useSelector((state) => state.question.loading)
   const res = useSelector((state) => state.question.response)
+
+  const quesDelRef = useRef()
 
   useEffect(() => {
     dispatch(fetchCategory())
@@ -39,24 +46,62 @@ export default function SelectQuestions({ viewHandler }) {
     dispatch(getQuestionByCategoryLoader(currentCategory))
   }
 
+  const handleCloseModal = () => {
+    setShowModal(false)
+  }
+
+  const massdeleteQuestions = () => {
+    Axios.delete(`${process.env.REACT_APP_SITE_URL}/questions`, {
+      data: { ids: quesDelRef.current.value }
+    })
+      .then((delRes) => {
+        setshowDelRes(delRes.data.message + JSON.stringify(delRes.data.data))
+      })
+      .catch((e) => {
+        setshowDelRes(e.response.data.message)
+      })
+  }
+
   return (
     <div>
       {loading && <CircleLoader />}
-      {
-        <Toast
-          show={res}
-          onClose={setRes}
-          style={{ position: 'fixed', right: '20px' }}
-        >
-          <Toast.Header>
-            <strong className='mr-auto'>Response</strong>
-          </Toast.Header>
-          <Toast.Body>{res && JSON.stringify(res)}</Toast.Body>
-        </Toast>
-      }
 
-      <div className='d-flex'>
-        <PdfRenderer questions={questions} />
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title className='text-danger'>Delete Questions</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {showDelRes ? (
+            <p>{showDelRes} </p>
+          ) : (
+            <Form.Group controlId='exampleForm.ControlTextarea1'>
+              <Form.Label>Enter questions' ids (comma seperated)</Form.Label>
+              <Form.Control as='textarea' rows={3} ref={quesDelRef} />
+            </Form.Group>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='danger' onClick={massdeleteQuestions}>
+            Delete All
+          </Button>
+          <Button variant='secondary' onClick={handleCloseModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Toast
+        show={res}
+        onClose={setRes}
+        style={{ position: 'fixed', right: '20px' }}
+      >
+        <Toast.Header>
+          <strong className='mr-auto'>Response</strong>
+        </Toast.Header>
+        <Toast.Body>{res && JSON.stringify(res)}</Toast.Body>
+      </Toast>
+
+      <div className='d-flex flex-grow-2'>
         <div>
           <Form.Group controlId='categoryType' className='mr-5'>
             <Form.Label>Category Type</Form.Label>
@@ -72,6 +117,26 @@ export default function SelectQuestions({ viewHandler }) {
               })}
             </Form.Control>
           </Form.Group>
+          <div className='my-5'>
+            <Button
+              onClick={() => {
+                setShowPdfButton(!showPdfButton)
+              }}
+            >
+              Show Pdf Renderer Button
+            </Button>
+            {showPdfButton && <PdfRenderer questions={questions} />}
+          </div>
+          <div>
+            <Button
+              onClick={() => {
+                setShowModal(true)
+              }}
+              variant='danger'
+            >
+              Bulk Delete Modal
+            </Button>
+          </div>
         </div>
         <div>
           <ListGroup className='my-2'>
@@ -91,20 +156,19 @@ export default function SelectQuestions({ viewHandler }) {
               </ListGroup.Item>
             ))}
           </ListGroup>
+          <Pagination
+            activePage={currentPage}
+            itemsCountPerPage={10}
+            totalItemsCount={questions.length}
+            pageRangeDisplayed={4}
+            onChange={onPageHandler}
+            itemClass='page-item'
+            linkClass='page-link'
+            prevPageText='Previous'
+            nextPageText='Next'
+          />
         </div>
       </div>
-
-      <Pagination
-        activePage={currentPage}
-        itemsCountPerPage={10}
-        totalItemsCount={questions.length}
-        pageRangeDisplayed={4}
-        onChange={onPageHandler}
-        itemClass='page-item'
-        linkClass='page-link'
-        prevPageText='Previous'
-        nextPageText='Next'
-      />
     </div>
   )
 }

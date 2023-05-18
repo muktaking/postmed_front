@@ -8,9 +8,10 @@ import {
   FormCheck,
   ListGroup,
   Modal,
-  Row
+  Row,
+  Table
 } from 'react-bootstrap'
-import { FaShoppingBasket } from 'react-icons/fa'
+import { FaChevronCircleDown, FaShoppingBasket } from 'react-icons/fa'
 import { connect } from 'react-redux'
 import { FaRegCheckCircle } from 'react-icons/fa'
 import ExamSpec from '../../components/examBuilder/examSpec'
@@ -35,7 +36,8 @@ class ExamPaper extends Component {
     pageSize: 10,
     currentPage: 1,
     qTypeState: 'all',
-    search: null
+    search: null,
+    showStem: null
   }
   componentDidMount() {
     this.props.onFetchCategoryLoader()
@@ -354,6 +356,40 @@ class ExamPaper extends Component {
                       </Badge>
                     )}
                     <Badge className='ml-2'>Id No. {question.id}</Badge>
+                    <span
+                      onMouseEnter={() => {
+                        this.setState({ showStem: question.id })
+                      }}
+                      onMouseLeave={() => {
+                        this.setState({ showStem: null })
+                      }}
+                    >
+                      <FaChevronCircleDown />
+                    </span>
+                    {this.state.showStem === question.id && (
+                      <div className='question-stems-container'>
+                        <Table striped bordered hover variant='dark'>
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>qStem</th>
+                              <th>aStem</th>
+                              <th>fbSten</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {question.stems.map((stem, ind) => (
+                              <tr>
+                                <td>{ind + 1}</td>
+                                <td>{stem.qStem}</td>
+                                <td>{stem.aStem}</td>
+                                <td>{stem.fbStem}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </Table>
+                      </div>
+                    )}
                   </ListGroup.Item>
                 ))}
               </ListGroup>
