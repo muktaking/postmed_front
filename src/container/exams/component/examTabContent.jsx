@@ -15,10 +15,7 @@ export default function ExamTabContent({ courses }) {
     <div className='mt-3'>
       <div className='d-flex justify-content-around flex-wrap'>
         {paginatedCourses.map((course) => (
-          <Card
-            className='mb-3 mr-3 bg-dark text-white'
-            style={{ width: '350px' }}
-          >
+          <Card className='mb-3 bg-dark text-white' style={{ width: '350px' }}>
             <Card.Body>
               <Card.Title
                 className='text-center'

@@ -59,9 +59,11 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
                   <Tab.Pane key={id} eventKey={ind}>
                     {/* <div className='d-flex justify-content-between flex-wrap'> */}
                     <div className='d-flex justify-content-center mb-2'>
-                      <Link to={'/exams/courses/' + id} className='mb-2'>
-                        <Button>Exams</Button>
-                      </Link>
+                      {!moment().isAfter(endDate) && (
+                        <Link to={'/exams/courses/' + id} className='mb-2'>
+                          <Button>Exams</Button>
+                        </Link>
+                      )}
                       <Link to={'/reports?courseId=' + id} className='ml-2'>
                         <Button>Reports</Button>
                       </Link>

@@ -124,8 +124,8 @@ export default function ProfileSnippet({ isProfile, size = '100' }) {
         <div className={isProfile ? 'mt-3' : 'mt-3 text-white'}>
           <h4>{user.userName}</h4>
           <p className='mb-1'>{roleToString(user.role)}</p>
-          <p className='font-size-sm'>{user.address}</p>
-          <p className={isProfile ? 'lead' : 'text-white lead'}>
+          {/* <p className='font-size-sm'>{user.address}</p> */}
+          <p className={isProfile ? 'lead' : 'text-white'}>
             {user.id && (
               <>
                 <span>{`User ID No. `}</span>{' '}

@@ -4,6 +4,7 @@ import { apiCallBegun } from './api'
 const slice = createSlice({
   name: 'Exams',
   initialState: {
+    loading: false,
     id: null,
     questions: [],
     questionIdsByOrder: [],
@@ -30,6 +31,7 @@ const slice = createSlice({
   },
   reducers: {
     resetExamResult: (state) => {
+      state.loading = false
       state.examId = null
       state.examResult = null
       state.totalMark = null
@@ -47,10 +49,14 @@ const slice = createSlice({
       state.questionIdsByOrder = []
       state.disableQuestions = []
     },
+    loadingStart: (state) => {
+      state.loading = true
+    },
     getAllExams: (state, action) => {
       state.exams = action.payload
     },
     getExamById: (state, action) => {
+      state.loading = false
       state.questions = action.payload.questions
       action.payload.questions.forEach((e) => {
         state.questionIdsByOrder.push(e.id)
@@ -64,6 +70,7 @@ const slice = createSlice({
       state.isAnswerRestricted = action.payload.exam.isAnswerRestricted
     },
     getFreeExamById: (state, action) => {
+      state.loading = false
       state.questions = action.payload.questions
       action.payload.questions.forEach((e) => {
         state.questionIdsByOrder.push(e.id)
@@ -75,10 +82,8 @@ const slice = createSlice({
       state.penaltyMark = action.payload.exam.penaltyMark
     },
     getExamError: (state, action) => {
+      state.loading = false
       state.examError = action.payload
-    },
-    resetExamError: (state) => {
-      state.examError = null
     },
     postExamById: (state, action) => {
       state.examId = action.payload.examId
@@ -112,11 +117,11 @@ const slice = createSlice({
 
 export const {
   resetExamResult,
+  loadingStart,
   getAllExams,
   getExamById,
   getFreeExamById,
   getExamError,
-  resetExamError,
   postExamById,
   examRankStart,
   examRankById,
@@ -156,6 +161,7 @@ export const getExamByIdLoader = (id) => (dispatch) => {
       url: '/exams/questions/' + id,
       method: 'get',
       sendToken: true,
+      onStart: loadingStart.type,
       onSuccess: getExamById.type,
       onError: getExamError.type
     })
@@ -168,6 +174,7 @@ export const getFreeExamByIdLoader = (id) => (dispatch) => {
       url: '/exams/free/questions/' + id,
       method: 'get',
       sendToken: true,
+      onStart: loadingStart.type,
       onSuccess: getFreeExamById.type,
       onError: getExamError.type
     })

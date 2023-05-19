@@ -17,7 +17,7 @@ const contact = (props) => {
           <Col md={4} className='text-center'>
             <ContactInfo />
           </Col>
-          <Col className='text-center' md={4}>
+          <Col className='text-center mt-3' md={4}>
             <h4>Useful Links</h4>
             <Link to='/courses' className='link-hover'>
               Courses

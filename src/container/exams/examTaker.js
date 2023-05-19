@@ -29,7 +29,7 @@ import {
   getFreeExamByIdLoader,
   postExamByIdLoader,
   postFreeExamByIdLoader,
-  resetExamError
+  resetExamResultLoader
 } from "../../store/exams";
 import { paginate } from "../../utils/paginate";
 import PreExamNotification from "./component/preExamNotification";
@@ -178,7 +178,7 @@ class ExamTaker extends Component {
           <Redirect to="/result" />
         )}
 
-        {(this.props.exams.questions.length < 1 && !this.props.exams.examError) && (
+        {(this.props.exams.loading) && (
           <CircleLoader />
         )}
 
@@ -379,7 +379,7 @@ const mapDispatchToProps = (dispatch) => {
     onGetFreeExamByIdLoader: (id) => dispatch(getFreeExamByIdLoader(id)),
     onPostExamByIdLoader: (data) => dispatch(postExamByIdLoader(data)),
     onPostFreeExamByIdLoader: (data) => dispatch(postFreeExamByIdLoader(data)),
-    onResetExamLoader: () => dispatch({ type: resetExamError.type }),
+    onResetExamLoader: () => dispatch(resetExamResultLoader()),
     onDisableQuestionsAddLoader: (name) => dispatch({type: disableQuestionsAdd.type, payload: name})
   };
 };
