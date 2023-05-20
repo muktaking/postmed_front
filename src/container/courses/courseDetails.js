@@ -13,6 +13,7 @@ import SocialShare from '../../components/socialShare/socialShare'
 import { facultyToString, pgCourseTypeToString } from '../../utils/faculty'
 import ShowRoutine from '../../components/routine/showRoutine'
 import PaymentCompletionForm from './paymentCompletionForm'
+import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 const duration = require('dayjs/plugin/duration')
 const relativeTime = require('dayjs/plugin/relativeTime')
 moment.extend(relativeTime)
@@ -27,6 +28,7 @@ const styles = {
 
 export default function CourseDetails() {
   const [course, setCourse] = useState(null)
+  const [loading, setLoading] = useState(false)
   const [enrolledCoursesId, setEnrolledCoursesId] = useState([])
   const [res, setRes] = useState(null)
   let { id } = useParams()
@@ -39,19 +41,25 @@ export default function CourseDetails() {
   const handleRoutineShow = () => setRoutineShow(true)
 
   useEffect(() => {
+    setLoading(true)
     axios
       .get(process.env.REACT_APP_SITE_URL + '/courses/' + id)
       .then((res) => {
+        setLoading(false)
         setCourse(res.data)
       })
-      .catch((e) => console.log(e))
+      .catch((e) => {
+        setLoading(false)
+      })
 
     axios
       .get(process.env.REACT_APP_SITE_URL + '/courses/enrolled/courses')
       .then((res) => {
         setEnrolledCoursesId(res.data.map((course) => course.id))
       })
-      .catch((e) => console.log(e))
+      .catch((e) => {
+        setLoading(false)
+      })
   }, [id])
 
   const handleClose = () => {
@@ -59,15 +67,18 @@ export default function CourseDetails() {
   }
 
   const enrollmentHandler = (courseId) => {
+    setLoading(true)
     axios({
       baseURL: process.env.REACT_APP_SITE_URL,
       url: '/courses/enroll/' + courseId,
       method: 'patch'
     })
       .then((response) => {
+        setLoading(false)
         setRes(response.data.message)
       })
       .catch((error) => {
+        setLoading(false)
         setRes(
           'Sorry. Enrollment to this course is not possible due to server error. Please contact with admin.'
         )
@@ -105,6 +116,7 @@ export default function CourseDetails() {
           enrollmentHandler={enrollmentHandler}
         />
       )}
+      {loading && <CircleLoader />}
       <div className='d-flex justify-content-around flex-wrap'>
         {course && (
           <Card className='my-3 pt-3' style={{ minWidth: '350px' }}>
@@ -127,13 +139,46 @@ export default function CourseDetails() {
               >
                 {course.title}
               </Card.Title>
+
+              {isAuthenticated && (
+                <>
+                  <hr />
+                  <div className='d-flex justify-content-center align-items-center'>
+                    {enrolledCoursesId.indexOf(course.id) > -1 ? (
+                      <p className='text-success'>Already Enrolled</p>
+                    ) : (
+                      <Button
+                        variant='primary'
+                        style={{
+                          width: '300px',
+                          height: '55px',
+                          fontSize: '18px'
+                        }}
+                        onClick={() => {
+                          if (course.price) {
+                            setShowPayemntModalForm(true)
+                            setModalCourse(course)
+                          } else enrollmentHandler(course.id)
+                        }}
+                      >
+                        Enroll
+                      </Button>
+                    )}
+                  </div>
+                </>
+              )}
+
               <div className='text-right'>
-                <Badge pill variant='dark' className='mr-2'>
-                  {pgCourseTypeToString(course.pgCourseType)}
-                </Badge>
-                <Badge pill variant='dark'>
-                  {facultyToString(course.faculty)}
-                </Badge>
+                {course.pgCourseType !== 0 && (
+                  <Badge pill variant='dark' className='mr-2'>
+                    {pgCourseTypeToString(course.pgCourseType)}
+                  </Badge>
+                )}
+                {course.faculty !== 0 && (
+                  <Badge pill variant='dark'>
+                    {facultyToString(course.faculty)}
+                  </Badge>
+                )}
               </div>
 
               <Card.Text className='mt-2'>
@@ -190,33 +235,7 @@ export default function CourseDetails() {
                   <Button variant='primary'>Go to Exams</Button>
                 </Link>
               </Card.Text>
-              {isAuthenticated && (
-                <>
-                  <hr />
-                  <div className='d-flex justify-content-center align-items-center'>
-                    {enrolledCoursesId.indexOf(course.id) > -1 ? (
-                      <p className='text-success'>Already Enrolled</p>
-                    ) : (
-                      <Button
-                        variant='primary'
-                        style={{
-                          width: '300px',
-                          height: '55px',
-                          fontSize: '18px'
-                        }}
-                        onClick={() => {
-                          if (course.price) {
-                            setShowPayemntModalForm(true)
-                            setModalCourse(course)
-                          } else enrollmentHandler(course.id)
-                        }}
-                      >
-                        Enroll
-                      </Button>
-                    )}
-                  </div>
-                </>
-              )}
+
               <hr />
               <Card.Text className='text-muted text-center'>
                 <span>Start: {moment(course.startDate).fromNow()}</span>

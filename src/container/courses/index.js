@@ -168,12 +168,16 @@ export default function Index() {
                   </Link>
                   <Card.Text className=''>
                     <div className='text-right mb-2'>
-                      <Badge pill variant='dark' className='mr-2'>
-                        {pgCourseTypeToString(course.pgCourseType)}
-                      </Badge>
-                      <Badge pill variant='dark'>
-                        {facultyToString(course.faculty)}
-                      </Badge>
+                      {course.pgCourseType !== 0 && (
+                        <Badge pill variant='dark' className='mr-2'>
+                          {pgCourseTypeToString(course.pgCourseType)}
+                        </Badge>
+                      )}
+                      {course.faculty !== 0 && (
+                        <Badge pill variant='dark'>
+                          {facultyToString(course.faculty)}
+                        </Badge>
+                      )}
                     </div>
                     <div>
                       <span className='bg-light text-dark px-1'>
