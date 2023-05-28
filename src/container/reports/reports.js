@@ -54,7 +54,7 @@ export default function Reports() {
       .catch((e) => {
         console.log(e)
       })
-  }, [])
+  }, [queryCourseId, userId])
 
   const courseSelectHandler = (e, courseId = null) => {
     setLoading(true)

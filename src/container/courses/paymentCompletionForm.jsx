@@ -1,62 +1,77 @@
-import React from 'react'
-import { Alert, Button, ListGroup, Modal } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Alert, Button, Modal, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { ContactConfig } from '../../config/contact.config'
+// import { grantTokenRequestPromise } from '../payment/pgw.bkash'
+import axios from 'axios'
+import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 
 export default function PaymentCompletionForm({
   showPaymentModalForm,
   setShowPaymentModalForm,
-  course,
-  enrollmentHandler
+  course
 }) {
+  const [loading, setLoading] = useState(false)
   const handleClose = () => setShowPaymentModalForm(false)
+
+  const paymentHandler = () => {
+    setLoading(true)
+
+    const data = {
+      productType: 1,
+      productId: course.id,
+      ref: 'no-ref'
+    }
+
+    axios
+      .post(process.env.REACT_APP_SITE_URL + '/payment/bkash/create', data)
+      .then(({ data }) => {
+        setLoading(false)
+        window.location.replace(data.bkashURL)
+      })
+      .catch((error) => {
+        setLoading(false)
+        console.log(error)
+      })
+  }
 
   return (
     <div className='paymentCompletionForm'>
+      {loading && <CircleLoader />}
       <Modal show={showPaymentModalForm} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Payment Required</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Thanks for enrolling this course. You are few steps apart.</p>
           <p>
-            Step 1. Please make Payment first to Personal Bkash (01737313915) |
-            Rocket account (01737313915). For detail procedure go to{' '}
-            <Link to='/payment'>Payment page</Link>{' '}
+            Thanks for choosing this course. For payment we encourage you to
+            make payment with Bkash. You will be auto enrolled after successful
+            payment.
           </p>
           <div>
-            <p>Step 2. Message at 01737313915</p>
-            <Alert variant='info'>
-              Write - Your name &lt;Space&gt; Your User ID / Your Email
-              &lt;Space&gt; The bKash Number (From which you send money)
+            <p className='d-flex justify-content-center'>
+              <Button
+                variant='outline-danger'
+                className='d-flex justify-content-around align-items-center'
+                onClick={paymentHandler}
+              >
+                <span className='mr-4'>Pay With Bkash</span>
+                <Image src='/assets/image/payment/bkash-logo.png' width='35' />
+              </Button>
+            </p>
+            <Alert variant='info' className='text-center'>
+              For other options go to <Link to='/payment'>Payment page</Link>
+              <br />
+              For any problems or refund, go to{' '}
+              <Link to='/help'>Help section</Link> <br /> Contact us with{' '}
+              <span>{ContactConfig.mobile}</span>
+              <br /> Email us <span>{ContactConfig.email}</span>
             </Alert>
-          </div>
-          <p>
-            Now, Click the 'Confirm' button to complete this course enrollment.
-          </p>
-          <p>
-            Please wait until admin approves your payment. For any problems, go
-            to <Link to='/help'>Help section.</Link>. Or contact us with{' '}
-            <span>{ContactConfig.mobile}</span>
-            <br />
-            or email us <span>{ContactConfig.email}</span>
-          </p>
-          <div className='d-flex justify-content-center mt-1'>
-            <Button
-              variant='primary'
-              onClick={() => {
-                enrollmentHandler(course.id)
-                handleClose()
-              }}
-              size='lg'
-            >
-              Confirm
-            </Button>
           </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={handleClose}>
-            Close
+            Go Back
           </Button>
         </Modal.Footer>
       </Modal>

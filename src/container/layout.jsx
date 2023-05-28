@@ -79,13 +79,13 @@ const InnerContent = (props) => {
 
       <div>
         <Row className='no-gutters'>
-          <Col xl={2} lg={3} md={4} className='sidebar'>
+          <Col xl={2} lg={3} md={4} className='sidebar d-print-none'>
             <Sidebar />
           </Col>
 
           <Col xl={10} lg={9} md={8} sm={12}>
             <div className='mb-5'>
-              <Topbar pageName={pageName} />
+              <Topbar pageName={pageName} className='d-print-none' />
 
               <div className='px-3 ml-md-4' style={{ marginTop: '70px' }}>
                 <Suspense
@@ -98,7 +98,7 @@ const InnerContent = (props) => {
                 >
                   {pathname.search(exLink) === -1 && (
                     <>
-                      <DomHistory />
+                      <DomHistory className='d-print-none' />
                       <StickyBottom />
                     </>
                   )}

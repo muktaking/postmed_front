@@ -92,7 +92,11 @@ export default function CourseDetails() {
           <Modal.Title>Routine</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <ShowRoutine showRaw={false} id={id} title='' />
+          <ShowRoutine
+            showRaw={false}
+            id={course && course.id}
+            title={course && course.title}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={handleRoutineClose}>
