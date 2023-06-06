@@ -5,6 +5,7 @@ import { ContactConfig } from '../../config/contact.config'
 // import { grantTokenRequestPromise } from '../payment/pgw.bkash'
 import axios from 'axios'
 import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
+import { PaymentGateway, ProductType } from '../../utils/paymentClass'
 
 export default function PaymentCompletionForm({
   showPaymentModalForm,
@@ -12,13 +13,16 @@ export default function PaymentCompletionForm({
   course
 }) {
   const [loading, setLoading] = useState(false)
+  const [errorMsg, setErrorMsg] = useState(null)
   const handleClose = () => setShowPaymentModalForm(false)
 
   const paymentHandler = () => {
     setLoading(true)
-
+    setErrorMsg(null)
+    console.log(course)
     const data = {
-      productType: 1,
+      paymentGateway: PaymentGateway.Bkash,
+      productType: ProductType.Course,
       productId: course.id,
       ref: 'no-ref'
     }
@@ -31,6 +35,7 @@ export default function PaymentCompletionForm({
       })
       .catch((error) => {
         setLoading(false)
+        setErrorMsg(error.message)
         console.log(error)
       })
   }
@@ -59,6 +64,11 @@ export default function PaymentCompletionForm({
                 <Image src='/assets/image/payment/bkash-logo.png' width='35' />
               </Button>
             </p>
+            {errorMsg && (
+              <Alert variant='danger' className='text-center'>
+                {errorMsg}
+              </Alert>
+            )}
             <Alert variant='info' className='text-center'>
               For other options go to <Link to='/payment'>Payment page</Link>
               <br />

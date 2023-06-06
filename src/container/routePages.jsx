@@ -53,7 +53,7 @@ const RoutePages = (props) => {
         <Route path='/result/rank/:id' component={InnerContent} />
         <Route path='/print' component={InnerContent} />
         <Route path='/help' component={InnerContent} />
-        <Route path='/payment' component={InnerContent} />
+        <Route path='/paymentfaq' component={InnerContent} />
         <Route path='/terms' component={InnerContent} />
         <Route path='/error' render={(props) => <NotFoundPage {...props} />} />
         {/* change to display on langing page */}
@@ -87,6 +87,7 @@ const RoutePages = (props) => {
           <Route path='/logout' component={LogoutPage} />
           <Route path='/help' component={InnerContent} />
           <Route path='/payment' component={InnerContent} />
+          <Route path='/paymentfaq' component={InnerContent} />
           <Route path='/terms' component={InnerContent} />
           {/* change to display on langing page */}
           <Route path='/' exact component={Landing} />
@@ -109,6 +110,7 @@ const RoutePages = (props) => {
           <Route path='/logout' component={LogoutPage} />
           <Route path='/help' component={InnerContent} />
           <Route path='/payment' component={InnerContent} />
+          <Route path='/paymentfaq' component={InnerContent} />
           <Route path='/terms' component={InnerContent} />
           {/* change to display on langing page */}
           <Route path='/' exact component={Landing} />
@@ -136,6 +138,7 @@ const RoutePages = (props) => {
           <Route path='/logout' component={LogoutPage} />
           <Route path='/help' component={InnerContent} />
           <Route path='/payment' component={InnerContent} />
+          <Route path='/paymentfaq' component={InnerContent} />
           <Route path='/terms' component={InnerContent} />
           {/* change to display on langing page */}
           <Route path='/' exact component={Landing} />
@@ -164,6 +167,7 @@ const RoutePages = (props) => {
           <Route path='/logout' component={LogoutPage} />
           <Route path='/help' component={InnerContent} />
           <Route path='/payment' component={InnerContent} />
+          <Route path='/paymentfaq' component={InnerContent} />
           <Route path='/terms' component={InnerContent} />
           <Route path='/notificationbuilder' component={InnerContent} />
           {/* change to display on langing page */}

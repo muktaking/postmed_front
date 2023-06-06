@@ -153,7 +153,7 @@ export default function Help() {
           <h3 id='payment'>Payement Process</h3>
           <p>
             (For easily payement process with QR code scanning, go to{' '}
-            <Link to='/payment'>Payment Page</Link>)
+            <Link to='/paymentfaq'>Payment Page</Link>)
           </p>
           <hr />
           <div className='px-2'>

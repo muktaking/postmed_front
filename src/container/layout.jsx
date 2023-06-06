@@ -59,6 +59,8 @@ const Reports = lazy(() => import('./reports/reports'))
 const ShowQuestions = lazy(() => import('./reports/actions/showQuestions'))
 const Help = lazy(() => import('./help/help'))
 const Payment = lazy(() => import('./payment/payment'))
+const PaymentAdmin = lazy(() => import('./payment/payment.admin'))
+const PaymentFaq = lazy(() => import('./payment/payment.faq'))
 const Terms = lazy(() => import('./terms/terms'))
 const NotificationBuilder = lazy(() =>
   import('./notificationBuilder/notificationBuilder')
@@ -159,7 +161,17 @@ const InnerContent = (props) => {
                   />
                   <Route path='/settings' exact component={Settings} />
                   <Route path='/help' exact component={Help} />
-                  <Route path='/payment' exact component={Payment} />
+                  <Route
+                    path='/payment'
+                    exact
+                    component={
+                      props.isAuthenticated &&
+                      canActivate(rolePermitted.coordinator, props.token)
+                        ? PaymentAdmin
+                        : Payment
+                    }
+                  />
+                  <Route path='/paymentfaq' exact component={PaymentFaq} />
                   <Route
                     path='/notificationbuilder'
                     exact
