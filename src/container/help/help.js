@@ -151,79 +151,11 @@ export default function Help() {
         </Col>
         <Col lg={4} md={12}>
           <h3 id='payment'>Payement Process</h3>
+          <hr />
           <p>
-            (For easily payement process with QR code scanning, go to{' '}
+            (For inquery about payment process and policiy, go to{' '}
             <Link to='/paymentfaq'>Payment Page</Link>)
           </p>
-          <hr />
-          <div className='px-2'>
-            <AccordionStart>
-              <AccordionCard
-                heading={'Steps in bKash Payement Process'}
-                eventKey={0}
-              >
-                <ListGroup>
-                  <ListGroupItem>
-                    Go to your bKash Mobile Menu by dialing *247# or go to your
-                    mobile bKash app
-                  </ListGroupItem>
-                  <ListGroupItem>Choose “Send Money”</ListGroupItem>
-                  <ListGroupItem>
-                    Enter the bKash Account Number: 01737313915
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    Enter the amount you want to send (Payment Amount of The
-                    Course)
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    Enter a reference about the transaction.* (Enter Your User
-                    ID)
-                    <Alert variant='warning'>
-                      You will Get Your user id at Topbar with golden color text
-                      or your <Link to='/profile'>Profile</Link> marked with
-                      golden background at the top section
-                    </Alert>
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    Now enter your bKash Mobile Menu PIN to confirm the
-                    transaction
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    <p className='mt-2'>Now Message at 01737313915</p>
-                    <Alert variant='info'>
-                      Write - Your name &lt;Space&gt; Your User ID / Your Email
-                      &lt;Space&gt; The bKash Number (From which you send money)
-                    </Alert>
-                    <Alert variant='warning'>
-                      You will Get Your user id at Topbar with golden color text
-                      or your <Link to='/profile'>Profile</Link> marked with
-                      golden background at the top section
-                    </Alert>
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    <p>Or message at Facebook messenger</p>
-                    <Alert variant='primary'>
-                      Write - Your name &lt;Space&gt; Your User ID / Your Email
-                      &lt;Space&gt; The bKash Number (From you send money)
-                    </Alert>
-                    <Alert variant='warning'>
-                      You will Get Your user id at Topbar with golden color text
-                      or your <Link to='/profile'>Profile</Link> marked with
-                      golden background at the top section
-                    </Alert>
-                  </ListGroupItem>
-                  <ListGroupItem>
-                    You will be informed through message or mobile call within 8
-                    hours.
-                  </ListGroupItem>
-                </ListGroup>
-                <p>
-                  *Do not use more than one word, avoid space or special
-                  characters
-                </p>
-              </AccordionCard>
-            </AccordionStart>
-          </div>
         </Col>
       </Row>
       <Row className='my-3'>
