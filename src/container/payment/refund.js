@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
-import { Alert, Button, Form } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
 import ReactJson from 'react-json-view'
 import MultiSquareLoader from '../../components/customSpinner/multiSquare/multiSquareLoader'
 
@@ -35,7 +35,7 @@ export default function Refund({ paymentId, trxId, amount }) {
         {
           paymentId,
           trxId,
-          amount,
+          amount: amountRef.current.value,
           sku: skuRef.current.value,
           reason: reasonRef.current.value
         }

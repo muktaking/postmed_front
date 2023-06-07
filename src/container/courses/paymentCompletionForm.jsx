@@ -19,7 +19,6 @@ export default function PaymentCompletionForm({
   const paymentHandler = () => {
     setLoading(true)
     setErrorMsg(null)
-    console.log(course)
     const data = {
       paymentGateway: PaymentGateway.Bkash,
       productType: ProductType.Course,
@@ -36,7 +35,6 @@ export default function PaymentCompletionForm({
       .catch((error) => {
         setLoading(false)
         setErrorMsg(error.message)
-        console.log(error)
       })
   }
 
@@ -70,7 +68,7 @@ export default function PaymentCompletionForm({
               </Alert>
             )}
             <Alert variant='info' className='text-center'>
-              For other options go to <Link to='/payment'>Payment page</Link>
+              For other options go to <Link to='/paymentfaq'>Payment page</Link>
               <br />
               For any problems or refund, go to{' '}
               <Link to='/help'>Help section</Link> <br /> Contact us with{' '}
