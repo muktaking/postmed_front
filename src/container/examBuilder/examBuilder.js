@@ -27,6 +27,8 @@ import {
   getQuestionLoader
 } from '../../store/question'
 import { paginate } from '../../utils/paginate'
+import MultiSquareLoader from '../../components/customSpinner/multiSquare/multiSquareLoader'
+import { tagsToObj } from '../../utils/questionUtils'
 
 class ExamPaper extends Component {
   state = {
@@ -310,88 +312,110 @@ class ExamPaper extends Component {
             />
           </Col>
           <Col lg={8}>
+            {this.props.question.loading && <MultiSquareLoader />}
             <FormCheck>
               <ListGroup className='my-2'>
                 {questions.length < 1 && (
                   <p className='text-danger'>No Question in this category.</p>
                 )}
-                {questions.map((question, index) => (
-                  <ListGroup.Item
-                    key={question.id}
-                    variant={index % 2 === 0 ? 'dark' : 'light'}
-                  >
-                    {
-                      <Form.Check
-                        //ref={this.state.input}
-                        inline
-                        type='checkbox'
-                        value={question.id}
-                        onChange={(e) => {
-                          this.checkHandleChange(e, question)
-                        }}
-                        checked={
-                          this.state[question.id] &&
-                          this.state[question.id].checked
-                        }
-                      />
-                    }
-                    <span className='mr-2'>
-                      {index +
-                        1 +
-                        this.state.pageSize * (this.state.currentPage - 1)}
-                      .
-                    </span>
-                    <Badge className='mr-2'>{question.title}</Badge>
-                    <span>{question.qText}</span>
-                    <Badge className='ml-2'>{question.qType}</Badge>
-                    {question.generalFeedback && (
-                      <Badge className='ml-2'>
-                        GF: <FaRegCheckCircle className='ml-1' color='green' />
-                      </Badge>
-                    )}
-                    {question.stems[0].fbStem && (
-                      <Badge className='ml-2'>
-                        FbStem:{' '}
-                        <FaRegCheckCircle className='ml-1' color='green' />
-                      </Badge>
-                    )}
-                    <Badge className='ml-2'>Id No. {question.id}</Badge>
-                    <span
-                      onMouseEnter={() => {
-                        this.setState({ showStem: question.id })
-                      }}
-                      onMouseLeave={() => {
-                        this.setState({ showStem: null })
-                      }}
+                {questions.map((question, index) => {
+                  const tagObj = tagsToObj(question.tags)
+                  return (
+                    <ListGroup.Item
+                      key={question.id}
+                      variant={index % 2 === 0 ? 'dark' : 'light'}
                     >
-                      <FaChevronCircleDown />
-                    </span>
-                    {this.state.showStem === question.id && (
-                      <div className='question-stems-container'>
-                        <Table striped bordered hover variant='dark'>
-                          <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>qStem</th>
-                              <th>aStem</th>
-                              <th>fbSten</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {question.stems.map((stem, ind) => (
+                      {
+                        <Form.Check
+                          //ref={this.state.input}
+                          inline
+                          type='checkbox'
+                          value={question.id}
+                          onChange={(e) => {
+                            this.checkHandleChange(e, question)
+                          }}
+                          checked={
+                            this.state[question.id] &&
+                            this.state[question.id].checked
+                          }
+                        />
+                      }
+                      <span className='mr-2'>
+                        {index +
+                          1 +
+                          this.state.pageSize * (this.state.currentPage - 1)}
+                        .
+                      </span>
+                      <Badge className='mr-2'>{question.title}</Badge>
+                      <span>{question.qText}</span>
+                      <Badge className='ml-2'>{question.qType}</Badge>
+                      {question.generalFeedback && (
+                        <Badge className='ml-2'>
+                          GF:{' '}
+                          <FaRegCheckCircle className='ml-1' color='green' />
+                        </Badge>
+                      )}
+                      {question.stems[0].fbStem && (
+                        <Badge className='ml-2'>
+                          FbStem:{' '}
+                          <FaRegCheckCircle className='ml-1' color='green' />
+                        </Badge>
+                      )}
+                      <Badge className='ml-2'>Id No. {question.id}</Badge>
+                      {tagObj?.book && <Badge>Book: {tagObj?.book}</Badge>}
+                      {tagObj?.author && (
+                        <Badge>Author: {tagObj?.author}</Badge>
+                      )}
+                      {tagObj?.operator && (
+                        <Badge>Operator: {tagObj?.operator}</Badge>
+                      )}
+                      {tagObj?.programme && (
+                        <Badge>
+                          Programme:{' '}
+                          {tagObj?.programme +
+                            '-' +
+                            tagObj?.session +
+                            '-' +
+                            tagObj?.year}
+                        </Badge>
+                      )}
+                      <span
+                        onMouseEnter={() => {
+                          this.setState({ showStem: question.id })
+                        }}
+                        onMouseLeave={() => {
+                          this.setState({ showStem: null })
+                        }}
+                      >
+                        <FaChevronCircleDown />
+                      </span>
+                      {this.state.showStem === question.id && (
+                        <div className='question-stems-container'>
+                          <Table striped bordered hover variant='dark'>
+                            <thead>
                               <tr>
-                                <td>{ind + 1}</td>
-                                <td>{stem.qStem}</td>
-                                <td>{stem.aStem}</td>
-                                <td>{stem.fbStem}</td>
+                                <th>#</th>
+                                <th>qStem</th>
+                                <th>aStem</th>
+                                <th>fbSten</th>
                               </tr>
-                            ))}
-                          </tbody>
-                        </Table>
-                      </div>
-                    )}
-                  </ListGroup.Item>
-                ))}
+                            </thead>
+                            <tbody>
+                              {question.stems.map((stem, ind) => (
+                                <tr>
+                                  <td>{ind + 1}</td>
+                                  <td>{stem.qStem}</td>
+                                  <td>{stem.aStem}</td>
+                                  <td>{stem.fbStem}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </Table>
+                        </div>
+                      )}
+                    </ListGroup.Item>
+                  )
+                })}
               </ListGroup>
             </FormCheck>
             <p className='text-muted'>

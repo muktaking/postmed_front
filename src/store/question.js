@@ -12,6 +12,7 @@ const slice = createSlice({
   reducers: {
     getQuestions: (state, action) => {
       state.questions = action.payload
+      state.loading = false
     },
     loadingStart: (state, action) => {
       state.loading = true
@@ -46,6 +47,7 @@ export const getQuestionLoader = () => (dispatch) => {
       //sendToken: true,
       //data,
       //config,
+      onStart: loadingStart.type,
       onSuccess: getQuestions.type
     })
   )
@@ -56,6 +58,7 @@ export const getQuestionByCategoryLoader = (id) => (dispatch) => {
     apiCallBegun({
       url: '/questions/category/' + id,
       method: 'get',
+      onStart: loadingStart.type,
       onSuccess: getQuestions.type
     })
   )

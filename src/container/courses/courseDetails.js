@@ -59,7 +59,7 @@ export default function CourseDetails() {
         axios
           .post(process.env.REACT_APP_SITE_URL + '/exams/course/' + id)
           .then(({ data }) => {
-            setExams(data)
+            setExams(data?.reverse())
           })
           .catch((e) => console.log(e))
       })
@@ -262,7 +262,7 @@ export default function CourseDetails() {
                     </tr>
                   </thead>
                   <tbody>
-                    {exams.reverse().map((exam, index) => (
+                    {exams.map((exam, index) => (
                       <tr key={index}>
                         <td className='hideInSm'>{index + 1}</td>
                         <td>{exam.title}</td>
