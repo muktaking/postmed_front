@@ -3,17 +3,25 @@ import { useSelector } from 'react-redux'
 import axios from 'axios'
 import * as moment from 'dayjs'
 import { useParams } from 'react-router'
-import { Badge, Button, Card, Jumbotron, Modal, Toast } from 'react-bootstrap'
-import { FaCalendarAlt, FaMoneyCheckAlt } from 'react-icons/fa'
+import {
+  Badge,
+  Button,
+  Card,
+  Jumbotron,
+  Modal,
+  Table,
+  Toast
+} from 'react-bootstrap'
 import { LazyLoadComponent } from 'react-lazy-load-image-component'
 import ReactMarkdown from 'react-markdown'
-import { Link } from 'react-router-dom'
 import remarkGfm from 'remark-gfm'
 import SocialShare from '../../components/socialShare/socialShare'
 import { facultyToString, pgCourseTypeToString } from '../../utils/faculty'
 import ShowRoutine from '../../components/routine/showRoutine'
 import PaymentCompletionForm from './paymentCompletionForm'
 import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
+import { examTypeToString } from '../../utils/faculty'
+import StartExamBtn from '../exams/component/startExamBtn'
 const duration = require('dayjs/plugin/duration')
 const relativeTime = require('dayjs/plugin/relativeTime')
 moment.extend(relativeTime)
@@ -30,6 +38,7 @@ export default function CourseDetails() {
   const [course, setCourse] = useState(null)
   const [loading, setLoading] = useState(false)
   const [enrolledCoursesId, setEnrolledCoursesId] = useState([])
+  const [exams, setExams] = useState(null)
   const [res, setRes] = useState(null)
   let { id } = useParams()
   const isAuthenticated = useSelector((state) => state.auth.token !== null)
@@ -47,6 +56,12 @@ export default function CourseDetails() {
       .then((res) => {
         setLoading(false)
         setCourse(res.data)
+        axios
+          .post(process.env.REACT_APP_SITE_URL + '/exams/course/' + id)
+          .then(({ data }) => {
+            setExams(data)
+          })
+          .catch((e) => console.log(e))
       })
       .catch((e) => {
         setLoading(false)
@@ -200,7 +215,7 @@ export default function CourseDetails() {
               <hr />
               <Card.Text className='d-flex justify-content-between flex-wrap'>
                 <div className='mb-3'>
-                  <FaMoneyCheckAlt size='1.5rem' />{' '}
+                  <Badge variant=''>Price</Badge>
                   <span className='bg-info text-white px-3 py-1'>
                     {course.price ? (
                       course.discountPricePercentage ? ( //make strikethrough text if discount present
@@ -225,7 +240,7 @@ export default function CourseDetails() {
                   )}
                 </div>
                 <div>
-                  <FaCalendarAlt size='1.5rem' />{' '}
+                  <Badge>Duration</Badge>
                   <span className='bg-secondary text-white px-3 py-1'>
                     {moment
                       .duration(moment(course.endDate).diff(course.startDate))
@@ -234,15 +249,41 @@ export default function CourseDetails() {
                 </div>
               </Card.Text>
               <hr />
-              <Card.Text className='text-center mt-2'>
-                <Link to={'/exams/courses/' + course.id}>
-                  <Button variant='primary'>Go to Exams</Button>
-                </Link>
-              </Card.Text>
+              <Card.Text className='text-center mt-2'>Exams</Card.Text>
+              {exams && (
+                <Table striped bordered hover responsive>
+                  <thead>
+                    <tr>
+                      <th className='hideInSm'>#</th>
+                      <th>Exam Title</th>
+                      <th className='hideInSm'>Exam Type</th>
+                      <th className='hideInSm'>Start on</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {exams.reverse().map((exam, index) => (
+                      <tr key={index}>
+                        <td className='hideInSm'>{index + 1}</td>
+                        <td>{exam.title}</td>
+                        <td className='hideInSm'>
+                          {examTypeToString(exam.type)}
+                        </td>
+                        <td className='hideInSm'>
+                          {moment(exam.startDate).fromNow()}
+                        </td>
+                        <td>
+                          <StartExamBtn exam={exam} courseId={course.id} />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
 
               <hr />
               <Card.Text className='text-muted text-center'>
-                <span>Start: {moment(course.startDate).fromNow()}</span>
+                <Badge>Start: {moment(course.startDate).fromNow()}</Badge>
               </Card.Text>
             </Card.Body>
             <Card.Footer>
