@@ -43,7 +43,7 @@ export default function SelectQuestions({ viewHandler }) {
 
   const setRes = () => {
     dispatch(resetResponseLoader())
-    dispatch(getQuestionByCategoryLoader(currentCategory))
+    dispatch(getQuestionByCategoryLoader(currentCategory.split('#')[0]))
   }
 
   const handleCloseModal = () => {
@@ -61,7 +61,6 @@ export default function SelectQuestions({ viewHandler }) {
         setshowDelRes(e.response.data.message)
       })
   }
-
   return (
     <div>
       {loading && <CircleLoader />}
@@ -113,7 +112,11 @@ export default function SelectQuestions({ viewHandler }) {
               <option value=''>Select...</option>
               {categories.map((value) => {
                 let categorySlug = value.slug.replace(/_/g, ' / ')
-                return <option value={value.id}>{categorySlug}</option>
+                return (
+                  <option value={value.id + '#' + categorySlug}>
+                    {categorySlug}
+                  </option>
+                )
               })}
             </Form.Control>
           </Form.Group>
@@ -125,7 +128,14 @@ export default function SelectQuestions({ viewHandler }) {
             >
               Show Pdf Renderer Button
             </Button>
-            {showPdfButton && <PdfRenderer questions={questions} />}
+            <div className='mt-3'>
+              {showPdfButton && (
+                <PdfRenderer
+                  questions={questions}
+                  name={currentCategory.split('#')[1]}
+                />
+              )}
+            </div>
           </div>
           <div>
             <Button

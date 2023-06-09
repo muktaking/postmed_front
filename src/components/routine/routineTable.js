@@ -1,9 +1,9 @@
 //import moment from 'moment'
 import * as moment from 'dayjs'
-import React, { Suspense } from 'react'
+import React, { Suspense, lazy } from 'react'
 import { Table } from 'react-bootstrap'
 import { getStatus } from './showRoutine'
-import RoutineTablePdf from './routineTablePdf'
+const RoutineTablePdf = lazy(() => import('./routineTablePdf'))
 
 export default function RoutineTable({ routine, title }) {
   const headings = ['#', 'Topics', 'Status', 'Start Date']

@@ -26,15 +26,22 @@ const styles = StyleSheet.create({
     marginBottom: '5'
     //padding: '5 15 5 5'
     // flexGrow: 1
+  },
+  heading: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    paddingLeft: 5,
+    marginVertical: 10
   }
 })
 
-const MyDoc = ({ questions }) => (
+const MyDoc = ({ questions, name }) => (
   <Document>
     <Page size='A4' style={styles.page}>
+      <Text style={styles.heading}>{`Chapter: ${name}`}</Text>
       {questions.map((ques) => (
         <View style={styles.section}>
-          <Text>{`[ ${ques.id} ]. ${ques.qText}. <${ques.qType}>`}</Text>
+          <Text>{`[ ${ques.id} ] ${ques.qText} <${ques.qType}>`}</Text>
           <View style={{ paddingHorizontal: 35, marginTop: 5 }}>
             {ques.stems.map((stem, ind) => (
               <Text>
@@ -42,17 +49,25 @@ const MyDoc = ({ questions }) => (
                   1 +
                   '. ' +
                   stem.qStem +
-                  '< ' +
-                  stem.aStem +
-                  ' >' +
-                  '[ ' +
+                  ' < ' +
+                  (ques.qType === 'matrix'
+                    ? stem.aStem === '1'
+                      ? 'True'
+                      : 'False'
+                    : '') +
+                  ' > [ ' +
                   stem.fbStem +
                   ' ]'}
               </Text>
             ))}
           </View>
           <Text style={{ marginTop: 5, marginBottom: 5 }}>
-            {ques.generalFeedback}
+            {ques.qType === 'sba'
+              ? '< Correct Answer: ' + ques.stems[0].aStem + ' >'
+              : ''}
+          </Text>
+          <Text style={{ marginTop: 5, marginBottom: 5 }}>
+            {'<Explanation: ' + ques.generalFeedback + ' >'}
           </Text>
         </View>
       ))}
@@ -60,12 +75,12 @@ const MyDoc = ({ questions }) => (
   </Document>
 )
 
-export default function PdfRenderer({ questions }) {
+export default function PdfRenderer({ questions, name }) {
   return (
     <div>
       <PDFDownloadLink
-        document={<MyDoc questions={questions} />}
-        fileName='somename.pdf'
+        document={<MyDoc questions={questions} name={name} />}
+        fileName={name + '_Questions'}
       >
         {({ blob, url, loading, error }) =>
           loading ? 'Loading document...' : 'Download now!'
