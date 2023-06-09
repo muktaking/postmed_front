@@ -9,69 +9,71 @@ import EditQuestion from './edit'
 import SelectQuestions from './selectQuestions'
 import Upload from './upload'
 import { useQuery } from '../../utils/queryRouter'
+import { Link } from 'react-router-dom'
 
 const DefaultView = ({ viewHandler, disable }) => {
   return (
     <div className='my-3'>
       <MetaInfo {...RoutesConfig.Question.metaInfo} />
 
-      <Button
-        variant='primary'
-        size='bg'
-        className='mr-3 mt-3'
-        disabled={disable === 'create'}
-        onClick={() => {
-          viewHandler('create')
-        }}
-      >
-        Create Question
-      </Button>
-      <Button
-        variant='primary'
-        size='bg'
-        className='mr-3 mt-3'
-        disabled={disable === 'upload'}
-        onClick={() => {
-          viewHandler('upload')
-        }}
-      >
-        Upload An Excel File
-      </Button>
-      <Button
-        variant='primary'
-        size='bg'
-        className='mt-3'
-        disabled={disable === 'select'}
-        onClick={() => {
-          viewHandler('select')
-        }}
-      >
-        Select Questions For Edit
-      </Button>
+      <Link to='/question?action=create'>
+        <Button
+          variant='primary'
+          size='bg'
+          className='mr-3 mt-3'
+          disabled={disable === 'create'}
+        >
+          Create Question
+        </Button>
+      </Link>
+      <Link to='/question?action=upload'>
+        <Button
+          variant='primary'
+          size='bg'
+          className='mr-3 mt-3'
+          disabled={disable === 'upload'}
+        >
+          Upload An Excel File
+        </Button>
+      </Link>
+      <Link to='/question?action=select'>
+        <Button
+          variant='primary'
+          size='bg'
+          className='mt-3'
+          disabled={disable === 'select'}
+        >
+          Select Questions For Edit
+        </Button>
+      </Link>
     </div>
   )
 }
 
 export default function QuestionBuilder() {
   const [view, setView] = useState()
-  const [questionId, setQuestionId] = useState(null)
   const dispatch = useDispatch()
 
   const query = useQuery()
-  const queryQuestionId = query.get('questionId')
+  const questionId = query.get('questionId')
+  const action = query.get('action')
 
-  const viewHandler = (view, id) => {
+  const viewHandler = (view) => {
     dispatch(resetResponseLoader())
-    if (id) setQuestionId(id)
     setView(view)
   }
 
   useEffect(() => {
-    if (queryQuestionId) {
-      setQuestionId(queryQuestionId)
+    if (action === 'edit') {
       setView('edit')
+    } else if (action === 'upload') {
+      setView('upload')
+    } else if (action === 'select') {
+      setView('select')
+    } else {
+      setView('create')
     }
-  }, [queryQuestionId])
+  }, [action])
 
   switch (view) {
     case 'create':

@@ -2,6 +2,7 @@ import React from 'react'
 import { Badge, Button, OverlayTrigger, Popover } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { deleteQuestionLoader } from '../../../store/question'
+import { Link } from 'react-router-dom'
 
 export const PopoverWrapper = React.forwardRef(
   ({ questionId, ...props }, ref) => {
@@ -34,18 +35,16 @@ export default function Miniques({ question, viewHandler }) {
       <p style={{ fontSize: '1.1rem' }}>
         {question.qText + ' -->  '}
         <Badge variant='secondary'>{question.qType + ' '}</Badge>
-        <Button
-          variant='primary'
-          size='sm'
-          className='mx-2'
-          disabled={!viewHandler}
-          onClick={() => {
-            viewHandler('edit', question.id)
-          }}
-        >
-          {' '}
-          Edit{' '}
-        </Button>
+        <Link to={`question?action=edit&questionId=${question.id}`}>
+          <Button
+            variant='primary'
+            size='sm'
+            className='mx-2'
+            disabled={!viewHandler}
+          >
+            Edit
+          </Button>
+        </Link>
 
         <OverlayTrigger
           trigger='click'

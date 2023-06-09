@@ -39,9 +39,11 @@ const MyDoc = ({ questions, name }) => (
   <Document>
     <Page size='A4' style={styles.page}>
       <Text style={styles.heading}>{`Chapter: ${name}`}</Text>
-      {questions.map((ques) => (
+      {questions.map((ques, index) => (
         <View style={styles.section}>
-          <Text>{`[ ${ques.id} ] ${ques.qText} <${ques.qType}>`}</Text>
+          <Text>{`${index + 1}. [ ${ques.id} ] ${ques.qText} <${
+            ques.qType
+          }>`}</Text>
           <View style={{ paddingHorizontal: 35, marginTop: 5 }}>
             {ques.stems.map((stem, ind) => (
               <Text>
