@@ -5,6 +5,7 @@ import { GrUpdate } from 'react-icons/gr'
 import { Link } from 'react-router-dom'
 import AddASyllabus from './addASyllabus'
 import SingleRoutineCard from './singleRoutineCard'
+import ShowRoutineTableView from './showRoutineTableView'
 
 export function getStatus(start, end) {
   const date = new Date()
@@ -104,6 +105,7 @@ export default function ShowRoutine({ showRaw, id, title }) {
                   </Button>
                 </>
               )}
+              <ShowRoutineTableView courses={courses} routines={routine} />
               <div
                 id='content'
                 style={{ maxHeight: '350px', overflowY: 'scroll' }}

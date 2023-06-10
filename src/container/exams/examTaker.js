@@ -222,8 +222,11 @@ class ExamTaker extends Component {
               <Modal.Body>
                 <div>
                   <p className="lead">
-                    {this.props.intl.formatMessage({id: 'et.agree', defaultMessage: "Are You Sure ? You will Taken To Result Page. "})}
-                  You do no answer<span className="text-danger"> {this.props.exams.questions.length - this.answerIds.size} </span> questions.
+                    {this.answerIds.size > 0 ? this.props.intl.formatMessage({id: 'et.agree', defaultMessage: "Are You Sure ? You will be taken to result page after submitting. "}) : 'For submiiting you have to answer atleast one question.'}
+                  </p>
+                  <p>
+                    {this.answerIds.size !== this.props.exams.questions.length && <span>You do no answer<span className="text-danger"> {this.props.exams.questions.length - this.answerIds.size} </span> questions.</span> }
+                  
                   </p>
                   {/* countdown to proceed for result after clicking the submit button */}
                   <Countdown
@@ -236,8 +239,9 @@ class ExamTaker extends Component {
                         {seconds}
                       </p>
                     )}
-                    onComplete={this.onSubmitHandler}
+                    onComplete={this.modalHide}
                   />
+                  <p className="text-muted text-center">Modal is closing...</p>
                 </div>
               </Modal.Body>
               <Modal.Footer>
@@ -247,8 +251,8 @@ class ExamTaker extends Component {
                 </Button>
                 <Button variant="primary" onClick={
                   this.onSubmitHandler
-                  }>
-                {this.props.intl.formatMessage({id: 'et.yes', defaultMessage: "Yes, I Want."})}
+                  } disabled={this.answerIds.size === 0 }>
+                {this.props.intl.formatMessage({id: 'et.yes', defaultMessage: "Submit, Answers"})}
                 </Button>
               </Modal.Footer>
             </>
