@@ -4,30 +4,31 @@ import * as moment from 'dayjs'
 import React from 'react'
 import { Badge, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 
-const RenderTooltip = React.forwardRef(({ id, setMsg, ...props }, ref) => (
-  <Tooltip ref={ref} id='button-tooltip' {...props}>
-    <p>Are you sure to delete this syllabus.</p>
-    <Button
-      variant='danger'
-      onClick={() => {
-        Axios.delete(process.env.REACT_APP_SITE_URL + '/routine/' + id)
-          .then((res) => {
-            setMsg(res.data.message)
-          })
-          .catch((e) => {
-            console.log(e)
-            setMsg(e.message)
-          })
-      }}
-    >
-      Yes
-    </Button>
-  </Tooltip>
-))
+export const RenderTooltip = React.forwardRef(
+  ({ id, setMsg, ...props }, ref) => (
+    <Tooltip ref={ref} id='button-tooltip' {...props}>
+      <p>Are you sure to delete this syllabus.</p>
+      <Button
+        variant='danger'
+        onClick={() => {
+          Axios.delete(process.env.REACT_APP_SITE_URL + '/routine/' + id)
+            .then((res) => {
+              setMsg(res.data.message)
+            })
+            .catch((e) => {
+              console.log(e)
+              setMsg(e.message)
+            })
+        }}
+      >
+        Yes
+      </Button>
+    </Tooltip>
+  )
+)
 
 export default function SingleRoutineCard({
   syllabus,
-  showRaw,
   getStatus,
   setShowModal,
   setEditSyllabusValue,
@@ -49,7 +50,7 @@ export default function SingleRoutineCard({
       <p className='text-secondary'>
         Exam Starts: {moment(syllabus.startDate).format('DD-MMM-YYYY, h:mm a')}
       </p>
-      {showRaw && (
+      {
         <>
           <p className='text-secondary'>
             Exam ends: {moment(syllabus.endDate).format('DD-MMM-YYYY, h:mm a')}
@@ -79,7 +80,7 @@ export default function SingleRoutineCard({
             </Button>
           </OverlayTrigger>
         </>
-      )}
+      }
     </li>
   )
 }

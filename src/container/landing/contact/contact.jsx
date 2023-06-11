@@ -27,7 +27,7 @@ const contact = (props) => {
               Exams
             </Link>
             <br />
-            <Link to='/payment' className='link-hover'>
+            <Link to='/paymentfaq' className='link-hover'>
               Payment
             </Link>
             <br />
@@ -39,9 +39,9 @@ const contact = (props) => {
               Terms & Conditions
             </Link>
             <br />
-            <Link to='/sitemap.xml' className='link-hover'>
+            <a href='/sitemap.xml' className='link-hover'>
               Sitemap
-            </Link>
+            </a>
           </Col>
         </Row>
         <Row className=''>

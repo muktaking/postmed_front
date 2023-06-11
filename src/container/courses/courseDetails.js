@@ -45,6 +45,7 @@ export default function CourseDetails() {
   const [showRoutine, setRoutineShow] = useState(false)
   const [modalCourse, setModalCourse] = useState(null)
   const [showPaymentModalForm, setShowPayemntModalForm] = useState(false)
+  const [showMoreDes, setShowMoreDes] = useState(false)
 
   const handleRoutineClose = () => setRoutineShow(false)
   const handleRoutineShow = () => setRoutineShow(true)
@@ -202,9 +203,35 @@ export default function CourseDetails() {
 
               <Card.Text className='mt-2'>
                 <Jumbotron>
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                    {course.description}
-                  </ReactMarkdown>
+                  {showMoreDes ? (
+                    <>
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {course.description}
+                      </ReactMarkdown>
+
+                      <Button
+                        onClick={() => {
+                          setShowMoreDes(false)
+                        }}
+                      >
+                        Show Less
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {course.description &&
+                          course.description.slice(0, 250) + '...'}
+                      </ReactMarkdown>
+                      <Button
+                        onClick={() => {
+                          setShowMoreDes(true)
+                        }}
+                      >
+                        Show More
+                      </Button>
+                    </>
+                  )}
                 </Jumbotron>
               </Card.Text>
               <div className='mb-2 text-center'>

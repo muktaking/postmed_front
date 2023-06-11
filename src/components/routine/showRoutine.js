@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Button, Modal, Tab, Tabs, Toast } from 'react-bootstrap'
+import { Button, Modal, Toast } from 'react-bootstrap'
 import { GrUpdate } from 'react-icons/gr'
 import { Link } from 'react-router-dom'
 import AddASyllabus from './addASyllabus'
@@ -25,7 +25,7 @@ export function getStatus(start, end) {
 
   return 'Upcoming'
 }
-
+//showRaw means its only for admin
 export default function ShowRoutine({ showRaw, id, title }) {
   const [routine, setRoutine] = useState([])
   const [showModal, setShowModal] = useState(false)
@@ -105,38 +105,19 @@ export default function ShowRoutine({ showRaw, id, title }) {
                   </Button>
                 </>
               )}
-              <ShowRoutineTableView courses={courses} routines={routine} />
-              <div
-                id='content'
-                style={{ maxHeight: '350px', overflowY: 'scroll' }}
-              >
-                {' '}
-                {showRaw ? (
-                  <Tabs defaultActiveKey='0' id='uncontrolled-tab-example'>
-                    {courses.map((course, ind) => (
-                      <Tab eventKey={ind} title={course.title}>
-                        {
-                          <ul className='timeline mt-3'>
-                            {routine
-                              .filter(
-                                (syllabus) => syllabus.courseId === course.id
-                              )
-                              .map((syllabus) => (
-                                <SingleRoutineCard
-                                  syllabus={syllabus}
-                                  showRaw={showRaw}
-                                  getStatus={getStatus}
-                                  setShowModal={setShowModal}
-                                  setEditSyllabusValue={setEditSyllabusValue}
-                                  setMsg={setMsg}
-                                />
-                              ))}
-                          </ul>
-                        }
-                      </Tab>
-                    ))}
-                  </Tabs>
-                ) : (
+              {showRaw ? (
+                <ShowRoutineTableView
+                  courses={courses}
+                  routines={routine}
+                  setShowModal={setShowModal}
+                  setEditSyllabusValue={setEditSyllabusValue}
+                  setMsg={setMsg}
+                />
+              ) : (
+                <div
+                  id='content'
+                  style={{ maxHeight: '350px', overflowY: 'scroll' }}
+                >
                   <div>
                     <p className='text-muted'>
                       *** Only Ongoing & Upcoming exam's routine is showed here.
@@ -180,8 +161,8 @@ export default function ShowRoutine({ showRaw, id, title }) {
                       <Button>Details</Button>
                     </Link>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
