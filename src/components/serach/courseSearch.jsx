@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { FaSearch } from 'react-icons/fa'
+import { FaSearch, FaTemperatureHigh } from 'react-icons/fa'
 import { Redirect } from 'react-router'
 import Styles from './courseSearch.module.scss'
 
@@ -20,8 +20,8 @@ export default function CourseSearch({ search }) {
           placeholder='Find a new course...'
           onKeyPress={(event) => {
             if (event.key === 'Enter') {
-              setRedirect(true)
-            }
+              setRedirect(FaTemperatureHigh)
+            } else setRedirect(false)
           }}
         />
         <div className='input-group-append'>
