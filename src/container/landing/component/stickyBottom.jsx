@@ -10,7 +10,7 @@ import {
   FaWhatsapp
 } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { StickyBottomContext } from '../../routePages'
 
 const phoneNumber = 8801521500642
@@ -19,6 +19,7 @@ const greetings = 'Hello, MediOnExam'
 export default function StickyBottom() {
   const IsAuthenticated = useSelector((state) => state.auth.token !== null)
   const { stickyState, setStickyState } = useContext(StickyBottomContext)
+  const location = useLocation()
 
   const bootomNavItems = [
     {
@@ -84,7 +85,13 @@ export default function StickyBottom() {
       <div className='hideInMd'>
         <div className='py-2 d-flex flex-wrap justify-content-around align-items-center'>
           {bootomNavItems.map((item, ind) => (
-            <Link key={item + ind} to={item.link} className='text-white'>
+            <Link
+              key={item + ind}
+              to={item.link}
+              className={`text-white ${
+                location.pathname === item.link && 'activeLink'
+              }`}
+            >
               <div
                 className={
                   'mr-2 d-flex justify-content-center align-items-center'

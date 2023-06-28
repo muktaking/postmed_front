@@ -11,6 +11,18 @@ import {
 } from '../../utils/faculty'
 import { fetchCourseByFilterLoader } from '../../store/courses'
 
+//centering fixed element
+// const styles = {
+//   container: {
+//     width: '300px',
+//     position: 'fixed',
+//     left: '50%',
+//     zIndex: 1,
+//     marginLeft: '-150px',
+//     font: 'center'
+//   }
+// }
+
 export default function CourseFilter({
   search = '',
   pgCourseType = null,
@@ -47,7 +59,7 @@ export default function CourseFilter({
         }) => (
           <Form onSubmit={handleSubmit}>
             {loading && <CircleLoader />}
-            <h3>
+            <h3 className='text-center'>
               <Button
                 onClick={() => {
                   setShowFilter(!showFilter)
@@ -56,7 +68,7 @@ export default function CourseFilter({
                 Filter
               </Button>
             </h3>
-            <p className='text-muted'>(Click to expand filter options)</p>
+            {/* <p className='text-muted'>(Click to expand filter options)</p> */}
             {showFilter && (
               <Jumbotron>
                 <Form.Group className='mb-3' controlId='formBasicPassword'>
@@ -113,8 +125,15 @@ export default function CourseFilter({
                     </Form.Control>
                   </Form.Group>
                 </div>
-                <div className='mt-1 d-flex justify-content-center'>
+                <div className='mt-1 d-flex justify-content-around'>
                   <Button type='submit'>Apply</Button>
+                  <Button
+                    onClick={() => {
+                      setShowFilter(false)
+                    }}
+                  >
+                    close
+                  </Button>
                 </div>
               </Jumbotron>
             )}

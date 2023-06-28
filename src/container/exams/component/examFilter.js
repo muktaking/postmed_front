@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Formik } from 'formik'
 import React, { useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { Button, Form, Jumbotron } from 'react-bootstrap'
 import CircleLoader from '../../../components/customSpinner/circleLoader/circleLoader'
 import { examTypes } from '../../../utils/faculty'
 
@@ -50,18 +50,17 @@ export default function ExamFilter({ setExams, id, setCurrentPage }) {
         }) => (
           <Form onSubmit={handleSubmit}>
             {loading && <CircleLoader />}
-            <h3>
-              <Button
-                onClick={() => {
-                  setShowFilter(!showFilter)
-                }}
-              >
-                Filter
-              </Button>
-            </h3>
-            <p className='text-muted'>(Click to expand filter options)</p>
+
+            <Button
+              onClick={() => {
+                setShowFilter(!showFilter)
+              }}
+            >
+              Filter
+            </Button>
+
             {showFilter && (
-              <>
+              <Jumbotron>
                 <Form.Group className='mb-3' controlId='formBasicPassword'>
                   <Form.Label>Search</Form.Label>
                   <Form.Control
@@ -88,10 +87,17 @@ export default function ExamFilter({ setExams, id, setCurrentPage }) {
                     />
                   ))}
                 </div>
-                <div className='mt-1 d-flex justify-content-center'>
+                <div className='mt-1 d-flex justify-content-around'>
                   <Button type='submit'>Apply</Button>
+                  <Button
+                    onClick={() => {
+                      setShowFilter(false)
+                    }}
+                  >
+                    Close
+                  </Button>
                 </div>
-              </>
+              </Jumbotron>
             )}
           </Form>
         )}

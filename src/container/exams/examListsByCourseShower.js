@@ -83,32 +83,39 @@ export default function ExamListsByCatShower() {
 
       <Latest courseId={id} />
 
-      <Jumbotron>
-        <h3 className='text-center'>
-          <span className='mr-2'>Available Exams</span>
-        </h3>
+      <h3 className='text-center'>
+        <span className='mr-2'>Available Exams</span>
+      </h3>
 
-        <Row>
-          <Col lg={2} className='mb-3'>
-            <div className='mb-2'>
-              <Button variant='info' onClick={handleShow}>
-                Exams' Routine
-              </Button>
-            </div>
-            <ExamFilter
-              setExams={setExams}
-              id={id}
-              setCurrentPage={setCurrentPage}
-            />
-          </Col>
-          <Col lg={10} className='border'>
-            {!loading && (
-              <p className='text-center text-danger'>
-                {exams.length < 1 && 'NO Exam is avaiable.'}
-              </p>
-            )}
-            {isAuthenticated ? (
-              !isEnrolledStu ? (
+      <Row>
+        <Col lg={3} className='mb-3'>
+          <div className='mb-2'>
+            <Button onClick={handleShow}>Exams' Routine</Button>
+          </div>
+          <ExamFilter
+            setExams={setExams}
+            id={id}
+            setCurrentPage={setCurrentPage}
+          />
+        </Col>
+        <Col lg={9}>
+          {!loading && exams.length < 1 ? (
+            <p className='text-center text-danger'>NO Exam is avaiable.</p>
+          ) : (
+            <>
+              {isAuthenticated ? (
+                !isEnrolledStu ? (
+                  <Form.Check
+                    className='ml-2'
+                    type='switch'
+                    id='custom-switch'
+                    label='Sort Free Exams'
+                    onChange={onFreeExamSwitcherHandler}
+                  />
+                ) : (
+                  <></>
+                )
+              ) : (
                 <Form.Check
                   className='ml-2'
                   type='switch'
@@ -116,44 +123,33 @@ export default function ExamListsByCatShower() {
                   label='Sort Free Exams'
                   onChange={onFreeExamSwitcherHandler}
                 />
-              ) : (
-                <></>
-              )
-            ) : (
-              <Form.Check
-                className='ml-2'
-                type='switch'
-                id='custom-switch'
-                label='Sort Free Exams'
-                onChange={onFreeExamSwitcherHandler}
-              />
-            )}
-
-            <div className='d-flex justify-content-center flex-wrap mt-2'>
-              {paginatedExams &&
-                paginatedExams.map((exam) => (
-                  <ExamByCat key={exam.title} exam={exam} courseId={id} />
-                ))}
-            </div>
-            <br />
-            <div className='d-flex justify-content-center mt-3'>
-              <Pagination
-                activePage={currentPage}
-                itemsCountPerPage={pageSize}
-                totalItemsCount={exams.length}
-                pageRangeDisplayed={2}
-                onChange={(page) => {
-                  setCurrentPage(page)
-                }}
-                itemClass='page-item'
-                linkClass='page-link'
-                prevPageText='Previous'
-                nextPageText='Next'
-              />
-            </div>
-          </Col>
-        </Row>
-      </Jumbotron>
+              )}
+            </>
+          )}
+          <div className='d-flex justify-content-center flex-wrap mt-2'>
+            {paginatedExams &&
+              paginatedExams.map((exam) => (
+                <ExamByCat key={exam.title} exam={exam} courseId={id} />
+              ))}
+          </div>
+          <br />
+          <div className='d-flex justify-content-center mt-3'>
+            <Pagination
+              activePage={currentPage}
+              itemsCountPerPage={pageSize}
+              totalItemsCount={exams.length}
+              pageRangeDisplayed={2}
+              onChange={(page) => {
+                setCurrentPage(page)
+              }}
+              itemClass='page-item'
+              linkClass='page-link'
+              prevPageText='Previous'
+              nextPageText='Next'
+            />
+          </div>
+        </Col>
+      </Row>
     </div>
   )
 }

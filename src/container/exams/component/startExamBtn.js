@@ -3,7 +3,7 @@ import { Modal, Button, Badge } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
-import { FaLock, FaUnlock } from 'react-icons/fa'
+import { FaLock } from 'react-icons/fa'
 import { resetExamResultLoader } from '../../../store/exams'
 
 export default function StartExamBtn({ exam, courseId }) {
@@ -53,7 +53,7 @@ export default function StartExamBtn({ exam, courseId }) {
             <Badge variant='success'>
               {!isEnrolledStu && isFree && (
                 <>
-                  <span className='px-2 py-1'>Free</span> <FaUnlock />
+                  <span className='px-2 py-1'>Free</span>
                 </>
               )}
             </Badge>
