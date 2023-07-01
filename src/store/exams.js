@@ -24,8 +24,8 @@ const slice = createSlice({
     rankLoading: false,
     rank: null,
     exam: null, // store the individual exam
-    error: null,
-    examError: null,
+    error: null, // error related after submitting exam answer paper / post exam tasking
+    examError: null, // error during pulling exam's questions from backend
     exams: [], // store the all exam lists
     disableQuestions: []
   },
@@ -85,6 +85,18 @@ const slice = createSlice({
       state.loading = false
       state.examError = action.payload
     },
+    examReset: (state) => {
+      state.questions = []
+      state.questionIdsByOrder = []
+      state.id = null
+      state.singleQuestionMark = null
+      state.singleStemMark = null
+      state.timeLimit = null
+      state.type = null
+      state.penaltyMark = null
+      state.isAnswerRestricted = true
+      state.examError = null
+    },
     postExamById: (state, action) => {
       state.examId = action.payload.examId
       state.examResult = action.payload.resultArray
@@ -122,6 +134,7 @@ export const {
   getExamById,
   getFreeExamById,
   getExamError,
+  examReset,
   postExamById,
   examRankStart,
   examRankById,
@@ -156,6 +169,7 @@ export const getAllFreeExamsLoader = () => (dispatch) => {
 }
 
 export const getExamByIdLoader = (id) => (dispatch) => {
+  dispatch(examReset())
   dispatch(
     apiCallBegun({
       url: '/exams/questions/' + id,
@@ -169,6 +183,7 @@ export const getExamByIdLoader = (id) => (dispatch) => {
 }
 
 export const getFreeExamByIdLoader = (id) => (dispatch) => {
+  dispatch(examReset())
   dispatch(
     apiCallBegun({
       url: '/exams/free/questions/' + id,
