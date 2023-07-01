@@ -1,13 +1,17 @@
 import { Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
-import { Alert, Button, Form, Spinner } from 'react-bootstrap'
+import { Alert, Badge, Button, Form, Spinner } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { FaEdit, FaRegCalendarAlt } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 //import { useFormik } from "formik";
 import validator from 'validator'
-import { onLoadingLoader, postExamProfile } from '../../store/examPaper'
+import {
+  onLoadingLoader,
+  postExamProfile,
+  resetLoader
+} from '../../store/examPaper'
 import ExamCard from './card/card'
 
 const centeredStyle = {
@@ -26,10 +30,7 @@ const ExamSpec = ({
   selectedQuestionIds,
   editExamSpec
 }) => {
-  const [hideMsg, setHideMsg] = useState(true)
-  const [editExamId, setEditExamId] = useState(
-    editExamSpec ? editExamSpec.id : null
-  )
+  const [editExamId, setEditExamId] = useState(null)
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
   const [forceEditTime, setForceEditTime] = useState(false) // for forcely set exam time to old days
@@ -59,7 +60,7 @@ const ExamSpec = ({
       setEndDate(new Date(editExamSpec.endDate))
     }
   }, [editExamSpec])
-
+  console.log(editExamId)
   return (
     <>
       {loading && (
@@ -78,35 +79,31 @@ const ExamSpec = ({
           endDate,
           selectedQuestionIds,
           dispatch,
-          setHideMsg,
           editExamId
         )}
         enableReinitialize
       >
         {({ errors, handleChange, handleSubmit, values }) => (
           <ExamCard header='Exam Specification' showHeader={true}>
-            {hideMsg && successMsg && (
+            {successMsg && (
               <Alert //
                 variant={'success'}
                 className='text-center'
                 style={centeredStyle}
-                onClose={() => setHideMsg(false)}
+                onClose={() => dispatch(resetLoader())}
                 dismissible
               >
-                {successMsg.title +
-                  ' --->  ' +
-                  successMsg.description +
-                  ' --->  ' +
-                  successMsg.questions.length +
-                  ' questions'}
+                <Badge>{successMsg.title}</Badge>
+                <span>{successMsg.description}</span>
+                <Badge>({successMsg.questions.length})</Badge>
               </Alert>
             )}
-            {hideMsg && errorMsg && (
+            {errorMsg && (
               <Alert //
-                variant={'success'}
+                variant={'danger'}
                 className='text-center'
                 style={centeredStyle}
-                onClose={() => setHideMsg(false)}
+                onClose={() => dispatch(resetLoader())}
                 dismissible
               >
                 {JSON.stringify(errorMsg)}
@@ -298,7 +295,14 @@ const ExamSpec = ({
                 <div className='alert alert-danger'>{errors.timeLimit}</div>
               ) : null}
             </Form>
-            <Button onClick={handleSubmit}>Submit</Button>
+            <Button
+              onClick={() => {
+                setEditExamId(editExamSpec.id)
+                handleSubmit()
+              }}
+            >
+              Submit
+            </Button>
             <Button
               className='ml-2'
               onClick={() => {
@@ -322,7 +326,6 @@ function onSubmitHandler(
   endDate,
   selectedQuestionIds,
   dispatch,
-  setHideMsg,
   editExamId
 ) {
   return (values) => {
@@ -330,7 +333,6 @@ function onSubmitHandler(
       values.startDate = startDate
       values.endDate = endDate
       dispatch(onLoadingLoader())
-      setHideMsg(true)
       dispatch(postExamProfile(values, selectedQuestionIds, editExamId))
     } else {
       alert('Their is no selected Question')
