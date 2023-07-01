@@ -1,23 +1,10 @@
 import React, { Component } from 'react'
-import {
-  Alert,
-  Badge,
-  Button,
-  Col,
-  Form,
-  FormCheck,
-  ListGroup,
-  Modal,
-  Row,
-  Table
-} from 'react-bootstrap'
-import { FaChevronCircleDown, FaShoppingBasket } from 'react-icons/fa'
+import { Alert, Button, Col, Row } from 'react-bootstrap'
+import { FaCopy, FaShoppingBasket } from 'react-icons/fa'
 import { connect } from 'react-redux'
-import { FaRegCheckCircle } from 'react-icons/fa'
 import ExamSpec from '../../components/examBuilder/examSpec'
 import Filter from '../../components/examBuilder/filter'
 import SelectedQuestionsPreview from '../../components/examBuilder/selectedQuestionsPreview'
-import Pagination from '../../components/pagination/pagination'
 import MetaInfo from '../../components/seo/metainfo'
 import { RoutesConfig } from '../../config/routes.config'
 import { fetchCategory } from '../../store/category'
@@ -28,190 +15,185 @@ import {
 } from '../../store/question'
 import { paginate } from '../../utils/paginate'
 import MultiSquareLoader from '../../components/customSpinner/multiSquare/multiSquareLoader'
-import { tagsToObj } from '../../utils/questionUtils'
+import ExamBuilderAction from './component/examBuilderAction'
+import QuestionList from './component/questionList'
+import CopyPasteQuestionIds from './component/copyPasteQuestionIds'
+import { withRouter } from 'react-router'
 
+const styles = {
+  questionCart: {
+    position: 'fixed',
+    bottom: '50px',
+    right: '20px',
+    width: '50px',
+    height: '35px',
+    zIndex: '99'
+  }
+}
+
+function getCategoryParamId(search) {
+  return new URLSearchParams(search, [search]).get('categoryId')
+}
 class ExamPaper extends Component {
   state = {
-    show: false,
-    selectedQuestions: [],
-    massQIds: [],
-    pageSize: 10,
-    currentPage: 1,
-    qTypeState: 'all',
-    search: null,
-    showStem: null
+    filteredQuestions: [], //questions filtered by filter section
+    questionCartshow: false, // show the question's cart modal
+    questionCart: new Set(), // the question cart
+    massQIds: [], //
+    pageSize: 10, //for paginate - amaount of questions per page
+    currentPage: 1, // for paginate - the current page number
+    qTypeState: 'all', // type of qTypeState at filter section - all, sba, matrix
+    search: null, // search text
+    searchRegxErrorMsg: null,
+    showStem: null, // show the stems of question
+    copyPasteShow: false // show the copyPasteQuestionIds element
   }
   componentDidMount() {
+    const categoryParamId = getCategoryParamId(this.props.location.search)
     this.props.onFetchCategoryLoader()
     this.props.onFetchCoursesLoader()
-    this.props.onGetQuestionLoader()
+    if (categoryParamId) {
+      this.props.onGetQuestionByCategoryLoader(categoryParamId)
+    } else {
+      this.props.onGetQuestionLoader()
+    }
   }
-
   componentDidUpdate(preProps) {
     if (preProps.editExam !== this.props.editExam) {
-      // a very bad and resource consuming computing
-      const editQuestions = this.props.editExam.questions.map((e) => {
-        const [question] = this.props.question.questions.filter((q) => {
-          return q.id.toString() === e
-        })
-
-        this.setState({
-          [e]: {
-            checked: true,
-            id: +e,
-            title: question && question.title,
-            qText: question && question.qText
-          }
-        })
-
-        return {
-          checked: true,
-          id: +e,
-          title: question && question.title,
-          qText: question && question.qText
-        }
-      })
-
       this.setState({
-        selectedQuestions: editQuestions
+        questionCart: new Set(
+          this.props.editExam.questions.map((qId) => parseInt(qId))
+        )
+      })
+    }
+    if (preProps.question.questions !== this.props.question.questions) {
+      this.setState({
+        filteredQuestions: this.props.question.questions
       })
     }
   }
 
-  handleShow = () => {
-    //control modal show state
-    this.setState({ show: true })
+  handleQuestionCartShow = () => {
+    //show question's cart modal show state
+    this.setState({ questionCartshow: true })
   }
-  handleClose = () => {
-    //control modal show state
-    this.setState({ show: false })
-  }
-
-  checkHandleChange = (e, question) => {
-    const isChecked = e.target.checked
-    const value = e.target.value
-
-    if (isChecked) {
-      this.setState({
-        [value]: {
-          checked: true,
-          id: question.id,
-          title: question.title,
-          qText: question.qText
-        }
-      })
-    } else {
-      this.setState({
-        [value]: {
-          checked: false
-        }
-      })
-    }
+  handleQuestionCartShowClose = () => {
+    //hide question's cart modal show state
+    this.setState({ questionCartshow: false })
   }
 
-  actionHandleChange = (e, questions) => {
-    e = e.target
-    const v = e.value
-
-    switch (v) {
-      case 'mAll':
-        questions.forEach((e) => {
-          this.setState({
-            [e.id]: { checked: true, id: e.id, title: e.title, qText: e.qText }
+  //action to manipulate question at mass amount
+  actionHandleChange = (event) => {
+    const value = event.target.value
+    this.setState((state) => {
+      switch (value) {
+        case 'mAll':
+          this.state.filteredQuestions.forEach((q) =>
+            state.questionCart.add(q.id)
+          )
+          break
+        case 'uAll':
+          this.state.filteredQuestions.forEach((q) => {
+            state.questionCart.delete(q.id)
           })
-        })
-        break
-      case 'uAll':
-        questions.forEach((e) => {
-          this.setState({ [e.id]: { checked: false } })
-        })
-        break
-      case 'mPQ':
-        paginate(
-          questions,
-          this.state.currentPage,
-          this.state.pageSize
-        ).forEach((e) => {
-          this.setState({
-            [e.id]: { checked: true, id: e.id, title: e.title, qText: e.qText }
+          break
+        case 'mPQ':
+          paginate(
+            state.filteredQuestions,
+            state.currentPage,
+            state.pageSize
+          ).forEach((q) => {
+            state.questionCart.add(q.id)
           })
-        })
-        break
-      case 'uPQ':
-        paginate(
-          questions,
-          this.state.currentPage,
-          this.state.pageSize
-        ).forEach((e) => {
-          this.setState({
-            [e.id]: { checked: false }
-          })
-        })
-        break
-      default:
-        break
-    }
-  }
 
-  selectedQuestionsHandler = (id) => {
-    this.setState({
-      selectedQuestions: this.state.selectedQuestions.filter(
-        (question) => question.id !== +id
-      ),
-      [id]: { checked: false }
+          break
+        case 'uPQ':
+          paginate(
+            state.filteredQuestions,
+            state.currentPage,
+            state.pageSize
+          ).forEach((q) => {
+            state.questionCart.delete(q.id)
+          })
+          break
+        default:
+          break
+      }
+      return { questionCart: state.questionCart }
     })
   }
 
-  handleChange = (e) => {
+  removeQuestionsFromCartHandler = (ids) => {
+    if (ids) {
+      this.setState({ questionCart: new Set(ids) })
+    } else this.setState({ questionCart: new Set() })
+  }
+
+  categoryChangeHandler = ({ target }) => {
     // the category controller
-    e = e.target
-    this.props.onGetQuestionByCategoryLoader(e.value)
+    this.props.onGetQuestionByCategoryLoader(target.value)
     this.setState({
-      id: e.value,
       currentPage: 1
     })
+    this.props.history.replace('/examBuilder/?categoryId=' + target.value)
   }
 
-  handleSwitch = (e) => {
-    if (e.target.name === 'sbaOnly') {
-      if (e.target.checked) {
+  qTypeSwitchFilterHandler = ({ target }) => {
+    if (target.name === 'sbaOnly') {
+      if (target.checked) {
         this.setState({ qTypeState: 'sba' })
       } else {
         this.setState({ qTypeState: 'all' })
       }
     } else {
-      if (e.target.checked) {
+      if (target.checked) {
         this.setState({ qTypeState: 'matrix' })
       } else {
         this.setState({ qTypeState: 'all' })
       }
     }
+    this.questionsFilterMethod()
   }
 
-  handleSearch = (text) => {
-    this.setState({ search: text })
-  }
-  matchSearch = (questions) => {
-    if (this.state.search) {
-      const rs = new RegExp(this.state.search, 'i')
-      return questions.filter((ques) => rs.test(ques.qText))
-    }
-    return null
+  searchFilterHandler = (text) => {
+    this.setState({ search: text, searchRegxErrorMsg: null })
+    this.questionsFilterMethod()
   }
 
   questionsFilterMethod = () => {
-    const quesByQType =
-      this.state.qTypeState === 'sba'
-        ? this.props.question.questions.filter((ques) => ques.qType === 'sba')
-        : this.state.qTypeState === 'matrix'
-        ? this.props.question.questions.filter(
+    this.setState((state) => {
+      let filteredQuestions = []
+      //switch to change questions based on qType
+      switch (state.qTypeState) {
+        case 'sba':
+          filteredQuestions = state.filteredQuestions.filter(
+            (ques) => ques.qType === 'sba'
+          )
+          break
+        case 'matrix':
+          filteredQuestions = state.filteredQuestions.filter(
             (ques) => ques.qType === 'matrix'
           )
-        : this.props.question.questions
-    const quesBySearch = this.state.search
-      ? this.matchSearch(quesByQType, this.state.search)
-      : quesByQType
-    return [quesBySearch, quesBySearch.length]
+          break
+        default:
+          filteredQuestions = this.props.question.questions
+          break
+      }
+
+      //switch to change questions based on search
+      if (state.search && state.search !== '') {
+        try {
+          const rs = new RegExp(state.search, 'i')
+          filteredQuestions = filteredQuestions.filter((ques) =>
+            rs.test(ques.qText)
+          )
+        } catch (error) {
+          this.setState({ searchRegxErrorMsg: error.message })
+          console.log(error)
+        }
+      }
+      return { filteredQuestions: filteredQuestions }
+    })
   }
 
   onPageHandler = (page) => {
@@ -220,288 +202,120 @@ class ExamPaper extends Component {
   }
 
   render() {
-    // const quesByQType =
-    //   this.state.qTypeState === 'sba'
-    //     ? this.props.question.questions.filter((ques) => ques.qType === 'sba')
-    //     : this.state.qTypeState === 'matrix'
-    //     ? this.props.question.questions.filter(
-    //         (ques) => ques.qType === 'matrix'
-    //       )
-    //     : this.props.question.questions
-
-    // const quesBySearch = this.state.search
-    //   ? this.matchSearch(quesByQType, this.state.search)
-    //   : quesByQType
-    const [questionsFiltered, questionsFilteredLength] =
-      this.questionsFilterMethod()
-
     const questions = paginate(
-      questionsFiltered,
+      this.state.filteredQuestions,
       this.state.currentPage,
       this.state.pageSize
-    )
-
-    const checkedQuestionIds = Object.keys(this.state).filter(
-      (key) => !isNaN(key) && this.state[key].checked
     )
 
     return (
       <>
         <MetaInfo {...RoutesConfig.ExamBuilder.metaInfo} />
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Selected Questions Preview</Modal.Title>
-          </Modal.Header>
-
-          <Modal.Body>
-            <SelectedQuestionsPreview
-              selectedQuestions={this.state.selectedQuestions}
-              selectedQuestionsHandler={this.selectedQuestionsHandler}
-            />
-          </Modal.Body>
-
-          <Modal.Footer>
-            <Button variant='secondary' onClick={this.handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
-        {/* Preview questions cart */}
-        <div
-          style={{
-            position: 'fixed',
-            bottom: '50px',
-            right: '20px',
-            width: '50px',
-            height: '35px',
-            zIndex: '99'
-          }}
-        >
-          <Button onClick={this.handleShow} title='Questions Busket'>
+        {/* Preview questions cart section starts*/}
+        {this.state.questionCartshow && (
+          <SelectedQuestionsPreview
+            questionCart={this.state.questionCart}
+            removeQuestionsFromCartHandler={this.removeQuestionsFromCartHandler}
+            show={this.state.questionCartshow}
+            handleClose={this.handleQuestionCartShowClose}
+          />
+        )}
+        <div style={styles.questionCart}>
+          <Button
+            onClick={this.handleQuestionCartShow}
+            title='Questions Busket'
+          >
             <FaShoppingBasket size={'2rem'} />
           </Button>
           <span
             className='bg-danger text-white p-1 text-center'
             style={{ position: 'absolute', top: '-15px', right: '-10px' }}
           >
-            {this.state.selectedQuestions.length}
+            {this.state.questionCart.size}
           </span>
         </div>
+        {/* Preview questions cart section ends*/}
 
         <Row>
           <Col lg={4}>
             <Alert variant={'primary'} className='text-center mt-3'>
-              Total number of Question is :{questionsFilteredLength}
+              Total number of Question is :{this.state.filteredQuestions.length}
             </Alert>
 
             <Filter
-              handleChange={this.handleChange}
+              handleChange={this.categoryChangeHandler}
               categories={this.props.category.categories}
-              handleSwitch={this.handleSwitch}
-              qTypeState={this.qTypeState}
-              handleSearch={this.handleSearch}
+              categoryParamId={getCategoryParamId(this.props.location.search)}
+              handleSwitch={this.qTypeSwitchFilterHandler}
+              qTypeState={this.state.qTypeState}
+              handleSearch={this.searchFilterHandler}
+              searchRegxErrorMsg={this.state.searchRegxErrorMsg}
             />
+            <ExamBuilderAction actionHandleChange={this.actionHandleChange} />
             <ExamSpec
               categories={this.props.category.categories}
               courses={this.props.courses.courses}
-              selectedQuestionIds={this.state.selectedQuestions.map(
-                (q) => q.id
-              )}
+              selectedQuestionIds={Array.from(this.state.questionCart)}
               editExamSpec={this.props.editExam}
             />
           </Col>
           <Col lg={8}>
-            {this.props.question.loading && <MultiSquareLoader />}
-            <FormCheck>
-              <ListGroup className='my-2'>
-                {questions.length < 1 && (
-                  <p className='text-danger'>No Question in this category.</p>
-                )}
-                {questions.map((question, index) => {
-                  const tagObj = tagsToObj(question.tags)
-                  return (
-                    <ListGroup.Item
-                      key={question.id}
-                      variant={index % 2 === 0 ? 'dark' : 'light'}
-                    >
-                      {
-                        <Form.Check
-                          //ref={this.state.input}
-                          inline
-                          type='checkbox'
-                          value={question.id}
-                          onChange={(e) => {
-                            this.checkHandleChange(e, question)
-                          }}
-                          checked={
-                            this.state[question.id] &&
-                            this.state[question.id].checked
-                          }
-                        />
-                      }
-                      <span className='mr-2'>
-                        {index +
-                          1 +
-                          this.state.pageSize * (this.state.currentPage - 1)}
-                        .
-                      </span>
-                      <Badge className='mr-2'>{question.title}</Badge>
-                      <span>{question.qText}</span>
-                      <Badge className='ml-2'>{question.qType}</Badge>
-                      {question.generalFeedback && (
-                        <Badge className='ml-2'>
-                          GF:{' '}
-                          <FaRegCheckCircle className='ml-1' color='green' />
-                        </Badge>
-                      )}
-                      {question.stems[0].fbStem && (
-                        <Badge className='ml-2'>
-                          FbStem:{' '}
-                          <FaRegCheckCircle className='ml-1' color='green' />
-                        </Badge>
-                      )}
-                      <Badge className='ml-2'>Id No. {question.id}</Badge>
-                      {tagObj?.book && <Badge>Book: {tagObj?.book}</Badge>}
-                      {tagObj?.author && (
-                        <Badge>Author: {tagObj?.author}</Badge>
-                      )}
-                      {tagObj?.operator && (
-                        <Badge>Operator: {tagObj?.operator}</Badge>
-                      )}
-                      {tagObj?.programme && (
-                        <Badge>
-                          Programme:{' '}
-                          {tagObj?.programme +
-                            '-' +
-                            tagObj?.session +
-                            '-' +
-                            tagObj?.year}
-                        </Badge>
-                      )}
-                      <span
-                        onMouseEnter={() => {
-                          this.setState({ showStem: question.id })
-                        }}
-                        onMouseLeave={() => {
-                          this.setState({ showStem: null })
-                        }}
-                      >
-                        <FaChevronCircleDown />
-                      </span>
-                      {this.state.showStem === question.id && (
-                        <div className='question-stems-container'>
-                          <Table striped bordered hover variant='dark'>
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>qStem</th>
-                                <th>aStem</th>
-                                <th>fbSten</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {question.stems.map((stem, ind) => (
-                                <tr>
-                                  <td>{ind + 1}</td>
-                                  <td>{stem.qStem}</td>
-                                  <td>{stem.aStem}</td>
-                                  <td>{stem.fbStem}</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </Table>
-                        </div>
-                      )}
-                    </ListGroup.Item>
-                  )
-                })}
-              </ListGroup>
-            </FormCheck>
-            <p className='text-muted'>
-              ** Please add checked questions to{' '}
-              <Badge variant='info'>Preview Cart</Badge>. Otherwise no questions
-              will be avaiable in exam.
-            </p>
-            <Pagination
-              itemsCount={questionsFilteredLength}
-              pageSize={this.state.pageSize}
-              currentPage={this.state.currentPage}
-              onPageHandler={this.onPageHandler}
-            />
-
-            <div className='my-3'>
-              <Form>
-                <Form.Group controlId='massQIds'>
-                  <Form.Label>
-                    Enter Question's Ids (Comma seperated Values)
-                  </Form.Label>
-                  <Form.Control
-                    type='text'
-                    name=' massQIds'
-                    placeholder='12,3,25,103,...'
-                    onChange={(e) => {
-                      this.setState({
-                        massQIds: e.target.value.split(',').map((e) => +e)
-                      })
-                    }}
-                  />
-                </Form.Group>
-              </Form>
-            </div>
-
-            <div className='d-flex justify-content-center align-items-center'>
-              <Button
+            <div className='text-center mb-2'>
+              <FaCopy
+                size='1.4rem'
+                style={{ cursor: 'pointer' }}
                 onClick={() => {
+                  this.setState({ copyPasteShow: !this.state.copyPasteShow })
+                }}
+              />
+            </div>
+            {this.props.question.loading && <MultiSquareLoader />}
+            {this.state.copyPasteShow && (
+              <CopyPasteQuestionIds
+                massQIdsHandler={(e) => {
                   this.setState({
-                    selectedQuestions: [
-                      ...checkedQuestionIds.map((id) => this.state[id]),
-                      ...this.state.massQIds
-                    ]
+                    massQIds: e.target.value.split(',')
                   })
                 }}
-                className='mr-5 mb-2 mb-sm-0'
-              >
-                Add Questions to Preview Cart
-              </Button>
+                addToQuestionCartHandler={() => {
+                  this.setState((preState) => {
+                    this.state.massQIds.forEach((id) => {
+                      if (typeof parseInt(id) === 'number') {
+                        preState.questionCart.add(parseInt(id))
+                      }
+                    })
+                    return { questionCart: preState.questionCart }
+                  })
+                }}
+                questionCart={this.state.questionCart}
+              />
+            )}
 
-              <Form.Group controlId='formGridParent'>
-                <Form.Label>Actions</Form.Label>
-                <Form.Control
-                  as='select'
-                  name='action'
-                  onChange={(e) => {
-                    this.actionHandleChange(e, questionsFiltered)
-                  }}
-                >
-                  <option>Select...</option>
-                  <option value='mAll'>Mark All</option>
-                  <option value='uAll'>UnMark All</option>
-                  <option value='mPQ'>Mark The On Page's Questiones </option>
-                  <option value='uPQ'>UnMark The On Page's Questiones</option>
-                </Form.Control>
-              </Form.Group>
-            </div>
-            <div className='my-3'>
-              <Alert
-                className='d-flex justify-content-between'
-                variant='success'
-              >
-                <span className='mr-3 overflow-auto'>
-                  {this.state.selectedQuestions.map((q) => q.id).join(',')}
-                </span>
-                <Button
-                  variant='primary'
-                  onClick={() => {
-                    navigator.clipboard.writeText(
-                      this.state.selectedQuestions.map((q) => q.id).join(',')
-                    )
-                  }}
-                >
-                  Copy
-                </Button>
-              </Alert>
-            </div>
+            <QuestionList
+              questions={questions}
+              showStem={this.state.showStem}
+              questionCartAddHandler={(value) => {
+                this.setState((preState) => ({
+                  questionCart: preState.questionCart.add(value)
+                }))
+              }}
+              questionCartDelHandler={(value) => {
+                this.setState((preState) => {
+                  // Set.delete() method returns boolean wheter it deletes or not
+                  if (preState.questionCart.delete(value)) {
+                    return { questionCart: preState.questionCart }
+                  }
+                })
+              }}
+              questionCart={this.state.questionCart}
+              showStemHandler={(value) => {
+                this.setState({ showStem: value })
+              }}
+              currentPage={this.state.currentPage}
+              pageSize={this.state.pageSize}
+              onPageHandler={this.onPageHandler}
+              filteredQuestionslength={this.state.filteredQuestions.length}
+            />
           </Col>
         </Row>
       </>
@@ -514,8 +328,13 @@ const mapDispatchToProps = (dispatch) => {
     onFetchCategoryLoader: () => dispatch(fetchCategory()),
     onFetchCoursesLoader: () => dispatch(fetchCourseLoader()),
     onGetQuestionLoader: () => dispatch(getQuestionLoader()),
-    onGetQuestionByCategoryLoader: (id) =>
-      dispatch(getQuestionByCategoryLoader(id))
+    onGetQuestionByCategoryLoader: (id) => {
+      if (id === 'top') {
+        dispatch(getQuestionLoader())
+      } else {
+        dispatch(getQuestionByCategoryLoader(id))
+      }
+    }
   }
 }
 const mapStateToProps = (state) => {
@@ -528,4 +347,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExamPaper)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(ExamPaper))

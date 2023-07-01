@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
 
-const card = ({ header, children, headerBgColor, showHeader }) => {
+const ExamCard = ({ header, children, headerBgColor, showHeader }) => {
   return (
     <Card className='mt-5'>
       {showHeader && (
@@ -16,4 +16,4 @@ const card = ({ header, children, headerBgColor, showHeader }) => {
   )
 }
 
-export default card
+export default ExamCard

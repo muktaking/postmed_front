@@ -1,14 +1,16 @@
 import React from 'react'
 import { Form } from 'react-bootstrap'
-import ExamCard from './card/card'
 import FilterQuestionsBySearch from './filterQuestionsBySearch'
+import ExamCard from './card/card'
 
-const filter = ({
+const Filter = ({
   handleChange,
   handleSwitch,
   categories,
+  categoryParamId,
   qTypeState,
-  handleSearch
+  handleSearch,
+  searchRegxErrorMsg
 }) => {
   return (
     <ExamCard header='Filter' showHeader={true}>
@@ -16,13 +18,11 @@ const filter = ({
         <Form.Label>Category</Form.Label>
         <Form.Control
           as='select'
-          defaultValue='top'
           name='categoryId'
           onChange={handleChange}
+          value={categoryParamId}
         >
-          <option disabled value='top'>
-            Top...
-          </option>
+          <option value='top'>Top...</option>
           {categories.map((value) => {
             let categorySlug = value.slug.replace(/_/g, ' / ')
             return <option value={value.id}>{categorySlug}</option>
@@ -46,8 +46,9 @@ const filter = ({
         disabled={qTypeState === 'sba'}
       />
       <FilterQuestionsBySearch handleSearch={handleSearch} />
+      <p className='text-danger'>{searchRegxErrorMsg}</p>
     </ExamCard>
   )
 }
 
-export default filter
+export default Filter

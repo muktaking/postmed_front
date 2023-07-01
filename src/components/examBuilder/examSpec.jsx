@@ -27,6 +27,9 @@ const ExamSpec = ({
   editExamSpec
 }) => {
   const [hideMsg, setHideMsg] = useState(true)
+  const [editExamId, setEditExamId] = useState(
+    editExamSpec ? editExamSpec.id : null
+  )
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
   const [forceEditTime, setForceEditTime] = useState(false) // for forcely set exam time to old days
@@ -76,7 +79,7 @@ const ExamSpec = ({
           selectedQuestionIds,
           dispatch,
           setHideMsg,
-          editExamSpec && editExamSpec.id
+          editExamId
         )}
         enableReinitialize
       >
@@ -296,6 +299,15 @@ const ExamSpec = ({
               ) : null}
             </Form>
             <Button onClick={handleSubmit}>Submit</Button>
+            <Button
+              className='ml-2'
+              onClick={() => {
+                setEditExamId(null)
+                handleSubmit()
+              }}
+            >
+              Create A New Exam
+            </Button>
           </ExamCard>
         )}
       </Formik>

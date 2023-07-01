@@ -78,7 +78,6 @@ const InnerContent = (props) => {
   return (
     <>
       <SidebarMini />
-
       <div>
         <Row className='no-gutters'>
           <Col xl={2} lg={3} md={4} className='sidebar d-print-none'>

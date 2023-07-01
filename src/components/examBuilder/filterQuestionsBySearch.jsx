@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Button, FormControl, InputGroup } from 'react-bootstrap'
+import { FormControl, InputGroup } from 'react-bootstrap'
 
 export default function FilterQuestionsBySearch({ handleSearch }) {
   const qTypeSearchRef = useRef()
@@ -15,15 +15,11 @@ export default function FilterQuestionsBySearch({ handleSearch }) {
           aria-label='qTypeSearch'
           aria-describedby='qTypeSearch'
           ref={qTypeSearchRef}
+          onChange={() => {
+            handleSearch(qTypeSearchRef.current.value)
+          }}
         />
       </InputGroup>
-      <Button
-        onClick={() => {
-          handleSearch(qTypeSearchRef.current.value)
-        }}
-      >
-        Submit
-      </Button>
     </div>
   )
 }

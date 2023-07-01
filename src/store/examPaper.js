@@ -25,11 +25,18 @@ const slice = createSlice({
     onError: (state, action) => {
       state.error = action.payload
       state.loading = false
+    },
+    reset: (state) => {
+      state.loading = false
+      state.questions = []
+      state.ids = []
+      state.success = null
+      state.error = null
     }
   }
 })
 
-export const { selectedQuestions, onSuccess, onError, onLoading } =
+export const { selectedQuestions, onSuccess, onError, onLoading, reset } =
   slice.actions
 
 export default slice.reducer
@@ -56,3 +63,6 @@ export const postExamProfile =
       })
     )
   }
+export const resetLoader = () => (dispatch) => {
+  dispatch({ type: reset.type })
+}
