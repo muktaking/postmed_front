@@ -70,6 +70,7 @@ class ExamPaper extends Component {
       this.setState({
         filteredQuestions: this.props.question.questions
       })
+      this.questionsFilterMethod()
     }
   }
 
@@ -135,7 +136,9 @@ class ExamPaper extends Component {
     this.setState({
       currentPage: 1
     })
-    this.props.history.replace('/examBuilder/?categoryId=' + target.value)
+    this.props.history.replace(
+      `${this.props.location.pathname}?categoryId=${target.value}`
+    )
   }
 
   qTypeSwitchFilterHandler = ({ target }) => {
@@ -156,7 +159,11 @@ class ExamPaper extends Component {
   }
 
   searchFilterHandler = (text) => {
-    this.setState({ search: text, searchRegxErrorMsg: null })
+    this.setState({
+      search: text,
+      searchRegxErrorMsg: null,
+      filteredQuestions: this.props.question.questions
+    })
     this.questionsFilterMethod()
   }
 
@@ -181,7 +188,7 @@ class ExamPaper extends Component {
       }
 
       //switch to change questions based on search
-      if (state.search && state.search !== '') {
+      if (state.search) {
         try {
           const rs = new RegExp(state.search, 'i')
           filteredQuestions = filteredQuestions.filter((ques) =>
