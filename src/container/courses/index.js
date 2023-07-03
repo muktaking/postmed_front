@@ -21,6 +21,7 @@ import { paginate } from '../../utils/paginate'
 import Pagination from 'react-js-pagination'
 import { useQuery } from '../../utils/queryRouter'
 import PaymentCompletionForm from './paymentCompletionForm'
+import usePageNumberQueryToRoute from '../../utils/usePageNumberQueryToRoute'
 const duration = require('dayjs/plugin/duration')
 const relativeTime = require('dayjs/plugin/relativeTime')
 moment.extend(relativeTime)
@@ -38,11 +39,13 @@ const styles = {
  * @returns nothing
  */
 export default function Index() {
+  const pageNumberQueryToRoute = usePageNumberQueryToRoute()
   const dispatch = useDispatch()
   let query = useQuery()
   const pgCourseType = query.get('pgCourseType')
   const faculty = query.get('faculty')
   const search = query.get('search')
+  const pageNumber = pageNumberQueryToRoute.getPageNumberQueryValue
   const loading = useSelector((state) => state.courses.loading)
   const courses = useSelector((state) => state.courses.courses)
   const coursesEnrolledByStu = useSelector(
@@ -52,7 +55,7 @@ export default function Index() {
   const isAuthenticated = useSelector((state) => state.auth.token !== null)
   const [enrollResLoader, setEnrollResLoader] = useState(false)
   const [res, setRes] = useState(null) // get server response after enrollment request by student
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(pageNumber ? pageNumber : 1)
   const [modalCourse, setModalCourse] = useState(null)
   const [showPaymentModalForm, setShowPayemntModalForm] = useState(false)
   const [showModalMsg, setShowModalMsg] = useState(null) // show modal
@@ -279,6 +282,7 @@ export default function Index() {
           totalItemsCount={courses ? courses.length : null}
           pageRangeDisplayed={2}
           onChange={(page) => {
+            pageNumberQueryToRoute.add(page)
             setCurrentPage(page)
           }}
           itemClass='page-item'

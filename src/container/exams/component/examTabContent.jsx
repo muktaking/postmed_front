@@ -4,10 +4,12 @@ import * as moment from 'dayjs'
 import { paginate } from '../../../utils/paginate'
 import { Badge, Button, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import usePageNumberQueryToRoute from '../../../utils/usePageNumberQueryToRoute'
 
 export default function ExamTabContent({ courses }) {
-  const [currentPage, setCurrentPage] = useState(1)
-
+  const pageNumberQueryToRoute = usePageNumberQueryToRoute()
+  const pageNumber = pageNumberQueryToRoute.getPageNumberQueryValue
+  const [currentPage, setCurrentPage] = useState(pageNumber ? pageNumber : 1)
   const pageSize = 6
   const paginatedCourses = paginate(courses, currentPage, pageSize)
 
@@ -45,6 +47,7 @@ export default function ExamTabContent({ courses }) {
           totalItemsCount={courses && courses.length}
           pageRangeDisplayed={2}
           onChange={(page) => {
+            pageNumberQueryToRoute.add(page)
             setCurrentPage(page)
           }}
           itemClass='page-item'

@@ -205,6 +205,7 @@ class ExamPaper extends Component {
 
   onPageHandler = (page) => {
     // for pagination
+    this.props.pageNumberQueryToRoute.add(page)
     this.setState({ currentPage: page })
   }
 

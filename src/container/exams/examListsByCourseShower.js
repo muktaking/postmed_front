@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Form, Jumbotron, Modal, Row } from 'react-bootstrap'
+import { Button, Col, Form, Modal, Row } from 'react-bootstrap'
 import Pagination from 'react-js-pagination'
 import { useParams } from 'react-router'
 import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
@@ -11,8 +11,11 @@ import ExamFilter from './component/examFilter'
 import Latest from './component/latest'
 import { fetchCourseEnrolledByStuLoader } from '../../store/courses'
 import { useDispatch, useSelector } from 'react-redux'
+import usePageNumberQueryToRoute from '../../utils/usePageNumberQueryToRoute'
 
 export default function ExamListsByCatShower() {
+  const pageNumberQueryToRoute = usePageNumberQueryToRoute()
+  const pageNumber = pageNumberQueryToRoute.getPageNumberQueryValue
   const dispatch = useDispatch()
   const isAuthenticated = useSelector((state) => state.auth.token !== null)
   const coursesEnrolledByStu = useSelector(
@@ -22,7 +25,7 @@ export default function ExamListsByCatShower() {
   const [rootExams, setRootExams] = useState([]) //this store the initial exams to use later in FreeExamSwitch
   const [exams, setExams] = useState([])
   const [loading, setLoading] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(pageNumber ? pageNumber : 1)
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
@@ -140,6 +143,7 @@ export default function ExamListsByCatShower() {
               totalItemsCount={exams.length}
               pageRangeDisplayed={2}
               onChange={(page) => {
+                pageNumberQueryToRoute.add(page)
                 setCurrentPage(page)
               }}
               itemClass='page-item'

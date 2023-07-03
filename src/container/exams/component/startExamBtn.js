@@ -30,20 +30,23 @@ export default function StartExamBtn({ exam, courseId, children }) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {children ? (
-            children
-          ) : (
-            <div>
-              <span>To continue the exam, you have to</span>{' '}
-              {isAuthenticated ? (
+          {isAuthenticated ? (
+            children ? (
+              children
+            ) : (
+              <div>
+                <span>To continue the exam, you have to</span>{' '}
                 <Link to={`/courses/${courseId ? courseId : ''}`}>
                   <Button>Enroll the course</Button>
                 </Link>
-              ) : (
-                <Link to='/login'>
-                  <Button>Login</Button>
-                </Link>
-              )}
+              </div>
+            )
+          ) : (
+            <div>
+              <span>To continue the exam, you have to</span>{' '}
+              <Link to='/login'>
+                <Button>Login</Button>
+              </Link>
             </div>
           )}
         </Modal.Body>
