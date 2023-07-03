@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Alert, Button, Modal, Image } from 'react-bootstrap'
+import { Alert, Button, Modal, Image, Badge } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { ContactConfig } from '../../config/contact.config'
 // import { grantTokenRequestPromise } from '../payment/pgw.bkash'
@@ -12,10 +12,30 @@ export default function PaymentCompletionForm({
   setShowPaymentModalForm,
   course
 }) {
-  const [loading, setLoading] = useState(false)
-  const [errorMsg, setErrorMsg] = useState(null)
   const handleClose = () => setShowPaymentModalForm(false)
 
+  return (
+    <div className='paymentCompletionForm'>
+      <Modal show={showPaymentModalForm} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Payment Required</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <PaymentCompletionFormModalContent course={course} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={handleClose}>
+            Go Back
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+  )
+}
+
+export function PaymentCompletionFormModalContent({ course }) {
+  const [loading, setLoading] = useState(false)
+  const [errorMsg, setErrorMsg] = useState(null)
   const paymentHandler = () => {
     setLoading(true)
     setErrorMsg(null)
@@ -37,52 +57,58 @@ export default function PaymentCompletionForm({
         setErrorMsg(error.message)
       })
   }
-
   return (
-    <div className='paymentCompletionForm'>
+    <>
       {loading && <CircleLoader />}
-      <Modal show={showPaymentModalForm} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Payment Required</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>
-            Thanks for choosing this course. For payment we encourage you to
-            make payment with Bkash. You will be auto enrolled after successful
-            payment.
-          </p>
-          <div>
-            <p className='d-flex justify-content-center'>
-              <Button
-                variant='outline-danger'
-                className='d-flex justify-content-around align-items-center'
-                onClick={paymentHandler}
-              >
-                <span className='mr-4'>Pay With Bkash</span>
-                <Image src='/assets/image/payment/bkash-logo.png' width='35' />
-              </Button>
-            </p>
-            {errorMsg && (
-              <Alert variant='danger' className='text-center'>
-                {errorMsg}
-              </Alert>
-            )}
-            <Alert variant='info' className='text-center'>
-              For other options go to <Link to='/paymentfaq'>Payment page</Link>
-              <br />
-              For any problems or refund, go to{' '}
-              <Link to='/help'>Help section</Link> <br /> Contact us with{' '}
-              <span>{ContactConfig.mobile}</span>
-              <br /> Email us <span>{ContactConfig.email}</span>
-            </Alert>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
-            Go Back
+      <p>
+        <span>Thanks for choosing</span>
+        <Badge>{course.title}</Badge>
+        <span className=''>
+          . You have to pay only{' '}
+          {course.discountPricePercentage ? ( //make strikethrough text if discount present
+            <s className='text-danger'>{course.price + ' Taka'}</s>
+          ) : (
+            course.price + ' Taka'
+          )}
+        </span>
+        {course.price && course.discountPricePercentage ? (
+          <Badge variant='warning' className='mx-2 py-1'>
+            {` ${
+              course.price -
+              Math.ceil((course.price * course.discountPricePercentage) / 100)
+            } Taka (With discount- ${course.discountPricePercentage} %)`}
+          </Badge>
+        ) : (
+          <></>
+        )}
+        <span>. You will be auto enrolled after successful payment.</span>
+      </p>
+      <div>
+        <p className='d-flex justify-content-center'>
+          <Button
+            variant='outline-danger'
+            className='d-flex justify-content-around align-items-center'
+            onClick={paymentHandler}
+          >
+            <span className='mr-4'>Pay With Bkash</span>
+            <Image src='/assets/image/payment/bkash-logo.png' width='35' />
           </Button>
-        </Modal.Footer>
-      </Modal>
-    </div>
+        </p>
+        {errorMsg && (
+          <Alert variant='danger' className='text-center'>
+            {errorMsg}
+          </Alert>
+        )}
+        <Alert variant='info' className='text-center'>
+          For other options go to <Link to='/paymentfaq'>Payment page</Link>
+          <br />
+          For any problems or refund, go to <Link to='/help'>
+            Help section
+          </Link>{' '}
+          <br /> Contact us with <span>{ContactConfig.mobile}</span>
+          <br /> Email us <span>{ContactConfig.email}</span>
+        </Alert>
+      </div>
+    </>
   )
 }

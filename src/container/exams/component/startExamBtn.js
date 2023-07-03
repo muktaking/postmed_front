@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl'
 import { FaLock } from 'react-icons/fa'
 import { resetExamResultLoader } from '../../../store/exams'
 
-export default function StartExamBtn({ exam, courseId }) {
+export default function StartExamBtn({ exam, courseId, children }) {
   const [showModal, setShowModal] = useState(false)
   const dispatch = useDispatch()
   const isAuthenticated = useSelector((state) => state.auth.token !== null)
@@ -25,20 +25,26 @@ export default function StartExamBtn({ exam, courseId }) {
     <div>
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title className='text-warning'>
+          <Modal.Title className=''>
             {isAuthenticated ? 'Enrollment Required' : 'Login Required'}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <span>To continue the exam, you have to</span>{' '}
-          {isAuthenticated ? (
-            <Link to={`/courses/${courseId ? courseId : ''}`}>
-              <Button>Enroll the course</Button>
-            </Link>
+          {children ? (
+            children
           ) : (
-            <Link to='/login'>
-              <Button>Login</Button>
-            </Link>
+            <div>
+              <span>To continue the exam, you have to</span>{' '}
+              {isAuthenticated ? (
+                <Link to={`/courses/${courseId ? courseId : ''}`}>
+                  <Button>Enroll the course</Button>
+                </Link>
+              ) : (
+                <Link to='/login'>
+                  <Button>Login</Button>
+                </Link>
+              )}
+            </div>
           )}
         </Modal.Body>
         <Modal.Footer>

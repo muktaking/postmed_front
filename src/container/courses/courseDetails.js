@@ -18,7 +18,9 @@ import remarkGfm from 'remark-gfm'
 import SocialShare from '../../components/socialShare/socialShare'
 import { facultyToString, pgCourseTypeToString } from '../../utils/faculty'
 import ShowRoutine from '../../components/routine/showRoutine'
-import PaymentCompletionForm from './paymentCompletionForm'
+import PaymentCompletionForm, {
+  PaymentCompletionFormModalContent
+} from './paymentCompletionForm'
 import CircleLoader from '../../components/customSpinner/circleLoader/circleLoader'
 import { examTypeToString } from '../../utils/faculty'
 import StartExamBtn from '../exams/component/startExamBtn'
@@ -168,6 +170,7 @@ export default function CourseDetails() {
                       <p className='text-success'>Already Enrolled</p>
                     ) : (
                       <Button
+                        id='enroll-btn'
                         variant='primary'
                         style={{
                           width: '300px',
@@ -300,7 +303,11 @@ export default function CourseDetails() {
                           {moment(exam.startDate).fromNow()}
                         </td>
                         <td>
-                          <StartExamBtn exam={exam} courseId={course.id} />
+                          <StartExamBtn exam={exam} courseId={course.id}>
+                            <PaymentCompletionFormModalContent
+                              course={course}
+                            />
+                          </StartExamBtn>
                         </td>
                       </tr>
                     ))}
