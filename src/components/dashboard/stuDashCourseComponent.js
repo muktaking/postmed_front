@@ -11,16 +11,25 @@ import Rank from './miniCards/miniInfoBlock/rank'
 import Result from './miniCards/miniInfoBlock/result'
 import TotalExam from './miniCards/miniInfoBlock/totalExam'
 import UpcomingExam from './miniCards/miniInfoBlock/upcomingExam'
-import { Link } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
+import { useQuery } from '../../utils/queryRouter'
 const duration = require('dayjs/plugin/duration')
 const relativeTime = require('dayjs/plugin/relativeTime')
 moment.extend(relativeTime)
 moment.extend(duration)
 
 export default function StuDashCourseComponent({ userDashExamInfo }) {
+  const history = useHistory()
+  const location = useLocation()
+  let query = useQuery()
+  const courseId = query.get('courseId')
+
   return (
-    <Tab.Container id='left-tabs-example' defaultActiveKey={0}>
+    <Tab.Container
+      id='left-tabs-example'
+      defaultActiveKey={courseId ? courseId : userDashExamInfo[0].id}
+    >
       <Row>
         <Col sm={2}>
           <h4 className='text-center mt-3'>Enrolled Courses</h4>
@@ -30,8 +39,13 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
           <hr />
           <Nav variant='pills' className='flex-column p-3'>
             {userDashExamInfo.map((e, i) => (
-              <Nav.Item key={e + i} className='mb-2'>
-                <Nav.Link eventKey={i}>
+              <Nav.Item key={e.id + i} className='mb-2'>
+                <Nav.Link
+                  eventKey={e.id}
+                  onClick={() => {
+                    history.replace(`${location.pathname}?courseId=${e.id}`)
+                  }}
+                >
                   <FaChevronCircleRight className='mr-2' />
                   <span>{e.title}</span>
                   {moment(new Date(e.endDate)).diff(moment(new Date())) > 0 ? (
@@ -56,7 +70,7 @@ export default function StuDashCourseComponent({ userDashExamInfo }) {
                   endDate
                 } = examInfo
                 return (
-                  <Tab.Pane key={id} eventKey={ind}>
+                  <Tab.Pane key={id} eventKey={id}>
                     {/* <div className='d-flex justify-content-between flex-wrap'> */}
                     <div className='d-flex justify-content-center mb-2'>
                       {!moment().isAfter(endDate) && (

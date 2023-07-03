@@ -1,11 +1,15 @@
 import Axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Alert, Badge, ListGroup } from 'react-bootstrap'
+import { Alert, Badge, Image, ListGroup, Table } from 'react-bootstrap'
 import { useQuery } from '../../../utils/queryRouter'
 import { useSelector } from 'react-redux'
 import { canActivate, rolePermitted } from '../../../utils/canActivate'
 import { Link } from 'react-router-dom'
 import { FaEdit } from 'react-icons/fa'
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
+import remarkGfm from 'remark-gfm'
+import rehypeRaw from 'rehype-raw'
+import { LazyLoadComponent } from 'react-lazy-load-image-component'
 
 export default function ShowQuestions() {
   const [questions, setQuestions] = useState([])
@@ -83,7 +87,28 @@ export default function ShowQuestions() {
                 ))}
                 {ques.generalFeedback && (
                   <ListGroup.Item>
-                    {'Explanation: ' + ques.generalFeedback}
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      rehypePlugins={[rehypeRaw]}
+                      components={{
+                        table: ({ node, children, ...props }) => (
+                          <Table
+                            bordered
+                            responsive
+                            className='w-50'
+                            children={children}
+                          />
+                        ),
+
+                        img: ({ node, src, alt, ...props }) => (
+                          <LazyLoadComponent>
+                            <Image src={src} alt={alt} width={350} fluid />
+                          </LazyLoadComponent>
+                        )
+                      }}
+                    >
+                      {'Explanation: ' + ques.generalFeedback.trim()}
+                    </ReactMarkdown>
                   </ListGroup.Item>
                 )}
               </>
