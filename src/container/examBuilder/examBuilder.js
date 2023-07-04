@@ -18,7 +18,7 @@ import MultiSquareLoader from '../../components/customSpinner/multiSquare/multiS
 import ExamBuilderAction from './component/examBuilderAction'
 import QuestionList from './component/questionList'
 import CopyPasteQuestionIds from './component/copyPasteQuestionIds'
-import { withRouter } from 'react-router'
+import { withPageNumberQueryToRoute } from '../../utils/usePageNumberQueryToRoute'
 
 const styles = {
   questionCart: {
@@ -47,6 +47,11 @@ class ExamPaper extends Component {
     searchRegxErrorMsg: null,
     showStem: null, // show the stems of question
     copyPasteShow: false // show the copyPasteQuestionIds element
+  }
+  static getDerivedStateFromProps(props, state) {
+    return {
+      currentPage: props.getPageNumberQueryValue
+    }
   }
   componentDidMount() {
     const categoryParamId = getCategoryParamId(this.props.location.search)
@@ -205,7 +210,7 @@ class ExamPaper extends Component {
 
   onPageHandler = (page) => {
     // for pagination
-    this.props.pageNumberQueryToRoute.add(page)
+    this.props.addPageNumberQueryValue(page)
     this.setState({ currentPage: page })
   }
 
@@ -358,4 +363,4 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(ExamPaper))
+)(withPageNumberQueryToRoute(ExamPaper))
