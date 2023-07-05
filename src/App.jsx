@@ -3,11 +3,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
+import ReactGA from 'react-ga4'
+
 import './assets/scss/style.scss'
 import ScrollToTopPage from './components/scrollToTopPage/scrollToTopPage'
 import RoutePages from './container/routePages'
 import { checkAuthState } from './store/auth'
 
+ReactGA.initialize('G-2YL15YYRDB')
 class App extends Component {
   componentDidMount() {
     this.props.onTryAutologin()
