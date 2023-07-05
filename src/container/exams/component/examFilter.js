@@ -1,56 +1,38 @@
-import axios from 'axios'
 import { Formik } from 'formik'
 import React, { useState } from 'react'
 import { Button, Form, Jumbotron } from 'react-bootstrap'
-import CircleLoader from '../../../components/customSpinner/circleLoader/circleLoader'
 import { examTypes } from '../../../utils/faculty'
 
-export default function ExamFilter({ setExams, id, setCurrentPage }) {
-  const [loading, setLoading] = useState(false)
+export default function ExamFilter({
+  exams,
+  setFilteredExams,
+  setCurrentPage
+}) {
   const [showFilter, setShowFilter] = useState(false)
 
   return (
     <div>
       <Formik
         initialValues={{ text: '' }}
-        onSubmit={(values, { setSubmitting }) => {
-          setLoading(true)
+        onSubmit={(values) => {
+          let filteredExams = exams
           let { text, examType } = values
-          console.log(values)
-
-          if (examType.length < 1) {
-            examType = ['0', '1', '2', '3', '4', '5', '6']
+          if (text !== '') {
+            filteredExams = filteredExams.filter((exam) =>
+              exam.title.toLowerCase().includes(text.trim().toLowerCase())
+            )
           }
-
-          axios
-            .post(process.env.REACT_APP_SITE_URL + '/exams/course/' + id, {
-              text,
-              examType
-            })
-            .then((response) => {
-              setLoading(false)
-              setExams(response.data)
-              setCurrentPage(1)
-            })
-            .catch((e) => {
-              setLoading(false)
-              console.log(e)
-            })
+          if (examType && examType.length > 0) {
+            filteredExams = filteredExams.filter((exam) =>
+              examType.includes(exam.type.toString())
+            )
+          }
+          setFilteredExams(filteredExams)
+          setCurrentPage(1)
         }}
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting
-          /* and other goodies */
-        }) => (
+        {({ values, handleChange, handleBlur, handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
-            {loading && <CircleLoader />}
-
             <Button
               onClick={() => {
                 setShowFilter(!showFilter)

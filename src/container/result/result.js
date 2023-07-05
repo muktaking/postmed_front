@@ -205,28 +205,35 @@ class Result extends Component {
                             })}
                           </Badge>
                         </p>
-                        <ReactMarkdown
-                          remarkPlugins={[remarkGfm]}
-                          rehypePlugins={[rehypeRaw]}
-                          components={{
-                            table: ({ node, children, ...props }) => (
-                              <Table
-                                bordered
-                                responsive
-                                className='w-50'
-                                children={children}
-                              />
-                            ),
+                        {
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            rehypePlugins={[rehypeRaw]}
+                            components={{
+                              table: ({ node, children, ...props }) => (
+                                <Table
+                                  bordered
+                                  responsive
+                                  className='w-50'
+                                  children={children}
+                                />
+                              ),
 
-                            img: ({ node, src, alt, ...props }) => (
-                              <LazyLoadComponent>
-                                <Image src={src} alt={alt} width={350} fluid />
-                              </LazyLoadComponent>
-                            )
-                          }}
-                        >
-                          {item.generalFeedback.trim()}
-                        </ReactMarkdown>
+                              img: ({ node, src, alt, ...props }) => (
+                                <LazyLoadComponent>
+                                  <Image
+                                    src={src}
+                                    alt={alt}
+                                    width={350}
+                                    fluid
+                                  />
+                                </LazyLoadComponent>
+                              )
+                            }}
+                          >
+                            {item.generalFeedback.trim()}
+                          </ReactMarkdown>
+                        }
                       </ListGroup.Item>
                     )}
                   </ListGroup>

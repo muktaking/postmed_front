@@ -22,8 +22,8 @@ export default function ExamListsByCatShower() {
     (state) => state.courses.coursesEnrolledByStu
   )
   const { id } = useParams()
-  const [rootExams, setRootExams] = useState([]) //this store the initial exams to use later in FreeExamSwitch
   const [exams, setExams] = useState([])
+  const [filteredExams, setFilteredExams] = useState([])
   const [loading, setLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(pageNumber ? pageNumber : 1)
   const [show, setShow] = useState(false)
@@ -31,7 +31,7 @@ export default function ExamListsByCatShower() {
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   const pageSize = 5
-  let paginatedExams = paginate(exams, currentPage, pageSize)
+  let paginatedExams = paginate(filteredExams, currentPage, pageSize)
 
   const isEnrolledStu = coursesEnrolledByStu
     ? coursesEnrolledByStu.map((course) => course.id).indexOf(+id) !== -1
@@ -40,13 +40,13 @@ export default function ExamListsByCatShower() {
   function onFreeExamSwitcherHandler(e) {
     const checked = e.target.checked
     if (checked) {
-      setExams(
-        exams.filter(
+      setFilteredExams(
+        filteredExams.filter(
           (exam) =>
             exam.categoryType.filter((cat) => cat.name === 'Free').length > 0
         )
       )
-    } else setExams(rootExams) // set the rootExams value to exams
+    } else setFilteredExams(exams) // set the rootExams value to exams
   }
 
   useEffect(() => {
@@ -58,8 +58,8 @@ export default function ExamListsByCatShower() {
       .post(process.env.REACT_APP_SITE_URL + '/exams/course/' + id)
       .then((response) => {
         setLoading(false)
-        setRootExams(response.data) // this to store the reponse on page load
-        setExams(response.data) // this will change due to FreeExamSwithcer
+        setExams(response.data) // this is the base exams
+        setFilteredExams(response.data) // this exams will change on filtration such as filter or free swicher
       })
       .catch((e) => {
         setLoading(false)
@@ -96,13 +96,13 @@ export default function ExamListsByCatShower() {
             <Button onClick={handleShow}>Exams' Routine</Button>
           </div>
           <ExamFilter
-            setExams={setExams}
-            id={id}
+            exams={exams}
+            setFilteredExams={setFilteredExams}
             setCurrentPage={setCurrentPage}
           />
         </Col>
         <Col lg={9}>
-          {!loading && exams.length < 1 ? (
+          {!loading && filteredExams.length < 1 ? (
             <p className='text-center text-danger'>NO Exam is avaiable.</p>
           ) : (
             <>
@@ -140,8 +140,8 @@ export default function ExamListsByCatShower() {
             <Pagination
               activePage={currentPage}
               itemsCountPerPage={pageSize}
-              totalItemsCount={exams.length}
-              pageRangeDisplayed={2}
+              totalItemsCount={filteredExams.length}
+              pageRangeDisplayed={3}
               onChange={(page) => {
                 pageNumberQueryToRoute.add(page)
                 setCurrentPage(page)
