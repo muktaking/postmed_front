@@ -10,7 +10,7 @@ import ScrollToTopPage from './components/scrollToTopPage/scrollToTopPage'
 import RoutePages from './container/routePages'
 import { checkAuthState } from './store/auth'
 
-ReactGA.initialize('G-2YL15YYRDB')
+ReactGA.initialize(process.env.REACT_APP_GA_ID)
 class App extends Component {
   componentDidMount() {
     this.props.onTryAutologin()
