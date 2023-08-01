@@ -303,11 +303,15 @@ export default function CourseDetails() {
                           {moment(exam.startDate).fromNow()}
                         </td>
                         <td>
-                          <StartExamBtn exam={exam} courseId={course.id}>
-                            <PaymentCompletionFormModalContent
-                              course={course}
-                            />
-                          </StartExamBtn>
+                          {course.price ? (
+                            <StartExamBtn exam={exam} courseId={course.id}>
+                              <PaymentCompletionFormModalContent
+                                course={course}
+                              />
+                            </StartExamBtn>
+                          ) : (
+                            <StartExamBtn exam={exam} courseId={course.id} />
+                          )}
                         </td>
                       </tr>
                     ))}

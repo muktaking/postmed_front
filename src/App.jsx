@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import ReactGA from 'react-ga4'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 import './assets/scss/style.scss'
 import ScrollToTopPage from './components/scrollToTopPage/scrollToTopPage'
@@ -18,10 +19,12 @@ class App extends Component {
   render() {
     return (
       <>
-        <BrowserRouter>
-          <ScrollToTopPage />
-          <RoutePages />
-        </BrowserRouter>
+        <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+          <BrowserRouter>
+            <ScrollToTopPage />
+            <RoutePages />
+          </BrowserRouter>
+        </GoogleOAuthProvider>
       </>
     )
   }

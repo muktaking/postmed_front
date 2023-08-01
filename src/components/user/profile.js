@@ -102,8 +102,8 @@ export default function ProfileSnippet({ isProfile, size = '100' }) {
         <div>
           <img
             src={
-              user.avatar && user.avatar.includes('.')
-                ? user.avatar
+              localStorage.getItem('socialAvatar')
+                ? localStorage.getItem('socialAvatar')
                 : '/assets/image/avatar/' +
                   (user.avatar ? user.avatar : 'boy') +
                   '.png'

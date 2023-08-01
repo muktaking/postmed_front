@@ -14,6 +14,7 @@ const slice = createSlice({
     userFrom: Date.now(),
     address: null,
     avatar: null,
+    socialAvatar: null, // for facebook, google like social sites
     gender: null,
     faculty: null,
     institution: null
@@ -33,10 +34,13 @@ const slice = createSlice({
       user.gender = action.payload.gender
       user.faculty = action.payload.faculty
       user.institution = action.payload.institution
+    },
+    setSocialAvatar: (user, action) => {
+      user.socialAvatar = action.payload
     }
   }
 })
-export const { getUser } = slice.actions
+export const { getUser, setSocialAvatar } = slice.actions
 export default slice.reducer
 
 const url = '/users'
@@ -51,4 +55,8 @@ export const getUserLoader = () => (dispatch) => {
       sendToken: true
     })
   )
+}
+
+export const setSocialAvatarLoader = (avatar) => (dispatch) => {
+  dispatch({ type: setSocialAvatar.type, payload: avatar })
 }

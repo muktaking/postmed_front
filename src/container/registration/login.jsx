@@ -33,6 +33,7 @@ class Home extends Component {
       username: '',
       password: ''
     },
+    showManualLogin: false,
     errorMessage: null
   }
 
@@ -100,7 +101,7 @@ class Home extends Component {
     // }
     return (
       <>
-        <Topbar pageName='Login' />
+        <Topbar pageName='SignIn' />
         <SidebarMini />
         <div className='registration'>
           <ResetInit
@@ -118,69 +119,99 @@ class Home extends Component {
             {/* </div> */}
           </div>
           <div className='caption text-center' style={{ top: '15%' }}>
-            <h1>Login Form</h1>
+            <h1>SignIn Form</h1>
             <div className='heading-underline'></div>
-            <p>Easily Login with your Facebook or Google</p>
+            <p>Easily Sign in with your Google or Facebook Id</p>
             <Row className='mb-3'>
               <Col lg='6' className='mb-3'>
-                <FacebookLogin />
-              </Col>
-              <Col lg='6'>
                 <Google />
               </Col>
+              <Col lg='6'>
+                <FacebookLogin />
+              </Col>
             </Row>
-            <p>Or, Login with your Email and Password</p>
-            <Form className='mb-4' onSubmit={this.submitHandler} noValidate>
-              <div className='text-white mb-2 bg-danger'>
-                {this.props.auth.error && this.props.auth.error}
-              </div>
-              <Form.Group as={Col} controlId='formGridEmail'>
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type='email'
-                  placeholder='Enter email'
-                  name='username' // do not be confused; due to passportjs use only "username" for password verification though it is actually the user email
-                  onChange={this.handleChange}
-                  className={formErrors.username.length > 0 && 'is-invalid'}
-                />
-                {formErrors.username.length > 0 && (
-                  <span className='errorMessage'>{formErrors.username}</span>
-                )}
-              </Form.Group>
-              <Form.Group as={Col} controlId='formGridPassword'>
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type='password'
-                  placeholder='Password'
-                  name='password'
-                  onChange={this.handleChange}
-                  className={formErrors.password.length > 0 && 'is-invalid'}
-                />
-                {formErrors.password.length > 0 && (
-                  <span className='errorMessage'>{formErrors.password}</span>
-                )}
-              </Form.Group>
-              <Button type='submit' className='btn-submit'>
-                Submit
+            <div>
+              <Button
+                variant='secondary'
+                onClick={() => {
+                  this.setState({
+                    showManualLogin: !this.state.showManualLogin
+                  })
+                }}
+              >
+                Sign in Manually
               </Button>
-            </Form>
-            <Row>
-              <Col md={6}>
-                <p>Forget Your Password</p>
-                {/* <Button variant="danger">
+              <div className='mt-3'>
+                {this.state.showManualLogin && (
+                  <div className='border p-1'>
+                    <p>Sign in with your Email and Password</p>
+                    <Form
+                      className='mb-4'
+                      onSubmit={this.submitHandler}
+                      noValidate
+                    >
+                      <div className='text-white mb-2 bg-danger'>
+                        {this.props.auth.error && this.props.auth.error}
+                      </div>
+                      <Form.Group as={Col} controlId='formGridEmail'>
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control
+                          type='email'
+                          placeholder='Enter email'
+                          name='username' // do not be confused; due to passportjs use only "username" for password verification though it is actually the user email
+                          onChange={this.handleChange}
+                          className={
+                            formErrors.username.length > 0 && 'is-invalid'
+                          }
+                        />
+                        {formErrors.username.length > 0 && (
+                          <span className='errorMessage'>
+                            {formErrors.username}
+                          </span>
+                        )}
+                      </Form.Group>
+                      <Form.Group as={Col} controlId='formGridPassword'>
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                          type='password'
+                          placeholder='Password'
+                          name='password'
+                          onChange={this.handleChange}
+                          className={
+                            formErrors.password.length > 0 && 'is-invalid'
+                          }
+                        />
+                        {formErrors.password.length > 0 && (
+                          <span className='errorMessage'>
+                            {formErrors.password}
+                          </span>
+                        )}
+                      </Form.Group>
+                      <Button type='submit' className='btn-submit'>
+                        Submit
+                      </Button>
+                    </Form>
+                    <Row>
+                      <Col md={6}>
+                        <p>Forget Your Password</p>
+                        {/* <Button variant="danger">
                 Reset Your Password
               </Button> */}
-                <Button variant='danger' onClick={this.resetShow}>
-                  Reset
-                </Button>
-              </Col>
-              <Col md={6}>
-                <p>Not a member yet!</p>
-                <Link to='/signup' className='btn btn-secondary'>
-                  Sign up
-                </Link>
-              </Col>
-            </Row>
+                        <Button variant='danger' onClick={this.resetShow}>
+                          Reset
+                        </Button>
+                      </Col>
+                      <Col md={6}>
+                        <p>Not a member yet!</p>
+                        <Link to='/signup' className='btn btn-secondary'>
+                          Sign up
+                        </Link>
+                      </Col>
+                    </Row>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
           {/* End of Landing */}
         </div>{' '}

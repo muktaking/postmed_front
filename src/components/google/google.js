@@ -1,17 +1,18 @@
 import Axios from 'axios'
 import React from 'react'
-import GoogleLogin from 'react-google-login'
+import { GoogleLogin } from '@react-oauth/google'
 import { useDispatch } from 'react-redux'
 import {
   authFail,
-  authStart,
+  //authStart,
   authSuccess,
   checkAuthTimeOut
 } from '../../store/auth'
+import { setSocialAvatarLoader } from '../../store/user'
 
 const responseOnSuccess = (response, dispatch) => {
   Axios.post(process.env.REACT_APP_SITE_URL + '/auth/google', {
-    idToken: response.tokenId
+    idToken: response.credential
   })
     .then((res) => {
       dispatch(authSuccess(res.data))
@@ -21,7 +22,9 @@ const responseOnSuccess = (response, dispatch) => {
       localStorage.setItem('jwtToken', res.data.accessToken)
       localStorage.setItem('expirationDate', expirationDate)
       localStorage.setItem('userId', res.data.id)
+      localStorage.setItem('socialAvatar', res.data.avatar)
       dispatch(checkAuthTimeOut(res.data.expireIn))
+      dispatch(setSocialAvatarLoader(res.data.avatar))
     })
     .catch((err) => {
       console.log(err)
@@ -33,24 +36,20 @@ const responseOnFailure = (response, dispatch) => {
   dispatch(authFail(response.error))
 }
 
-export default function Google() {
+export default function Google({ useOneTap = false }) {
   const dispatch = useDispatch()
   return (
-    <div>
+    <div className='d-flex justify-content-center'>
       <GoogleLogin
-        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-        buttonText='LOGIN WITH GOOGLE'
-        onRequest={() => {
-          dispatch(authStart())
-        }}
         onSuccess={(response) => {
           responseOnSuccess(response, dispatch)
         }}
-        onFailure={(response) => {
+        onError={(response) => {
           console.log(response)
           responseOnFailure(response, dispatch)
         }}
-        cookiePolicy={'single_host_origin'}
+        theme='outline'
+        useOneTap={useOneTap}
       />
     </div>
   )
