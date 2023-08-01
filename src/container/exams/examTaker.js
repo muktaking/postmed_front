@@ -18,6 +18,7 @@ import Pagination from "react-js-pagination";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { Redirect } from "react-router-dom";
+import { Beforeunload } from 'react-beforeunload';
 //import { Link as LinkScroll } from "react-scroll";
 import CircleLoader from "../../components/customSpinner/circleLoader/circleLoader";
 import QuestionView from "../../components/exams/paper/question/question";
@@ -170,7 +171,7 @@ class ExamTaker extends Component {
     );
 
     return (
-      <>
+      <Beforeunload onBeforeunload={() => "Reloading or closing of the exam window will cause lost of all exam's data !!!"}>
         <Helmet>
           <title>Exam- test your knowledge</title>
         </Helmet>
@@ -372,7 +373,7 @@ class ExamTaker extends Component {
           </Row>
           </>
           )}
-      </>
+      </Beforeunload>
     );
   }
 }

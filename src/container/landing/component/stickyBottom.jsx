@@ -6,12 +6,13 @@ import {
   FaQuestionCircle,
   FaStackOverflow,
   FaTh,
-  FaTimesCircle,
+  FaTimes,
   FaWhatsapp
 } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import { StickyBottomContext } from '../../routePages'
+import Google from '../../../components/google/google'
 
 const phoneNumber = 8801521500642
 const greetings = 'Hello, MediOnExam'
@@ -60,29 +61,30 @@ export default function StickyBottom() {
       }}
     >
       {stickyState && !IsAuthenticated && (
-        <div>
-          <div className='text-center pt-2'>
-            <span className='mb-2 mr-2'>You are not logged in. Please</span>
-            <Link to='/login'>
-              <Button variant='outline-warning'>Login</Button>
-            </Link>
-            <div>
-              <FaTimesCircle
+        <div className='mb-2'>
+          <div className='d-flex justify-content-center text-center pt-3'>
+            <Google useOneTap={true} />
+            <div
+              className='d-flex justify-content-center align-items-center bg-danger ml-2'
+              style={{ width: '2rem' }}
+            >
+              <FaTimes
                 onClick={() => {
                   setStickyState(!stickyState)
                 }}
-                color='red'
+                color='white'
                 size={'1.4rem'}
                 className='shadow'
-                style={{ cursor: 'pointer' }}
+                style={{
+                  cursor: 'pointer'
+                }}
               />
             </div>
           </div>
-          <hr />
         </div>
       )}
 
-      <div className='hideInMd'>
+      <div className='hideInMd border-top border-light'>
         <div className='py-2 d-flex flex-wrap justify-content-around align-items-center'>
           {bootomNavItems.map((item, ind) => (
             <Link
