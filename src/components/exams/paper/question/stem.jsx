@@ -22,7 +22,7 @@ const QuestionStemView = ({
    */
   return (
     <Row className='px-md-4 px-xs-2 exam-taker-stem'>
-      <Col xs='9'>{index + '. ' + stem}</Col>
+      <Col xs='9'>{String.fromCharCode(96 + index) + '. ' + stem}</Col>
       <Form.Group
         as={Col}
         controlId='formGroupQuestionStemAnswer'

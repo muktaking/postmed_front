@@ -124,7 +124,9 @@ class Result extends Component {
                                       item.result.stemResult[1],
                                       item.result.stemResult[2]
                                     ]}
-                                    qStem={`${ind + 1}. ${stem.qStem}`}
+                                    qStem={`${String.fromCharCode(97 + ind)}. ${
+                                      stem.qStem
+                                    }`}
                                   />
                                 </div>
                                 <div className='ml-3 mb-1'>
@@ -147,7 +149,9 @@ class Result extends Component {
                                     index={ind}
                                     qType={item.result.stemResult[0]}
                                     answer={item.result.stemResult[ind + 1]}
-                                    qStem={`${ind + 1}. ${stem.qStem}`}
+                                    qStem={`${String.fromCharCode(97 + ind)}. ${
+                                      stem.qStem
+                                    }`}
                                     aStem={stem.aStem}
                                     isUntouched={
                                       item.result.stemResult.length === 1
