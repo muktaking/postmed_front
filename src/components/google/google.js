@@ -8,7 +8,6 @@ import {
   authSuccess,
   checkAuthTimeOut
 } from '../../store/auth'
-import { setSocialAvatarLoader } from '../../store/user'
 
 const responseOnSuccess = (response, dispatch) => {
   Axios.post(process.env.REACT_APP_SITE_URL + '/auth/google', {
@@ -24,7 +23,6 @@ const responseOnSuccess = (response, dispatch) => {
       localStorage.setItem('userId', res.data.id)
       localStorage.setItem('socialAvatar', res.data.avatar)
       dispatch(checkAuthTimeOut(res.data.expireIn))
-      dispatch(setSocialAvatarLoader(res.data.avatar))
     })
     .catch((err) => {
       console.log(err)
