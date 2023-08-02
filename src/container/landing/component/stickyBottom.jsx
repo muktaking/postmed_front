@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import { Button } from 'react-bootstrap'
 import {
   FaBookOpen,
   FaHome,
@@ -61,9 +60,10 @@ export default function StickyBottom() {
       }}
     >
       {stickyState && !IsAuthenticated && (
-        <div className='mb-2'>
-          <div className='d-flex justify-content-center text-center pt-3'>
-            <Google useOneTap={true} />
+        <div className='mb-2 pt-2'>
+          <p className='text-center'>Dear User, Please sign in.</p>
+          <div className='d-flex justify-content-center text-center'>
+            <Google />
             <div
               className='d-flex justify-content-center align-items-center bg-danger ml-2'
               style={{ width: '2rem' }}
